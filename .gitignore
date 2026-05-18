@@ -1,12 +1,30 @@
 # External repositories are managed by scripts and manifests.
 /external/*/
 
-# Local experiment outputs.
-/experiments/inputs/
-/experiments/pseudo_views/
-/experiments/reconstructions/
-/experiments/metrics/
-/experiments/figures/
+# Local experiment outputs. Keep compact metadata and summaries tracked.
+/experiments/inputs/**
+/experiments/pseudo_views/**
+/experiments/reconstructions/**
+/experiments/metrics/**
+/experiments/figures/**
+!/experiments/README.md
+!/experiments/inputs/
+!/experiments/pseudo_views/
+!/experiments/pseudo_views/**/
+!/experiments/pseudo_views/**/README.md
+!/experiments/pseudo_views/**/metadata.json
+!/experiments/reconstructions/
+!/experiments/reconstructions/**/
+!/experiments/reconstructions/**/README.md
+!/experiments/reconstructions/**/metadata.json
+!/experiments/metrics/
+!/experiments/metrics/**/
+!/experiments/metrics/**/*.csv
+!/experiments/metrics/**/*.json
+!/experiments/metrics/**/*.md
+!/experiments/figures/
+!/experiments/figures/**/
+!/experiments/figures/**/*.md
 
 # Common local artifacts.
 __pycache__/
