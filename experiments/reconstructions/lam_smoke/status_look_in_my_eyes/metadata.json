@@ -1,0 +1,34 @@
+{
+  "run_id": "lam_smoke_status_look_in_my_eyes_20260518",
+  "status": "success",
+  "input": "external/LAM/assets/sample_input/status.png",
+  "motion": "external/LAM/assets/sample_motion/export/Look_In_My_Eyes/",
+  "config": "external/LAM/configs/inference/lam-20k-8gpu.yaml",
+  "model": "external/LAM/model_zoo/lam_models/releases/lam/lam-20k/step_045500/",
+  "source_output": "external/LAM/exps/videos/lam/lam_20k/",
+  "outputs": [
+    {
+      "path": "experiments/reconstructions/lam_smoke/status_look_in_my_eyes/status.mp4",
+      "sha256": "e896f3263c1ff565bee32509b126344ef96758dec8f002c688d5111326644906",
+      "frames": 520,
+      "fps": 30.0,
+      "width": 512,
+      "height": 512
+    },
+    {
+      "path": "experiments/reconstructions/lam_smoke/status_look_in_my_eyes/status_audio.mp4",
+      "sha256": "661b9ad059489ee0d00249c3c95256f9f2d85b5047cc79614a5c702211f359ff",
+      "frames": 520,
+      "fps": 30.0,
+      "width": 512,
+      "height": 512
+    }
+  ],
+  "cuda_env": "/data1/workspace/airulan/env124.sh",
+  "cuda_visible_devices": "7",
+  "conda_env": "lam",
+  "torch": "2.6.0+cu124",
+  "torch_cuda": "12.4",
+  "lam_commit": "abbf38a6fb858c5364894d51b04e5f4279a4a163",
+  "notes": "Requires TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 under torch 2.6; full run note is in /data1/workspace/airulan/3dv_work/logs/lam_smoke_status_look_in_my_eyes.md."
+}

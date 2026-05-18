@@ -1,7 +1,7 @@
 # External repositories are managed by scripts and manifests.
 /external/*/
 
-# Local experiment outputs. Keep compact metadata and summaries tracked.
+# Local experiment outputs. Track compact metadata plus PNG/MP4 results.
 /experiments/inputs/**
 /experiments/pseudo_views/**
 /experiments/reconstructions/**
@@ -13,10 +13,12 @@
 !/experiments/pseudo_views/**/
 !/experiments/pseudo_views/**/README.md
 !/experiments/pseudo_views/**/metadata.json
+!/experiments/pseudo_views/**/*.png
 !/experiments/reconstructions/
 !/experiments/reconstructions/**/
 !/experiments/reconstructions/**/README.md
 !/experiments/reconstructions/**/metadata.json
+!/experiments/reconstructions/**/*.mp4
 !/experiments/metrics/
 !/experiments/metrics/**/
 !/experiments/metrics/**/*.csv

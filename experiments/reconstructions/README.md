@@ -1,0 +1,15 @@
+# Reconstructions
+
+Reconstruction MP4 videos are experiment results and should be committed with
+their `metadata.json` files and summary tables. Meshes, ply files, weights,
+and full intermediate outputs still stay local unless explicitly reviewed.
+
+Current local smoke output:
+
+```text
+lam_smoke/status_look_in_my_eyes/
+```
+
+The tracked metadata records input, motion, model checkpoint path, output
+hashes, CUDA env, GPU id, and package versions. The MP4 outputs are tracked
+for reproducible review.

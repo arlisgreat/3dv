@@ -41,25 +41,22 @@ data_manifest.csv
 
 不要把实验结果散落在 `external/` 里。第三方代码可以临时产出结果，但最终要复制或导出到 `experiments/`。
 
-大文件默认不提交；仓库内只保留轻量索引：
+实验结果需要回传到仓库：伪视角 PNG、重建 MP4、指标和索引文件都提交。权重、cache、第三方源码产物仍然不要提交。
 
 ```text
 experiments/pseudo_views/**/metadata.json
+experiments/pseudo_views/**/*.png
 experiments/reconstructions/**/metadata.json
+experiments/reconstructions/**/*.mp4
 experiments/metrics/*.csv
 experiments/metrics/*.md
 ```
 
-当前 smoke 结果索引：
+当前 smoke 结果：
 
 ```text
 experiments/metrics/smoke_runs_20260518.csv
 experiments/metrics/local_environment_20260518.md
-```
-
-本地大文件位置：
-
-```text
 experiments/pseudo_views/zero123plus_smoke/teaser_low_steps10/
 experiments/reconstructions/lam_smoke/status_look_in_my_eyes/
 ```
