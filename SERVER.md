@@ -76,6 +76,59 @@ bash scripts/server/03_run_lam_sample.sh
 bash scripts/server/02_download_lam_assets.sh modelscope
 ```
 
+### 本机 env124 已验证路径
+
+在 `/data1/workspace/airulan` 这台机器上，实际可用的是 CUDA 12.4
+环境，而不是脚本默认假设的 cu121/cu118。2026-05-18 已验证：
+
+```text
+conda env: lam
+CUDA env: /data1/workspace/airulan/env124.sh
+torch: 2.6.0+cu124
+xformers: 0.0.29.post3
+pytorch3d: 0.7.9
+scipy: 1.10.1
+```
+
+运行前使用空闲 GPU，并修复 `env124.sh` 的 `LD_LIBRARY_PATH` 分隔符：
+
+```bash
+export PATH=/data1/workspace/airulan/conda/miniconda3/bin:$PATH
+source /data1/workspace/airulan/conda/miniconda3/etc/profile.d/conda.sh
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"
+source /data1/workspace/airulan/env124.sh
+export LD_LIBRARY_PATH="$CUDA_HOME/lib64:${LD_LIBRARY_PATH#"$CUDA_HOME/lib64"}"
+export CUDA_VISIBLE_DEVICES="$(/home/airulan/.codex/skills/3dv-experiment-orchestrator/scripts/select_idle_gpu.sh)"
+export TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1
+unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy HF_ENDPOINT
+export NO_PROXY="*"
+export CACHE_ROOT=$PWD/.cache
+export HF_HOME="$CACHE_ROOT/huggingface"
+export TORCH_HOME="$CACHE_ROOT/torch"
+```
+
+LAM-20K 权重在本机通过 ModelScope 下载更稳定：
+
+```bash
+conda activate lam
+modelscope download "Damo_XR_Lab/LAM-20K" \
+  --local_dir "./external/LAM/model_zoo/lam_models/releases/lam/lam-20k/step_045500/"
+```
+
+如果 Torch Hub 下载 DINOv2 很慢，先手动缓存：
+
+```bash
+curl -L -C - --retry 20 --retry-delay 5 --speed-limit 102400 --speed-time 120 \
+  -o .cache/torch/hub/checkpoints/dinov2_vitl14_reg4_pretrain.pth \
+  https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_reg4_pretrain.pth
+```
+
+已验证 smoke 输出索引在：
+
+```text
+experiments/metrics/smoke_runs_20260518.csv
+```
+
 ## 6. 跑 Zero123++
 
 CUDA 12.1：
@@ -130,4 +183,3 @@ bash scripts/server/03_run_lam_sample.sh experiments/inputs/first10/your_image.p
 ### 显存不足
 
 Zero123++ 基础推理约需 5GB VRAM。LAM 更重，先跑 sample，不要一开始批量跑。
-
