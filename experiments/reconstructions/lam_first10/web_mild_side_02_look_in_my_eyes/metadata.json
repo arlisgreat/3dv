@@ -1,0 +1,31 @@
+{
+  "sample_id": "web_mild_side_02",
+  "input": "/data1/workspace/airulan/3dv/experiments/inputs/first10/processed/web_mild_side_02.png",
+  "source": {
+    "sample_id": "web_mild_side_02",
+    "input_path": "experiments/inputs/first10/processed/web_mild_side_02.png",
+    "group": "mild_side",
+    "input_yaw": "-30",
+    "notes": "mild side or three-quarter portrait"
+  },
+  "status": "success",
+  "returncode": 0,
+  "elapsed_sec": 44.104,
+  "command": [
+    "bash",
+    "/data1/workspace/airulan/3dv/scripts/server/03_run_lam_sample.sh",
+    "/data1/workspace/airulan/3dv/experiments/inputs/first10/processed/web_mild_side_02.png",
+    "configs/inference/lam-20k-8gpu.yaml",
+    "model_zoo/lam_models/releases/lam/lam-20k/step_045500/",
+    "assets/sample_motion/export/Look_In_My_Eyes/"
+  ],
+  "config": "configs/inference/lam-20k-8gpu.yaml",
+  "model": "model_zoo/lam_models/releases/lam/lam-20k/step_045500/",
+  "motion": "assets/sample_motion/export/Look_In_My_Eyes/",
+  "cuda_visible_devices": "0",
+  "copied_files": [
+    "experiments/reconstructions/lam_first10/web_mild_side_02_look_in_my_eyes/web_mild_side_02.mp4",
+    "experiments/reconstructions/lam_first10/web_mild_side_02_look_in_my_eyes/web_mild_side_02_audio.mp4"
+  ],
+  "log": "/data1/workspace/airulan/3dv_work/logs/lam_first10/web_mild_side_02.log"
+}

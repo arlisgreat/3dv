@@ -60,3 +60,17 @@ experiments/metrics/local_environment_20260518.md
 experiments/pseudo_views/zero123plus_smoke/teaser_low_steps10/
 experiments/reconstructions/lam_smoke/status_look_in_my_eyes/
 ```
+
+当前 first10 pilot 结果：
+
+```text
+experiments/inputs/first10/manifest.csv
+experiments/figures/first10_wikimedia_contact_sheet.png
+experiments/pseudo_views/zero123plus_first10/
+experiments/figures/zero123plus_first10_steps20_grids.png
+experiments/metrics/zero123plus_first10_steps20.csv
+experiments/reconstructions/lam_first10/
+experiments/figures/lam_first10_look_in_my_eyes_frames.png
+experiments/metrics/lam_first10_look_in_my_eyes.csv
+experiments/metrics/first10_pilot_observations_20260518.md
+```

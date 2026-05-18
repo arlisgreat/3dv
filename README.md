@@ -126,16 +126,29 @@ Zero123++: experiments/pseudo_views/zero123plus_smoke/teaser_low_steps10/
 LAM: experiments/reconstructions/lam_smoke/status_look_in_my_eyes/
 ```
 
+并完成第一轮 Wikimedia Commons `first10` pilot：
+
+```text
+Inputs manifest: experiments/inputs/first10/manifest.csv
+Zero123++: experiments/pseudo_views/zero123plus_first10/
+LAM: experiments/reconstructions/lam_first10/
+Figures: experiments/figures/
+Metrics: experiments/metrics/
+```
+
 轻量结果索引：
 
 ```text
 experiments/metrics/smoke_runs_20260518.csv
 experiments/metrics/local_environment_20260518.md
+experiments/metrics/zero123plus_first10_steps20.csv
+experiments/metrics/lam_first10_look_in_my_eyes.csv
+experiments/metrics/first10_pilot_observations_20260518.md
 ```
 
 下一步：
 
-1. 准备 `experiments/inputs/first10/` 和 `data_manifest.csv`。
-2. 对 first10 跑 Zero123++ 伪视角。
-3. 对 same input 跑 LAM baseline。
-4. 建立视角预算和失败标签表。
+1. 对 first10 做 `steps=75` Zero123++ face-quality 消融。
+2. 建立 identity filtering 和可信区域 mask 规则。
+3. 对 `1/2/4/6` 视角预算做可控对比。
+4. 建立失败标签表：identity drift、hair hallucination、glasses loss、back-head inconsistency、geometry collapse、floaters。

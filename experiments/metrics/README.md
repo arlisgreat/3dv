@@ -6,7 +6,9 @@ This directory is for small, publishable experiment metadata:
 - compact environment notes
 - evaluation CSV/JSON summaries
 - links or hashes for larger local artifacts
+- pilot observation notes and literature-grounded idea updates
 
-Do not place raw portraits, generated image dumps, videos, meshes, model
-weights, or long logs here. Keep those under the ignored experiment output
-directories or `/data1/workspace/airulan/3dv_work`.
+Do not place raw portraits, meshes, model weights, caches, or long logs here.
+Compact PNG/MP4 results live under `experiments/pseudo_views/`,
+`experiments/reconstructions/`, and `experiments/figures/` with matching
+metadata and summary CSVs.

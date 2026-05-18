@@ -9,6 +9,10 @@
 /experiments/figures/**
 !/experiments/README.md
 !/experiments/inputs/
+!/experiments/inputs/**/
+!/experiments/inputs/**/README.md
+!/experiments/inputs/**/*.csv
+!/experiments/inputs/**/*.json
 !/experiments/pseudo_views/
 !/experiments/pseudo_views/**/
 !/experiments/pseudo_views/**/README.md
@@ -18,6 +22,7 @@
 !/experiments/reconstructions/**/
 !/experiments/reconstructions/**/README.md
 !/experiments/reconstructions/**/metadata.json
+!/experiments/reconstructions/**/summary.json
 !/experiments/reconstructions/**/*.mp4
 !/experiments/metrics/
 !/experiments/metrics/**/
@@ -27,6 +32,7 @@
 !/experiments/figures/
 !/experiments/figures/**/
 !/experiments/figures/**/*.md
+!/experiments/figures/**/*.png
 
 # Common local artifacts.
 __pycache__/

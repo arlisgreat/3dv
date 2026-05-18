@@ -1,1 +1,11 @@
 sample_id,input_path,group,input_yaw,notes
+web_clean_frontal_01,experiments/inputs/first10/processed/web_clean_frontal_01.png,clean_frontal,0,clean frontal web portrait
+web_clean_frontal_02,experiments/inputs/first10/processed/web_clean_frontal_02.png,clean_frontal,0,clean frontal web portrait
+web_clean_frontal_03,experiments/inputs/first10/processed/web_clean_frontal_03.png,clean_frontal,0,clean frontal web portrait
+web_mild_side_01,experiments/inputs/first10/processed/web_mild_side_01.png,mild_side,30,mild side or three-quarter portrait
+web_mild_side_02,experiments/inputs/first10/processed/web_mild_side_02.png,mild_side,-30,mild side or three-quarter portrait
+web_glasses_01,experiments/inputs/first10/processed/web_glasses_01.png,glasses,0,glasses portrait
+web_glasses_02,experiments/inputs/first10/processed/web_glasses_02.png,glasses,0,glasses portrait
+web_complex_hair_01,experiments/inputs/first10/processed/web_complex_hair_01.png,complex_hair,0,complex hair portrait
+web_complex_hair_02,experiments/inputs/first10/processed/web_complex_hair_02.png,complex_hair,0,complex hair portrait
+web_occlusion_lowq_01,experiments/inputs/first10/processed/web_occlusion_lowq_01.png,occlusion_lowq,unknown,occlusion or lower-quality portrait
