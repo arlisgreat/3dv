@@ -119,9 +119,23 @@ bash scripts/server/05_run_zero123plus_sample.sh
 
 ## 下一步
 
-1. 在服务器跑 `bash scripts/server/00_check_server.sh`。
-2. 根据 CUDA 版本选择 `cu121` 或 `cu118`。
-3. 跑通 LAM sample。
-4. 跑通 Zero123++ sample。
-5. 准备 `experiments/inputs/first10/` 和 `data_manifest.csv`。
+当前本机 `/data1/workspace/airulan` 已经跑通两个 smoke：
 
+```text
+Zero123++: experiments/pseudo_views/zero123plus_smoke/teaser_low_steps10/
+LAM: experiments/reconstructions/lam_smoke/status_look_in_my_eyes/
+```
+
+轻量结果索引：
+
+```text
+experiments/metrics/smoke_runs_20260518.csv
+experiments/metrics/local_environment_20260518.md
+```
+
+下一步：
+
+1. 准备 `experiments/inputs/first10/` 和 `data_manifest.csv`。
+2. 对 first10 跑 Zero123++ 伪视角。
+3. 对 same input 跑 LAM baseline。
+4. 建立视角预算和失败标签表。
