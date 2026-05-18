@@ -1,0 +1,8 @@
+name	url	branch	role	priority
+LAM	https://github.com/aigc3d/LAM.git	main	one-shot Gaussian head baseline	P0
+PanoHead	https://github.com/SizheAn/PanoHead.git	main	original PanoHead NeRF/GAN baseline	P0
+zero123plus	https://github.com/SUDO-AI-3D/zero123plus.git	main	pseudo multiview diffusion generator	P0
+ri3d	https://github.com/avinashpaliwal/ri3d.git	main	sparse-view 3DGS repair/inpainting reference	P0
+TensorialGaussianAvatar	https://github.com/ant-research/TensorialGaussianAvatar.git	main	optional FLAME Gaussian head reference	P1
+stable-fast-3d	https://github.com/Stability-AI/stable-fast-3d.git	main	optional fast single-image mesh baseline	P1
+

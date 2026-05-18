@@ -1,0 +1,15 @@
+# External repositories are managed by scripts and manifests.
+/external/*/
+
+# Local experiment outputs.
+/experiments/inputs/
+/experiments/pseudo_views/
+/experiments/reconstructions/
+/experiments/metrics/
+/experiments/figures/
+
+# Common local artifacts.
+__pycache__/
+*.pyc
+.DS_Store
+

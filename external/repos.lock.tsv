@@ -1,0 +1,5 @@
+name	remote	branch	commit
+LAM	https://github.com/aigc3d/LAM.git	paper/3dv-pseudo-view-study	abbf38a6fb858c5364894d51b04e5f4279a4a163
+PanoHead	https://github.com/SizheAn/PanoHead.git	paper/3dv-pseudo-view-study	17ad915941c7e2703d5aa3eb5ff12eac47c90e53
+zero123plus	https://github.com/SUDO-AI-3D/zero123plus.git	paper/3dv-pseudo-view-study	7d0315c31be6eb906b34cf07d91310f8e12e9b95
+ri3d	https://github.com/avinashpaliwal/ri3d.git	paper/3dv-pseudo-view-study	506496a2ee1a4555756251ddbe15e1b04fd64e97
