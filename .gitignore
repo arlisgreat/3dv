@@ -5,6 +5,7 @@
 /experiments/inputs/**
 /experiments/pseudo_views/**
 /experiments/reconstructions/**
+/experiments/downstream_3d/**
 /experiments/metrics/**
 /experiments/figures/**
 !/experiments/README.md

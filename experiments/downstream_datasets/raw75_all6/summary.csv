@@ -1,0 +1,11 @@
+sample_id,group,variant,source_run,view_count,metadata
+web_clean_frontal_01,clean_frontal,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_clean_frontal_01/metadata.json
+web_clean_frontal_02,clean_frontal,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_clean_frontal_02/metadata.json
+web_clean_frontal_03,clean_frontal,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_clean_frontal_03/metadata.json
+web_mild_side_01,mild_side,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_mild_side_01/metadata.json
+web_mild_side_02,mild_side,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_mild_side_02/metadata.json
+web_glasses_01,glasses,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_glasses_01/metadata.json
+web_glasses_02,glasses,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_glasses_02/metadata.json
+web_complex_hair_01,complex_hair,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_complex_hair_01/metadata.json
+web_complex_hair_02,complex_hair,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_complex_hair_02/metadata.json
+web_occlusion_lowq_01,occlusion_lowq,raw75_all6,raw75,6,/home/susie_lynn/3dv/experiments/downstream_datasets/raw75_all6/web_occlusion_lowq_01/metadata.json

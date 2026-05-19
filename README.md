@@ -41,6 +41,7 @@
 3dv/
   README.md              # 当前入口：先看这里
   PLAN.md                # 研究计划、论文结构、一个月安排
+  EXPERIMENTS.md         # 实验阶段、结果、文件索引
   SERVER.md              # 服务器运行步骤
   data_manifest.csv      # 样本清单
 
@@ -119,61 +120,62 @@ bash scripts/server/05_run_zero123plus_sample.sh
 
 ## 下一步
 
-当前本机 `/data1/workspace/airulan` 已经跑通两个 smoke：
+当前实验索引见：
 
 ```text
-Zero123++: experiments/pseudo_views/zero123plus_smoke/teaser_low_steps10/
-LAM: experiments/reconstructions/lam_smoke/status_look_in_my_eyes/
+EXPERIMENTS.md
 ```
 
-并完成第一轮 Wikimedia Commons `first10` pilot：
+已经完成：
 
 ```text
-Inputs manifest: experiments/inputs/first10/manifest.csv
-Zero123++: experiments/pseudo_views/zero123plus_first10/
-LAM: experiments/reconstructions/lam_first10/
-Figures: experiments/figures/
-Metrics: experiments/metrics/
+LAM first10 baseline
+Zero123++ raw steps20 / steps75
+CLIP + reliability view ranking
+trusted-region masks
+subject cutout ablation
+downstream dataset build
 ```
 
-轻量结果索引：
+当前默认 pseudo-view 前端：
 
 ```text
-experiments/metrics/smoke_runs_20260518.csv
-experiments/metrics/local_environment_20260518.md
-experiments/metrics/zero123plus_first10_steps20.csv
-experiments/metrics/lam_first10_look_in_my_eyes.csv
-experiments/metrics/first10_pilot_observations_20260518.md
+subject cutout
+-> Zero123++ steps75
+-> CLIP + reliability budget4
+-> trusted-region mask
 ```
 
-2026-05-19 追加完成：
+已经构建好三套下游输入：
 
 ```text
-Zero123++ steps75: experiments/pseudo_views/zero123plus_first10_steps75/
-steps20/steps75 reliability: experiments/metrics/pseudo_view_reliability_first10_steps20_75.csv
-view budget: experiments/metrics/view_budget_selection_first10_steps20_75.csv
-comparison figure: experiments/figures/zero123plus_first10_steps20_vs75_grids.png
-budget figure: experiments/figures/view_budget_selection_first10_steps75_budget4.png
-application alignment: experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
-CLIP consistency proxy: experiments/metrics/clip_consistency_filter_observations_20260519.md
-trusted-region masks: experiments/metrics/trusted_region_mask_observations_20260519.md
-cutout input ablation: experiments/metrics/cutout_input_ablation_observations_20260519.md
+experiments/downstream_datasets/raw75_all6/
+experiments/downstream_datasets/raw75_budget4/
+experiments/downstream_datasets/cutout75_budget4_masked/
+```
+
+并且已经转换出 RI3D 可直接读取的 first2 pilot 数据：
+
+```text
+experiments/ri3d_datasets/first2/
+```
+
+服务器上下一步直接跑：
+
+```bash
+bash scripts/run_ri3d_first2.sh
 ```
 
 当前结论：
 
 ```text
-steps75 对 5 个样本有帮助、3 个基本持平、2 个变差。
-盲目使用全部 6 个伪视角不安全。
-steps75 + budget4 暂时是后续 trusted-view 输入的默认候选。
-CLIP consistency 只能辅助排序，不能替代 face-aware identity filtering。
-raw portrait 输入会导致 photo-frame/background rotation。
-subject cutout 输入把 CLIP-budget4 mask accepted views 从 25/40 提升到 37/40。
+filtered pseudo-view frontend 已经比 raw pseudo views 更可靠。
+但还没有证明它能提升最终 3D reconstruction。
 ```
 
 下一步：
 
-1. 扩展到 first30 / first50。
-2. 将 cheap proxy 替换或增强为 face-embedding identity filtering。
-3. 默认使用 subject cutout + trusted-region mask 规则，过滤 photo-frame / background rotation。
-4. 把 selected pseudo views 接入后续 Gaussian/PanoHead/FLAME 路线。
+1. 不急着扩 first30 / first50。
+2. 先选 2 个 first10 样本做下游 3D 重建闭环。
+3. 对比 `raw75_all6`、`raw75_budget4`、`cutout75_budget4_masked`。
+4. 验证 filtered pseudo views 是否真的改善最终 3D 输出。

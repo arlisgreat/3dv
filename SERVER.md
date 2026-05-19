@@ -170,7 +170,68 @@ conda activate lam
 bash scripts/server/03_run_lam_sample.sh experiments/inputs/first10/your_image.png
 ```
 
-## 8. 常见问题
+## 8. 跑 downstream RI3D first2
+
+本地已经把下游输入转换成 RI3D 格式：
+
+```text
+experiments/ri3d_datasets/first2/
+```
+
+服务器上先准备/激活 RI3D 环境。RI3D 原仓库推荐：
+
+```bash
+cd external/ri3d
+uv venv --python 3.10
+source .venv/bin/activate
+uv sync
+cd ../..
+```
+
+如果服务器已装好 RI3D 依赖，只需要激活对应环境。
+
+然后在 3dv 仓库根目录运行：
+
+```bash
+bash scripts/run_ri3d_first2.sh
+```
+
+默认会跑：
+
+```text
+2 samples:
+web_clean_frontal_03
+web_clean_frontal_01
+
+3 variants:
+raw75_all6
+raw75_budget4
+cutout75_budget4_masked
+```
+
+输出位置：
+
+```text
+experiments/downstream_3d/ri3d_first2/
+```
+
+如果只想先做更短 smoke：
+
+```bash
+ITERATIONS=200 bash scripts/run_ri3d_first2.sh
+```
+
+指定 GPU：
+
+```bash
+GPU=1 bash scripts/run_ri3d_first2.sh
+```
+
+### 当前注意点
+
+这一步的目标是快速验证“filtered pseudo views 是否比 raw pseudo views 的最终 3D 输出更稳定”。`experiments/ri3d_datasets/first2/*/*/depth_rel` 里的 depth 是本地生成的简单 bootstrap prior，不是最终论文指标本身；如果 first2 有明显趋势，再升级成更强的单目深度或 RI3D 原生深度预处理。
+
+## 9. 常见问题
 
 ### LAM 编译失败
 

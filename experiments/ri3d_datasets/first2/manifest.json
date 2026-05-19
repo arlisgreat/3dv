@@ -1,0 +1,44 @@
+[
+  {
+    "variant": "raw75_all6",
+    "sample_id": "web_clean_frontal_03",
+    "scene_dir": "experiments/ri3d_datasets/first2/raw75_all6/web_clean_frontal_03",
+    "view_count": 6,
+    "image_size": 320
+  },
+  {
+    "variant": "raw75_all6",
+    "sample_id": "web_clean_frontal_01",
+    "scene_dir": "experiments/ri3d_datasets/first2/raw75_all6/web_clean_frontal_01",
+    "view_count": 6,
+    "image_size": 320
+  },
+  {
+    "variant": "raw75_budget4",
+    "sample_id": "web_clean_frontal_03",
+    "scene_dir": "experiments/ri3d_datasets/first2/raw75_budget4/web_clean_frontal_03",
+    "view_count": 4,
+    "image_size": 320
+  },
+  {
+    "variant": "raw75_budget4",
+    "sample_id": "web_clean_frontal_01",
+    "scene_dir": "experiments/ri3d_datasets/first2/raw75_budget4/web_clean_frontal_01",
+    "view_count": 4,
+    "image_size": 320
+  },
+  {
+    "variant": "cutout75_budget4_masked",
+    "sample_id": "web_clean_frontal_03",
+    "scene_dir": "experiments/ri3d_datasets/first2/cutout75_budget4_masked/web_clean_frontal_03",
+    "view_count": 4,
+    "image_size": 320
+  },
+  {
+    "variant": "cutout75_budget4_masked",
+    "sample_id": "web_clean_frontal_01",
+    "scene_dir": "experiments/ri3d_datasets/first2/cutout75_budget4_masked/web_clean_frontal_01",
+    "view_count": 4,
+    "image_size": 320
+  }
+]
