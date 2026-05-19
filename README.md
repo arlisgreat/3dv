@@ -42,6 +42,7 @@
   README.md              # 当前入口：先看这里
   PLAN.md                # 研究计划、论文结构、一个月安排
   EXPERIMENTS.md         # 实验阶段、结果、文件索引
+  MILESTONES.md          # milestone ledger: 已完成 gate、当前 gate、下一步
   SERVER.md              # 服务器运行步骤
   data_manifest.csv      # 样本清单
 
@@ -124,6 +125,7 @@ bash scripts/server/05_run_zero123plus_sample.sh
 
 ```text
 EXPERIMENTS.md
+MILESTONES.md
 ```
 
 已经完成：
@@ -138,6 +140,7 @@ face identity filter
 downstream dataset build
 RI3D first2 dataset conversion
 RI3D first2 160px iter50 smoke render
+RI3D first2 160px iter500 milestone
 ```
 
 当前默认 pseudo-view 前端：
@@ -181,6 +184,13 @@ GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=expe
 GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh
 ```
 
+RI3D first2 500-iteration gate 复现命令：
+
+```bash
+GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=experiments/downstream_3d/ri3d_first2_160_iter500 bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter500 bash scripts/render_ri3d_first2.sh
+```
+
 当前结论：
 
 ```text
@@ -189,12 +199,14 @@ face-embedding filter 在 cutout75+budget4 上得到 20/40 identity candidates�
 14/40 geometry-only candidates、1/40 identity reject。
 RI3D first2 160px iter50 已跑通下游闭环，但还只是 smoke 级验证。
 raw75_all6 在两个样本上训练 loss 都更高，说明盲目增加视角不可靠。
-cutout75_budget4_masked 只在其中一个 first2 样本上略优于 raw75_budget4。
+RI3D first2 160px iter500 已完成；raw75_all6 仍然更差。
+cutout75_budget4_masked 只在其中一个 first2 样本上略优于 raw75_budget4，
+因此 G8 是执行通过但科学结论仍然 ambiguous。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 先把 first2 RI3D 跑到 500-1500 iterations，并看 MP4 质量而不是只看 loss。
-3. 在下游闭环中显式使用 identity / geometry-only / reject 三路协议。
-4. 如果 first2 长迭代证明 filtered pseudo views 稳定优于 raw，再扩 first30 / first50。
+2. 先实现 G9：role-aware downstream supervision。
+3. 在 RI3D 下游闭环中显式使用 identity / geometry-only / reject / mask_reject 四路协议。
+4. 如果 G9/G10 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。

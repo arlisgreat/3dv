@@ -1,4 +1,4 @@
-# RI3D first2 160px iter50 downstream observations
+# ri3d_first2_160_iter50 downstream observations
 
 Date: 2026-05-19
 
@@ -16,7 +16,7 @@ Run:
 ```bash
 GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/run_ri3d_first2.sh
 GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh
-python scripts/summarize_ri3d_first2.py --data-root experiments/ri3d_datasets/first2_160 --run-root experiments/downstream_3d/ri3d_first2_160_iter50 --iteration 50
+python scripts/summarize_ri3d_first2.py --data-root experiments/ri3d_datasets/first2_160 --run-root experiments/downstream_3d/ri3d_first2_160_iter50 --export-root experiments/reconstructions/ri3d_first2_160_iter50 --metrics-csv experiments/metrics/ri3d_first2_160_iter50.csv --observations experiments/metrics/ri3d_first2_160_iter50_observations.md --input-figure experiments/figures/ri3d_first2_160_iter50_inputs.png --render-figure experiments/figures/ri3d_first2_160_iter50_renders.png --iteration 50 --run-name ri3d_first2_160_iter50
 ```
 
 Published artifacts:
@@ -43,11 +43,11 @@ Observations:
 
 ```text
 The pipeline is now end-to-end executable through RI3D on two first10 samples.
-At this very short 50-iteration smoke budget, raw75_budget4 is best on web_clean_frontal_03.
-cutout75_budget4_masked is best by a small margin on web_clean_frontal_01.
 raw75_all6 has more splats and higher training loss in both samples, so more views are not automatically better.
+web_clean_frontal_01: best training loss is cutout75_budget4_masked (0.1273211).
+web_clean_frontal_03: best training loss is raw75_budget4 (0.1258080).
 The rendered videos are smoke-quality only: several views still show rotated full-photo/background artifacts.
-Some 4-view depth videos emitted zero-range depth normalization warnings; use RGB renders and longer runs for judgment.
+Some 4-view depth videos may emit zero-range depth normalization warnings; use RGB renders and longer runs for judgment.
 This is not yet a final quality claim; it is a gate that justifies longer iter runs and visual inspection.
 ```
 

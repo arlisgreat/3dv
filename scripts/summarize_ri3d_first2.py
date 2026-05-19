@@ -27,6 +27,7 @@ def write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+        f.write("\n")
 
 
 def read_text(path: Path) -> str:
@@ -172,13 +173,56 @@ def make_render_contact_sheet(rows: list[dict[str, Any]], export_root: Path, out
     sheet.save(output)
 
 
-def write_observations(path: Path, rows: list[dict[str, Any]], export_root: Path, iteration: int) -> None:
+def write_observations(
+    *,
+    path: Path,
+    rows: list[dict[str, Any]],
+    export_root: Path,
+    data_root: Path,
+    run_root: Path,
+    metrics_csv: Path,
+    input_figure: Path,
+    render_figure: Path,
+    iteration: int,
+    run_name: str,
+) -> None:
     by_sample: dict[str, list[dict[str, Any]]] = {}
     for row in rows:
         by_sample.setdefault(row["sample_id"], []).append(row)
 
+    best_lines: list[str] = []
+    for sample_id, sample_rows in sorted(by_sample.items()):
+        valid_rows = [row for row in sample_rows if row["final_loss"] is not None]
+        if not valid_rows:
+            continue
+        best = min(valid_rows, key=lambda row: row["final_loss"])
+        best_lines.append(f"{sample_id}: best training loss is {best['variant']} ({best['final_loss']:.7f}).")
+
+    if iteration <= 100:
+        quality_note = [
+            "The rendered videos are smoke-quality only: several views still show rotated full-photo/background artifacts.",
+            "Some 4-view depth videos may emit zero-range depth normalization warnings; use RGB renders and longer runs for judgment.",
+            "This is not yet a final quality claim; it is a gate that justifies longer iter runs and visual inspection.",
+        ]
+        next_lines = [
+            "Run the same 160px protocol at 500-1500 iterations for first2.",
+            "Use rendered video inspection plus identity-filter tags before expanding beyond first2.",
+            "Keep RI3D PLYs in the ignored downstream output area unless a size-reviewed branch is created.",
+        ]
+    else:
+        quality_note = [
+            "This is a longer first2 milestone, but still a two-sample gate rather than a final first10/first50 claim.",
+            "Use the RGB/depth videos together with loss; low training loss alone does not prove better identity or geometry.",
+            "If filtered variants do not visibly improve over raw75_budget4, the next method step must change supervision roles before scaling data.",
+        ]
+        next_lines = [
+            "Compare RGB/depth videos frame-by-frame against the iter50 smoke and the input contact sheet.",
+            "Make the RI3D downstream loader consume identity_supervision, geometry_only, identity_reject, and mask_reject roles.",
+            "Expand beyond first2 only after the filtered path wins on rendered quality, not just on training loss.",
+        ]
+
     lines = [
-        "# RI3D first2 160px iter50 downstream observations",
+        f"# {run_name} downstream observations",
         "",
         "Date: 2026-05-19",
         "",
@@ -194,17 +238,23 @@ def write_observations(path: Path, rows: list[dict[str, Any]], export_root: Path
         "Run:",
         "",
         "```bash",
-        "GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/run_ri3d_first2.sh",
-        "GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh",
-        "python scripts/summarize_ri3d_first2.py --data-root experiments/ri3d_datasets/first2_160 --run-root experiments/downstream_3d/ri3d_first2_160_iter50 --iteration 50",
+        f"GPU=0 ITERATIONS={iteration} DATA_ROOT={data_root} OUT_ROOT={run_root} bash scripts/run_ri3d_first2.sh",
+        f"GPU=0 ITERATION={iteration} DATA_ROOT={data_root} RUN_ROOT={run_root} bash scripts/render_ri3d_first2.sh",
+        (
+            f"python scripts/summarize_ri3d_first2.py --data-root {data_root} "
+            f"--run-root {run_root} --export-root {export_root} "
+            f"--metrics-csv {metrics_csv} --observations {path} "
+            f"--input-figure {input_figure} --render-figure {render_figure} "
+            f"--iteration {iteration} --run-name {run_name}"
+        ),
         "```",
         "",
         "Published artifacts:",
         "",
         "```text",
-        "experiments/metrics/ri3d_first2_160_iter50.csv",
-        "experiments/figures/ri3d_first2_160_iter50_inputs.png",
-        "experiments/figures/ri3d_first2_160_iter50_renders.png",
+        str(metrics_csv),
+        str(input_figure),
+        str(render_figure),
         f"{export_root}/",
         "```",
         "",
@@ -228,20 +278,15 @@ def write_observations(path: Path, rows: list[dict[str, Any]], export_root: Path
             "",
             "```text",
             "The pipeline is now end-to-end executable through RI3D on two first10 samples.",
-            "At this very short 50-iteration smoke budget, raw75_budget4 is best on web_clean_frontal_03.",
-            "cutout75_budget4_masked is best by a small margin on web_clean_frontal_01.",
             "raw75_all6 has more splats and higher training loss in both samples, so more views are not automatically better.",
-            "The rendered videos are smoke-quality only: several views still show rotated full-photo/background artifacts.",
-            "Some 4-view depth videos emitted zero-range depth normalization warnings; use RGB renders and longer runs for judgment.",
-            "This is not yet a final quality claim; it is a gate that justifies longer iter runs and visual inspection.",
+            *best_lines,
+            *quality_note,
             "```",
             "",
             "Next iteration:",
             "",
             "```text",
-            "Run the same 160px protocol at 500-1500 iterations for first2.",
-            "Use rendered video inspection plus identity-filter tags before expanding beyond first2.",
-            "Keep RI3D PLYs in the ignored downstream output area unless a size-reviewed branch is created.",
+            *next_lines,
             "```",
             "",
         ]
@@ -260,11 +305,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input-figure", type=Path, default=Path("experiments/figures/ri3d_first2_160_iter50_inputs.png"))
     parser.add_argument("--render-figure", type=Path, default=Path("experiments/figures/ri3d_first2_160_iter50_renders.png"))
     parser.add_argument("--iteration", type=int, default=50)
+    parser.add_argument("--run-name", default=None)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+    run_name = args.run_name or args.export_root.name
     rows = scene_tags(args.data_root)
     args.export_root.mkdir(parents=True, exist_ok=True)
 
@@ -329,23 +376,34 @@ def main() -> None:
     write_json(
         args.export_root / "metadata.json",
         {
-            "name": "ri3d_first2_160_iter50",
+            "name": run_name,
             "date": "2026-05-19",
-            "description": "RI3D first2 downstream 160px 50-iteration pilot videos exported from ignored raw outputs.",
+            "description": f"RI3D first2 downstream 160px {args.iteration}-iteration videos exported from ignored raw outputs.",
             "source_run_root": str(args.run_root),
             "metrics_csv": str(args.metrics_csv),
         },
     )
     (args.export_root / "README.md").write_text(
-        "# RI3D first2 160px iter50\n\n"
-        "Exported RGB/depth MP4 flythroughs for the first RI3D downstream pilot. "
+        f"# {run_name}\n\n"
+        f"Exported RGB/depth MP4 flythroughs for the RI3D first2 {args.iteration}-iteration pilot. "
         "Raw PLYs and RI3D working directories stay under ignored `experiments/downstream_3d/`.\n",
         encoding="utf-8",
     )
 
     make_input_contact_sheet(rows, args.input_figure)
     make_render_contact_sheet(rows, args.export_root, args.render_figure)
-    write_observations(args.observations, output_rows, args.export_root, args.iteration)
+    write_observations(
+        path=args.observations,
+        rows=output_rows,
+        export_root=args.export_root,
+        data_root=args.data_root,
+        run_root=args.run_root,
+        metrics_csv=args.metrics_csv,
+        input_figure=args.input_figure,
+        render_figure=args.render_figure,
+        iteration=args.iteration,
+        run_name=run_name,
+    )
 
     print(f"Wrote {args.metrics_csv}")
     print(f"Wrote {args.observations}")

@@ -131,9 +131,12 @@ Zero123++ 旋转整张照片而不是旋转头部的失败。
 3. identity filtering。
 4. 可选：depth / FLAME 小实验。
 
-当前 identity filtering 已在 first10 上跑通。下一步应扩展到 first30/first50，
-并把 downstream reconstruction ablation 的输入从“selected views”改成显式的
-`identity / geometry-only / reject` 三路协议。
+当前 identity filtering 已在 first10 上跑通，RI3D first2 iter50 和 iter500
+也已经闭合下游重建循环。iter500 的结论是：raw75_all6 仍然更差，但
+cutout75_budget4_masked 只在一个 first2 样本上优于 raw75_budget4。
+因此下一步不应先扩 first30/first50，而应先把 downstream reconstruction
+ablation 的输入从“selected views”改成显式的
+`identity / geometry-only / reject / mask_reject` 四路协议。
 
 ### Week 4
 

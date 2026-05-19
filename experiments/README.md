@@ -113,4 +113,9 @@ experiments/metrics/ri3d_first2_160_iter50_observations.md
 experiments/figures/ri3d_first2_160_iter50_inputs.png
 experiments/figures/ri3d_first2_160_iter50_renders.png
 experiments/reconstructions/ri3d_first2_160_iter50/
+experiments/metrics/ri3d_first2_160_iter500.csv
+experiments/metrics/ri3d_first2_160_iter500_observations.md
+experiments/figures/ri3d_first2_160_iter500_inputs.png
+experiments/figures/ri3d_first2_160_iter500_renders.png
+experiments/reconstructions/ri3d_first2_160_iter500/
 ```

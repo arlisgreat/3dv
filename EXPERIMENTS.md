@@ -27,12 +27,13 @@ trusted-region mask
 face identity filter
 downstream dataset 构建
 RI3D first2 160px downstream smoke
+RI3D first2 160px iter500 gate
 ```
 
 还没有完成：
 
 ```text
-raw / filtered pseudo views 是否在长迭代最终 3D reconstruction 中稳定提升
+role-aware pseudo-view supervision 是否能在最终 3D reconstruction 中稳定提升
 ```
 
 当前默认 pseudo-view 前端：
@@ -441,6 +442,7 @@ python3 scripts/build_downstream_dataset.py --overwrite
 
 ```text
 RI3D first2 160px iter50 smoke 已完成
+RI3D first2 160px iter500 gate 已完成，但结论 ambiguous
 ```
 
 下一步要验证：
@@ -500,6 +502,7 @@ GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=exper
 ```text
 experiments/downstream_3d/ri3d_first2/
 experiments/downstream_3d/ri3d_first2_160_iter50/
+experiments/downstream_3d/ri3d_first2_160_iter500/
 ```
 
 已发布结果：
@@ -510,6 +513,11 @@ experiments/metrics/ri3d_first2_160_iter50_observations.md
 experiments/figures/ri3d_first2_160_iter50_inputs.png
 experiments/figures/ri3d_first2_160_iter50_renders.png
 experiments/reconstructions/ri3d_first2_160_iter50/
+experiments/metrics/ri3d_first2_160_iter500.csv
+experiments/metrics/ri3d_first2_160_iter500_observations.md
+experiments/figures/ri3d_first2_160_iter500_inputs.png
+experiments/figures/ri3d_first2_160_iter500_renders.png
+experiments/reconstructions/ri3d_first2_160_iter500/
 ```
 
 阶段结论：
@@ -520,6 +528,10 @@ raw75_all6 在两个样本上 loss 都更高，说明盲目增加视角不可靠
 raw75_budget4 在 web_clean_frontal_03 上最低 loss。
 cutout75_budget4_masked 在 web_clean_frontal_01 上略低于 raw75_budget4。
 渲染视频仍可见 full-photo/background rotation，不能作为最终质量证明。
+iter500 复现了同样趋势：raw75_all6 仍然更差；cutout75_budget4_masked
+只在 web_clean_frontal_01 上优于 raw75_budget4。
+因此下一步不是扩 first30/first50，而是让下游显式消费
+identity_supervision / geometry_only / identity_reject / mask_reject。
 ```
 
 对比指标：
@@ -557,5 +569,5 @@ C: cutout75_budget4_masked
 当前最重要的未闭环问题：
 
 ```text
-C 是否在更长迭代和更多样本中稳定优于 B？
+role-aware C 是否在 first2 和 first10 中稳定优于 B？
 ```
