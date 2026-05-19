@@ -178,6 +178,8 @@ Medium-term architecture:
    the GAF direction without training a new diffusion model.
 7. Patch RI3D locally so identity_supervision and geometry_only affect RGB/depth
    losses differently, with reject roles excluded before optimization.
+8. Add spatial mask-aware supervision after G10: scalar per-view role weights
+   reduce the numeric loss but do not remove background/photo-card artifacts.
 ```
 
 High-risk / rollback-monitored work:
@@ -205,9 +207,10 @@ RI3D first2 160px iter500 confirms raw75_all6 is risky, but filtered variants
 remain ambiguous.
 RI3D first2 role-aware iter500 confirms the role-aware data path works, but
 metadata/desaturation alone is not enough to make a stable final 3D win.
+RI3D first2 role-weighted iter500 confirms explicit per-view role weights work,
+but scalar weights alone are still insufficient for visual quality.
 ```
 
 The next concrete experiment should keep the same first2 samples and patch RI3D
-so the training loss explicitly consumes `identity_supervision`,
-`geometry_only`, `identity_reject`, and `mask_reject` roles. Expand to
-first30/first50 only after that improves final 3D outputs.
+so foreground/trusted-region masks spatially gate the RGB or silhouette loss.
+Expand to first30/first50 only after that improves final 3D outputs.

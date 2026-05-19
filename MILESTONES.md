@@ -72,6 +72,7 @@ quality without explicit role-weighted losses.
 | G7 | done | Close RI3D first2 iter50 smoke | `experiments/metrics/ri3d_first2_160_iter50.csv` | Downstream loop runs, but render quality is smoke-level. |
 | G8 | done, ambiguous | Run RI3D first2 iter500 gate | `experiments/metrics/ri3d_first2_160_iter500.csv` | Execution passed; method conclusion is not strong enough to scale data. |
 | G9 | done, ambiguous | Non-invasive role-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleaware_iter500.csv` | Role metadata/desaturation runs, but explicit role-weighted loss is still needed. |
+| G10 | done, ambiguous | Explicit role-weighted RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleweighted_iter500.csv` | Scalar per-view role weights run, but spatial artifacts remain dominant. |
 
 ## G8 Result
 
@@ -186,58 +187,117 @@ Next step: make RI3D training loss explicitly consume role weights. Metadata
 and geometry-only desaturation alone are not enough.
 ```
 
-## Active Milestone: G10
+## G10 Result
+
+RI3D first2 role-weighted iter500 completed for:
+
+```text
+roleaware_cutout75_budget4
+```
+
+Patch:
+
+```text
+patches/ri3d/role_weighted_loss.patch
+transforms.json -> CameraInfo -> Camera -> cal_loss
+identity_supervision: role_rgb_weight=1.0, role_depth_weight=1.0
+geometry_only: role_rgb_weight=0.25, role_depth_weight=1.0
+reject roles: zero weights and excluded before current first2 training
+```
+
+Published artifacts:
+
+```text
+patches/ri3d/role_weighted_loss.patch
+experiments/ri3d_datasets/first2_roleweighted/
+experiments/metrics/ri3d_first2_roleweighted_iter500.csv
+experiments/metrics/ri3d_first2_roleweighted_observations.md
+experiments/figures/ri3d_first2_roleweighted_iter500_inputs.png
+experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
+experiments/reconstructions/ri3d_first2_roleweighted_iter500/
+```
+
+Loss summary:
+
+```text
+web_clean_frontal_03:
+  roleweighted_cutout75_budget4: 0.0085665
+  roleaware_cutout75_budget4: 0.0157378
+  raw75_budget4: 0.0147302
+
+web_clean_frontal_01:
+  roleweighted_cutout75_budget4: 0.0152099
+  roleaware_cutout75_budget4: 0.0154150
+  cutout75_budget4_masked: 0.0152439
+```
+
+Interpretation:
+
+```text
+The web_clean_frontal_03 weighted loss drop is not directly comparable because
+2/4 views have only 0.25 RGB weight. web_clean_frontal_01 is more comparable
+because all four views are identity_supervision and slightly improves over G9.
+
+All MP4s render and validate as 120 frames at 160x160. However, the first-frame
+render sheet still shows fragmented/rotated photo-card artifacts similar to G9.
+
+Conclusion: scalar per-view role weighting is not enough. The next milestone
+must use spatial foreground/mask-aware loss or a stronger geometry prior before
+expanding beyond first2.
+```
+
+## Active Milestone: G11
 
 Name:
 
 ```text
-Explicit role-weighted RI3D loss on first2
+Spatial mask-aware RI3D loss on first2
 ```
 
 Purpose:
 
 ```text
-Move beyond metadata-only role awareness. Modify the local RI3D integration so
-identity_supervision, geometry_only, identity_reject, and mask_reject affect
-training loss instead of only prepared images and CSV/JSON records.
+Move from per-view scalar weights to spatial supervision. Use foreground masks
+or trusted regions so pseudo-view background/photo-frame pixels do not supervise
+RGB or silhouette geometry.
 ```
 
 Planned outputs:
 
 ```text
-patches/ri3d/role_weighted_loss.patch
-experiments/metrics/ri3d_first2_roleweighted_iter500.csv
-experiments/metrics/ri3d_first2_roleweighted_observations.md
-experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
-experiments/reconstructions/ri3d_first2_roleweighted_iter500/
+patches/ri3d/mask_aware_loss.patch
+experiments/metrics/ri3d_first2_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_maskaware_observations.md
+experiments/figures/ri3d_first2_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_maskaware_iter500/
 ```
 
 Pass criteria:
 
 ```text
-1. RI3D explicitly applies lower RGB/identity pressure to geometry_only views.
-2. identity_reject and mask_reject can be excluded or zero-weighted before training.
-3. first2 MP4s render and are no worse than raw75_budget4 by visual quality.
-4. The decision is clear: first2 iter1500 confirmation or first10 expansion.
+1. RI3D RGB loss is spatially masked or foreground weighted.
+2. background/photo-card regions no longer dominate first-frame render sheets.
+3. role-aware/role-weighted results visibly improve over raw75_budget4 on first2.
+4. The next decision is clear: first2 iter1500 confirmation or first10 expansion.
 ```
 
 Failure criteria:
 
 ```text
-1. The RI3D code path requires a large risky rewrite.
-2. Role weighting still leaves full-photo/background rotation artifacts dominant.
-3. The method cannot match raw75_budget4 on first2 visual quality.
+1. Mask-aware loss requires a large risky RI3D rewrite.
+2. Masks remove useful head/hair regions and degrade identity.
+3. Render quality still cannot match raw75_budget4 on first2.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G10 | Explicit role-weighted RI3D loss on first2 | G9 exported and reviewed | Clear first2 visual/loss decision |
-| G11 | first2 iter1500 confirmation | G10 positive or narrowly ambiguous | Same conclusion holds at longer optimization |
-| G12 | Expand to first10 downstream | G10/G11 positive | Per-group result table across clean/side/glasses/hair/occlusion |
-| G13 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
-| G14 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G11 | Spatial mask-aware RI3D loss on first2 | G10 exported and reviewed | Clear first2 visual/loss decision |
+| G12 | first2 iter1500 confirmation | G11 positive or narrowly ambiguous | Same conclusion holds at longer optimization |
+| G13 | Expand to first10 downstream | G11/G12 positive | Per-group result table across clean/side/glasses/hair/occlusion |
+| G14 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
+| G15 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

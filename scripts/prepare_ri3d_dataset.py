@@ -40,6 +40,18 @@ ROLE_CONFIDENCE_MULTIPLIERS = {
     "identity_reject": 0.0,
     "mask_reject": 0.0,
 }
+ROLE_RGB_WEIGHTS = {
+    "identity_supervision": 1.0,
+    "geometry_only": 0.25,
+    "identity_reject": 0.0,
+    "mask_reject": 0.0,
+}
+ROLE_DEPTH_WEIGHTS = {
+    "identity_supervision": 1.0,
+    "geometry_only": 1.0,
+    "identity_reject": 0.0,
+    "mask_reject": 0.0,
+}
 ROLE_RGB_POLICIES = {
     "identity_supervision": "rgb",
     "geometry_only": "desaturated_rgb",
@@ -177,6 +189,8 @@ def convert_scene(
         src_image = resolve_scene_image(src_scene, view["image"])
         supervision_role = view.get("supervision_role")
         confidence_multiplier = ROLE_CONFIDENCE_MULTIPLIERS.get(str(supervision_role), 1.0)
+        role_rgb_weight = ROLE_RGB_WEIGHTS.get(str(supervision_role), 1.0)
+        role_depth_weight = ROLE_DEPTH_WEIGHTS.get(str(supervision_role), 1.0)
         rgb_policy = ROLE_RGB_POLICIES.get(str(supervision_role), "rgb")
 
         image_name = f"{order:03d}_view{int(view['view_index']):02d}.png"
@@ -212,6 +226,8 @@ def convert_scene(
                 "geometry_only_candidate": view.get("geometry_only_candidate"),
                 "face_embedding_cosine": view.get("face_embedding_cosine"),
                 "role_confidence_multiplier": confidence_multiplier,
+                "role_rgb_weight": role_rgb_weight,
+                "role_depth_weight": role_depth_weight,
                 "role_rgb_policy": rgb_policy,
             }
         )
@@ -248,6 +264,8 @@ def convert_scene(
             "excluded_view_count": len(all_views) - n_views,
             "role_counts": dict(Counter(str(view.get("supervision_role", "uniform_rgb")) for view in views)),
             "role_confidence_multipliers": ROLE_CONFIDENCE_MULTIPLIERS,
+            "role_rgb_weights": ROLE_RGB_WEIGHTS,
+            "role_depth_weights": ROLE_DEPTH_WEIGHTS,
             "role_rgb_policies": ROLE_RGB_POLICIES,
             "source_metadata": metadata,
         },

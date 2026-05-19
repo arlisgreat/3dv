@@ -29,12 +29,13 @@ downstream dataset 构建
 RI3D first2 160px downstream smoke
 RI3D first2 160px iter500 gate
 RI3D first2 role-aware iter500 gate
+RI3D first2 role-weighted iter500 gate
 ```
 
 还没有完成：
 
 ```text
-explicit role-weighted RI3D loss 是否能让 pseudo-view roles 稳定改善最终 3D reconstruction
+spatial mask-aware RI3D loss 是否能减少 pseudo-view 背景/相框 artifact 并稳定改善最终 3D reconstruction
 ```
 
 当前默认 pseudo-view 前端：
@@ -445,6 +446,7 @@ python3 scripts/build_downstream_dataset.py --overwrite
 RI3D first2 160px iter50 smoke 已完成
 RI3D first2 160px iter500 gate 已完成，但结论 ambiguous
 RI3D first2 role-aware iter500 gate 已完成，但非侵入版本仍 ambiguous
+RI3D first2 role-weighted iter500 gate 已完成，但 scalar weights 仍 ambiguous
 ```
 
 下一步要验证：
@@ -455,6 +457,7 @@ raw75_budget4 -> 3D reconstruction
 cutout75_budget4_masked -> 3D reconstruction
 roleaware_cutout75_budget4 -> 3D reconstruction
 roleweighted_cutout75_budget4 -> 3D reconstruction
+maskaware_cutout75_budget4 -> 3D reconstruction
 ```
 
 目标问题：
@@ -476,6 +479,7 @@ web_clean_frontal_01      # cutout 可能伤害
 experiments/ri3d_datasets/first2/
 experiments/ri3d_datasets/first2_160/
 experiments/ri3d_datasets/first2_roleaware/
+experiments/ri3d_datasets/first2_roleweighted/
 ```
 
 包含：
@@ -486,6 +490,7 @@ raw75_all6: 6 views/sample
 raw75_budget4: 4 views/sample
 cutout75_budget4_masked: 4 views/sample
 roleaware_cutout75_budget4: 4 views/sample, with supervision_role metadata
+roleweighted_cutout75_budget4: same views plus role_rgb_weight / role_depth_weight
 ```
 
 CPU 端准备脚本：
@@ -503,6 +508,8 @@ GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=expe
 GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh
 GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted OUT_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
 ```
 
 默认输出：
@@ -512,6 +519,7 @@ experiments/downstream_3d/ri3d_first2/
 experiments/downstream_3d/ri3d_first2_160_iter50/
 experiments/downstream_3d/ri3d_first2_160_iter500/
 experiments/downstream_3d/ri3d_first2_roleaware_iter500/
+experiments/downstream_3d/ri3d_first2_roleweighted_iter500/
 ```
 
 已发布结果：
@@ -535,6 +543,13 @@ experiments/metrics/ri3d_first2_roleaware_observations.md
 experiments/figures/ri3d_first2_roleaware_iter500_inputs.png
 experiments/figures/ri3d_first2_roleaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_roleaware_iter500/
+patches/ri3d/role_weighted_loss.patch
+experiments/ri3d_datasets/first2_roleweighted/
+experiments/metrics/ri3d_first2_roleweighted_iter500.csv
+experiments/metrics/ri3d_first2_roleweighted_observations.md
+experiments/figures/ri3d_first2_roleweighted_iter500_inputs.png
+experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
+experiments/reconstructions/ri3d_first2_roleweighted_iter500/
 ```
 
 阶段结论：
@@ -554,6 +569,9 @@ G9 已完成非侵入 role-aware 数据和 iter500 渲染：web_clean_frontal_03
 优于 raw75_budget4 但略差于 cutout75_budget4_masked。
 render sheet 仍有 fragmented/rotated photo-card artifacts，所以 G9 是
 infrastructure pass，不是最终 method win。
+G10 已完成 explicit role-weighted RI3D loss：web_clean_frontal_03 的 weighted
+loss 降低但不能直接和未加权 loss 比较；web_clean_frontal_01 略优于 G9。
+render sheet 仍有同类 artifacts，所以下一步必须使用 spatial mask-aware loss。
 ```
 
 对比指标：
@@ -591,5 +609,5 @@ C: cutout75_budget4_masked
 当前最重要的未闭环问题：
 
 ```text
-role-aware C 是否在 first2 和 first10 中稳定优于 B？
+mask-aware role supervision 是否在 first2 和 first10 中稳定优于 raw75_budget4？
 ```

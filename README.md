@@ -142,6 +142,7 @@ RI3D first2 dataset conversion
 RI3D first2 160px iter50 smoke render
 RI3D first2 160px iter500 milestone
 RI3D first2 role-aware iter500 milestone
+RI3D first2 role-weighted iter500 milestone
 ```
 
 当前默认 pseudo-view 前端：
@@ -202,6 +203,14 @@ GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware OUT_RO
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
 ```
 
+RI3D first2 role-weighted 500-iteration gate 复现命令：
+
+```bash
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_roleweighted --variants roleaware_cutout75_budget4 --image-size 160 --overwrite
+GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted OUT_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+```
+
 当前结论：
 
 ```text
@@ -215,11 +224,13 @@ cutout75_budget4_masked 只在其中一个 first2 样本上略优于 raw75_budge
 因此 G8 是执行通过但科学结论仍然 ambiguous。
 RI3D first2 role-aware iter500 已完成；角色 metadata/desaturation 路径跑通，
 但 loss 和 render sheet 仍不构成稳定 method win。
+RI3D first2 role-weighted iter500 已完成；per-view scalar role weights 路径跑通，
+但 render sheet 仍有 fragmented/photo-card artifacts，仍不是最终 method win。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 实现 G10：explicit role-weighted RI3D loss。
-3. 让 identity / geometry-only / reject / mask_reject 真正进入训练 loss。
-4. 如果 G10/G11 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
+2. 实现 G11：spatial mask-aware RI3D loss。
+3. 让 trusted foreground / mask 区域进入 RGB 或 silhouette 监督，压低背景/相框像素的影响。
+4. 如果 G11/G12 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。

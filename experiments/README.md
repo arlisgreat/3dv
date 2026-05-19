@@ -123,4 +123,9 @@ experiments/metrics/ri3d_first2_roleaware_observations.md
 experiments/figures/ri3d_first2_roleaware_iter500_inputs.png
 experiments/figures/ri3d_first2_roleaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_roleaware_iter500/
+experiments/metrics/ri3d_first2_roleweighted_iter500.csv
+experiments/metrics/ri3d_first2_roleweighted_observations.md
+experiments/figures/ri3d_first2_roleweighted_iter500_inputs.png
+experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
+experiments/reconstructions/ri3d_first2_roleweighted_iter500/
 ```

@@ -138,8 +138,9 @@ G9 已把 downstream reconstruction ablation 的输入从“selected views”
 改成显式的 `identity / geometry-only / reject / mask_reject` 四路协议，
 并完成 first2 role-aware iter500 训练/渲染。结果仍然 ambiguous：角色
 metadata 和 geometry-only desaturation 不足以稳定改善 RI3D 输出。
-因此下一步不应先扩 first30/first50，而应先让 RI3D loss 显式消费
-per-view/per-role 权重。
+G10 已让 RI3D loss 显式消费 per-view/per-role 权重，但 render sheet
+仍然有 fragmented/photo-card artifacts。因此下一步不应先扩 first30/first50，
+而应先把 trusted foreground / mask-aware spatial supervision 接入 RI3D loss。
 
 ### Week 4
 
