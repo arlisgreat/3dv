@@ -119,6 +119,16 @@ def simple_confidence(size: int) -> np.ndarray:
     return np.clip(conf, 0.0, 5.0).astype(np.float32)
 
 
+def resolve_scene_image(src_scene: Path, image_ref: str) -> Path:
+    path = Path(image_ref)
+    if path.exists():
+        return path
+    fallback = src_scene / "images" / path.name
+    if fallback.exists():
+        return fallback
+    raise FileNotFoundError(f"{image_ref} not found; also tried {fallback}")
+
+
 def convert_scene(
     *,
     src_scene: Path,
@@ -147,9 +157,7 @@ def convert_scene(
     confs: list[np.ndarray] = []
 
     for order, view in enumerate(views):
-        src_image = Path(view["image"])
-        if not src_image.exists():
-            raise FileNotFoundError(src_image)
+        src_image = resolve_scene_image(src_scene, view["image"])
 
         image_name = f"{order:03d}_view{int(view['view_index']):02d}.png"
         image_path = images_dir / image_name

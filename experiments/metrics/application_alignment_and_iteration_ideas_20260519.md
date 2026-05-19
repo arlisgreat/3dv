@@ -4,10 +4,9 @@ Date: 2026-05-19
 
 Source application: `QY25181-申请书-6-13.pdf`
 
-Coordination note: a separate research subagent was requested for the PDF and
-literature pass, but the current Codex agent thread limit prevented spawning
-another subagent. The read and search pass below was completed in the main
-thread instead.
+Coordination note: a research subagent later completed a read-only PDF and
+literature pass. The repo updates below fold that result into the current
+experiment path.
 
 ## Application Target
 
@@ -57,6 +56,9 @@ https://arxiv.org/abs/2310.15110
 
 FaceLift, 2024-12-23
 https://arxiv.org/abs/2412.17812
+
+GAF: Gaussian Avatar Reconstruction from Monocular Videos via Multi-view Diffusion, 2024-12-13
+https://arxiv.org/abs/2412.10209
 
 Consistency Diffusion Models for Single-Image 3D Reconstruction with Priors, 2025-01-28
 https://arxiv.org/abs/2501.16737
@@ -139,6 +141,7 @@ Short-term, already supported by the current repo:
 3. failure taxonomy and unsafe-view rejection.
 4. curated first10 -> first30/first50 expansion with the same manifest groups.
 5. replacement of cheap histogram/Haar scoring with a face-embedding identity filter.
+6. RI3D first2 raw75_all6/raw75_budget4/cutout75_budget4_masked downstream smoke.
 ```
 
 Medium-term architecture:
@@ -152,6 +155,10 @@ Medium-term architecture:
    regions supervise texture; background/photo-frame regions are ignored.
 4. Compare LAM, PanoLAM/OMEGA-style feed-forward references, and a lightweight
    PanoHead-to-Gaussian adaptation if implementation time allows.
+5. Add a RI3D-inspired two-stage protocol: identity/visible regions first,
+   missing side/back regions second with lower identity weight.
+6. Add FLAME normal/depth compatibility scoring before reconstruction, borrowing
+   the GAF direction without training a new diffusion model.
 ```
 
 High-risk / rollback-monitored work:
@@ -165,14 +172,20 @@ High-risk / rollback-monitored work:
 
 ## Current Experimental Conclusion
 
-The first10 steps75 run partially verifies the iteration hypothesis:
+The first10 steps75 run and RI3D first2 smoke partially verify the iteration
+hypothesis:
 
 ```text
 higher diffusion steps improve many samples but hurt some hard identity/hair cases.
 all six views are not safe as priors.
 budget4 selected views currently look more defensible than blind budget6.
 diffusion pseudo-view quality must be filtered before any Gaussian/PanoHead fusion.
+RI3D first2 160px iter50 closes the downstream loop, but the MP4 renders still
+show smoke-level artifacts and cannot yet prove final reconstruction quality.
 ```
 
-The next concrete experiment should expand the same protocol to more portraits
-and replace the proxy identity score with an embedding-based identity filter.
+The next concrete experiment should keep the same first2 samples, run 500-1500
+RI3D iterations, and make the downstream loader consume `identity_supervision`,
+`geometry_only`, and `identity_reject` roles instead of treating all pseudo
+views uniformly. Expand to first30/first50 only after that improves final 3D
+outputs.

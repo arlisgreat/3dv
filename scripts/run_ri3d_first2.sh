@@ -21,6 +21,16 @@ ITERATIONS="${ITERATIONS:-1500}"
 GPU="${GPU:-0}"
 SH_DEGREE="${SH_DEGREE:-2}"
 
+case "$DATA_ROOT" in
+  /*) ;;
+  *) DATA_ROOT="$PROJECT_ROOT/$DATA_ROOT" ;;
+esac
+
+case "$OUT_ROOT" in
+  /*) ;;
+  *) OUT_ROOT="$PROJECT_ROOT/$OUT_ROOT" ;;
+esac
+
 VARIANTS=(
   raw75_all6
   raw75_budget4
@@ -47,6 +57,7 @@ mkdir -p "$OUT_ROOT"
 cd "$RI3D_ROOT"
 
 export CUDA_VISIBLE_DEVICES="$GPU"
+export PYTHONPATH="$RI3D_ROOT:${PYTHONPATH:-}"
 
 for variant in "${VARIANTS[@]}"; do
   for sample in "${SAMPLES[@]}"; do

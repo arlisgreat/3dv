@@ -1,0 +1,32 @@
+diff --git a/scripts/render.py b/scripts/render.py
+index 5e3aadc..22d22d6 100644
+--- a/scripts/render.py
++++ b/scripts/render.py
+@@ -269,7 +269,6 @@ if __name__ == "__main__":
+     parser.add_argument("--postfix", default="_stage1", type=str, help="Postfix for output directory (e.g. _stage1 for repair, _stage2 for inpainting)")
+     args = get_combined_args(parser)
+     print("Rendering " + args.model_path)
+-    lpips_fn = lpips.LPIPS(net='vgg').cuda()
+     # Initialize system state (RNG)
+     safe_state(args.quiet)
+
+@@ -277,8 +276,11 @@ if __name__ == "__main__":
+
+     postfix = args.postfix if hasattr(args, 'postfix') else '_den'
+
++    lpips_fn = None
++
+     # sometimes we only want to render the images, and do not want to evaluate the metrics
+     if args.is_eval:
++        lpips_fn = lpips.LPIPS(net='vgg').cuda()
+         with torch.no_grad():
+             evaluate([args.model_path])
+         exit()
+@@ -286,6 +288,7 @@ if __name__ == "__main__":
+     bg = None
+
+     if not args.render_path:
++        lpips_fn = lpips.LPIPS(net='vgg').cuda()
+         bg = render_sets(model.extract(args), args.iteration, pipeline.extract(args), args.skip_train, args.skip_test, args.skip_all, extra_opts=args)
+
+     if args.render_path:

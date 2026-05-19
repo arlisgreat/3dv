@@ -9,8 +9,10 @@ experiments/
   inputs/           # 输入头像
   pseudo_views/     # Zero123++ 等生成的伪多视角
   reconstructions/  # LAM / baseline 输出
+  downstream_3d/    # 下游 3D 工作目录，本地 ignored
   metrics/          # CSV / JSON 指标
   figures/          # 论文图
+  ri3d_datasets/    # RI3D-compatible downstream inputs
 ```
 
 ## First10
@@ -105,4 +107,10 @@ experiments/metrics/face_identity_filter_first10_cutout75_budget4.csv
 experiments/metrics/face_identity_filter_summary_first10_cutout75_budget4.csv
 experiments/figures/face_identity_filter_first10_cutout75_budget4.png
 experiments/metrics/face_identity_filter_observations_20260519.md
+experiments/ri3d_datasets/first2_160/
+experiments/metrics/ri3d_first2_160_iter50.csv
+experiments/metrics/ri3d_first2_160_iter50_observations.md
+experiments/figures/ri3d_first2_160_iter50_inputs.png
+experiments/figures/ri3d_first2_160_iter50_renders.png
+experiments/reconstructions/ri3d_first2_160_iter50/
 ```

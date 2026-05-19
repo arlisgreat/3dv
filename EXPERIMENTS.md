@@ -24,13 +24,15 @@ CLIP/reliability ranking
 view budget 实验
 subject cutout 输入消融
 trusted-region mask
+face identity filter
 downstream dataset 构建
+RI3D first2 160px downstream smoke
 ```
 
 还没有完成：
 
 ```text
-raw / filtered pseudo views 是否提升最终 3D reconstruction
+raw / filtered pseudo views 是否在长迭代最终 3D reconstruction 中稳定提升
 ```
 
 当前默认 pseudo-view 前端：
@@ -41,6 +43,7 @@ subject cutout
 -> CLIP + reliability reranking
 -> budget4
 -> trusted-region mask
+-> face identity / geometry-only / reject split
 ```
 
 ## 2. Stage 00: Inputs
@@ -342,7 +345,47 @@ cutout75 CLIP-budget4 accepted masks: 37 / 40
 cutout + budget4 + trusted mask 明显比 raw pseudo views 更适合下游 3D 监督
 ```
 
-## 9. Stage 07: Downstream Dataset Build
+## 9. Stage 07: Face Identity Filter
+
+目的：
+
+```text
+在 trusted cutout views 上显式区分身份监督、几何补全和身份拒绝
+```
+
+关键文件：
+
+```text
+experiments/metrics/face_identity_filter_first10_cutout75_budget4.csv
+experiments/metrics/face_identity_filter_summary_first10_cutout75_budget4.csv
+experiments/metrics/face_identity_filter_observations_20260519.md
+```
+
+关键图：
+
+```text
+experiments/figures/face_identity_filter_first10_cutout75_budget4.png
+```
+
+结论：
+
+```text
+40 个 cutout75 budget4 视图里：
+20 identity_supervision
+14 geometry_only
+1 identity_reject
+37 mask_accepted
+```
+
+这一步把“筛选”推进为下游监督协议：
+
+```text
+identity_supervision 用于可见身份/纹理
+geometry_only 只给侧后脑等几何补全信号
+identity_reject 不进入下游监督
+```
+
+## 10. Stage 08: Downstream Dataset Build
 
 目的：
 
@@ -392,12 +435,12 @@ python3 scripts/build_downstream_dataset.py --overwrite
 这一步只是准备下游输入数据，不等于已经证明 3D reconstruction 被提升
 ```
 
-## 10. Stage 08: Downstream 3D Reconstruction
+## 11. Stage 09: Downstream 3D Reconstruction
 
 状态：
 
 ```text
-GPU runner 已准备好，等待服务器运行
+RI3D first2 160px iter50 smoke 已完成
 ```
 
 下一步要验证：
@@ -425,6 +468,7 @@ web_clean_frontal_01      # cutout 可能伤害
 
 ```text
 experiments/ri3d_datasets/first2/
+experiments/ri3d_datasets/first2_160/
 ```
 
 包含：
@@ -440,18 +484,42 @@ CPU 端准备脚本：
 
 ```bash
 python3 scripts/prepare_ri3d_dataset.py --overwrite
+python3 scripts/prepare_ri3d_dataset.py --output-root experiments/ri3d_datasets/first2_160 --image-size 160 --overwrite
 ```
 
 GPU 端运行脚本：
 
 ```bash
 bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh
 ```
 
 默认输出：
 
 ```text
 experiments/downstream_3d/ri3d_first2/
+experiments/downstream_3d/ri3d_first2_160_iter50/
+```
+
+已发布结果：
+
+```text
+experiments/metrics/ri3d_first2_160_iter50.csv
+experiments/metrics/ri3d_first2_160_iter50_observations.md
+experiments/figures/ri3d_first2_160_iter50_inputs.png
+experiments/figures/ri3d_first2_160_iter50_renders.png
+experiments/reconstructions/ri3d_first2_160_iter50/
+```
+
+阶段结论：
+
+```text
+first2 下游闭环已经能跑通，但 iter50 仍然只是 smoke 级结果。
+raw75_all6 在两个样本上 loss 都更高，说明盲目增加视角不可靠。
+raw75_budget4 在 web_clean_frontal_03 上最低 loss。
+cutout75_budget4_masked 在 web_clean_frontal_01 上略低于 raw75_budget4。
+渲染视频仍可见 full-photo/background rotation，不能作为最终质量证明。
 ```
 
 对比指标：
@@ -465,7 +533,7 @@ qualitative contact sheet
 rendered output integrity
 ```
 
-## 11. 当前默认路线
+## 12. 当前默认路线
 
 当前推荐 pseudo-view 前端：
 
@@ -475,6 +543,7 @@ subject cutout
 -> CLIP + reliability reranking
 -> budget4
 -> trusted-region mask
+-> face identity / geometry-only / reject split
 ```
 
 当前推荐下游对比：
@@ -488,5 +557,5 @@ C: cutout75_budget4_masked
 当前最重要的未闭环问题：
 
 ```text
-C 是否在最终 3D reconstruction 中优于 B？
+C 是否在更长迭代和更多样本中稳定优于 B？
 ```

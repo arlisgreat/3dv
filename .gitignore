@@ -8,6 +8,7 @@
 /experiments/downstream_3d/**
 /experiments/metrics/**
 /experiments/figures/**
+/experiments/ri3d_datasets/**/point_cloud.ply
 !/experiments/README.md
 !/experiments/inputs/
 !/experiments/inputs/**/

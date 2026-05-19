@@ -137,6 +137,7 @@ subject cutout ablation
 face identity filter
 downstream dataset build
 RI3D first2 dataset conversion
+RI3D first2 160px iter50 smoke render
 ```
 
 当前默认 pseudo-view 前端：
@@ -173,10 +174,11 @@ skills/3dv-experiment-orchestrator/
 experiments/ri3d_datasets/first2/
 ```
 
-服务器上下一步直接跑：
+RI3D first2 smoke 复现命令：
 
 ```bash
-bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATIONS=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=50 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter50 bash scripts/render_ri3d_first2.sh
 ```
 
 当前结论：
@@ -185,13 +187,14 @@ bash scripts/run_ri3d_first2.sh
 filtered pseudo-view frontend 已经比 raw pseudo views 更可靠。
 face-embedding filter 在 cutout75+budget4 上得到 20/40 identity candidates、
 14/40 geometry-only candidates、1/40 identity reject。
-但还没有证明它能提升最终 3D reconstruction。
+RI3D first2 160px iter50 已跑通下游闭环，但还只是 smoke 级验证。
+raw75_all6 在两个样本上训练 loss 都更高，说明盲目增加视角不可靠。
+cutout75_budget4_masked 只在其中一个 first2 样本上略优于 raw75_budget4。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 先选 2 个 first10 样本做下游 3D 重建闭环。
-3. 对比 `raw75_all6`、`raw75_budget4`、`cutout75_budget4_masked`。
-4. 在下游闭环中显式使用 identity / geometry-only / reject 三路协议。
-5. 验证 filtered pseudo views 是否真的改善最终 3D 输出，再扩 first30 / first50。
+2. 先把 first2 RI3D 跑到 500-1500 iterations，并看 MP4 质量而不是只看 loss。
+3. 在下游闭环中显式使用 identity / geometry-only / reject 三路协议。
+4. 如果 first2 长迭代证明 filtered pseudo views 稳定优于 raw，再扩 first30 / first50。
