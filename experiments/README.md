@@ -74,3 +74,17 @@ experiments/figures/lam_first10_look_in_my_eyes_frames.png
 experiments/metrics/lam_first10_look_in_my_eyes.csv
 experiments/metrics/first10_pilot_observations_20260518.md
 ```
+
+当前 iteration 结果：
+
+```text
+experiments/pseudo_views/zero123plus_first10_steps75/
+experiments/figures/zero123plus_first10_steps20_vs75_grids.png
+experiments/figures/view_budget_selection_first10_steps75_budget4.png
+experiments/metrics/pseudo_view_reliability_first10_steps20_75.csv
+experiments/metrics/pseudo_view_summary_first10_steps20_75.csv
+experiments/metrics/view_budget_selection_first10_steps20_75.csv
+experiments/metrics/steps20_vs75_comparison_first10.csv
+experiments/metrics/zero123plus_first10_steps75_view_budget_observations_20260519.md
+experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
+```

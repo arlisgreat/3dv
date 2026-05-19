@@ -1,0 +1,69 @@
+{
+  "sample_id": "web_occlusion_lowq_01",
+  "input": "/data1/workspace/airulan/3dv/experiments/inputs/first10/processed/web_occlusion_lowq_01.png",
+  "source": {
+    "sample_id": "web_occlusion_lowq_01",
+    "input_path": "experiments/inputs/first10/processed/web_occlusion_lowq_01.png",
+    "group": "occlusion_lowq",
+    "input_yaw": "unknown",
+    "source_title": "File:Balaclava as suggested fashion piece for winter 2018 - modelled by ModelTanja.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Balaclava_as_suggested_fashion_piece_for_winter_2018_-_modelled_by_ModelTanja.jpg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/89/Balaclava_as_suggested_fashion_piece_for_winter_2018_-_modelled_by_ModelTanja.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 3.0",
+    "artist": "Tobias ToMar Maier",
+    "credit": "Own work",
+    "sha256": "3338144c450fa20c1e01b45acb9183c2f043acf0410e2a1e8378d2589da852c5",
+    "width": "1280",
+    "height": "1920",
+    "query": "portrait face mask photograph",
+    "notes": "occlusion or lower-quality portrait"
+  },
+  "model": "sudo-ai/zero123plus-v1.2",
+  "custom_pipeline": "sudo-ai/zero123plus-pipeline",
+  "steps": 75,
+  "seed": 42,
+  "device": "cuda:0",
+  "grid": {
+    "rows": 2,
+    "cols": 3,
+    "file": "grid.png"
+  },
+  "views": [
+    {
+      "index": 0,
+      "file": "view_00_az030_el+20.png",
+      "azimuth": 30,
+      "elevation": 20
+    },
+    {
+      "index": 1,
+      "file": "view_01_az090_el-10.png",
+      "azimuth": 90,
+      "elevation": -10
+    },
+    {
+      "index": 2,
+      "file": "view_02_az150_el+20.png",
+      "azimuth": 150,
+      "elevation": 20
+    },
+    {
+      "index": 3,
+      "file": "view_03_az210_el-10.png",
+      "azimuth": 210,
+      "elevation": -10
+    },
+    {
+      "index": 4,
+      "file": "view_04_az270_el+20.png",
+      "azimuth": 270,
+      "elevation": 20
+    },
+    {
+      "index": 5,
+      "file": "view_05_az330_el-10.png",
+      "azimuth": 330,
+      "elevation": -10
+    }
+  ]
+}

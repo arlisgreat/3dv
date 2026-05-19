@@ -1,0 +1,11 @@
+sample_id,group,mean_score_steps20,mean_score_steps75,delta_mean_score,good_views_steps20,good_views_steps75,delta_good_views,verdict
+web_clean_frontal_01,clean_frontal,74.000,90.000,16.000,4,5,1,steps75_helped
+web_clean_frontal_02,clean_frontal,70.333,78.667,8.334,3,4,1,steps75_helped
+web_clean_frontal_03,clean_frontal,33.333,27.333,-6.000,0,0,0,steps75_hurt
+web_complex_hair_01,complex_hair,74.000,74.000,0.000,4,4,0,steps75_neutral
+web_complex_hair_02,complex_hair,58.333,47.333,-11.000,1,0,-1,steps75_hurt
+web_glasses_01,glasses,64.667,64.667,0.000,4,4,0,steps75_neutral
+web_glasses_02,glasses,57.000,65.667,8.667,1,3,2,steps75_helped
+web_mild_side_01,mild_side,66.667,74.000,7.333,2,4,2,steps75_helped
+web_mild_side_02,mild_side,69.333,74.000,4.667,4,4,0,steps75_neutral
+web_occlusion_lowq_01,occlusion_lowq,62.000,74.000,12.000,2,4,2,steps75_helped

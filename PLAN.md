@@ -102,6 +102,16 @@ data_manifest.csv
 3. 做第一张主表。
 4. 做第一张主图。
 
+当前 first10 进展：
+
+```text
+steps20 和 steps75 Zero123++ 伪视角已完成。
+steps75 对 5/10 个样本提升、3/10 持平、2/10 变差。
+budget4 的 selected-view 平均可靠性高于盲目使用全部 6 视角。
+```
+
+这一轮支持原假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。
+
 ### Week 3
 
 目标：消融和诊断。
@@ -149,4 +159,5 @@ Abstract
 3. Zero123++: Single Image to Consistent Multi-view Diffusion.
 4. RI3D: Few-Shot Gaussian Splatting with Repair and Inpainting Diffusion Priors.
 5. PanoHead: Geometry-Aware 3D Full-Head Synthesis in 360°.
-
+6. FaceLift: single-image 360-degree 3D Gaussian head reconstruction with multi-view diffusion.
+7. OMEGA-Avatar / OMG-Avatar: 2026 one-shot 360 Gaussian avatar references.

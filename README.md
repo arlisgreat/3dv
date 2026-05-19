@@ -146,9 +146,28 @@ experiments/metrics/lam_first10_look_in_my_eyes.csv
 experiments/metrics/first10_pilot_observations_20260518.md
 ```
 
+2026-05-19 追加完成：
+
+```text
+Zero123++ steps75: experiments/pseudo_views/zero123plus_first10_steps75/
+steps20/steps75 reliability: experiments/metrics/pseudo_view_reliability_first10_steps20_75.csv
+view budget: experiments/metrics/view_budget_selection_first10_steps20_75.csv
+comparison figure: experiments/figures/zero123plus_first10_steps20_vs75_grids.png
+budget figure: experiments/figures/view_budget_selection_first10_steps75_budget4.png
+application alignment: experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
+```
+
+当前结论：
+
+```text
+steps75 对 5 个样本有帮助、3 个基本持平、2 个变差。
+盲目使用全部 6 个伪视角不安全。
+steps75 + budget4 暂时是后续 trusted-view 输入的默认候选。
+```
+
 下一步：
 
-1. 对 first10 做 `steps=75` Zero123++ face-quality 消融。
-2. 建立 identity filtering 和可信区域 mask 规则。
-3. 对 `1/2/4/6` 视角预算做可控对比。
-4. 建立失败标签表：identity drift、hair hallucination、glasses loss、back-head inconsistency、geometry collapse、floaters。
+1. 扩展到 first30 / first50。
+2. 将 cheap proxy 替换或增强为 face-embedding identity filtering。
+3. 建立可信区域 mask 规则，过滤 photo-frame / background rotation。
+4. 把 selected pseudo views 接入后续 Gaussian/PanoHead/FLAME 路线。
