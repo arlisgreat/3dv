@@ -108,6 +108,8 @@ data_manifest.csv
 steps20 和 steps75 Zero123++ 伪视角已完成。
 steps75 对 5/10 个样本提升、3/10 持平、2/10 变差。
 budget4 的 selected-view 平均可靠性高于盲目使用全部 6 视角。
+CLIP consistency proxy 确认 steps75 的 learned-image consistency 也更高，
+但仍会保留部分整图/背景旋转视图，后续必须叠加 mask 或 face-aware identity filter。
 ```
 
 这一轮支持原假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。

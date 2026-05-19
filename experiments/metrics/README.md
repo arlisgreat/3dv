@@ -18,4 +18,5 @@ Current iteration notes:
 ```text
 zero123plus_first10_steps75_view_budget_observations_20260519.md
 application_alignment_and_iteration_ideas_20260519.md
+clip_consistency_filter_observations_20260519.md
 ```

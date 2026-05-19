@@ -155,6 +155,7 @@ view budget: experiments/metrics/view_budget_selection_first10_steps20_75.csv
 comparison figure: experiments/figures/zero123plus_first10_steps20_vs75_grids.png
 budget figure: experiments/figures/view_budget_selection_first10_steps75_budget4.png
 application alignment: experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
+CLIP consistency proxy: experiments/metrics/clip_consistency_filter_observations_20260519.md
 ```
 
 当前结论：
@@ -163,6 +164,7 @@ application alignment: experiments/metrics/application_alignment_and_iteration_i
 steps75 对 5 个样本有帮助、3 个基本持平、2 个变差。
 盲目使用全部 6 个伪视角不安全。
 steps75 + budget4 暂时是后续 trusted-view 输入的默认候选。
+CLIP consistency 只能辅助排序，不能替代 face-aware identity filtering。
 ```
 
 下一步：

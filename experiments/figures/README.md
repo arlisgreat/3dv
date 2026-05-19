@@ -14,4 +14,5 @@ zero123plus_first10_steps20_grids.png
 lam_first10_look_in_my_eyes_frames.png
 zero123plus_first10_steps20_vs75_grids.png
 view_budget_selection_first10_steps75_budget4.png
+view_budget_clip_selection_first10_steps75_budget4.png
 ```
