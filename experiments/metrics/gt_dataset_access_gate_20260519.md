@@ -27,6 +27,20 @@ multi-view images, camera parameters, validity flags, distortion parameters,
 and corresponding reconstructed 3D face meshes.
 ```
 
+Secondary routes checked:
+
+```text
+Multiface mini: technically strong and public under CC-BY-NC 4.0, but official
+mini size is 16.2 GB and local source download was slow/unreliable in this
+session. Good fallback after setting up a stable mirror/cache.
+
+NeRSemble: excellent full-head multi-view data, but v2 access requires approval
+and a private dataset URL; full dataset is too large for immediate blind download.
+
+UEA 3D Face: useful OBJ GT fallback after license agreement, but only five
+photo directions and weaker calibrated multi-view coverage.
+```
+
 Local access check:
 
 ```text
@@ -58,7 +72,9 @@ Next pass condition:
 ```text
 1. Obtain licensed FaceScape access and use a publishable-list subject, or pick
    another dataset with redistributable demo assets.
-2. Export only a compact case manifest and allowed thumbnails/figures.
-3. Confirm 6-12 valid calibrated views and GT mesh/point cloud.
-4. Run visual/VLM data audit on the actual case before any reconstruction.
+2. If using Multiface mini, first download only one identity/expression subset
+   and confirm license-compatible repo outputs.
+3. Export only a compact case manifest and allowed thumbnails/figures.
+4. Confirm 6-12 valid calibrated views and GT mesh/point cloud.
+5. Run visual/VLM data audit on the actual case before any reconstruction.
 ```

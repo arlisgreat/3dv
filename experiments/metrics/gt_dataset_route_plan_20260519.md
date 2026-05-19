@@ -85,12 +85,29 @@ mini-dataset option around 16.2 GB
 full dataset around 65 TB
 ```
 
+Access status checked on 2026-05-19:
+
+```text
+The official repository is archived but still public.
+It is licensed CC-BY-NC 4.0.
+Official mini config:
+  entity: 6795937
+  expressions: E057_Cheeks_Puffed, E061_Lips_Puffed
+  assets: image, mesh, texture, metadata, audio
+Official README reports the mini-dataset size as 16.2 GB.
+Local source clone via git/ghfast was unreliable; partial zip download was
+stopped after being too slow. Use raw GitHub files or retry with a better
+mirror/HTTP cache before downloading data.
+```
+
 Use plan:
 
 ```text
 Try mini-dataset first.
 Extract one identity, one neutral-ish frame, 6-12 cameras, tracked mesh, and calibration.
 Use it as a positive-control sparse-view reconstruction case.
+Do not commit raw mini images/meshes unless redistribution is explicitly
+compatible with the paper/repo policy; commit metadata and derived metrics first.
 ```
 
 Why second choice:
@@ -113,6 +130,16 @@ Official project page states that NeRSemble uses:
 over 4700 sequences
 more than 220 human heads
 dataset access and download links
+```
+
+Access status checked on 2026-05-19:
+
+```text
+The official v2 download repository is https://github.com/tobias-kirschstein/nersemble-data.
+Dataset access requires a form approval and a private NERSEMBLE_DATA_URL.
+The full v2 dataset is reported as more than 1.5 TB.
+The downloader can select participant, sequence, and camera subsets, so it is
+viable after access approval but not immediately usable as an open sample.
 ```
 
 Use plan:
@@ -142,6 +169,15 @@ about 300 high-resolution 3D face models
 about 1000 photos in five facing directions
 OBJ scanning set treated as ground-truth 3D structure
 free for non-commercial academic research after license agreement
+```
+
+Access status checked on 2026-05-19:
+
+```text
+Official page requires a signed license agreement / data use agreement before
+access. The scanning set is the ground-truth 3D structure in OBJ format, and
+the image set provides five facing directions rather than dense calibrated
+multi-view capture.
 ```
 
 Use plan:
