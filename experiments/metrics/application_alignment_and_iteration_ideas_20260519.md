@@ -180,6 +180,13 @@ Medium-term architecture:
    losses differently, with reject roles excluded before optimization.
 8. Add spatial mask-aware supervision after G10: scalar per-view role weights
    reduce the numeric loss but do not remove background/photo-card artifacts.
+9. After G11, add foreground-canonical crop/recenter before RI3D conversion:
+   masking alone removes background loss pressure but still lets Gaussians fit
+   small off-center fragments.
+10. Add mask-loss ablations: mask RGB only, mask RGB plus silhouette, and
+    geometry_only depth/silhouette only. Record foreground loss, background
+    leakage, silhouette BCE, and mask coverage instead of final training loss
+    alone.
 ```
 
 High-risk / rollback-monitored work:
@@ -209,8 +216,12 @@ RI3D first2 role-aware iter500 confirms the role-aware data path works, but
 metadata/desaturation alone is not enough to make a stable final 3D win.
 RI3D first2 role-weighted iter500 confirms explicit per-view role weights work,
 but scalar weights alone are still insufficient for visual quality.
+RI3D first2 mask-aware iter500 confirms spatial masks can be passed through
+the RI3D data loader and training loss, but foreground-only loss still produces
+fragmented/card-like renders without subject recentering or structural priors.
 ```
 
-The next concrete experiment should keep the same first2 samples and patch RI3D
-so foreground/trusted-region masks spatially gate the RGB or silhouette loss.
-Expand to first30/first50 only after that improves final 3D outputs.
+The next concrete experiment should keep the same first2 samples and canonicalize
+foreground scale/position from trusted masks before RI3D conversion. If that
+fails, move to a LAM/FLAME/full-head geometry prior before expanding to first10
+or first30/first50.

@@ -126,6 +126,17 @@ def resize_rgb(src: Path, dst: Path, size: int, supervision_role: str | None = N
     return canvas
 
 
+def resize_mask(src: Path, dst: Path, size: int) -> Image.Image:
+    mask = Image.open(src).convert("L")
+    mask = ImageOps.contain(mask, (size, size), Image.Resampling.NEAREST)
+    canvas = Image.new("L", (size, size), 0)
+    offset = ((size - mask.width) // 2, (size - mask.height) // 2)
+    canvas.paste(mask, offset)
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(dst)
+    return canvas
+
+
 def simple_depth_prior(size: int, azimuth_deg: float, elevation_deg: float) -> np.ndarray:
     """Create a smooth positive inverse-depth-like prior for RI3D bootstrap."""
     y, x = np.mgrid[0:size, 0:size].astype(np.float32)
@@ -157,6 +168,16 @@ def resolve_scene_image(src_scene: Path, image_ref: str) -> Path:
     raise FileNotFoundError(f"{image_ref} not found; also tried {fallback}")
 
 
+def resolve_scene_file(src_scene: Path, file_ref: str, subdir: str) -> Path:
+    path = Path(file_ref)
+    if path.exists():
+        return path
+    fallback = src_scene / subdir / path.name
+    if fallback.exists():
+        return fallback
+    raise FileNotFoundError(f"{file_ref} not found; also tried {fallback}")
+
+
 def convert_scene(
     *,
     src_scene: Path,
@@ -176,8 +197,10 @@ def convert_scene(
 
     clean_dir(dst_scene, overwrite=overwrite)
     images_dir = dst_scene / "images"
+    masks_dir = dst_scene / "masks"
     depth_dir = images_dir / "depth_rel"
     images_dir.mkdir(parents=True, exist_ok=True)
+    masks_dir.mkdir(parents=True, exist_ok=True)
     depth_dir.mkdir(parents=True, exist_ok=True)
 
     focal = 0.5 * image_size / math.tan(math.radians(fov_deg) / 2.0)
@@ -196,6 +219,11 @@ def convert_scene(
         image_name = f"{order:03d}_view{int(view['view_index']):02d}.png"
         image_path = images_dir / image_name
         resize_rgb(src_image, image_path, image_size, supervision_role=supervision_role)
+        mask_name = f"{Path(image_name).stem}_mask.png"
+        mask_path = masks_dir / mask_name
+        source_mask = view.get("mask")
+        if source_mask:
+            resize_mask(resolve_scene_file(src_scene, source_mask, "masks"), mask_path, image_size)
 
         azimuth = float(view.get("azimuth") or 0.0)
         elevation = float(view.get("elevation") or 0.0)
@@ -210,6 +238,9 @@ def convert_scene(
         frames.append(
             {
                 "file_path": f"images/{image_name}",
+                "mask_path": f"masks/{mask_name}" if source_mask else None,
+                "source_mask": source_mask,
+                "mask_coverage": view.get("mask_coverage"),
                 "transform_matrix": camera_to_world(azimuth, elevation, camera_radius),
                 "view_index": view.get("view_index"),
                 "azimuth": azimuth,

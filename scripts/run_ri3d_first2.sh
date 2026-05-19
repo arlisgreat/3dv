@@ -14,6 +14,7 @@ set -euo pipefail
 #   GPU=0
 #   VARIANTS_STR="raw75_budget4 roleaware_cutout75_budget4"
 #   SAMPLES_STR="web_clean_frontal_03 web_clean_frontal_01"
+#   USE_MASK=1
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RI3D_ROOT="${RI3D_ROOT:-$PROJECT_ROOT/external/ri3d}"
@@ -22,6 +23,7 @@ OUT_ROOT="${OUT_ROOT:-$PROJECT_ROOT/experiments/downstream_3d/ri3d_first2}"
 ITERATIONS="${ITERATIONS:-1500}"
 GPU="${GPU:-0}"
 SH_DEGREE="${SH_DEGREE:-2}"
+USE_MASK="${USE_MASK:-0}"
 VARIANTS_INPUT="${VARIANTS_STR:-${VARIANTS:-raw75_all6 raw75_budget4 cutout75_budget4_masked}}"
 SAMPLES_INPUT="${SAMPLES_STR:-${SAMPLES:-web_clean_frontal_03 web_clean_frontal_01}}"
 
@@ -37,6 +39,16 @@ esac
 
 read -r -a VARIANTS <<< "$VARIANTS_INPUT"
 read -r -a SAMPLES <<< "$SAMPLES_INPUT"
+
+MASK_ARGS=()
+case "${USE_MASK,,}" in
+  1|true|yes|on) MASK_ARGS=(--use_mask) ;;
+  0|false|no|off|"") ;;
+  *)
+    echo "Unsupported USE_MASK value: $USE_MASK" >&2
+    exit 1
+    ;;
+esac
 
 if [[ ! -d "$RI3D_ROOT" ]]; then
   echo "Missing RI3D checkout: $RI3D_ROOT" >&2
@@ -80,6 +92,7 @@ for variant in "${VARIANTS[@]}"; do
       --white_background \
       --random_background \
       --iterations 1 \
+      "${MASK_ARGS[@]}" \
       2>&1 | tee "$log_dir/${tag}_init.log"
 
     ply_path="$init_out/point_cloud/iteration_1/point_cloud.ply"
@@ -100,6 +113,7 @@ for variant in "${VARIANTS[@]}"; do
       --iterations "$ITERATIONS" \
       --save_iterations "$ITERATIONS" \
       --ply_path "$ply_path" \
+      "${MASK_ARGS[@]}" \
       2>&1 | tee "$log_dir/${tag}_train.log"
 
     echo "Finished: $tag"

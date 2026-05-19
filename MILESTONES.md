@@ -73,6 +73,7 @@ quality without explicit role-weighted losses.
 | G8 | done, ambiguous | Run RI3D first2 iter500 gate | `experiments/metrics/ri3d_first2_160_iter500.csv` | Execution passed; method conclusion is not strong enough to scale data. |
 | G9 | done, ambiguous | Non-invasive role-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleaware_iter500.csv` | Role metadata/desaturation runs, but explicit role-weighted loss is still needed. |
 | G10 | done, ambiguous | Explicit role-weighted RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleweighted_iter500.csv` | Scalar per-view role weights run, but spatial artifacts remain dominant. |
+| G11 | done, negative | Spatial mask-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_maskaware_iter500.csv` | Mask-aware loss runs and exports valid videos, but visual artifacts remain and recentering/priors are needed. |
 
 ## G8 Result
 
@@ -246,58 +247,118 @@ must use spatial foreground/mask-aware loss or a stronger geometry prior before
 expanding beyond first2.
 ```
 
-## Active Milestone: G11
+## G11 Result
+
+RI3D first2 mask-aware iter500 completed for:
+
+```text
+roleaware_cutout75_budget4
+```
+
+Patch:
+
+```text
+patches/ri3d/mask_aware_loss.patch
+transforms.json mask_path -> CameraInfo.mask -> Camera.mask -> masked cal_loss
+--use_mask explicitly gates mask loading so older baselines do not change silently
+masked RGB/SSIM foreground loss + silhouette BCE + masked monodepth indexing
+```
+
+Published artifacts:
+
+```text
+experiments/ri3d_datasets/first2_maskaware/
+experiments/metrics/ri3d_first2_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_maskaware_observations.md
+experiments/figures/ri3d_first2_maskaware_iter500_inputs.png
+experiments/figures/ri3d_first2_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_maskaware_iter500/
+```
+
+Loss summary:
+
+```text
+web_clean_frontal_03:
+  maskaware_cutout75_budget4: 0.0084686
+  roleweighted_cutout75_budget4: 0.0085665
+  raw75_budget4: 0.0147302
+
+web_clean_frontal_01:
+  maskaware_cutout75_budget4: 0.0155180
+  roleweighted_cutout75_budget4: 0.0152099
+  cutout75_budget4_masked: 0.0152439
+```
+
+Interpretation:
+
+```text
+The loss values are not directly comparable to unmasked full-image losses
+because G11 changes the objective to foreground-masked RGB/SSIM plus silhouette.
+
+All four MP4s validate as 120 frames at 160x160. However, the render sheet still
+shows small fragmented/rotated photo-card foregrounds and large blank regions.
+Spatial masking prevents background pixels from supervising RGB, but it does
+not canonicalize subject scale/position and does not add a structural full-head
+prior.
+
+Conclusion: G11 is an implementation pass and a visual-method failure. The next
+milestone should not be first10 expansion or iter1500 confirmation. It should
+first test foreground recentering/mask ablations or a stronger geometry prior.
+```
+
+## Active Milestone: G12
 
 Name:
 
 ```text
-Spatial mask-aware RI3D loss on first2
+Foreground-canonical mask ablation on first2
 ```
 
 Purpose:
 
 ```text
-Move from per-view scalar weights to spatial supervision. Use foreground masks
-or trusted regions so pseudo-view background/photo-frame pixels do not supervise
-RGB or silhouette geometry.
+Fix the G11 failure mode where the masked objective learns small floating
+foreground fragments. Crop/recenter each RI3D training image from the trusted
+mask before resizing, preserve role metadata, and compare mask-loss variants.
 ```
 
 Planned outputs:
 
 ```text
-patches/ri3d/mask_aware_loss.patch
-experiments/metrics/ri3d_first2_maskaware_iter500.csv
-experiments/metrics/ri3d_first2_maskaware_observations.md
-experiments/figures/ri3d_first2_maskaware_iter500_renders.png
-experiments/reconstructions/ri3d_first2_maskaware_iter500/
+experiments/ri3d_datasets/first2_fgcenter_maskaware/
+experiments/metrics/ri3d_first2_fgcenter_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_fgcenter_maskaware_observations.md
+experiments/figures/ri3d_first2_fgcenter_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_fgcenter_maskaware_iter500/
 ```
 
 Pass criteria:
 
 ```text
-1. RI3D RGB loss is spatially masked or foreground weighted.
-2. background/photo-card regions no longer dominate first-frame render sheets.
-3. role-aware/role-weighted results visibly improve over raw75_budget4 on first2.
-4. The next decision is clear: first2 iter1500 confirmation or first10 expansion.
+1. Foreground crop/recentered inputs are generated reproducibly from mask boxes.
+2. First-frame render sheets show less floating/card-like fragmentation than G11.
+3. web_clean_frontal_01 does not regress relative to G8 cutout75_budget4_masked.
+4. The next decision is clear: iter1500 confirmation, first10 expansion, or
+   LAM/FLAME geometry-prior integration.
 ```
 
 Failure criteria:
 
 ```text
-1. Mask-aware loss requires a large risky RI3D rewrite.
-2. Masks remove useful head/hair regions and degrade identity.
-3. Render quality still cannot match raw75_budget4 on first2.
+1. Cropping removes useful hair/ear/body context or worsens identity.
+2. The render sheet still collapses to floating fragments.
+3. Mask-loss variants change numeric loss without visual improvement.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G11 | Spatial mask-aware RI3D loss on first2 | G10 exported and reviewed | Clear first2 visual/loss decision |
-| G12 | first2 iter1500 confirmation | G11 positive or narrowly ambiguous | Same conclusion holds at longer optimization |
-| G13 | Expand to first10 downstream | G11/G12 positive | Per-group result table across clean/side/glasses/hair/occlusion |
-| G14 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
-| G15 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G12 | Foreground-canonical mask ablation on first2 | G11 exported and reviewed | Clear first2 visual/loss decision |
+| G13 | Geometry-prior first2 repair | G12 fails or remains ambiguous | LAM/FLAME/normal/depth prior either helps or is rejected |
+| G14 | Expand to first10 downstream | G12/G13 positive | Per-group result table across clean/side/glasses/hair/occlusion |
+| G15 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
+| G16 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

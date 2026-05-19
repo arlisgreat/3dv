@@ -1,0 +1,317 @@
+diff --git a/scene/dataset_readers_flow.py b/scene/dataset_readers_flow.py
+index edb0d30..5304e80 100644
+--- a/scene/dataset_readers_flow.py
++++ b/scene/dataset_readers_flow.py
+@@ -35,6 +35,19 @@ from utils.camera_utils import transform_cams, CameraInfo, generate_ellipse_path
+ 
+ from utils.bilateral_filtering import sparse_bilateral_filtering
+ 
++ROLE_RGB_WEIGHTS = {
++    "identity_supervision": 1.0,
++    "geometry_only": 0.25,
++    "identity_reject": 0.0,
++    "mask_reject": 0.0,
++}
++ROLE_DEPTH_WEIGHTS = {
++    "identity_supervision": 1.0,
++    "geometry_only": 1.0,
++    "identity_reject": 0.0,
++    "mask_reject": 0.0,
++}
++
+ class SceneInfo(NamedTuple):
+     point_cloud: BasicPointCloud
+     train_cameras: list
+@@ -66,6 +79,25 @@ def getNerfppNorm(cam_info):
+ 
+     return {"translate": translate, "radius": radius}
+ 
++def role_weight(frame, key, defaults):
++    value = frame.get(key)
++    if value is not None:
++        return float(value)
++    role = frame.get("supervision_role", "uniform_rgb")
++    return float(defaults.get(role, 1.0))
++
++def load_frame_mask(path, frame):
++    mask_ref = frame.get("mask_path") or frame.get("mask")
++    if not mask_ref:
++        return None
++    mask_path = mask_ref if osp.isabs(mask_ref) else osp.join(path, mask_ref)
++    if not osp.exists(mask_path):
++        return None
++    mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
++    if mask is None:
++        return None
++    return mask.astype(np.float32) / 255.0
++
+ 
+ 
+ def readMipTransforms(path, resolution=4):
+@@ -116,10 +148,16 @@ def readMipTransforms(path, resolution=4):
+         image_path = osp.join(path, impath)
+         image_name = osp.basename(image_path).split(".")[0]
+         image = None#Image.open(image_path)
++        supervision_role = cam_extr.get("supervision_role", "uniform_rgb")
++        role_rgb_weight = role_weight(cam_extr, "role_rgb_weight", ROLE_RGB_WEIGHTS)
++        role_depth_weight = role_weight(cam_extr, "role_depth_weight", ROLE_DEPTH_WEIGHTS)
++        mask = load_frame_mask(path, cam_extr)
+ 
+         cam_info = CameraInfo(uid=uid, R=R, T=T, FovY=FovY, FovX=FovX, image=image,
+                               image_path=image_path, image_name=image_name, 
+-                              width=resolution*width, height=resolution*height, mask=None, mono_depth=None)
++                              width=resolution*width, height=resolution*height, mask=mask, mono_depth=None,
++                              supervision_role=supervision_role, role_rgb_weight=role_rgb_weight,
++                              role_depth_weight=role_depth_weight)
+         cam_infos.append(cam_info)
+     sys.stdout.write('\n')
+     return cam_infos
+diff --git a/scripts/train_gs.py b/scripts/train_gs.py
+index 482995c..6135ed9 100755
+--- a/scripts/train_gs.py
++++ b/scripts/train_gs.py
+@@ -239,14 +239,39 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+     Optional: [silhouette loss, monodepth loss]
+     """
+     gt_image = viewpoint_cam.original_image.to(image.dtype).cuda()
++    role_rgb_weight = float(getattr(viewpoint_cam, "role_rgb_weight", 1.0))
++    role_depth_weight = float(getattr(viewpoint_cam, "role_depth_weight", 1.0))
++    mask = getattr(viewpoint_cam, "mask", None)
++    mask3 = None
++    if mask is not None:
++        mask = mask.to(image.dtype).cuda().clamp(0.0, 1.0)
++        if torch.count_nonzero(mask > 0.5).item() >= 16:
++            mask3 = mask.expand_as(image)
++        else:
++            mask = None
+     # if opt.random_background:
+     #     gt_image = gt_image * viewpoint_cam.mask + bg[:, None, None] * (1 - viewpoint_cam.mask).squeeze()
+-    Ll1 = l1_loss(image, gt_image)
+-    Lssim = (1.0 - ssim(image, gt_image))
+-    loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * Lssim
++    if mask3 is not None:
++        Ll1 = (torch.abs(image - gt_image) * mask3).sum() / mask3.sum().clamp_min(1.0)
++        image_for_ssim = image * mask3 + gt_image * (1.0 - mask3)
++        Lssim = (1.0 - ssim(image_for_ssim, gt_image))
++    else:
++        Ll1 = l1_loss(image, gt_image)
++        Lssim = (1.0 - ssim(image, gt_image))
++    rgb_loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * Lssim
++    loss = role_rgb_weight * rgb_loss
+     if tb_writer is not None:
+         tb_writer.add_scalar('loss/l1_loss', Ll1, iteration)
+         tb_writer.add_scalar('loss/ssim_loss', Lssim, iteration)
++        tb_writer.add_scalar('loss/role_rgb_weight', role_rgb_weight, iteration)
++        tb_writer.add_scalar('loss/role_depth_weight', role_depth_weight, iteration)
++
++    if mask is not None and "rendered_alpha" in render_pkg:
++        alpha = render_pkg["rendered_alpha"].to(image.dtype).clamp(1e-4, 1.0 - 1e-4)
++        silhouette_loss = F.binary_cross_entropy(alpha, mask)
++        loss = loss + role_depth_weight * opt.lambda_silhouette * silhouette_loss
++        if tb_writer is not None:
++            tb_writer.add_scalar('loss/silhouette_loss', silhouette_loss, iteration)
+ 
+ 
+     if hasattr(viewpoint_cam, "mono_depth") and viewpoint_cam.mono_depth is not None:
+@@ -255,11 +280,21 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+             # we apply masked monocular loss
+             disp_mono = 1/viewpoint_cam.mono_depth.clamp(1e-6).reshape(-1) # shape: [N]
+             disp_render = 1/render_pkg["rendered_depth"].clamp(1e-6).reshape(-1) # shape: [N]
++            if mask is not None:
++                depth_mask = mask.reshape(-1) > 0.5
++                if torch.count_nonzero(depth_mask).item() >= 16:
++                    disp_mono = disp_mono[depth_mask]
++                    disp_render = disp_render[depth_mask]
+             # print(viewpoint_cam.mono_depth.shape, render_pkg['rendered_depth'].shape, disp_mono.shape, disp_render.shape)
+             depth_loss = monodisp(disp_mono, disp_render, 'l1')[-1]
+         elif mono_loss_type == "pearson":
+             disp_mono = viewpoint_cam.mono_depth.clamp(min=1e-6).reshape(-1, 1) # shape: [N]
+             disp_render = render_pkg["rendered_depth"].clamp(min=1e-6).reshape(-1, 1) # shape: [N]
++            if mask is not None:
++                depth_mask = mask.reshape(-1) > 0.5
++                if torch.count_nonzero(depth_mask).item() >= 16:
++                    disp_mono = disp_mono[depth_mask]
++                    disp_render = disp_render[depth_mask]
+             # print(disp_mono.shape, disp_render.shape)
+             depth_loss = (1 - pearson_corrcoef(disp_render, disp_mono)).mean()
+         else:
+@@ -267,7 +302,7 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+ 
+     # depth_loss = l2_loss(viewpoint_cam.mono_depth, render_pkg["rendered_depth"])
+ 
+-        loss = loss + args.mono_depth_weight * depth_loss
++        loss = loss + role_depth_weight * args.mono_depth_weight * depth_loss
+         if tb_writer is not None:
+             tb_writer.add_scalar('loss/depth_loss', depth_loss, iteration)
+ 
+@@ -293,7 +328,7 @@ if __name__ == "__main__":
+                         help="Use sparse view or dense view, if sparse_view_num > 0, use sparse view, \
+                         else use dense view. In sparse setting, sparse views will be used as training data, \
+                         others will be used as testing data.")
+-    parser.add_argument("--use_mask", default=False, help="Use masked image, by default True")
++    parser.add_argument("--use_mask", action="store_true", default=False, help="Use mask-aware supervision")
+     parser.add_argument("--init_pcd_name", default='origin', type=str, 
+                         help="the init pcd name. 'random' for random, 'origin' for pcd from the whole scene")
+     parser.add_argument("--transform_the_world", action="store_true", help="Transform the world to the origin")
+diff --git a/scripts/train_gs_init.py b/scripts/train_gs_init.py
+index 4025d3f..a4fab83 100755
+--- a/scripts/train_gs_init.py
++++ b/scripts/train_gs_init.py
+@@ -231,14 +231,39 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+     Optional: [silhouette loss, monodepth loss]
+     """
+     gt_image = viewpoint_cam.original_image.to(image.dtype).cuda()
++    role_rgb_weight = float(getattr(viewpoint_cam, "role_rgb_weight", 1.0))
++    role_depth_weight = float(getattr(viewpoint_cam, "role_depth_weight", 1.0))
++    mask = getattr(viewpoint_cam, "mask", None)
++    mask3 = None
++    if mask is not None:
++        mask = mask.to(image.dtype).cuda().clamp(0.0, 1.0)
++        if torch.count_nonzero(mask > 0.5).item() >= 16:
++            mask3 = mask.expand_as(image)
++        else:
++            mask = None
+     # if opt.random_background:
+     #     gt_image = gt_image * viewpoint_cam.mask + bg[:, None, None] * (1 - viewpoint_cam.mask).squeeze()
+-    Ll1 = l1_loss(image, gt_image)
+-    Lssim = (1.0 - ssim(image, gt_image))
+-    loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * Lssim
++    if mask3 is not None:
++        Ll1 = (torch.abs(image - gt_image) * mask3).sum() / mask3.sum().clamp_min(1.0)
++        image_for_ssim = image * mask3 + gt_image * (1.0 - mask3)
++        Lssim = (1.0 - ssim(image_for_ssim, gt_image))
++    else:
++        Ll1 = l1_loss(image, gt_image)
++        Lssim = (1.0 - ssim(image, gt_image))
++    rgb_loss = (1.0 - opt.lambda_dssim) * Ll1 + opt.lambda_dssim * Lssim
++    loss = role_rgb_weight * rgb_loss
+     if tb_writer is not None:
+         tb_writer.add_scalar('loss/l1_loss', Ll1, iteration)
+         tb_writer.add_scalar('loss/ssim_loss', Lssim, iteration)
++        tb_writer.add_scalar('loss/role_rgb_weight', role_rgb_weight, iteration)
++        tb_writer.add_scalar('loss/role_depth_weight', role_depth_weight, iteration)
++
++    if mask is not None and "rendered_alpha" in render_pkg:
++        alpha = render_pkg["rendered_alpha"].to(image.dtype).clamp(1e-4, 1.0 - 1e-4)
++        silhouette_loss = F.binary_cross_entropy(alpha, mask)
++        loss = loss + role_depth_weight * opt.lambda_silhouette * silhouette_loss
++        if tb_writer is not None:
++            tb_writer.add_scalar('loss/silhouette_loss', silhouette_loss, iteration)
+ 
+     # if hasattr(args, "use_mask") and args.use_mask:
+     #     if silhouette_loss_type == "bce":
+@@ -257,17 +282,27 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+             # we apply masked monocular loss
+             disp_mono = 1/viewpoint_cam.mono_depth.clamp(1e-6).reshape(-1) # shape: [N]
+             disp_render = 1/render_pkg["rendered_depth"].clamp(1e-6).reshape(-1) # shape: [N]
++            if mask is not None:
++                depth_mask = mask.reshape(-1) > 0.5
++                if torch.count_nonzero(depth_mask).item() >= 16:
++                    disp_mono = disp_mono[depth_mask]
++                    disp_render = disp_render[depth_mask]
+             # print(viewpoint_cam.mono_depth.shape, render_pkg['rendered_depth'].shape, disp_mono.shape, disp_render.shape)
+             depth_loss = monodisp(disp_mono, disp_render, 'l1')[-1]
+         elif mono_loss_type == "pearson":
+             disp_mono = viewpoint_cam.mono_depth.clamp(1e-6).reshape(-1, 1) # shape: [N]
+             disp_render = render_pkg["rendered_depth"].clamp(1e-6).reshape(-1, 1) # shape: [N]
++            if mask is not None:
++                depth_mask = mask.reshape(-1) > 0.5
++                if torch.count_nonzero(depth_mask).item() >= 16:
++                    disp_mono = disp_mono[depth_mask]
++                    disp_render = disp_render[depth_mask]
+             # print(disp_mono.shape, disp_render.shape)
+             depth_loss = (1 - pearson_corrcoef(disp_render, -disp_mono)).mean()
+         else:
+             raise NotImplementedError
+ 
+-        loss = loss + args.mono_depth_weight * depth_loss
++        loss = loss + role_depth_weight * args.mono_depth_weight * depth_loss
+         if tb_writer is not None:
+             tb_writer.add_scalar('loss/depth_loss', depth_loss, iteration)
+ 
+@@ -293,7 +328,7 @@ if __name__ == "__main__":
+                         help="Use sparse view or dense view, if sparse_view_num > 0, use sparse view, \
+                         else use dense view. In sparse setting, sparse views will be used as training data, \
+                         others will be used as testing data.")
+-    parser.add_argument("--use_mask", default=False, help="Use masked image, by default True")
++    parser.add_argument("--use_mask", action="store_true", default=False, help="Use mask-aware supervision")
+     parser.add_argument("--init_pcd_name", default='origin', type=str, 
+                         help="the init pcd name. 'random' for random, 'origin' for pcd from the whole scene")
+     parser.add_argument("--transform_the_world", action="store_true", help="Transform the world to the origin")
+diff --git a/utils/camera_utils.py b/utils/camera_utils.py
+index 9132e46..2ac6cab 100644
+--- a/utils/camera_utils.py
++++ b/utils/camera_utils.py
+@@ -37,6 +37,9 @@ class CameraInfo(NamedTuple):
+     distance: Optional[float] = None
+     mask: Optional[np.ndarray] = None
+     mono_depth: Optional[np.ndarray] = None
++    supervision_role: Optional[str] = None
++    role_rgb_weight: float = 1.0
++    role_depth_weight: float = 1.0
+ 
+ 
+ def loadCam(args, 
+@@ -69,15 +72,15 @@ def loadCam(args,
+ 
+     gt_image = resized_image_rgb[:3, ...]
+ 
+-    if resized_image_rgb.shape[1] == 4:
++    use_mask = bool(getattr(args, "use_mask", False))
++    loaded_mask = None
++    if use_mask and resized_image_rgb.shape[0] == 4:
+         loaded_mask = resized_image_rgb[3:4, ...]
+ 
+-    # # use masked image to train
+-    # if cam_info.mask is not None:
+-    #     resized_mask = resize_mask_image(cam_info.mask, resolution)
+-    #     loaded_mask = torch.from_numpy(resized_mask).unsqueeze(0)
+-    # else:
+-    loaded_mask = None
++    # use masked image to train
++    if use_mask and cam_info.mask is not None:
++        resized_mask = resize_mask_image(cam_info.mask, resolution)
++        loaded_mask = torch.from_numpy(resized_mask).float().unsqueeze(0)
+ 
+     mono_depth = cam_info.mono_depth
+     ### we load depth here for acceleration
+@@ -89,11 +92,15 @@ def loadCam(args,
+     #         resized_depth = cv2.resize(loaded_depth, resolution, interpolation=cv2.INTER_NEAREST)
+     #         mono_depth = torch.from_numpy(resized_depth).unsqueeze(0)
+ 
+-    return Camera(colmap_id=cam_info.uid, R=cam_info.R, T=cam_info.T, 
+-                  FoVx=cam_info.FovX, FoVy=cam_info.FovY, 
+-                  image=gt_image, gt_alpha_mask=loaded_mask, mono_depth=mono_depth,
+-                  image_name=cam_info.image_name, uid=id, 
+-                  data_device=args.data_device, white_background=args.white_background, distance=cam_info.distance)
++    camera = Camera(colmap_id=cam_info.uid, R=cam_info.R, T=cam_info.T,
++                    FoVx=cam_info.FovX, FoVy=cam_info.FovY,
++                    image=gt_image, gt_alpha_mask=loaded_mask, mono_depth=mono_depth,
++                    image_name=cam_info.image_name, uid=id,
++                    data_device=args.data_device, white_background=args.white_background, distance=cam_info.distance)
++    camera.supervision_role = cam_info.supervision_role
++    camera.role_rgb_weight = float(cam_info.role_rgb_weight)
++    camera.role_depth_weight = float(cam_info.role_depth_weight)
++    return camera
+ 
+ def cameraList_from_camInfos(cam_infos, resolution_scale, args, mode="test"):
+     camera_list = []
+@@ -191,17 +198,7 @@ def transform_cams(cams, MLMatrix44):
+         Rt[:3, :3] = cam.R.transpose() # 3*3
+         Rt[:3, 3] = cam.T # (3,)
+         new_Rt = Rt @ inv_MLMatrix44
+-        new_cam = CameraInfo(cam.uid, 
+-                             new_Rt[:3, :3].transpose(), 
+-                             new_Rt[:3, 3], 
+-                             cam.FovY, 
+-                             cam.FovX, 
+-                             cam.image, 
+-                             cam.image_path, 
+-                             cam.image_name, 
+-                             cam.width, 
+-                             cam.height, 
+-                             cam.mask)
++        new_cam = cam._replace(R=new_Rt[:3, :3].transpose(), T=new_Rt[:3, 3])
+         new_cams.append(new_cam)
+     return new_cams
+ 

@@ -128,4 +128,10 @@ experiments/metrics/ri3d_first2_roleweighted_observations.md
 experiments/figures/ri3d_first2_roleweighted_iter500_inputs.png
 experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
 experiments/reconstructions/ri3d_first2_roleweighted_iter500/
+experiments/ri3d_datasets/first2_maskaware/
+experiments/metrics/ri3d_first2_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_maskaware_observations.md
+experiments/figures/ri3d_first2_maskaware_iter500_inputs.png
+experiments/figures/ri3d_first2_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_maskaware_iter500/
 ```

@@ -11,6 +11,9 @@ Current pilot:
 ```text
 experiments/ri3d_datasets/first2/
 experiments/ri3d_datasets/first2_160/
+experiments/ri3d_datasets/first2_roleaware/
+experiments/ri3d_datasets/first2_roleweighted/
+experiments/ri3d_datasets/first2_maskaware/
 ```
 
 It contains 2 samples x 3 variants:
@@ -19,6 +22,7 @@ It contains 2 samples x 3 variants:
 raw75_all6
 raw75_budget4
 cutout75_budget4_masked
+roleaware_cutout75_budget4
 ```
 
 Each scene is ready for `external/ri3d` and includes:
@@ -31,6 +35,7 @@ train_test_split_<N>.json
 depths<N>.npy
 confs<N>.npy
 source_metadata.json
+masks/                  # only for mask-aware role datasets
 ```
 
 The depth files are simple CPU-generated bootstrap priors. They are not ground
@@ -46,3 +51,10 @@ python3 scripts/prepare_ri3d_dataset.py --output-root experiments/ri3d_datasets/
 
 Generated `point_cloud.ply` files are local RI3D bootstrap artifacts and are
 ignored to keep GitHub checkpoints compact.
+
+`first2_maskaware` adds per-frame `mask_path`, `source_mask`, and
+`mask_coverage` metadata and is intended to be trained with:
+
+```bash
+USE_MASK=1 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware bash scripts/run_ri3d_first2.sh
+```

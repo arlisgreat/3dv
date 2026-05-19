@@ -30,12 +30,13 @@ RI3D first2 160px downstream smoke
 RI3D first2 160px iter500 gate
 RI3D first2 role-aware iter500 gate
 RI3D first2 role-weighted iter500 gate
+RI3D first2 mask-aware iter500 gate
 ```
 
 还没有完成：
 
 ```text
-spatial mask-aware RI3D loss 是否能减少 pseudo-view 背景/相框 artifact 并稳定改善最终 3D reconstruction
+foreground-canonical mask ablation 是否能修复 G11 的小碎片/相框 artifact
 ```
 
 当前默认 pseudo-view 前端：
@@ -447,6 +448,7 @@ RI3D first2 160px iter50 smoke 已完成
 RI3D first2 160px iter500 gate 已完成，但结论 ambiguous
 RI3D first2 role-aware iter500 gate 已完成，但非侵入版本仍 ambiguous
 RI3D first2 role-weighted iter500 gate 已完成，但 scalar weights 仍 ambiguous
+RI3D first2 mask-aware iter500 gate 已完成，但 foreground-only loss 仍没有修复视觉 artifact
 ```
 
 下一步要验证：
@@ -480,6 +482,7 @@ experiments/ri3d_datasets/first2/
 experiments/ri3d_datasets/first2_160/
 experiments/ri3d_datasets/first2_roleaware/
 experiments/ri3d_datasets/first2_roleweighted/
+experiments/ri3d_datasets/first2_maskaware/
 ```
 
 包含：
@@ -491,6 +494,7 @@ raw75_budget4: 4 views/sample
 cutout75_budget4_masked: 4 views/sample
 roleaware_cutout75_budget4: 4 views/sample, with supervision_role metadata
 roleweighted_cutout75_budget4: same views plus role_rgb_weight / role_depth_weight
+maskaware_cutout75_budget4: same views plus mask_path / source_mask / mask_coverage
 ```
 
 CPU 端准备脚本：
@@ -510,6 +514,9 @@ GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware OUT_RO
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
 GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted OUT_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_maskaware --variants roleaware_cutout75_budget4 --image-size 160 --overwrite
+GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
 ```
 
 默认输出：
@@ -520,6 +527,7 @@ experiments/downstream_3d/ri3d_first2_160_iter50/
 experiments/downstream_3d/ri3d_first2_160_iter500/
 experiments/downstream_3d/ri3d_first2_roleaware_iter500/
 experiments/downstream_3d/ri3d_first2_roleweighted_iter500/
+experiments/downstream_3d/ri3d_first2_maskaware_iter500/
 ```
 
 已发布结果：
@@ -550,6 +558,13 @@ experiments/metrics/ri3d_first2_roleweighted_observations.md
 experiments/figures/ri3d_first2_roleweighted_iter500_inputs.png
 experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
 experiments/reconstructions/ri3d_first2_roleweighted_iter500/
+patches/ri3d/mask_aware_loss.patch
+experiments/ri3d_datasets/first2_maskaware/
+experiments/metrics/ri3d_first2_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_maskaware_observations.md
+experiments/figures/ri3d_first2_maskaware_iter500_inputs.png
+experiments/figures/ri3d_first2_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_maskaware_iter500/
 ```
 
 阶段结论：
@@ -571,7 +586,12 @@ render sheet 仍有 fragmented/rotated photo-card artifacts，所以 G9 是
 infrastructure pass，不是最终 method win。
 G10 已完成 explicit role-weighted RI3D loss：web_clean_frontal_03 的 weighted
 loss 降低但不能直接和未加权 loss 比较；web_clean_frontal_01 略优于 G9。
-render sheet 仍有同类 artifacts，所以下一步必须使用 spatial mask-aware loss。
+render sheet 仍有同类 artifacts。
+G11 已完成 spatial mask-aware RI3D loss：MP4/PNG/CSV 全部导出且训练可复现，
+但 render sheet 仍显示小碎片/相框 artifact。foreground-only loss 不能解决
+尺度/位置 canonicalization 和结构先验缺失问题。
+因此下一步不是 first10 扩展，而是 first2 foreground-canonical crop/recenter
+和 mask-loss ablation。
 ```
 
 对比指标：
@@ -609,5 +629,5 @@ C: cutout75_budget4_masked
 当前最重要的未闭环问题：
 
 ```text
-mask-aware role supervision 是否在 first2 和 first10 中稳定优于 raw75_budget4？
+foreground-canonical role/mask supervision 是否能在 first2 修复 G11 的视觉失败？
 ```

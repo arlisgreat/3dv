@@ -211,6 +211,14 @@ GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted OUT
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleweighted_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
 ```
 
+RI3D first2 mask-aware 500-iteration gate 复现命令：
+
+```bash
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_maskaware --variants roleaware_cutout75_budget4 --image-size 160 --overwrite
+GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+```
+
 当前结论：
 
 ```text
@@ -226,11 +234,13 @@ RI3D first2 role-aware iter500 已完成；角色 metadata/desaturation 路径�
 但 loss 和 render sheet 仍不构成稳定 method win。
 RI3D first2 role-weighted iter500 已完成；per-view scalar role weights 路径跑通，
 但 render sheet 仍有 fragmented/photo-card artifacts，仍不是最终 method win。
+RI3D first2 mask-aware iter500 已完成；mask_path/USE_MASK 训练路径跑通，
+但 foreground-only loss 仍学出小碎片/相框 artifact，不是最终 method win。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 实现 G11：spatial mask-aware RI3D loss。
-3. 让 trusted foreground / mask 区域进入 RGB 或 silhouette 监督，压低背景/相框像素的影响。
-4. 如果 G11/G12 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
+2. 实现 G12：foreground-canonical crop/recenter + mask-loss ablation。
+3. 如果 G12 仍失败，接入 LAM/FLAME/full-head geometry prior。
+4. 只有当 G12/G13 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
