@@ -148,6 +148,10 @@ mask-loss ablation；若仍失败，再接 LAM/FLAME/full-head geometry prior，
 G12 已完成 foreground canonical crop/recenter 和 mask-loss ablation：输入 sheet
 明显更干净，但 USE_MASK=1/0 都仍输出卡片/碎片。当前应转 G13，先验证
 LAM/FLAME/full-head geometry prior 能否作为结构锚点；在此之前不扩 first10。
+G13 已完成 RI3D foreground point-cloud initialization filter：它去掉了 G12 中
+明显的灰色矩形卡片背景，说明初始化确实是一个关键失效源；但输出仍是
+前景碎片，不是稳定 3D head。因此下一步 G14 应使用现有 LAM tracking export
+里的 FLAME mesh/depth/silhouette 做更强结构先验，或把论文主张转向诊断负结果。
 
 ### Week 4
 

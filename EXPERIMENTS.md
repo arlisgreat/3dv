@@ -32,12 +32,13 @@ RI3D first2 role-aware iter500 gate
 RI3D first2 role-weighted iter500 gate
 RI3D first2 mask-aware iter500 gate
 RI3D first2 foreground-canonical mask ablations
+RI3D first2 foreground point-cloud initialization filter
 ```
 
 还没有完成：
 
 ```text
-LAM/FLAME/full-head geometry prior 是否能修复 G8-G12 的卡片/碎片 artifact
+LAM/FLAME/full-head mesh/depth/silhouette prior 是否能修复 G13 仍存在的碎片 artifact
 ```
 
 当前默认 pseudo-view 前端：
@@ -594,6 +595,14 @@ experiments/reconstructions/ri3d_first2_fgcenter_maskaware_iter500/
 experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/
 experiments/reconstructions/ri3d_first2_fghead_maskaware_iter500/
 experiments/reconstructions/ri3d_first2_fghead_unmasked_iter500/
+patches/ri3d/geometry_prior_pointcloud_filter.patch
+experiments/metrics/geometry_prior_first2_plan.md
+experiments/metrics/ri3d_first2_fghead_pcdmask_iter500.csv
+experiments/metrics/ri3d_first2_fghead_pcdmask_observations.md
+experiments/figures/ri3d_first2_fghead_pcdmask_iter500_inputs.png
+experiments/figures/ri3d_first2_fghead_pcdmask_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_pcdmask_vs_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_fghead_pcdmask_iter500/
 ```
 
 阶段结论：

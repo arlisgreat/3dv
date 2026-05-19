@@ -15,6 +15,7 @@ set -euo pipefail
 #   VARIANTS_STR="raw75_budget4 roleaware_cutout75_budget4"
 #   SAMPLES_STR="web_clean_frontal_03 web_clean_frontal_01"
 #   USE_MASK=1
+#   PCD_MASK_FILTER=1
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RI3D_ROOT="${RI3D_ROOT:-$PROJECT_ROOT/external/ri3d}"
@@ -24,6 +25,10 @@ ITERATIONS="${ITERATIONS:-1500}"
 GPU="${GPU:-0}"
 SH_DEGREE="${SH_DEGREE:-2}"
 USE_MASK="${USE_MASK:-0}"
+PCD_MASK_FILTER="${PCD_MASK_FILTER:-0}"
+PCD_CONF_THRESHOLD="${PCD_CONF_THRESHOLD:-0.0}"
+PCD_MIN_POINTS="${PCD_MIN_POINTS:-256}"
+PCD_POINTS_PER_VIEW="${PCD_POINTS_PER_VIEW:-0}"
 VARIANTS_INPUT="${VARIANTS_STR:-${VARIANTS:-raw75_all6 raw75_budget4 cutout75_budget4_masked}}"
 SAMPLES_INPUT="${SAMPLES_STR:-${SAMPLES:-web_clean_frontal_03 web_clean_frontal_01}}"
 
@@ -46,6 +51,23 @@ case "${USE_MASK,,}" in
   0|false|no|off|"") ;;
   *)
     echo "Unsupported USE_MASK value: $USE_MASK" >&2
+    exit 1
+    ;;
+esac
+
+PCD_FILTER_ARGS=()
+case "${PCD_MASK_FILTER,,}" in
+  1|true|yes|on)
+    PCD_FILTER_ARGS=(
+      --pointcloud_mask_filter
+      --pointcloud_conf_threshold "$PCD_CONF_THRESHOLD"
+      --pointcloud_min_points "$PCD_MIN_POINTS"
+      --pointcloud_points_per_view "$PCD_POINTS_PER_VIEW"
+    )
+    ;;
+  0|false|no|off|"") ;;
+  *)
+    echo "Unsupported PCD_MASK_FILTER value: $PCD_MASK_FILTER" >&2
     exit 1
     ;;
 esac
@@ -93,6 +115,7 @@ for variant in "${VARIANTS[@]}"; do
       --random_background \
       --iterations 1 \
       "${MASK_ARGS[@]}" \
+      "${PCD_FILTER_ARGS[@]}" \
       2>&1 | tee "$log_dir/${tag}_init.log"
 
     ply_path="$init_out/point_cloud/iteration_1/point_cloud.ply"
@@ -114,6 +137,7 @@ for variant in "${VARIANTS[@]}"; do
       --save_iterations "$ITERATIONS" \
       --ply_path "$ply_path" \
       "${MASK_ARGS[@]}" \
+      "${PCD_FILTER_ARGS[@]}" \
       2>&1 | tee "$log_dir/${tag}_train.log"
 
     echo "Finished: $tag"

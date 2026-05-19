@@ -1,0 +1,149 @@
+diff --git a/scene/dataset_readers_flow.py b/scene/dataset_readers_flow.py
+index 5304e80..3eab197 100644
+--- a/scene/dataset_readers_flow.py
++++ b/scene/dataset_readers_flow.py
+@@ -99,6 +99,51 @@ def load_frame_mask(path, frame):
+     return mask.astype(np.float32) / 255.0
+
+
++def exact_point_subset(keep, target_points):
++    target_points = int(target_points)
++    if target_points <= 0:
++        return keep
++    indices = np.flatnonzero(keep)
++    if indices.size <= target_points:
++        return keep
++    selected = np.linspace(0, indices.size - 1, target_points).astype(np.int64)
++    subset = np.zeros_like(keep, dtype=bool)
++    subset[indices[selected]] = True
++    return subset
++
++
++def pointcloud_filter_for_frame(
++        cam_info, confidence, depth_rel, min_points, conf_threshold,
++        use_frame_mask=True, target_points=0, verbose=True):
++    valid = np.isfinite(depth_rel).reshape(-1) & (depth_rel.reshape(-1) > 1e-6)
++    keep = valid.copy()
++
++    if confidence is not None:
++        conf = confidence
++        if conf.ndim == 3:
++            conf = conf[..., 0]
++        keep &= conf.reshape(-1) >= conf_threshold
++
++    if use_frame_mask and getattr(cam_info, "mask", None) is not None:
++        frame_mask = cam_info.mask
++        if frame_mask.shape != depth_rel.shape:
++            frame_mask = cv2.resize(frame_mask, (depth_rel.shape[1], depth_rel.shape[0]), interpolation=cv2.INTER_NEAREST)
++        keep &= frame_mask.reshape(-1) > 0.5
++
++    if int(keep.sum()) < int(min_points):
++        if verbose:
++            print(
++                f"Pointcloud mask filter fallback for {cam_info.image_name}: "
++                f"{int(keep.sum())} kept < {int(min_points)} min points"
++            )
++        keep = valid
++
++    keep = exact_point_subset(keep, target_points)
++    if verbose:
++        print(f"Pointcloud mask filter for {cam_info.image_name}: {int(keep.sum())}/{keep.size} points kept")
++    return keep
++
++
+
+ def readMipTransforms(path, resolution=4):
+     cam_infos = []
+@@ -308,6 +353,30 @@ def readColmapSceneInfo(path, images, eval, llffhold=8, extra_opts=None, ply_ini
+
+     flows = np.load(f'{path}/depths{extra_opts.sparse_view_num}.npy')
+     masks = np.load(f'{path}/confs{extra_opts.sparse_view_num}.npy')
++    pointcloud_mask_filter = bool(getattr(extra_opts, "pointcloud_mask_filter", False))
++    pointcloud_conf_threshold = float(getattr(extra_opts, "pointcloud_conf_threshold", 0.0))
++    pointcloud_min_points = int(getattr(extra_opts, "pointcloud_min_points", 256))
++    pointcloud_use_frame_mask = bool(getattr(extra_opts, "pointcloud_use_frame_mask", True))
++    pointcloud_points_per_view = int(getattr(extra_opts, "pointcloud_points_per_view", 0))
++    if pointcloud_mask_filter and pointcloud_points_per_view <= 0:
++        per_view_counts = []
++        for idx, cam_info in enumerate(train_cam_infos):
++            depth_rel = np.load(f'{os.path.dirname(cam_info.image_path)}/depth_rel/inp_dust3r{os.path.splitext(cam_info.image_name)[0]}_{extra_opts.sparse_view_num}.npy')
++            if depth_rel.shape[-1] == 3:
++                depth_rel = depth_rel[..., 0]
++            keep = pointcloud_filter_for_frame(
++                cam_info,
++                masks[idx],
++                depth_rel,
++                min_points=pointcloud_min_points,
++                conf_threshold=pointcloud_conf_threshold,
++                use_frame_mask=pointcloud_use_frame_mask,
++                target_points=0,
++                verbose=False,
++            )
++            per_view_counts.append(int(keep.sum()))
++        pointcloud_points_per_view = max(pointcloud_min_points, min(per_view_counts))
++        print(f"Pointcloud mask filter dynamic target: {pointcloud_points_per_view} points/view")
+     # print(train_cam_infos)
+     # exit()
+     xyz_arr, rgb_arr, radii2_arr, sparse_dep_arr = [], [], [], []
+@@ -378,6 +447,19 @@ def readColmapSceneInfo(path, images, eval, llffhold=8, extra_opts=None, ply_ini
+             xyz_cam = camera3d[0].permute(1, 2, 0).reshape(-1, 3).numpy()
+             rgb = torch.Tensor(im_data).reshape(-1, 3).numpy()
+             radii2 = radii2[0].permute(1, 2, 0).reshape(-1).numpy()
++            if pointcloud_mask_filter:
++                pcd_keep = pointcloud_filter_for_frame(
++                    cam_info,
++                    masks[idx],
++                    depth_rel,
++                    min_points=pointcloud_min_points,
++                    conf_threshold=pointcloud_conf_threshold,
++                    use_frame_mask=pointcloud_use_frame_mask,
++                    target_points=pointcloud_points_per_view,
++                )
++                xyz_cam = xyz_cam[pcd_keep]
++                rgb = rgb[pcd_keep]
++                radii2 = radii2[pcd_keep]
+             # print(height, width, depth.shape, xyz_cam.shape, radii2.shape, K, extra_opts.resolution, cam_info.width, cam_info.height)
+             # exit()
+
+diff --git a/scripts/train_gs.py b/scripts/train_gs.py
+index 6135ed9..3c9d522 100755
+--- a/scripts/train_gs.py
++++ b/scripts/train_gs.py
+@@ -329,6 +329,16 @@ if __name__ == "__main__":
+                         else use dense view. In sparse setting, sparse views will be used as training data, \
+                         others will be used as testing data.")
+     parser.add_argument("--use_mask", action="store_true", default=False, help="Use mask-aware supervision")
++    parser.add_argument("--pointcloud_mask_filter", action="store_true", default=False,
++                        help="Filter point-cloud initialization by frame masks/confidence")
++    parser.add_argument("--pointcloud_conf_threshold", type=float, default=0.0,
++                        help="Minimum confidence for point-cloud initialization when filtering")
++    parser.add_argument("--pointcloud_min_points", type=int, default=256,
++                        help="Fallback to all valid depth points if filtering keeps fewer points")
++    parser.add_argument("--pointcloud_points_per_view", type=int, default=0,
++                        help="Exact points per view for filtered point-cloud initialization; 0 uses per-scene minimum")
++    parser.add_argument("--pointcloud_use_frame_mask", action="store_true", default=True,
++                        help="Use frame masks for point-cloud initialization filtering")
+     parser.add_argument("--init_pcd_name", default='origin', type=str,
+                         help="the init pcd name. 'random' for random, 'origin' for pcd from the whole scene")
+     parser.add_argument("--transform_the_world", action="store_true", help="Transform the world to the origin")
+diff --git a/scripts/train_gs_init.py b/scripts/train_gs_init.py
+index a4fab83..d57f8ae 100755
+--- a/scripts/train_gs_init.py
++++ b/scripts/train_gs_init.py
+@@ -329,6 +329,16 @@ if __name__ == "__main__":
+                         else use dense view. In sparse setting, sparse views will be used as training data, \
+                         others will be used as testing data.")
+     parser.add_argument("--use_mask", action="store_true", default=False, help="Use mask-aware supervision")
++    parser.add_argument("--pointcloud_mask_filter", action="store_true", default=False,
++                        help="Filter point-cloud initialization by frame masks/confidence")
++    parser.add_argument("--pointcloud_conf_threshold", type=float, default=0.0,
++                        help="Minimum confidence for point-cloud initialization when filtering")
++    parser.add_argument("--pointcloud_min_points", type=int, default=256,
++                        help="Fallback to all valid depth points if filtering keeps fewer points")
++    parser.add_argument("--pointcloud_points_per_view", type=int, default=0,
++                        help="Exact points per view for filtered point-cloud initialization; 0 uses per-scene minimum")
++    parser.add_argument("--pointcloud_use_frame_mask", action="store_true", default=True,
++                        help="Use frame masks for point-cloud initialization filtering")
+     parser.add_argument("--init_pcd_name", default='origin', type=str,
+                         help="the init pcd name. 'random' for random, 'origin' for pcd from the whole scene")
+     parser.add_argument("--transform_the_world", action="store_true", help="Transform the world to the origin")

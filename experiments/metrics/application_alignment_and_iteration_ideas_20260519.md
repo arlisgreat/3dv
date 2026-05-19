@@ -190,6 +190,10 @@ Medium-term architecture:
 11. After G12, stop adding RI3D crop/mask variants until a structural prior is
     present. LAM/FLAME/full-head depth, normal, silhouette, or initialization
     should be tested before any first10 expansion.
+12. After G13, keep the foreground point-cloud initialization filter as a useful
+    repair switch: it removes much of the rectangular card background. Do not
+    treat it as the final prior because detached foreground chunks remain.
+    The next iteration should use actual LAM/FLAME mesh/depth/silhouette.
 ```
 
 High-risk / rollback-monitored work:
@@ -226,6 +230,10 @@ RI3D first2 foreground-canonical ablations improve input scale and remove
 disconnected components, but both USE_MASK=1 and USE_MASK=0 still render
 card-like fragments. The repeated failure now points to missing structural
 geometry rather than only pseudo-view selection, masks, or crop scale.
+RI3D first2 foreground point-cloud filtering validates the initialization
+failure hypothesis: card backgrounds are reduced after background points are
+removed from the initial point cloud. It still leaves detached foreground
+fragments, so an actual LAM/FLAME structure prior is still needed.
 ```
 
 The next concrete experiment should keep the same first2 samples and introduce

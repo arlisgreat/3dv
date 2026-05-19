@@ -75,6 +75,7 @@ quality without explicit role-weighted losses.
 | G10 | done, ambiguous | Explicit role-weighted RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleweighted_iter500.csv` | Scalar per-view role weights run, but spatial artifacts remain dominant. |
 | G11 | done, negative | Spatial mask-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_maskaware_iter500.csv` | Mask-aware loss runs and exports valid videos, but visual artifacts remain and recentering/priors are needed. |
 | G12 | done, negative | Foreground-canonical mask ablation on first2 | `experiments/metrics/ri3d_first2_fghead_unmasked_iter500.csv` | Foreground scale/crop and mask-loss ablations improve inputs but still render card-like fragments. |
+| G13 | done, partial positive | RI3D foreground point-cloud initialization filter | `experiments/metrics/ri3d_first2_fghead_pcdmask_iter500.csv` | Card backgrounds are reduced, but detached foreground fragments remain; a stronger FLAME/LAM structural prior is still needed. |
 
 ## G8 Result
 
@@ -379,60 +380,130 @@ to make RI3D pseudo-view supervision produce a stable 3D head. The next step
 must add a structural geometry prior, not more first2 crop/mask variants.
 ```
 
-## Active Milestone: G13
+## G13 Result
 
 Name:
 
 ```text
-Geometry-prior first2 repair
+Foreground point-cloud geometry-prior first2 repair
 ```
 
 Purpose:
 
 ```text
-Inject a stronger structure signal after G8-G12 all show that filtered
-pseudo-view RGB/mask supervision alone collapses into card-like geometry.
-Start with the lowest-risk local prior: LAM/FLAME/full-head silhouette, depth,
-normal, or initialization evidence that can be generated from existing first2
-inputs without retraining a new model.
+Test whether G12's card artifact is seeded by RI3D initialization. G11/G12 only
+used masks in supervision loss; RI3D still back-projected every image pixel into
+the initial point cloud. G13 adds a gated point-cloud filter that keeps only
+trusted foreground mask pixels and equalizes point count per view to preserve
+RI3D's internal camera grouping assumption.
+```
+
+Patch:
+
+```text
+patches/ri3d/geometry_prior_pointcloud_filter.patch
+scripts/run_ri3d_first2.sh adds PCD_MASK_FILTER=1 plumbing
+external/ri3d dataset reader filters initial point cloud by frame mask/confidence
+dynamic equal-points-per-view target avoids GaussianModel grouping failure
+```
+
+Published artifacts:
+
+```text
+experiments/metrics/geometry_prior_first2_plan.md
+patches/ri3d/geometry_prior_pointcloud_filter.patch
+experiments/metrics/ri3d_first2_fghead_pcdmask_iter500.csv
+experiments/metrics/ri3d_first2_fghead_pcdmask_observations.md
+experiments/figures/ri3d_first2_fghead_pcdmask_iter500_inputs.png
+experiments/figures/ri3d_first2_fghead_pcdmask_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_pcdmask_vs_maskaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_fghead_pcdmask_iter500/
+```
+
+Point-count and loss summary:
+
+```text
+web_clean_frontal_03:
+  foreground points/view: 6766
+  total splats: 27064
+  final loss: 0.1139016
+
+web_clean_frontal_01:
+  foreground points/view: 9516
+  total splats: 38064
+  final loss: 0.2007467
+```
+
+Interpretation:
+
+```text
+G13 removes or reduces the gray rectangular card backgrounds visible in G12,
+so the initialization hypothesis is partially supported.
+
+However, render sheets still show detached foreground chunks rather than a
+stable 3D head. Training loss is much larger because the objective and point
+support changed, so G13 should be judged visually and structurally, not by loss
+against G12.
+
+Conclusion: foreground point-cloud filtering is a useful RI3D repair and should
+remain available behind `PCD_MASK_FILTER=1`, but it is not a complete geometry
+prior. The next milestone should use actual LAM/FLAME mesh/depth/silhouette
+structure or pivot the paper toward a diagnostic negative result.
+```
+
+## Active Milestone: G14
+
+Name:
+
+```text
+LAM/FLAME structural prior first2 repair
+```
+
+Purpose:
+
+```text
+Use the existing LAM tracking exports for the same first2 samples to generate a
+stronger full-head structural proxy: FLAME mesh/depth/silhouette/normal or a
+LAM-rendered positive-control baseline. Compare against G13 to decide whether
+RI3D can be repaired enough for this paper sprint.
 ```
 
 Planned outputs:
 
 ```text
-experiments/metrics/geometry_prior_first2_plan.md
-experiments/metrics/geometry_prior_first2_observations.md
-experiments/figures/geometry_prior_first2_*.png
-experiments/reconstructions/geometry_prior_first2_*/
-patches/ri3d/geometry_prior_*.patch if RI3D loss/init is changed
+experiments/metrics/flame_geometry_prior_first2_plan.md
+experiments/metrics/flame_geometry_prior_first2_observations.md
+experiments/figures/flame_geometry_prior_first2_*.png
+experiments/reconstructions/flame_geometry_prior_first2_*/
+patches/ri3d/flame_geometry_prior_*.patch if RI3D is changed
 ```
 
 Pass criteria:
 
 ```text
-1. A LAM/FLAME/full-head structural proxy is generated for the same first2 samples.
-2. The proxy can be consumed without overwriting G8-G12 artifacts.
-3. Render sheets reduce card-like planes or clearly explain why the RI3D path is
-   the wrong downstream baseline for this paper sprint.
+1. A LAM/FLAME-derived structural proxy is generated for web_clean_frontal_03 and web_clean_frontal_01.
+2. The proxy is consumed without overwriting G8-G13 artifacts.
+3. Render sheets reduce detached foreground fragments beyond G13, or clearly
+   prove RI3D is the wrong downstream baseline for the final paper framing.
 ```
 
 Failure criteria:
 
 ```text
-1. Available LAM/FLAME outputs cannot provide a usable first2 structural proxy.
-2. Geometry-prior integration requires a large risky rewrite.
-3. Outputs still collapse to cards/fragments, pushing the paper framing toward a
-   diagnostic negative result rather than a reconstruction method win.
+1. Available LAM/FLAME outputs cannot provide usable first2 depth/silhouette/mesh priors.
+2. Integration requires a large risky rewrite beyond the paper sprint budget.
+3. Outputs still collapse to fragments, pushing the claim toward pseudo-view
+   failure diagnosis rather than a reconstruction method win.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G13 | Geometry-prior first2 repair | G12 fails or remains ambiguous | LAM/FLAME/normal/depth prior either helps or is rejected |
-| G14 | Expand to first10 downstream | G12/G13 positive | Per-group result table across clean/side/glasses/hair/occlusion |
-| G15 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
-| G16 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G14 | LAM/FLAME structural prior first2 repair | G13 remains fragmented | LAM/FLAME/normal/depth prior either helps or is rejected |
+| G15 | Expand to first10 downstream | G14 positive or paper pivots to diagnostic baseline comparison | Per-group result table across clean/side/glasses/hair/occlusion |
+| G16 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
+| G17 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

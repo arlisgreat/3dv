@@ -227,6 +227,13 @@ GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghea
 GPU=0 USE_MASK=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fghead_unmasked_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
 ```
 
+RI3D first2 foreground point-cloud filter 复现命令：
+
+```bash
+GPU=0 USE_MASK=1 PCD_MASK_FILTER=1 PCD_CONF_THRESHOLD=0.0 PCD_MIN_POINTS=256 PCD_POINTS_PER_VIEW=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fghead_pcdmask_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_fghead_pcdmask_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+```
+
 当前结论：
 
 ```text
@@ -246,11 +253,13 @@ RI3D first2 mask-aware iter500 已完成；mask_path/USE_MASK 训练路径跑通
 但 foreground-only loss 仍学出小碎片/相框 artifact，不是最终 method win。
 RI3D first2 foreground-canonical ablations 已完成；输入尺度和主体对齐改善，
 但 USE_MASK=1/0 都仍输出卡片/碎片，不是最终 method win。
+RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景明显减少，
+但仍有 detached foreground fragments，不是最终 method win。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 实现 G13：LAM/FLAME/full-head geometry prior first2 repair。
-3. 如果 G13 仍失败，把论文定位收紧为诊断负结果和 failure-aware protocol。
-4. 只有当 G13 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
+2. 实现 G14：LAM/FLAME mesh/depth/silhouette structural prior first2 repair。
+3. 如果 G14 仍失败，把论文定位收紧为诊断负结果和 failure-aware protocol。
+4. 只有当结构先验证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
