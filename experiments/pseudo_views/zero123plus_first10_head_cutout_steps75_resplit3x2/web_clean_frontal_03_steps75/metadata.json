@@ -1,0 +1,79 @@
+{
+  "sample_id": "web_clean_frontal_03",
+  "input": "/data1/workspace/airulan/3dv/experiments/inputs/first10/head_cutouts/web_clean_frontal_03.png",
+  "source": {
+    "sample_id": "web_clean_frontal_03",
+    "input_path": "experiments/inputs/first10/head_cutouts/web_clean_frontal_03.png",
+    "original_input_path": "experiments/inputs/first10/cutouts/web_clean_frontal_03.png",
+    "group": "clean_frontal",
+    "input_yaw": "0",
+    "source_title": "File:Alexander Freeman Headshot.jpg",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Alexander_Freeman_Headshot.jpg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Alexander_Freeman_Headshot.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "artist": "John Freeman",
+    "credit": "Own work",
+    "sha256": "2041abd03285ffd00cf652045d5b55c403ce0f14c94acca6a0d8f73204dbc448",
+    "width": "1280",
+    "height": "1660",
+    "query": "headshot portrait man",
+    "notes": "clean frontal web portrait",
+    "alpha_coverage": "0.502453",
+    "alpha_bbox": "94;17;456;512",
+    "padded_bbox": "45;0;505;512",
+    "cutout_scale": "0.920000",
+    "head_crop_box": "0;0;512;512",
+    "head_crop_face": "",
+    "head_crop_gate_note": "fallback_crop"
+  },
+  "model": "sudo-ai/zero123plus-v1.2",
+  "custom_pipeline": "sudo-ai/zero123plus-pipeline",
+  "steps": 75,
+  "seed": 42,
+  "device": "cuda:0",
+  "grid": {
+    "rows": 3,
+    "cols": 2,
+    "file": "grid.png"
+  },
+  "views": [
+    {
+      "index": 0,
+      "file": "view_00_az030_el+20.png",
+      "azimuth": 30,
+      "elevation": 20
+    },
+    {
+      "index": 1,
+      "file": "view_01_az090_el-10.png",
+      "azimuth": 90,
+      "elevation": -10
+    },
+    {
+      "index": 2,
+      "file": "view_02_az150_el+20.png",
+      "azimuth": 150,
+      "elevation": 20
+    },
+    {
+      "index": 3,
+      "file": "view_03_az210_el-10.png",
+      "azimuth": 210,
+      "elevation": -10
+    },
+    {
+      "index": 4,
+      "file": "view_04_az270_el+20.png",
+      "azimuth": 270,
+      "elevation": 20
+    },
+    {
+      "index": 5,
+      "file": "view_05_az330_el-10.png",
+      "azimuth": 330,
+      "elevation": -10
+    }
+  ],
+  "resplit_from": "/data1/workspace/airulan/3dv/experiments/pseudo_views/zero123plus_first10_head_cutout_steps75/web_clean_frontal_03_steps75",
+  "resplit_note": "Corrected Zero123++ grid split from historical rows=2, cols=3 to rows=3, cols=2."
+}

@@ -40,7 +40,7 @@ View selection and failure-aware filtering matter more than blindly adding more
 diffusion pseudo views.
 ```
 
-Current pseudo-view frontend:
+Current diagnostic pseudo-view frontend:
 
 ```text
 subject cutout
@@ -48,6 +48,7 @@ subject cutout
 -> CLIP + reliability budget4
 -> trusted-region mask
 -> face identity / geometry-only / reject split
+-> diagnostic-only unless a later visual gate passes
 ```
 
 Current unresolved claim:
@@ -84,8 +85,11 @@ Current verdict:
 
 ```text
 BLOCKED for reconstruction training.
-The existing experiments/downstream_datasets candidate pools are visually poor
-and only usable as failure evidence.
+The existing experiments/downstream_datasets candidate pools are invalid for
+training. A later audit also found a severe Zero123++ 2x3/3x2 grid split bug
+that contaminates historical per-view PNGs.
+After correct 3x2 resplitting, the head-cutout pseudo views are still visibly
+distorted, so web first10 remains diagnostic-only.
 ```
 
 ## Completed Milestones
@@ -108,6 +112,9 @@ and only usable as failure evidence.
 | G13 | done, partial positive | RI3D foreground point-cloud initialization filter | `experiments/metrics/ri3d_first2_fghead_pcdmask_iter500.csv` | Card backgrounds are reduced, but detached foreground fragments remain; a stronger FLAME/LAM structural prior is still needed. |
 | G14 | done, diagnostic negative | FLAME proxy depth/conf prior on G13 | `experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv` | FLAME proxy priors run and export valid videos, but lose subject support and do not repair detached fragments. |
 | G15a | done, blocked | Candidate-pool structural and visual audit | `experiments/metrics/first10_candidate_pool_audit_gate_20260519.md` | Existing downstream candidate pools fail the reconstruction-training premise. |
+| G15b | done, probe input pass | Head-cutout input recovery gate | `experiments/metrics/first10_head_cutout_input_gate_20260519.md` | Tighter gray-background head crops pass only for a small generation probe, not reconstruction training. |
+| G15c | done, blocked for training | Zero123++ 3x2 split correction and head-cutout probe | `experiments/metrics/zero123plus_grid_split_bug_20260519.md` | Correct 3x2 splitting fixes a major preprocessing bug, but pseudo views still show visible distortions and remain diagnostic-only. |
+| G16a | in progress | GT dataset access gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | FaceScape sample metadata confirms the right data structure, but raw sample assets cannot be redistributed and reconstruction rerun is still blocked. |
 
 ## G8 Result
 
@@ -556,59 +563,60 @@ toward failure-aware pseudo-view supervision and failure taxonomy, not a claim
 that RI3D plus generic FLAME proxy is already a strong reconstruction method.
 ```
 
-## Active Milestone: G15
+## Active Milestone: G16
 
 Name:
 
 ```text
-candidate-pool recovery and VLM-gated regeneration
+GT multi-view dataset access and compact case export
 ```
 
 Purpose:
 
 ```text
-Recover from the failed candidate-pool premise. The existing selected pseudo
-views are too poor to support reconstruction training, so the next milestone is
-to regenerate or repair candidate pools with a stronger visual/VLM gate before
-any more RI3D/Gaussian experiments.
+Stop using distorted web pseudo views as reconstruction-training premises.
+Use a public dataset case with real multi-view images, camera calibration, and
+mesh/point-cloud ground truth for any reconstruction-quality claim.
 ```
 
 Planned outputs:
 
 ```text
 experiments/metrics/milestone_data_audit_protocol_20260519.md
-experiments/metrics/first10_diagnostic_plan.md
-experiments/metrics/first10_candidate_pool_recovery_plan.md
-experiments/metrics/first10_candidate_pool_audit_gate_*.csv
-experiments/metrics/first10_candidate_pool_visual_audit_*.md
-experiments/figures/first10_candidate_pool_visual_audit_*.png
-experiments/pseudo_views/<regenerated_or_repaired_candidates>/
-experiments/metrics/<regenerated_candidate_quality>.csv
+experiments/metrics/zero123plus_grid_split_bug_20260519.md
+experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
+experiments/metrics/gt_dataset_route_plan_20260519.md
+experiments/metrics/gt_dataset_access_gate_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.json
+experiments/metrics/gt_case_manifest_*.csv
+experiments/figures/gt_case_*_contact_sheet.png
+experiments/metrics/first10_head_cutout_input_gate_20260519.md
+experiments/inputs/first10/head_cutouts/
+experiments/figures/first10_head_cutout_inputs.png
 experiments/metrics/downstream_candidate_pool_semantics_20260519.md
 ```
 
 Pass criteria:
 
 ```text
-1. Candidate pools pass structural audit with no stale paths or missing refs.
-2. VLM/manual visual audit rejects split bodies, rotated photo cards, cropped
-   fragments, and background/body-only candidates.
-3. The gate explicitly records whether candidates are PASS_RECONSTRUCTION_TRAINING
-   or PASS_DIAGNOSTIC_ONLY.
-4. Only after PASS_RECONSTRUCTION_TRAINING may a new RI3D/Gaussian milestone
-   consume the candidate pool.
+1. Dataset license/access is recorded before download or publication.
+2. One compact case has real multi-view images, cameras, and GT mesh/point cloud.
+3. Redistribution constraints are respected; restricted raw data stays out of
+   git unless the license permits it.
+4. A visual/VLM data audit passes before reconstruction rerun.
 5. PNG/CSV/MD artifacts are synced; MP4s are synced only for selected compact
-   reconstruction examples, not raw ignored RI3D working directories.
+   reconstruction examples, not raw ignored working directories.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G15 | candidate-pool recovery and VLM-gated regeneration | G15a blocked current candidate pools | Candidate pool passes visual/VLM gate or is rejected as diagnostic-only |
-| G16 | first10 diagnostic or reconstruction rerun | G15 gate verdict decides path | If pass: compact reconstruction rerun; if blocked: failure-taxonomy paper |
-| G17 | Expand to first30/first50 | first10 trend stable and data gate passes | Main table and failure taxonomy stable |
-| G18 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G16 | GT dataset access gate | G15c blocks web pseudo views for training | Licensed or redistributable FaceScape/Multiface/NeRSemble/UEA case chosen and access constraints recorded |
+| G17 | compact GT case export and reconstruction rerun | G16 access passes | One GT case with 6-12 views, cameras, mesh/point cloud, and audit sheet |
+| G18 | first10 pseudo-view failure taxonomy | web pseudo views remain diagnostic-only | Failure labels stable after corrected 3x2 splitting |
+| G19 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

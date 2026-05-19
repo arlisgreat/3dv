@@ -14,6 +14,7 @@ experiments/
   metrics/          # CSV / JSON 指标
   figures/          # 论文图
   ri3d_datasets/    # RI3D-compatible downstream inputs
+  gt_cases/          # optional compact GT case metadata, only if license permits
 ```
 
 ## First10
@@ -49,6 +50,11 @@ data_manifest.csv
 
 `experiments/downstream_datasets/` 是历史路径名，语义上只是伪视角候选池
 导出，不是已经证明适合重建的训练集。
+
+真实人脸/人头数据集同样必须先看许可证。FaceScape sample 已经做过本地
+metadata access audit，但 sample readme 明确不允许分发，因此 raw images、
+mesh、tarball、thumbnails 和渲染图都不提交；仓库只保存 CSV/JSON/MD 级别
+的 access/gate 记录。
 
 ```text
 experiments/pseudo_views/**/metadata.json
@@ -177,4 +183,9 @@ experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_inputs.png
 experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_renders.png
 experiments/figures/ri3d_first2_flame_proxy_vs_pcdmask_iter500_renders.png
 experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/
+experiments/metrics/zero123plus_grid_split_bug_20260519.md
+experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
+experiments/metrics/gt_dataset_route_plan_20260519.md
+experiments/metrics/gt_dataset_access_gate_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.md
 ```

@@ -34,12 +34,15 @@ RI3D first2 mask-aware iter500 gate
 RI3D first2 foreground-canonical mask ablations
 RI3D first2 foreground point-cloud initialization filter
 RI3D first2 FLAME proxy geometry-prior diagnostic
+Zero123++ 3x2 split correction and head-cutout diagnostic probe
+FaceScape sample metadata access gate
 ```
 
 还没有完成：
 
 ```text
-candidate-pool recovery and VLM-gated regeneration before any more reconstruction
+licensed or redistributable GT multi-view case export
+reconstruction rerun on real cameras + mesh/point-cloud GT
 ```
 
 当前默认 pseudo-view 前端：
@@ -51,6 +54,16 @@ subject cutout
 -> budget4
 -> trusted-region mask
 -> face identity / geometry-only / reject split
+```
+
+Current gate status:
+
+```text
+Web first10 pseudo views are diagnostic-only.
+Correcting Zero123++ grid splitting from 2x3 to 3x2 fixes an artificial crop
+bug, but visual inspection still shows multi-view distortions. No more
+reconstruction training should consume web pseudo-view candidates until a gate
+explicitly passes PASS_RECONSTRUCTION_TRAINING.
 ```
 
 ## 2. Stage 00: Inputs
@@ -640,6 +653,23 @@ experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_inputs.png
 experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_renders.png
 experiments/figures/ri3d_first2_flame_proxy_vs_pcdmask_iter500_renders.png
 experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/
+experiments/inputs/first10/head_cutouts/
+experiments/inputs/first10/head_cutouts_manifest.csv
+experiments/figures/first10_head_cutout_inputs.png
+experiments/pseudo_views/zero123plus_first10_cutout_steps75_resplit3x2/
+experiments/pseudo_views/zero123plus_first10_head_cutout_steps75_resplit3x2/
+experiments/figures/zero123plus_first10_head_cutout_steps75_resplit3x2_grids.png
+experiments/figures/view_budget_selection_head_cutout75_resplit3x2_budget4.png
+experiments/metrics/zero123plus_grid_split_bug_20260519.md
+experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
+experiments/metrics/head_cutout_probe_observations_20260519_resplit3x2.md
+experiments/metrics/pseudo_view_reliability_first10_head_cutout_steps75_resplit3x2.csv
+experiments/metrics/view_budget_selection_first10_head_cutout_steps75_resplit3x2.csv
+experiments/metrics/pseudo_view_summary_first10_head_cutout_steps75_resplit3x2.csv
+experiments/metrics/gt_dataset_route_plan_20260519.md
+experiments/metrics/gt_dataset_access_gate_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.json
 ```
 
 G14 结论：
@@ -649,6 +679,8 @@ FLAME proxy depth/conf prior 能生成并接入 RI3D，所有 MP4 可读。
 但它没有修复 G13 仍有的 detached foreground fragments，并且会削弱部分主体支持。
 因此它是 diagnostic negative：后续 first10 应作为 failure taxonomy 和 protocol
 验证，而不是宣称该 RI3D+FLAME proxy 路线已经解决重建质量。
+之后的 G15 审计发现历史 Zero123++ per-view PNG 存在 2x3/3x2 切分错误；
+修正后伪多视图仍然有畸变，所以 web first10 不再作为重建训练输入。
 ```
 
 阶段结论：
@@ -678,6 +710,7 @@ G12 已完成 foreground canonicalization 和 mask-loss ablation。largest_squar
 和 mask_width_anchor 都让输入 sheet 更干净，但 USE_MASK=1/0 的 render sheet
 仍然是同类卡片/碎片失败。
 因此下一步不是 first10 扩展，而是 G13：接入 LAM/FLAME/full-head geometry prior。
+G15 之后的实际路线已经改为 G16：使用真实 GT 多视角数据集 case 做重建质量验证。
 ```
 
 对比指标：
@@ -707,13 +740,14 @@ subject cutout
 当前推荐下游对比：
 
 ```text
-A: LAM single-image baseline
-B: raw75_all6 or raw75_budget4
-C: cutout75_budget4_masked
+A: single-image baseline
+B: real GT sparse multi-view case with 6-12 calibrated views
+C: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 ```
 
 当前最重要的未闭环问题：
 
 ```text
-结构几何先验是否能修复 G8-G12 中 RI3D 反复出现的卡片/碎片几何失败？
+在真实多视角/mesh/point-cloud GT case 上，failure-aware pseudo-view protocol
+是否能解释或避免 web pseudo-view 路线中出现的身份漂移、几何畸变和碎片失败？
 ```

@@ -1,0 +1,34 @@
+{
+  "sample_root": "/data1/workspace/airulan/3dv/external/facescape/samples",
+  "redistribution_note": "FaceScape sample readme says: do not distribute.",
+  "sample_tar_bytes": 37597885,
+  "mview_tuple": "4_anger",
+  "mview_param_views": 58,
+  "mview_valid_views": 52,
+  "mview_available_images": [
+    {
+      "file": "49.jpg",
+      "width": 2896,
+      "height": 4344,
+      "bytes": 1891233
+    },
+    {
+      "file": "50.jpg",
+      "width": 2896,
+      "height": 4344,
+      "bytes": 2056450
+    }
+  ],
+  "mview_mesh": {
+    "file": "4_anger.ply",
+    "bytes": 38743319
+  },
+  "tu_model_files": [
+    "1_neutral.jpg",
+    "1_neutral.obj",
+    "1_neutral.obj.mtl",
+    "1_neutral.png"
+  ],
+  "keypoint3d_rows": 68,
+  "gate_implication": "Sample confirms FaceScape has calibrated multi-view params and a corresponding mesh, but the public sample exposes only two images and must not be committed or redistributed."
+}

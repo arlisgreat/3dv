@@ -40,8 +40,8 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--input-size", type=int, default=512, help="Square input size. Use 0 to keep padded original size.")
-    parser.add_argument("--rows", type=int, default=2)
-    parser.add_argument("--cols", type=int, default=3)
+    parser.add_argument("--rows", type=int, default=3)
+    parser.add_argument("--cols", type=int, default=2)
     args = parser.parse_args()
 
     outdir = Path(args.outdir)
@@ -100,4 +100,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

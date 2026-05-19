@@ -167,13 +167,28 @@ split body、rotated photo card、cropped fragment 或背景/身体片段。这�
 没有站住，所以 G8-G14 的科学解释必须降级为“弱候选池 + RI3D 的失败证据”，
 不能说成“可靠伪视角监督协议失败”。之后每个 milestone 必须先过 data audit
 gate：结构审计 + PNG 可视/VLM 审计 + 明确 gate verdict，然后才能启动训练。
+G15 进一步发现一个严重工程错误：历史 Zero123++ grids 实际是 3x2，但脚本
+按 2x3 切 per-view PNG。这个错误污染了 G2-G14 的 per-view PNG 和下游 RI3D
+候选。修正 3x2 切分后，head-cutout 伪多视图仍有身份漂移、几何畸变和配件/
+发型不一致，因此 web first10 只能保留为 failure taxonomy，不能作为重建训练集。
 
 ### Replanned Gate After G15a
 
 ```text
-G15: candidate-pool recovery and VLM-gated regeneration.
-G16: only if G15 passes, rerun compact reconstruction; otherwise write failure taxonomy.
-G17: only after first10 gate passes, consider first30/first50 expansion.
+G15: candidate-pool recovery and VLM-gated regeneration. Done, blocked for training.
+G16: GT multi-view dataset access gate. Use FaceScape/Multiface/NeRSemble/UEA,
+     not web pseudo views, for reconstruction-quality validation.
+G17: compact GT case export and reconstruction rerun only after G16 passes.
+G18: first10 pseudo-view failure taxonomy using corrected 3x2 grids.
+```
+
+Current G16 access result:
+
+```text
+FaceScape sample metadata confirms 58 camera entries, 52 valid views, 2 public
+sample images, and a corresponding mesh. The sample readme says not to distribute
+it, so only metadata audits are committed. A reconstruction rerun remains blocked
+until licensed/publishable or otherwise redistributable GT assets are available.
 ```
 
 ### Week 4

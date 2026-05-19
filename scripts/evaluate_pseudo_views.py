@@ -184,7 +184,7 @@ def view_records(repo: Path, manifest_path: Path, run_specs: list[tuple[str, Pat
 def write_csv(path: Path, rows: list[dict[str, str]], columns: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=columns)
+        writer = csv.DictWriter(f, fieldnames=columns, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

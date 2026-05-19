@@ -145,6 +145,8 @@ RI3D first2 role-aware iter500 milestone
 RI3D first2 role-weighted iter500 milestone
 RI3D first2 mask-aware / foreground-canonical / point-cloud-filter milestones
 RI3D first2 FLAME proxy geometry-prior diagnostic
+Zero123++ 3x2 grid split correction and head-cutout diagnostic probe
+FaceScape sample metadata access gate
 ```
 
 当前默认 pseudo-view 前端：
@@ -205,6 +207,26 @@ are visually poor. Many selected views are split bodies, rotated photo cards,
 cropped fragments, or background/body-only pieces. Future milestones must pass
 a structural data audit and a VLM/manual visual audit before any reconstruction
 training.
+
+Second correction: historical Zero123++ per-view PNGs were split as 2x3, while
+the saved grids are 3x2. Correct 3x2 resplitting removes the artificial tall
+split-view tiles, but the generated head-cutout pseudo views still have visible
+identity and geometry distortions. Web first10 is therefore diagnostic-only.
+
+Current reconstruction-quality route: use a real GT multi-view dataset case
+with cameras and mesh/point-cloud ground truth. FaceScape is the primary route:
+its sample was inspected locally for metadata only, but its readme says not to
+distribute the sample, so raw images/meshes stay out of git.
+```
+
+G16 access/audit records:
+
+```text
+experiments/metrics/zero123plus_grid_split_bug_20260519.md
+experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
+experiments/metrics/gt_dataset_route_plan_20260519.md
+experiments/metrics/gt_dataset_access_gate_20260519.md
+experiments/metrics/facescape_sample_access_audit_20260519.md
 ```
 
 RI3D first2 smoke 复现命令：

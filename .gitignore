@@ -6,6 +6,7 @@
 /experiments/pseudo_views/**
 /experiments/reconstructions/**
 /experiments/downstream_3d/**
+/experiments/gt_cases/**
 /experiments/metrics/**
 /experiments/figures/**
 /experiments/ri3d_datasets/**/point_cloud.ply
@@ -16,6 +17,7 @@
 !/experiments/inputs/**/*.csv
 !/experiments/inputs/**/*.json
 !/experiments/inputs/first10/cutouts/*.png
+!/experiments/inputs/first10/head_cutouts/*.png
 !/experiments/pseudo_views/
 !/experiments/pseudo_views/**/
 !/experiments/pseudo_views/**/README.md
@@ -28,6 +30,11 @@
 !/experiments/reconstructions/**/metadata.json
 !/experiments/reconstructions/**/summary.json
 !/experiments/reconstructions/**/*.mp4
+!/experiments/gt_cases/
+!/experiments/gt_cases/**/
+!/experiments/gt_cases/**/*.csv
+!/experiments/gt_cases/**/*.json
+!/experiments/gt_cases/**/*.md
 !/experiments/metrics/
 !/experiments/metrics/**/
 !/experiments/metrics/**/*.csv
