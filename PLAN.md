@@ -134,9 +134,12 @@ Zero123++ 旋转整张照片而不是旋转头部的失败。
 当前 identity filtering 已在 first10 上跑通，RI3D first2 iter50 和 iter500
 也已经闭合下游重建循环。iter500 的结论是：raw75_all6 仍然更差，但
 cutout75_budget4_masked 只在一个 first2 样本上优于 raw75_budget4。
-因此下一步不应先扩 first30/first50，而应先把 downstream reconstruction
-ablation 的输入从“selected views”改成显式的
-`identity / geometry-only / reject / mask_reject` 四路协议。
+G9 已把 downstream reconstruction ablation 的输入从“selected views”
+改成显式的 `identity / geometry-only / reject / mask_reject` 四路协议，
+并完成 first2 role-aware iter500 训练/渲染。结果仍然 ambiguous：角色
+metadata 和 geometry-only desaturation 不足以稳定改善 RI3D 输出。
+因此下一步不应先扩 first30/first50，而应先让 RI3D loss 显式消费
+per-view/per-role 权重。
 
 ### Week 4
 
@@ -178,3 +181,5 @@ Abstract
 5. PanoHead: Geometry-Aware 3D Full-Head Synthesis in 360°.
 6. FaceLift: single-image 360-degree 3D Gaussian head reconstruction with multi-view diffusion.
 7. OMEGA-Avatar / OMG-Avatar: 2026 one-shot 360 Gaussian avatar references.
+8. Splatent / GS-Diff / VASA-3D: 2025-2026 diffusion+3DGS references that
+   reinforce robust losses, multi-view consistency, and sparse-view artifact control.

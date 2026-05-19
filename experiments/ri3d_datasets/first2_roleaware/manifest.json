@@ -1,0 +1,27 @@
+[
+  {
+    "variant": "roleaware_cutout75_budget4",
+    "sample_id": "web_clean_frontal_03",
+    "scene_dir": "experiments/ri3d_datasets/first2_roleaware/roleaware_cutout75_budget4/web_clean_frontal_03",
+    "view_count": 4,
+    "image_size": 160,
+    "source_view_count": 4,
+    "excluded_view_count": 0,
+    "role_counts": {
+      "identity_supervision": 2,
+      "geometry_only": 2
+    }
+  },
+  {
+    "variant": "roleaware_cutout75_budget4",
+    "sample_id": "web_clean_frontal_01",
+    "scene_dir": "experiments/ri3d_datasets/first2_roleaware/roleaware_cutout75_budget4/web_clean_frontal_01",
+    "view_count": 4,
+    "image_size": 160,
+    "source_view_count": 4,
+    "excluded_view_count": 0,
+    "role_counts": {
+      "identity_supervision": 4
+    }
+  }
+]

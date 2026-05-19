@@ -73,6 +73,9 @@ https://arxiv.org/abs/2502.20220
 RI3D, 2025-03-13
 https://arxiv.org/abs/2503.10860
 
+GS-Diff: Diffusion-Guided Gaussian Splatting, 2025-04-02
+https://arxiv.org/abs/2504.01960
+
 SEGA, 2025-04-19
 https://arxiv.org/abs/2504.14373
 
@@ -87,6 +90,12 @@ https://arxiv.org/abs/2509.07552
 
 Generalizable and Animatable 3D Full-Head Gaussian Avatar from a Single Image, 2026-01-19
 https://arxiv.org/abs/2601.12770
+
+VASA-3D, 2025-12-16
+https://arxiv.org/abs/2512.14677
+
+Splatent, 2025-12-10 / revised 2026-04-28
+https://arxiv.org/abs/2512.09923
 
 OMEGA-Avatar, 2026-02-12
 https://arxiv.org/abs/2602.11693
@@ -113,6 +122,14 @@ avatars without heavy test-time optimization.
 RI3D and Consistency Diffusion both support separating visible-region fidelity
 from missing-region hallucination/repair instead of trusting every generated
 view equally.
+
+GS-Diff supports using diffusion pseudo-observations for sparse 3DGS, but also
+adds appearance/depth/regularization components; this reinforces that pseudo
+RGB alone is not a complete supervision protocol.
+
+VASA-3D and Splatent both point at robust losses and multi-view consistency as
+current bottlenecks. This matches the G9 finding that metadata-only roles and
+desaturated geometry-only views do not fully remove 3D artifacts.
 
 MoGA explicitly argues that sparse 2D diffusion views can be inconsistent and
 can create 3D artifacts, which matches the first10 observations here.
@@ -159,6 +176,8 @@ Medium-term architecture:
    missing side/back regions second with lower identity weight.
 6. Add FLAME normal/depth compatibility scoring before reconstruction, borrowing
    the GAF direction without training a new diffusion model.
+7. Patch RI3D locally so identity_supervision and geometry_only affect RGB/depth
+   losses differently, with reject roles excluded before optimization.
 ```
 
 High-risk / rollback-monitored work:
@@ -182,10 +201,13 @@ budget4 selected views currently look more defensible than blind budget6.
 diffusion pseudo-view quality must be filtered before any Gaussian/PanoHead fusion.
 RI3D first2 160px iter50 closes the downstream loop, but the MP4 renders still
 show smoke-level artifacts and cannot yet prove final reconstruction quality.
+RI3D first2 160px iter500 confirms raw75_all6 is risky, but filtered variants
+remain ambiguous.
+RI3D first2 role-aware iter500 confirms the role-aware data path works, but
+metadata/desaturation alone is not enough to make a stable final 3D win.
 ```
 
-The next concrete experiment should keep the same first2 samples, run 500-1500
-RI3D iterations, and make the downstream loader consume `identity_supervision`,
-`geometry_only`, and `identity_reject` roles instead of treating all pseudo
-views uniformly. Expand to first30/first50 only after that improves final 3D
-outputs.
+The next concrete experiment should keep the same first2 samples and patch RI3D
+so the training loss explicitly consumes `identity_supervision`,
+`geometry_only`, `identity_reject`, and `mask_reject` roles. Expand to
+first30/first50 only after that improves final 3D outputs.

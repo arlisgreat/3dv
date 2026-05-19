@@ -53,8 +53,9 @@ subject cutout
 Current unresolved claim:
 
 ```text
-Filtered pseudo views look more reliable as 2D supervision, but have not yet
-been proven to improve final downstream 3D reconstruction quality.
+Filtered pseudo views and role metadata look more reliable as 2D supervision,
+but have not yet been proven to improve final downstream 3D reconstruction
+quality without explicit role-weighted losses.
 ```
 
 ## Completed Milestones
@@ -70,6 +71,7 @@ been proven to improve final downstream 3D reconstruction quality.
 | G6 | done | Add face identity filtering | `experiments/metrics/face_identity_filter_observations_20260519.md` | Cutout75 budget4 splits into identity, geometry-only, and reject roles. |
 | G7 | done | Close RI3D first2 iter50 smoke | `experiments/metrics/ri3d_first2_160_iter50.csv` | Downstream loop runs, but render quality is smoke-level. |
 | G8 | done, ambiguous | Run RI3D first2 iter500 gate | `experiments/metrics/ri3d_first2_160_iter500.csv` | Execution passed; method conclusion is not strong enough to scale data. |
+| G9 | done, ambiguous | Non-invasive role-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleaware_iter500.csv` | Role metadata/desaturation runs, but explicit role-weighted loss is still needed. |
 
 ## G8 Result
 
@@ -126,73 +128,116 @@ G8 is an execution pass but a scientific ambiguity, not a proof that filtered
 pseudo views already improve final 3D reconstruction.
 ```
 
-## Active Milestone: G9
+## G9 Result
+
+RI3D first2 role-aware iter500 completed for:
+
+```text
+roleaware_cutout75_budget4
+```
+
+Samples:
+
+```text
+web_clean_frontal_03: 2 identity_supervision + 2 geometry_only
+web_clean_frontal_01: 4 identity_supervision
+```
+
+Published artifacts:
+
+```text
+scripts/build_roleaware_downstream_dataset.py
+experiments/downstream_datasets/roleaware_cutout75_budget4/
+experiments/ri3d_datasets/first2_roleaware/
+experiments/metrics/ri3d_first2_roleaware_iter500.csv
+experiments/metrics/ri3d_first2_roleaware_observations.md
+experiments/figures/ri3d_first2_roleaware_iter500_inputs.png
+experiments/figures/ri3d_first2_roleaware_iter500_renders.png
+experiments/reconstructions/ri3d_first2_roleaware_iter500/
+```
+
+Loss summary:
+
+```text
+web_clean_frontal_03:
+  raw75_budget4: 0.0147302
+  cutout75_budget4_masked: 0.0157672
+  roleaware_cutout75_budget4: 0.0157378
+
+web_clean_frontal_01:
+  raw75_budget4: 0.0163405
+  cutout75_budget4_masked: 0.0152439
+  roleaware_cutout75_budget4: 0.0154150
+```
+
+Interpretation:
+
+```text
+The role-aware data path is now reproducible and exports all expected MP4/PNG/CSV/JSON artifacts.
+
+web_clean_frontal_03 is slightly better than cutout75_budget4_masked by loss,
+but still worse than raw75_budget4. web_clean_frontal_01 is better than
+raw75_budget4 but slightly worse than cutout75_budget4_masked.
+
+The first-frame render sheet still shows fragmented/rotated photo-card artifacts.
+Therefore G9 is an infrastructure pass but not a final method win.
+
+Next step: make RI3D training loss explicitly consume role weights. Metadata
+and geometry-only desaturation alone are not enough.
+```
+
+## Active Milestone: G10
 
 Name:
 
 ```text
-Role-aware downstream supervision on first2
+Explicit role-weighted RI3D loss on first2
 ```
 
 Purpose:
 
 ```text
-Stop treating all selected pseudo views uniformly. Make downstream supervision
-consume the roles discovered by masks and identity filtering:
-
-identity_supervision -> visible face/identity/texture supervision
-geometry_only        -> side/back/head-shape completion with low identity weight
-identity_reject      -> excluded from identity supervision
-mask_reject          -> excluded from geometry/texture supervision
-```
-
-Why G9 comes before first30/first50:
-
-```text
-G8 shows that simple cutout+mask filtering is not enough to produce a stable
-downstream win. Scaling data before role-aware supervision would mostly scale
-the same ambiguity.
+Move beyond metadata-only role awareness. Modify the local RI3D integration so
+identity_supervision, geometry_only, identity_reject, and mask_reject affect
+training loss instead of only prepared images and CSV/JSON records.
 ```
 
 Planned outputs:
 
 ```text
-scripts/build_downstream_dataset.py role fields or a new role-aware RI3D prep script
-experiments/ri3d_datasets/first2_roleaware/
-experiments/metrics/ri3d_first2_roleaware_iter500.csv
-experiments/metrics/ri3d_first2_roleaware_observations.md
-experiments/figures/ri3d_first2_roleaware_renders.png
-experiments/reconstructions/ri3d_first2_roleaware_iter500/
+patches/ri3d/role_weighted_loss.patch
+experiments/metrics/ri3d_first2_roleweighted_iter500.csv
+experiments/metrics/ri3d_first2_roleweighted_observations.md
+experiments/figures/ri3d_first2_roleweighted_iter500_renders.png
+experiments/reconstructions/ri3d_first2_roleweighted_iter500/
 ```
 
 Pass criteria:
 
 ```text
-1. Role-aware first2 jobs finish and export RGB/depth MP4s.
-2. raw75_all6 remains a riskier baseline than selected-view variants.
-3. role-aware cutout supervision visibly reduces background/full-photo rotation.
-4. identity regions remain closer to the source face than geometry-only regions.
-5. The next decision is clear: either run first2 at 1500 or expand to first10.
+1. RI3D explicitly applies lower RGB/identity pressure to geometry_only views.
+2. identity_reject and mask_reject can be excluded or zero-weighted before training.
+3. first2 MP4s render and are no worse than raw75_budget4 by visual quality.
+4. The decision is clear: first2 iter1500 confirmation or first10 expansion.
 ```
 
 Failure criteria:
 
 ```text
-1. Role-aware logic cannot be expressed with the current RI3D loader without
-   invasive third-party changes.
-2. Render quality remains dominated by bad pseudo-view geometry.
-3. The method still cannot beat raw75_budget4 on first2 visual quality.
+1. The RI3D code path requires a large risky rewrite.
+2. Role weighting still leaves full-photo/background rotation artifacts dominant.
+3. The method cannot match raw75_budget4 on first2 visual quality.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G9 | Role-aware downstream supervision on first2 | G8 exported and reviewed | Clear first2 visual/loss decision |
-| G10 | first2 iter1500 confirmation | G9 positive or narrowly ambiguous | Same conclusion holds at longer optimization |
-| G11 | Expand to first10 downstream | G9/G10 positive | Per-group result table across clean/side/glasses/hair/occlusion |
-| G12 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
-| G13 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G10 | Explicit role-weighted RI3D loss on first2 | G9 exported and reviewed | Clear first2 visual/loss decision |
+| G11 | first2 iter1500 confirmation | G10 positive or narrowly ambiguous | Same conclusion holds at longer optimization |
+| G12 | Expand to first10 downstream | G10/G11 positive | Per-group result table across clean/side/glasses/hair/occlusion |
+| G13 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
+| G14 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

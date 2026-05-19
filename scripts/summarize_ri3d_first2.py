@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import json
 import re
@@ -62,15 +63,16 @@ def extract_namespace_value(log_text: str, key: str) -> str | None:
     return match.group(2) if match.group(2) is not None else match.group(3)
 
 
-def scene_tags(data_root: Path) -> list[dict[str, Any]]:
+def scene_tags(data_root: Path, variants: list[str], samples: list[str]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for variant in VARIANTS:
-        for sample in SAMPLES:
+    for variant in variants:
+        for sample in samples:
             scene = data_root / variant / sample
             if not scene.exists():
                 continue
             transforms = load_json(scene / "transforms.json")
             view_count = len(transforms["frames"])
+            role_counts = Counter(str(frame.get("supervision_role", "uniform_rgb")) for frame in transforms["frames"])
             rows.append(
                 {
                     "variant": variant,
@@ -79,6 +81,7 @@ def scene_tags(data_root: Path) -> list[dict[str, Any]]:
                     "tag": f"{sample}_{variant}_{view_count}v",
                     "scene": scene,
                     "image_size": transforms["w"],
+                    "role_counts": dict(role_counts),
                 }
             )
     return rows
@@ -198,7 +201,36 @@ def write_observations(
         best = min(valid_rows, key=lambda row: row["final_loss"])
         best_lines.append(f"{sample_id}: best training loss is {best['variant']} ({best['final_loss']:.7f}).")
 
-    if iteration <= 100:
+    has_roleaware = any("roleaware" in row["variant"] for row in rows)
+
+    if has_roleaware:
+        purpose_lines = [
+            "Test whether identity-filter roles can improve the first2 RI3D gate without invasive third-party loss changes.",
+            "Use identity_supervision RGB frames and geometry_only desaturated frames from cutout75 budget4.",
+        ]
+        observation_intro = [
+            "The pipeline is now end-to-end executable with role-aware first2 RI3D inputs.",
+            "This run deliberately keeps RI3D loss code unchanged; role effects enter through prepared images and metadata.",
+        ]
+        quality_note = [
+            "This run tests role-aware RI3D inputs rather than another uniform filtered-view baseline.",
+            "identity_supervision frames keep RGB texture; geometry_only frames are desaturated and have lower depth-confidence metadata.",
+            "RI3D still applies a uniform RGB reconstruction loss, so this is a conservative non-invasive G9 pass.",
+        ]
+        next_lines = [
+            "Compare role-aware videos against raw75_budget4 and cutout75_budget4_masked iter500.",
+            "If geometry-only desaturation is insufficient, patch RI3D loss to consume per-frame role weights explicitly.",
+            "Expand beyond first2 only after role-aware visual quality is no worse than raw75_budget4.",
+        ]
+    elif iteration <= 100:
+        purpose_lines = [
+            "Close the first downstream 3D loop before expanding first10 to first30/first50.",
+            "Compare raw all-6 pseudo views, raw CLIP/reliability budget4, and cutout+mask budget4.",
+        ]
+        observation_intro = [
+            "The pipeline is now end-to-end executable through RI3D on two first10 samples.",
+            "raw75_all6 has more splats and higher training loss in both samples, so more views are not automatically better.",
+        ]
         quality_note = [
             "The rendered videos are smoke-quality only: several views still show rotated full-photo/background artifacts.",
             "Some 4-view depth videos may emit zero-range depth normalization warnings; use RGB renders and longer runs for judgment.",
@@ -210,6 +242,14 @@ def write_observations(
             "Keep RI3D PLYs in the ignored downstream output area unless a size-reviewed branch is created.",
         ]
     else:
+        purpose_lines = [
+            "Close the first downstream 3D loop before expanding first10 to first30/first50.",
+            "Compare raw all-6 pseudo views, raw CLIP/reliability budget4, and cutout+mask budget4.",
+        ]
+        observation_intro = [
+            "The pipeline is now end-to-end executable through RI3D on two first10 samples.",
+            "raw75_all6 has more splats and higher training loss in both samples, so more views are not automatically better.",
+        ]
         quality_note = [
             "This is a longer first2 milestone, but still a two-sample gate rather than a final first10/first50 claim.",
             "Use the RGB/depth videos together with loss; low training loss alone does not prove better identity or geometry.",
@@ -231,21 +271,27 @@ def write_observations(
         "Purpose:",
         "",
         "```text",
-        "Close the first downstream 3D loop before expanding first10 to first30/first50.",
-        "Compare raw all-6 pseudo views, raw CLIP/reliability budget4, and cutout+mask budget4.",
+        *purpose_lines,
         "```",
         "",
         "Run:",
         "",
         "```bash",
-        f"GPU=0 ITERATIONS={iteration} DATA_ROOT={data_root} OUT_ROOT={run_root} bash scripts/run_ri3d_first2.sh",
-        f"GPU=0 ITERATION={iteration} DATA_ROOT={data_root} RUN_ROOT={run_root} bash scripts/render_ri3d_first2.sh",
+        (
+            f"GPU=0 ITERATIONS={iteration} DATA_ROOT={data_root} OUT_ROOT={run_root} "
+            f"VARIANTS_STR=\"{' '.join(sorted({row['variant'] for row in rows}))}\" bash scripts/run_ri3d_first2.sh"
+        ),
+        (
+            f"GPU=0 ITERATION={iteration} DATA_ROOT={data_root} RUN_ROOT={run_root} "
+            f"VARIANTS_STR=\"{' '.join(sorted({row['variant'] for row in rows}))}\" bash scripts/render_ri3d_first2.sh"
+        ),
         (
             f"python scripts/summarize_ri3d_first2.py --data-root {data_root} "
             f"--run-root {run_root} --export-root {export_root} "
             f"--metrics-csv {metrics_csv} --observations {path} "
             f"--input-figure {input_figure} --render-figure {render_figure} "
-            f"--iteration {iteration} --run-name {run_name}"
+            f"--iteration {iteration} --run-name {run_name} "
+            f"--variants {' '.join(sorted({row['variant'] for row in rows}))}"
         ),
         "```",
         "",
@@ -260,15 +306,19 @@ def write_observations(
         "",
         "Summary:",
         "",
-        "| sample | variant | views | final loss | splats | rgb mp4 |",
-        "| --- | --- | ---: | ---: | ---: | --- |",
+        "| sample | variant | views | roles | final loss | splats | rgb mp4 |",
+        "| --- | --- | ---: | --- | ---: | ---: | --- |",
     ]
     for row in rows:
         loss = "" if row["final_loss"] is None else f"{row['final_loss']:.7f}"
         splats = "" if row["point_count"] is None else str(row["point_count"])
         mp4 = "yes" if row.get("render_rgb_mp4") else "missing"
+        roles = row.get("role_counts") or {}
+        if isinstance(roles, str):
+            roles = json.loads(roles) if roles else {}
+        role_text = ", ".join(f"{key}:{value}" for key, value in sorted(roles.items()))
         lines.append(
-            f"| {row['sample_id']} | {row['variant']} | {row['view_count']} | {loss} | {splats} | {mp4} |"
+            f"| {row['sample_id']} | {row['variant']} | {row['view_count']} | {role_text} | {loss} | {splats} | {mp4} |"
         )
 
     lines.extend(
@@ -277,8 +327,7 @@ def write_observations(
             "Observations:",
             "",
             "```text",
-            "The pipeline is now end-to-end executable through RI3D on two first10 samples.",
-            "raw75_all6 has more splats and higher training loss in both samples, so more views are not automatically better.",
+            *observation_intro,
             *best_lines,
             *quality_note,
             "```",
@@ -306,13 +355,15 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--render-figure", type=Path, default=Path("experiments/figures/ri3d_first2_160_iter50_renders.png"))
     parser.add_argument("--iteration", type=int, default=50)
     parser.add_argument("--run-name", default=None)
+    parser.add_argument("--variants", nargs="+", default=list(VARIANTS))
+    parser.add_argument("--samples", nargs="+", default=list(SAMPLES))
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     run_name = args.run_name or args.export_root.name
-    rows = scene_tags(args.data_root)
+    rows = scene_tags(args.data_root, args.variants, args.samples)
     args.export_root.mkdir(parents=True, exist_ok=True)
 
     output_rows: list[dict[str, Any]] = []
@@ -331,6 +382,9 @@ def main() -> None:
                 "variant": row["variant"],
                 "view_count": row["view_count"],
                 "image_size": row["image_size"],
+                "role_counts": json.dumps(row.get("role_counts") or {}, sort_keys=True),
+                "identity_supervision_count": (row.get("role_counts") or {}).get("identity_supervision", 0),
+                "geometry_only_count": (row.get("role_counts") or {}).get("geometry_only", 0),
                 "iterations": int(extract_namespace_value(log_text, "iterations") or args.iteration),
                 "final_loss": loss,
                 "progress_splats": n_splats,
@@ -349,6 +403,9 @@ def main() -> None:
         "variant",
         "view_count",
         "image_size",
+        "role_counts",
+        "identity_supervision_count",
+        "geometry_only_count",
         "iterations",
         "final_loss",
         "progress_splats",

@@ -21,6 +21,7 @@ views.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import json
 import math
 import shutil
@@ -33,6 +34,18 @@ from PIL import Image, ImageOps
 
 DEFAULT_VARIANTS = ("raw75_all6", "raw75_budget4", "cutout75_budget4_masked")
 DEFAULT_SAMPLES = ("web_clean_frontal_03", "web_clean_frontal_01")
+ROLE_CONFIDENCE_MULTIPLIERS = {
+    "identity_supervision": 1.0,
+    "geometry_only": 0.35,
+    "identity_reject": 0.0,
+    "mask_reject": 0.0,
+}
+ROLE_RGB_POLICIES = {
+    "identity_supervision": "rgb",
+    "geometry_only": "desaturated_rgb",
+    "identity_reject": "excluded",
+    "mask_reject": "excluded",
+}
 
 
 def load_json(path: Path) -> Any:
@@ -87,12 +100,15 @@ def camera_to_world(azimuth_deg: float, elevation_deg: float, radius: float) -> 
     return c2w.tolist()
 
 
-def resize_rgb(src: Path, dst: Path, size: int) -> Image.Image:
+def resize_rgb(src: Path, dst: Path, size: int, supervision_role: str | None = None) -> Image.Image:
     image = Image.open(src).convert("RGB")
     image = ImageOps.contain(image, (size, size), Image.Resampling.LANCZOS)
     canvas = Image.new("RGB", (size, size), (127, 127, 127))
     offset = ((size - image.width) // 2, (size - image.height) // 2)
     canvas.paste(image, offset)
+    if supervision_role == "geometry_only":
+        gray = ImageOps.grayscale(canvas).convert("RGB")
+        canvas = Image.blend(canvas, gray, 0.85)
     dst.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(dst)
     return canvas
@@ -141,9 +157,10 @@ def convert_scene(
     overwrite: bool,
 ) -> dict[str, Any]:
     metadata = load_json(src_scene / "metadata.json")
-    views = metadata["views"]
+    all_views = metadata["views"]
+    views = [view for view in all_views if view.get("ri3d_train_candidate", True)]
     if len(views) < 3:
-        raise ValueError(f"{src_scene} has only {len(views)} views; RI3D pilot needs at least 3.")
+        raise ValueError(f"{src_scene} has only {len(views)} trainable views; RI3D pilot needs at least 3.")
 
     clean_dir(dst_scene, overwrite=overwrite)
     images_dir = dst_scene / "images"
@@ -158,15 +175,18 @@ def convert_scene(
 
     for order, view in enumerate(views):
         src_image = resolve_scene_image(src_scene, view["image"])
+        supervision_role = view.get("supervision_role")
+        confidence_multiplier = ROLE_CONFIDENCE_MULTIPLIERS.get(str(supervision_role), 1.0)
+        rgb_policy = ROLE_RGB_POLICIES.get(str(supervision_role), "rgb")
 
         image_name = f"{order:03d}_view{int(view['view_index']):02d}.png"
         image_path = images_dir / image_name
-        resize_rgb(src_image, image_path, image_size)
+        resize_rgb(src_image, image_path, image_size, supervision_role=supervision_role)
 
         azimuth = float(view.get("azimuth") or 0.0)
         elevation = float(view.get("elevation") or 0.0)
         depth = simple_depth_prior(image_size, azimuth, elevation)
-        conf = simple_confidence(image_size)
+        conf = simple_confidence(image_size) * float(confidence_multiplier)
         stem = image_path.stem
         np.save(depth_dir / f"inpv2{stem}_{len(views)}.npy", depth)
         np.save(depth_dir / f"inp_dust3r{stem}_{len(views)}.npy", depth)
@@ -184,6 +204,15 @@ def convert_scene(
                 "trusted_score": view.get("trusted_score"),
                 "reliability_score": view.get("reliability_score"),
                 "trusted_accepted": view.get("trusted_accepted"),
+                "supervision_role": view.get("supervision_role"),
+                "ri3d_train_candidate": view.get("ri3d_train_candidate", True),
+                "identity_decision": view.get("identity_decision"),
+                "identity_labels": view.get("identity_labels"),
+                "identity_supervision_candidate": view.get("identity_supervision_candidate"),
+                "geometry_only_candidate": view.get("geometry_only_candidate"),
+                "face_embedding_cosine": view.get("face_embedding_cosine"),
+                "role_confidence_multiplier": confidence_multiplier,
+                "role_rgb_policy": rgb_policy,
             }
         )
 
@@ -215,6 +244,11 @@ def convert_scene(
             "camera_radius": camera_radius,
             "fov_deg": fov_deg,
             "view_count": n_views,
+            "source_view_count": len(all_views),
+            "excluded_view_count": len(all_views) - n_views,
+            "role_counts": dict(Counter(str(view.get("supervision_role", "uniform_rgb")) for view in views)),
+            "role_confidence_multipliers": ROLE_CONFIDENCE_MULTIPLIERS,
+            "role_rgb_policies": ROLE_RGB_POLICIES,
             "source_metadata": metadata,
         },
     )
@@ -224,6 +258,9 @@ def convert_scene(
         "scene_dir": str(dst_scene),
         "view_count": n_views,
         "image_size": image_size,
+        "source_view_count": len(all_views),
+        "excluded_view_count": len(all_views) - n_views,
+        "role_counts": dict(Counter(str(view.get("supervision_role", "uniform_rgb")) for view in views)),
     }
 
 

@@ -12,6 +12,8 @@ set -euo pipefail
 #   OUT_ROOT=/path/to/3dv/experiments/downstream_3d/ri3d_first2
 #   ITERATIONS=1500
 #   GPU=0
+#   VARIANTS_STR="raw75_budget4 roleaware_cutout75_budget4"
+#   SAMPLES_STR="web_clean_frontal_03 web_clean_frontal_01"
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RI3D_ROOT="${RI3D_ROOT:-$PROJECT_ROOT/external/ri3d}"
@@ -20,6 +22,8 @@ OUT_ROOT="${OUT_ROOT:-$PROJECT_ROOT/experiments/downstream_3d/ri3d_first2}"
 ITERATIONS="${ITERATIONS:-1500}"
 GPU="${GPU:-0}"
 SH_DEGREE="${SH_DEGREE:-2}"
+VARIANTS_INPUT="${VARIANTS_STR:-${VARIANTS:-raw75_all6 raw75_budget4 cutout75_budget4_masked}}"
+SAMPLES_INPUT="${SAMPLES_STR:-${SAMPLES:-web_clean_frontal_03 web_clean_frontal_01}}"
 
 case "$DATA_ROOT" in
   /*) ;;
@@ -31,16 +35,8 @@ case "$OUT_ROOT" in
   *) OUT_ROOT="$PROJECT_ROOT/$OUT_ROOT" ;;
 esac
 
-VARIANTS=(
-  raw75_all6
-  raw75_budget4
-  cutout75_budget4_masked
-)
-
-SAMPLES=(
-  web_clean_frontal_03
-  web_clean_frontal_01
-)
+read -r -a VARIANTS <<< "$VARIANTS_INPUT"
+read -r -a SAMPLES <<< "$SAMPLES_INPUT"
 
 if [[ ! -d "$RI3D_ROOT" ]]; then
   echo "Missing RI3D checkout: $RI3D_ROOT" >&2

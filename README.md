@@ -141,6 +141,7 @@ downstream dataset build
 RI3D first2 dataset conversion
 RI3D first2 160px iter50 smoke render
 RI3D first2 160px iter500 milestone
+RI3D first2 role-aware iter500 milestone
 ```
 
 当前默认 pseudo-view 前端：
@@ -175,6 +176,7 @@ skills/3dv-experiment-orchestrator/
 
 ```text
 experiments/ri3d_datasets/first2/
+experiments/ri3d_datasets/first2_roleaware/
 ```
 
 RI3D first2 smoke 复现命令：
@@ -191,6 +193,15 @@ GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_160 OUT_ROOT=exp
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_160 RUN_ROOT=experiments/downstream_3d/ri3d_first2_160_iter500 bash scripts/render_ri3d_first2.sh
 ```
 
+RI3D first2 role-aware 500-iteration gate 复现命令：
+
+```bash
+python scripts/build_roleaware_downstream_dataset.py --overwrite
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_roleaware --variants roleaware_cutout75_budget4 --image-size 160 --overwrite
+GPU=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_roleaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+```
+
 当前结论：
 
 ```text
@@ -202,11 +213,13 @@ raw75_all6 在两个样本上训练 loss 都更高，说明盲目增加视角不
 RI3D first2 160px iter500 已完成；raw75_all6 仍然更差。
 cutout75_budget4_masked 只在其中一个 first2 样本上略优于 raw75_budget4，
 因此 G8 是执行通过但科学结论仍然 ambiguous。
+RI3D first2 role-aware iter500 已完成；角色 metadata/desaturation 路径跑通，
+但 loss 和 render sheet 仍不构成稳定 method win。
 ```
 
 下一步：
 
 1. 不急着扩 first30 / first50。
-2. 先实现 G9：role-aware downstream supervision。
-3. 在 RI3D 下游闭环中显式使用 identity / geometry-only / reject / mask_reject 四路协议。
-4. 如果 G9/G10 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
+2. 实现 G10：explicit role-weighted RI3D loss。
+3. 让 identity / geometry-only / reject / mask_reject 真正进入训练 loss。
+4. 如果 G10/G11 证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。

@@ -1,0 +1,3 @@
+sample_id,group,variant,source_run,budget,view_count,ri3d_train_candidate_count,identity_supervision,geometry_only,identity_reject,mask_reject,metadata
+web_clean_frontal_03,clean_frontal,roleaware_cutout75_budget4,cutout75,4,4,4,2,2,0,0,/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_03/metadata.json
+web_clean_frontal_01,clean_frontal,roleaware_cutout75_budget4,cutout75,4,4,4,4,0,0,0,/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_01/metadata.json
