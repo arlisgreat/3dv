@@ -145,6 +145,9 @@ G11 已把 trusted mask 接入 RI3D 的 masked RGB/SSIM、silhouette 和 depth l
 并完成 first2 iter500。结果显示 loss 不能直接比较，且 render sheet 仍有
 小碎片/相框 artifact。下一步应先做 foreground canonical crop/recenter 和
 mask-loss ablation；若仍失败，再接 LAM/FLAME/full-head geometry prior，而不是扩 first10。
+G12 已完成 foreground canonical crop/recenter 和 mask-loss ablation：输入 sheet
+明显更干净，但 USE_MASK=1/0 都仍输出卡片/碎片。当前应转 G13，先验证
+LAM/FLAME/full-head geometry prior 能否作为结构锚点；在此之前不扩 first10。
 
 ### Week 4
 

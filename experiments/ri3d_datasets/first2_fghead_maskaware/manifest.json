@@ -1,0 +1,39 @@
+[
+  {
+    "variant": "roleaware_cutout75_budget4",
+    "sample_id": "web_clean_frontal_03",
+    "scene_dir": "experiments/ri3d_datasets/first2_fghead_maskaware/roleaware_cutout75_budget4/web_clean_frontal_03",
+    "view_count": 4,
+    "image_size": 160,
+    "foreground_crop": true,
+    "foreground_crop_mode": "mask_width_anchor",
+    "foreground_crop_margin": 0.2,
+    "foreground_width_scale": 1.8,
+    "foreground_height_fraction": 0.55,
+    "foreground_y_anchor": 0.45,
+    "source_view_count": 4,
+    "excluded_view_count": 0,
+    "role_counts": {
+      "identity_supervision": 2,
+      "geometry_only": 2
+    }
+  },
+  {
+    "variant": "roleaware_cutout75_budget4",
+    "sample_id": "web_clean_frontal_01",
+    "scene_dir": "experiments/ri3d_datasets/first2_fghead_maskaware/roleaware_cutout75_budget4/web_clean_frontal_01",
+    "view_count": 4,
+    "image_size": 160,
+    "foreground_crop": true,
+    "foreground_crop_mode": "mask_width_anchor",
+    "foreground_crop_margin": 0.2,
+    "foreground_width_scale": 1.8,
+    "foreground_height_fraction": 0.55,
+    "foreground_y_anchor": 0.45,
+    "source_view_count": 4,
+    "excluded_view_count": 0,
+    "role_counts": {
+      "identity_supervision": 4
+    }
+  }
+]

@@ -14,6 +14,8 @@ experiments/ri3d_datasets/first2_160/
 experiments/ri3d_datasets/first2_roleaware/
 experiments/ri3d_datasets/first2_roleweighted/
 experiments/ri3d_datasets/first2_maskaware/
+experiments/ri3d_datasets/first2_fgcenter_maskaware/
+experiments/ri3d_datasets/first2_fghead_maskaware/
 ```
 
 It contains 2 samples x 3 variants:
@@ -58,3 +60,9 @@ ignored to keep GitHub checkpoints compact.
 ```bash
 USE_MASK=1 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware bash scripts/run_ri3d_first2.sh
 ```
+
+`first2_fgcenter_maskaware` and `first2_fghead_maskaware` are G12 foreground
+canonicalization ablations. They are generated with `--foreground-crop`; the
+former uses the largest connected mask component square crop, while the latter
+uses `--foreground-crop-mode mask_width_anchor` to focus on head/upper-body
+scale. Both keep role weights and optional `mask_path` supervision.

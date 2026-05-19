@@ -112,8 +112,106 @@ def camera_to_world(azimuth_deg: float, elevation_deg: float, radius: float) -> 
     return c2w.tolist()
 
 
-def resize_rgb(src: Path, dst: Path, size: int, supervision_role: str | None = None) -> Image.Image:
+def crop_with_fill(image: Image.Image, box: tuple[int, int, int, int], fill: int | tuple[int, int, int]) -> Image.Image:
+    left, top, right, bottom = box
+    crop_w = max(1, right - left)
+    crop_h = max(1, bottom - top)
+    canvas = Image.new(image.mode, (crop_w, crop_h), fill)
+    src_box = (max(0, left), max(0, top), min(image.width, right), min(image.height, bottom))
+    if src_box[2] > src_box[0] and src_box[3] > src_box[1]:
+        paste_xy = (src_box[0] - left, src_box[1] - top)
+        canvas.paste(image.crop(src_box), paste_xy)
+    return canvas
+
+
+def foreground_component(
+    mask: Image.Image,
+    *,
+    mode: str,
+    margin: float,
+    width_scale: float,
+    height_fraction: float,
+    y_anchor: float,
+) -> tuple[Image.Image, tuple[int, int, int, int], int] | None:
+    arr = np.array(mask.convert("L")) > 127
+    if not arr.any():
+        return None
+    visited = np.zeros_like(arr, dtype=bool)
+    best: tuple[int, int, int, int, int, list[tuple[int, int]]] | None = None
+    height_arr, width_arr = arr.shape
+    for seed_y, seed_x in zip(*np.where(arr)):
+        if visited[seed_y, seed_x]:
+            continue
+        stack = [(int(seed_y), int(seed_x))]
+        visited[seed_y, seed_x] = True
+        pixels: list[tuple[int, int]] = []
+        count = 0
+        left = right = int(seed_x)
+        top = bottom = int(seed_y)
+        while stack:
+            y, x = stack.pop()
+            pixels.append((y, x))
+            count += 1
+            left = min(left, x)
+            right = max(right, x)
+            top = min(top, y)
+            bottom = max(bottom, y)
+            for ny in range(max(0, y - 1), min(height_arr, y + 2)):
+                for nx in range(max(0, x - 1), min(width_arr, x + 2)):
+                    if arr[ny, nx] and not visited[ny, nx]:
+                        visited[ny, nx] = True
+                        stack.append((ny, nx))
+        if best is None or count > best[0]:
+            best = (count, left, top, right + 1, bottom + 1, pixels)
+    if best is None:
+        return None
+    count, left, top, right, bottom, pixels = best
+    component_arr = np.zeros_like(arr, dtype=np.uint8)
+    for y, x in pixels:
+        component_arr[y, x] = 255
+    width = right - left
+    height = bottom - top
+    max_side = max(mask.width, mask.height)
+    if mode == "largest_square":
+        side = int(math.ceil(max(width, height) * (1.0 + 2.0 * margin)))
+        cy = (top + bottom) / 2.0
+    elif mode == "mask_width_anchor":
+        side = int(math.ceil(max(width * width_scale, height * height_fraction)))
+        cy = top + y_anchor * height
+    else:
+        raise ValueError(f"Unsupported foreground crop mode: {mode}")
+    side = max(8, side)
+    side = min(side, max_side)
+    cx = (left + right) / 2.0
+    crop_left = int(round(cx - side / 2.0))
+    crop_top = int(round(cy - side / 2.0))
+    crop_box = (crop_left, crop_top, crop_left + side, crop_top + side)
+    return Image.fromarray(component_arr, mode="L"), crop_box, count
+
+
+def resized_mask_coverage(mask: Image.Image) -> float:
+    arr = np.array(mask.convert("L"))
+    return float((arr > 127).mean())
+
+
+def resize_rgb(
+    src: Path,
+    dst: Path,
+    size: int,
+    supervision_role: str | None = None,
+    crop_box: tuple[int, int, int, int] | None = None,
+    foreground_mask: Image.Image | None = None,
+) -> Image.Image:
     image = Image.open(src).convert("RGB")
+    if foreground_mask is not None:
+        mask = foreground_mask
+        if mask.size != image.size:
+            mask = mask.resize(image.size, Image.Resampling.NEAREST)
+        masked = Image.new("RGB", image.size, (127, 127, 127))
+        masked.paste(image, (0, 0), mask)
+        image = masked
+    if crop_box is not None:
+        image = crop_with_fill(image, crop_box, (127, 127, 127))
     image = ImageOps.contain(image, (size, size), Image.Resampling.LANCZOS)
     canvas = Image.new("RGB", (size, size), (127, 127, 127))
     offset = ((size - image.width) // 2, (size - image.height) // 2)
@@ -126,8 +224,19 @@ def resize_rgb(src: Path, dst: Path, size: int, supervision_role: str | None = N
     return canvas
 
 
-def resize_mask(src: Path, dst: Path, size: int) -> Image.Image:
-    mask = Image.open(src).convert("L")
+def resize_mask(
+    src: Path,
+    dst: Path,
+    size: int,
+    crop_box: tuple[int, int, int, int] | None = None,
+    source_size: tuple[int, int] | None = None,
+    mask_image: Image.Image | None = None,
+) -> Image.Image:
+    mask = mask_image.convert("L") if mask_image is not None else Image.open(src).convert("L")
+    if source_size is not None and mask.size != source_size:
+        mask = mask.resize(source_size, Image.Resampling.NEAREST)
+    if crop_box is not None:
+        mask = crop_with_fill(mask, crop_box, 0)
     mask = ImageOps.contain(mask, (size, size), Image.Resampling.NEAREST)
     canvas = Image.new("L", (size, size), 0)
     offset = ((size - mask.width) // 2, (size - mask.height) // 2)
@@ -187,6 +296,12 @@ def convert_scene(
     image_size: int,
     camera_radius: float,
     fov_deg: float,
+    foreground_crop: bool,
+    foreground_crop_mode: str,
+    foreground_crop_margin: float,
+    foreground_width_scale: float,
+    foreground_height_fraction: float,
+    foreground_y_anchor: float,
     overwrite: bool,
 ) -> dict[str, Any]:
     metadata = load_json(src_scene / "metadata.json")
@@ -210,20 +325,55 @@ def convert_scene(
 
     for order, view in enumerate(views):
         src_image = resolve_scene_image(src_scene, view["image"])
+        source_mask = view.get("mask")
+        mask_source_path = resolve_scene_file(src_scene, source_mask, "masks") if source_mask else None
         supervision_role = view.get("supervision_role")
         confidence_multiplier = ROLE_CONFIDENCE_MULTIPLIERS.get(str(supervision_role), 1.0)
         role_rgb_weight = ROLE_RGB_WEIGHTS.get(str(supervision_role), 1.0)
         role_depth_weight = ROLE_DEPTH_WEIGHTS.get(str(supervision_role), 1.0)
         rgb_policy = ROLE_RGB_POLICIES.get(str(supervision_role), "rgb")
+        crop_box = None
+        component_mask = None
+        component_pixels = None
+        if foreground_crop and mask_source_path is not None:
+            mask_for_crop = Image.open(mask_source_path).convert("L")
+            image_size_source = Image.open(src_image).size
+            if mask_for_crop.size != image_size_source:
+                mask_for_crop = mask_for_crop.resize(image_size_source, Image.Resampling.NEAREST)
+            component = foreground_component(
+                mask_for_crop,
+                mode=foreground_crop_mode,
+                margin=foreground_crop_margin,
+                width_scale=foreground_width_scale,
+                height_fraction=foreground_height_fraction,
+                y_anchor=foreground_y_anchor,
+            )
+            if component is not None:
+                component_mask, crop_box, component_pixels = component
 
         image_name = f"{order:03d}_view{int(view['view_index']):02d}.png"
         image_path = images_dir / image_name
-        resize_rgb(src_image, image_path, image_size, supervision_role=supervision_role)
+        resize_rgb(
+            src_image,
+            image_path,
+            image_size,
+            supervision_role=supervision_role,
+            crop_box=crop_box,
+            foreground_mask=component_mask,
+        )
         mask_name = f"{Path(image_name).stem}_mask.png"
         mask_path = masks_dir / mask_name
-        source_mask = view.get("mask")
-        if source_mask:
-            resize_mask(resolve_scene_file(src_scene, source_mask, "masks"), mask_path, image_size)
+        output_mask_coverage = None
+        if mask_source_path is not None:
+            resized_mask = resize_mask(
+                mask_source_path,
+                mask_path,
+                image_size,
+                crop_box=crop_box,
+                source_size=Image.open(src_image).size,
+                mask_image=component_mask,
+            )
+            output_mask_coverage = resized_mask_coverage(resized_mask)
 
         azimuth = float(view.get("azimuth") or 0.0)
         elevation = float(view.get("elevation") or 0.0)
@@ -241,6 +391,15 @@ def convert_scene(
                 "mask_path": f"masks/{mask_name}" if source_mask else None,
                 "source_mask": source_mask,
                 "mask_coverage": view.get("mask_coverage"),
+                "mask_coverage_resized": output_mask_coverage,
+                "foreground_crop": bool(crop_box is not None),
+                "foreground_crop_mode": foreground_crop_mode if crop_box is not None else None,
+                "foreground_crop_box_source": list(crop_box) if crop_box is not None else None,
+                "foreground_crop_margin": foreground_crop_margin if crop_box is not None else None,
+                "foreground_width_scale": foreground_width_scale if crop_box is not None else None,
+                "foreground_height_fraction": foreground_height_fraction if crop_box is not None else None,
+                "foreground_y_anchor": foreground_y_anchor if crop_box is not None else None,
+                "foreground_component_pixels": component_pixels,
                 "transform_matrix": camera_to_world(azimuth, elevation, camera_radius),
                 "view_index": view.get("view_index"),
                 "azimuth": azimuth,
@@ -290,6 +449,12 @@ def convert_scene(
             "image_size": image_size,
             "camera_radius": camera_radius,
             "fov_deg": fov_deg,
+            "foreground_crop": foreground_crop,
+            "foreground_crop_mode": foreground_crop_mode,
+            "foreground_crop_margin": foreground_crop_margin,
+            "foreground_width_scale": foreground_width_scale,
+            "foreground_height_fraction": foreground_height_fraction,
+            "foreground_y_anchor": foreground_y_anchor,
             "view_count": n_views,
             "source_view_count": len(all_views),
             "excluded_view_count": len(all_views) - n_views,
@@ -307,6 +472,12 @@ def convert_scene(
         "scene_dir": str(dst_scene),
         "view_count": n_views,
         "image_size": image_size,
+        "foreground_crop": foreground_crop,
+        "foreground_crop_mode": foreground_crop_mode,
+        "foreground_crop_margin": foreground_crop_margin,
+        "foreground_width_scale": foreground_width_scale,
+        "foreground_height_fraction": foreground_height_fraction,
+        "foreground_y_anchor": foreground_y_anchor,
         "source_view_count": len(all_views),
         "excluded_view_count": len(all_views) - n_views,
         "role_counts": dict(Counter(str(view.get("supervision_role", "uniform_rgb")) for view in views)),
@@ -322,6 +493,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image-size", type=int, default=320)
     parser.add_argument("--camera-radius", type=float, default=2.8)
     parser.add_argument("--fov-deg", type=float, default=40.0)
+    parser.add_argument("--foreground-crop", action="store_true", help="Crop/recenter each view by its mask bbox before resizing")
+    parser.add_argument("--foreground-crop-mode", choices=["largest_square", "mask_width_anchor"], default="largest_square")
+    parser.add_argument("--foreground-crop-margin", type=float, default=0.2)
+    parser.add_argument("--foreground-width-scale", type=float, default=1.8)
+    parser.add_argument("--foreground-height-fraction", type=float, default=0.55)
+    parser.add_argument("--foreground-y-anchor", type=float, default=0.45)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -345,6 +522,12 @@ def main() -> None:
                     image_size=args.image_size,
                     camera_radius=args.camera_radius,
                     fov_deg=args.fov_deg,
+                    foreground_crop=args.foreground_crop,
+                    foreground_crop_mode=args.foreground_crop_mode,
+                    foreground_crop_margin=args.foreground_crop_margin,
+                    foreground_width_scale=args.foreground_width_scale,
+                    foreground_height_fraction=args.foreground_height_fraction,
+                    foreground_y_anchor=args.foreground_y_anchor,
                     overwrite=args.overwrite,
                 )
             )

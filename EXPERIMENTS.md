@@ -31,12 +31,13 @@ RI3D first2 160px iter500 gate
 RI3D first2 role-aware iter500 gate
 RI3D first2 role-weighted iter500 gate
 RI3D first2 mask-aware iter500 gate
+RI3D first2 foreground-canonical mask ablations
 ```
 
 还没有完成：
 
 ```text
-foreground-canonical mask ablation 是否能修复 G11 的小碎片/相框 artifact
+LAM/FLAME/full-head geometry prior 是否能修复 G8-G12 的卡片/碎片 artifact
 ```
 
 当前默认 pseudo-view 前端：
@@ -449,6 +450,7 @@ RI3D first2 160px iter500 gate 已完成，但结论 ambiguous
 RI3D first2 role-aware iter500 gate 已完成，但非侵入版本仍 ambiguous
 RI3D first2 role-weighted iter500 gate 已完成，但 scalar weights 仍 ambiguous
 RI3D first2 mask-aware iter500 gate 已完成，但 foreground-only loss 仍没有修复视觉 artifact
+RI3D first2 foreground-canonical ablations 已完成，但尺度对齐和 mask-loss ablation 仍没有修复视觉 artifact
 ```
 
 下一步要验证：
@@ -483,6 +485,8 @@ experiments/ri3d_datasets/first2_160/
 experiments/ri3d_datasets/first2_roleaware/
 experiments/ri3d_datasets/first2_roleweighted/
 experiments/ri3d_datasets/first2_maskaware/
+experiments/ri3d_datasets/first2_fgcenter_maskaware/
+experiments/ri3d_datasets/first2_fghead_maskaware/
 ```
 
 包含：
@@ -495,6 +499,7 @@ cutout75_budget4_masked: 4 views/sample
 roleaware_cutout75_budget4: 4 views/sample, with supervision_role metadata
 roleweighted_cutout75_budget4: same views plus role_rgb_weight / role_depth_weight
 maskaware_cutout75_budget4: same views plus mask_path / source_mask / mask_coverage
+fgcenter/fghead: foreground connected-component crop metadata and resized masks
 ```
 
 CPU 端准备脚本：
@@ -517,6 +522,12 @@ GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_roleweighted RUN_
 python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_maskaware --variants roleaware_cutout75_budget4 --image-size 160 --overwrite
 GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
 GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_maskaware RUN_ROOT=experiments/downstream_3d/ri3d_first2_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/render_ri3d_first2.sh
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_fgcenter_maskaware --variants roleaware_cutout75_budget4 --image-size 160 --foreground-crop --foreground-crop-margin 0.35 --overwrite
+GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fgcenter_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fgcenter_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 USE_MASK=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fgcenter_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fgcenter_unmasked_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+python scripts/prepare_ri3d_dataset.py --downstream-root experiments/downstream_datasets --output-root experiments/ri3d_datasets/first2_fghead_maskaware --variants roleaware_cutout75_budget4 --image-size 160 --foreground-crop --foreground-crop-mode mask_width_anchor --foreground-width-scale 1.8 --foreground-height-fraction 0.55 --foreground-y-anchor 0.45 --overwrite
+GPU=0 USE_MASK=1 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fghead_maskaware_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
+GPU=0 USE_MASK=0 ITERATIONS=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware OUT_ROOT=experiments/downstream_3d/ri3d_first2_fghead_unmasked_iter500 VARIANTS_STR="roleaware_cutout75_budget4" bash scripts/run_ri3d_first2.sh
 ```
 
 默认输出：
@@ -528,6 +539,10 @@ experiments/downstream_3d/ri3d_first2_160_iter500/
 experiments/downstream_3d/ri3d_first2_roleaware_iter500/
 experiments/downstream_3d/ri3d_first2_roleweighted_iter500/
 experiments/downstream_3d/ri3d_first2_maskaware_iter500/
+experiments/downstream_3d/ri3d_first2_fgcenter_maskaware_iter500/
+experiments/downstream_3d/ri3d_first2_fgcenter_unmasked_iter500/
+experiments/downstream_3d/ri3d_first2_fghead_maskaware_iter500/
+experiments/downstream_3d/ri3d_first2_fghead_unmasked_iter500/
 ```
 
 已发布结果：
@@ -565,6 +580,20 @@ experiments/metrics/ri3d_first2_maskaware_observations.md
 experiments/figures/ri3d_first2_maskaware_iter500_inputs.png
 experiments/figures/ri3d_first2_maskaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_maskaware_iter500/
+experiments/ri3d_datasets/first2_fgcenter_maskaware/
+experiments/ri3d_datasets/first2_fghead_maskaware/
+experiments/metrics/ri3d_first2_fgcenter_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_fgcenter_unmasked_iter500.csv
+experiments/metrics/ri3d_first2_fghead_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_fghead_unmasked_iter500.csv
+experiments/figures/ri3d_first2_fgcenter_maskaware_iter500_renders.png
+experiments/figures/ri3d_first2_fgcenter_unmasked_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_maskaware_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_unmasked_iter500_renders.png
+experiments/reconstructions/ri3d_first2_fgcenter_maskaware_iter500/
+experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/
+experiments/reconstructions/ri3d_first2_fghead_maskaware_iter500/
+experiments/reconstructions/ri3d_first2_fghead_unmasked_iter500/
 ```
 
 阶段结论：
@@ -590,8 +619,10 @@ render sheet 仍有同类 artifacts。
 G11 已完成 spatial mask-aware RI3D loss：MP4/PNG/CSV 全部导出且训练可复现，
 但 render sheet 仍显示小碎片/相框 artifact。foreground-only loss 不能解决
 尺度/位置 canonicalization 和结构先验缺失问题。
-因此下一步不是 first10 扩展，而是 first2 foreground-canonical crop/recenter
-和 mask-loss ablation。
+G12 已完成 foreground canonicalization 和 mask-loss ablation。largest_square
+和 mask_width_anchor 都让输入 sheet 更干净，但 USE_MASK=1/0 的 render sheet
+仍然是同类卡片/碎片失败。
+因此下一步不是 first10 扩展，而是 G13：接入 LAM/FLAME/full-head geometry prior。
 ```
 
 对比指标：
@@ -629,5 +660,5 @@ C: cutout75_budget4_masked
 当前最重要的未闭环问题：
 
 ```text
-foreground-canonical role/mask supervision 是否能在 first2 修复 G11 的视觉失败？
+结构几何先验是否能修复 G8-G12 中 RI3D 反复出现的卡片/碎片几何失败？
 ```

@@ -187,6 +187,9 @@ Medium-term architecture:
     geometry_only depth/silhouette only. Record foreground loss, background
     leakage, silhouette BCE, and mask coverage instead of final training loss
     alone.
+11. After G12, stop adding RI3D crop/mask variants until a structural prior is
+    present. LAM/FLAME/full-head depth, normal, silhouette, or initialization
+    should be tested before any first10 expansion.
 ```
 
 High-risk / rollback-monitored work:
@@ -219,9 +222,13 @@ but scalar weights alone are still insufficient for visual quality.
 RI3D first2 mask-aware iter500 confirms spatial masks can be passed through
 the RI3D data loader and training loss, but foreground-only loss still produces
 fragmented/card-like renders without subject recentering or structural priors.
+RI3D first2 foreground-canonical ablations improve input scale and remove
+disconnected components, but both USE_MASK=1 and USE_MASK=0 still render
+card-like fragments. The repeated failure now points to missing structural
+geometry rather than only pseudo-view selection, masks, or crop scale.
 ```
 
-The next concrete experiment should keep the same first2 samples and canonicalize
-foreground scale/position from trusted masks before RI3D conversion. If that
-fails, move to a LAM/FLAME/full-head geometry prior before expanding to first10
-or first30/first50.
+The next concrete experiment should keep the same first2 samples and introduce
+a LAM/FLAME/full-head geometry proxy before further RI3D pseudo-view variants.
+Expand to first10 or first30/first50 only after the geometry-prior path changes
+the render sheets, not merely the training loss.

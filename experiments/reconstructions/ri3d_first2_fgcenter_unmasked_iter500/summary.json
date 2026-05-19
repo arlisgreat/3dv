@@ -1,0 +1,45 @@
+{
+  "data_root": "experiments/ri3d_datasets/first2_fgcenter_maskaware",
+  "run_root": "experiments/downstream_3d/ri3d_first2_fgcenter_unmasked_iter500",
+  "iteration": 500,
+  "rows": [
+    {
+      "tag": "web_clean_frontal_03_roleaware_cutout75_budget4_4v",
+      "sample_id": "web_clean_frontal_03",
+      "variant": "roleaware_cutout75_budget4",
+      "view_count": 4,
+      "image_size": 160,
+      "role_counts": "{\"geometry_only\": 2, \"identity_supervision\": 2}",
+      "identity_supervision_count": 2,
+      "geometry_only_count": 2,
+      "iterations": 500,
+      "final_loss": 0.0092889,
+      "progress_splats": 102400,
+      "point_count": 102400,
+      "init_ply_bytes": 16794606,
+      "train_ply_bytes": 16794606,
+      "train_log": "experiments/downstream_3d/ri3d_first2_fgcenter_unmasked_iter500/logs/web_clean_frontal_03_roleaware_cutout75_budget4_4v_train.log",
+      "render_rgb_mp4": "experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/web_clean_frontal_03_roleaware_cutout75_budget4_4v_rgb.mp4",
+      "render_depth_mp4": "experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/web_clean_frontal_03_roleaware_cutout75_budget4_4v_depth.mp4"
+    },
+    {
+      "tag": "web_clean_frontal_01_roleaware_cutout75_budget4_4v",
+      "sample_id": "web_clean_frontal_01",
+      "variant": "roleaware_cutout75_budget4",
+      "view_count": 4,
+      "image_size": 160,
+      "role_counts": "{\"identity_supervision\": 4}",
+      "identity_supervision_count": 4,
+      "geometry_only_count": 0,
+      "iterations": 500,
+      "final_loss": 0.0157918,
+      "progress_splats": 102400,
+      "point_count": 102400,
+      "init_ply_bytes": 16794606,
+      "train_ply_bytes": 16794606,
+      "train_log": "experiments/downstream_3d/ri3d_first2_fgcenter_unmasked_iter500/logs/web_clean_frontal_01_roleaware_cutout75_budget4_4v_train.log",
+      "render_rgb_mp4": "experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/web_clean_frontal_01_roleaware_cutout75_budget4_4v_rgb.mp4",
+      "render_depth_mp4": "experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/web_clean_frontal_01_roleaware_cutout75_budget4_4v_depth.mp4"
+    }
+  ]
+}

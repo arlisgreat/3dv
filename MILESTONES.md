@@ -74,6 +74,7 @@ quality without explicit role-weighted losses.
 | G9 | done, ambiguous | Non-invasive role-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleaware_iter500.csv` | Role metadata/desaturation runs, but explicit role-weighted loss is still needed. |
 | G10 | done, ambiguous | Explicit role-weighted RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleweighted_iter500.csv` | Scalar per-view role weights run, but spatial artifacts remain dominant. |
 | G11 | done, negative | Spatial mask-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_maskaware_iter500.csv` | Mask-aware loss runs and exports valid videos, but visual artifacts remain and recentering/priors are needed. |
+| G12 | done, negative | Foreground-canonical mask ablation on first2 | `experiments/metrics/ri3d_first2_fghead_unmasked_iter500.csv` | Foreground scale/crop and mask-loss ablations improve inputs but still render card-like fragments. |
 
 ## G8 Result
 
@@ -306,55 +307,128 @@ milestone should not be first10 expansion or iter1500 confirmation. It should
 first test foreground recentering/mask ablations or a stronger geometry prior.
 ```
 
-## Active Milestone: G12
+## G12 Result
+
+RI3D first2 foreground-canonical ablations completed for:
+
+```text
+roleaware_cutout75_budget4
+```
+
+Branches:
+
+```text
+first2_fgcenter_maskaware: largest connected mask component, square crop, USE_MASK=1
+first2_fgcenter_unmasked: same largest-square data, USE_MASK=0
+first2_fghead_maskaware: mask_width_anchor head/upper-body crop, USE_MASK=1
+first2_fghead_unmasked: same head/upper-body data, USE_MASK=0
+```
+
+Published artifacts:
+
+```text
+experiments/ri3d_datasets/first2_fgcenter_maskaware/
+experiments/ri3d_datasets/first2_fghead_maskaware/
+experiments/metrics/ri3d_first2_fgcenter_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_fgcenter_maskaware_observations.md
+experiments/metrics/ri3d_first2_fgcenter_unmasked_iter500.csv
+experiments/metrics/ri3d_first2_fgcenter_unmasked_observations.md
+experiments/metrics/ri3d_first2_fghead_maskaware_iter500.csv
+experiments/metrics/ri3d_first2_fghead_maskaware_observations.md
+experiments/metrics/ri3d_first2_fghead_unmasked_iter500.csv
+experiments/metrics/ri3d_first2_fghead_unmasked_observations.md
+experiments/figures/ri3d_first2_fgcenter_maskaware_iter500_renders.png
+experiments/figures/ri3d_first2_fgcenter_unmasked_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_maskaware_iter500_renders.png
+experiments/figures/ri3d_first2_fghead_unmasked_iter500_renders.png
+experiments/reconstructions/ri3d_first2_fgcenter_maskaware_iter500/
+experiments/reconstructions/ri3d_first2_fgcenter_unmasked_iter500/
+experiments/reconstructions/ri3d_first2_fghead_maskaware_iter500/
+experiments/reconstructions/ri3d_first2_fghead_unmasked_iter500/
+```
+
+Loss summary:
+
+```text
+web_clean_frontal_03:
+  fgcenter_maskaware: 0.0093817
+  fgcenter_unmasked: 0.0092889
+  fghead_maskaware: 0.0091152
+  fghead_unmasked: 0.0092128
+
+web_clean_frontal_01:
+  fgcenter_maskaware: 0.0159728
+  fgcenter_unmasked: 0.0157918
+  fghead_maskaware: 0.0165959
+  fghead_unmasked: 0.0163692
+```
+
+Interpretation:
+
+```text
+G12 improves the input sheets. The mask_width_anchor branch produces a much
+more stable head/upper-body scale than G11 and removes disconnected foreground
+fragments from the training RGB images.
+
+However, every G12 render sheet still shows rotated card-like planes and
+detached chunks. The USE_MASK=0 branches are visually similar to USE_MASK=1,
+so the failure is not only caused by masked RGB/SSIM or silhouette loss.
+
+Conclusion: foreground canonicalization is useful data hygiene but not enough
+to make RI3D pseudo-view supervision produce a stable 3D head. The next step
+must add a structural geometry prior, not more first2 crop/mask variants.
+```
+
+## Active Milestone: G13
 
 Name:
 
 ```text
-Foreground-canonical mask ablation on first2
+Geometry-prior first2 repair
 ```
 
 Purpose:
 
 ```text
-Fix the G11 failure mode where the masked objective learns small floating
-foreground fragments. Crop/recenter each RI3D training image from the trusted
-mask before resizing, preserve role metadata, and compare mask-loss variants.
+Inject a stronger structure signal after G8-G12 all show that filtered
+pseudo-view RGB/mask supervision alone collapses into card-like geometry.
+Start with the lowest-risk local prior: LAM/FLAME/full-head silhouette, depth,
+normal, or initialization evidence that can be generated from existing first2
+inputs without retraining a new model.
 ```
 
 Planned outputs:
 
 ```text
-experiments/ri3d_datasets/first2_fgcenter_maskaware/
-experiments/metrics/ri3d_first2_fgcenter_maskaware_iter500.csv
-experiments/metrics/ri3d_first2_fgcenter_maskaware_observations.md
-experiments/figures/ri3d_first2_fgcenter_maskaware_iter500_renders.png
-experiments/reconstructions/ri3d_first2_fgcenter_maskaware_iter500/
+experiments/metrics/geometry_prior_first2_plan.md
+experiments/metrics/geometry_prior_first2_observations.md
+experiments/figures/geometry_prior_first2_*.png
+experiments/reconstructions/geometry_prior_first2_*/
+patches/ri3d/geometry_prior_*.patch if RI3D loss/init is changed
 ```
 
 Pass criteria:
 
 ```text
-1. Foreground crop/recentered inputs are generated reproducibly from mask boxes.
-2. First-frame render sheets show less floating/card-like fragmentation than G11.
-3. web_clean_frontal_01 does not regress relative to G8 cutout75_budget4_masked.
-4. The next decision is clear: iter1500 confirmation, first10 expansion, or
-   LAM/FLAME geometry-prior integration.
+1. A LAM/FLAME/full-head structural proxy is generated for the same first2 samples.
+2. The proxy can be consumed without overwriting G8-G12 artifacts.
+3. Render sheets reduce card-like planes or clearly explain why the RI3D path is
+   the wrong downstream baseline for this paper sprint.
 ```
 
 Failure criteria:
 
 ```text
-1. Cropping removes useful hair/ear/body context or worsens identity.
-2. The render sheet still collapses to floating fragments.
-3. Mask-loss variants change numeric loss without visual improvement.
+1. Available LAM/FLAME outputs cannot provide a usable first2 structural proxy.
+2. Geometry-prior integration requires a large risky rewrite.
+3. Outputs still collapse to cards/fragments, pushing the paper framing toward a
+   diagnostic negative result rather than a reconstruction method win.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G12 | Foreground-canonical mask ablation on first2 | G11 exported and reviewed | Clear first2 visual/loss decision |
 | G13 | Geometry-prior first2 repair | G12 fails or remains ambiguous | LAM/FLAME/normal/depth prior either helps or is rejected |
 | G14 | Expand to first10 downstream | G12/G13 positive | Per-group result table across clean/side/glasses/hair/occlusion |
 | G15 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
