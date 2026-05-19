@@ -1,0 +1,11 @@
+sample_id,group,mean_clip_raw75,mean_clip_cutout75,delta_mean_clip,mean_trusted_raw75,mean_trusted_cutout75,delta_mean_trusted,good_trusted_raw75,good_trusted_cutout75,delta_good_trusted
+web_clean_frontal_01,clean_frontal,0.588408,0.582625,-0.005783,86.297,75.471,-10.826,5,4,-1
+web_clean_frontal_02,clean_frontal,0.497025,0.575590,0.078565,77.331,72.639,-4.692,5,4,-1
+web_clean_frontal_03,clean_frontal,0.500018,0.558803,0.058785,44.017,69.312,25.295,0,4,4
+web_complex_hair_01,complex_hair,0.439190,0.488442,0.049252,73.286,74.148,0.862,4,4,0
+web_complex_hair_02,complex_hair,0.505659,0.628944,0.123285,57.116,70.540,13.424,3,4,1
+web_glasses_01,glasses,0.589325,0.518619,-0.070706,69.847,74.026,4.179,4,5,1
+web_glasses_02,glasses,0.547407,0.571508,0.024101,69.763,72.568,2.805,4,5,1
+web_mild_side_01,mild_side,0.361596,0.445307,0.083711,71.928,67.976,-3.952,4,4,0
+web_mild_side_02,mild_side,0.395647,0.581002,0.185355,72.524,75.767,3.243,4,4,0
+web_occlusion_lowq_01,occlusion_lowq,0.469105,0.449671,-0.019434,73.809,75.853,2.044,5,5,0

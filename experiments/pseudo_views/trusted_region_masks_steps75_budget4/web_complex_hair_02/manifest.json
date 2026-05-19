@@ -1,0 +1,83 @@
+[
+  {
+    "sample_id": "web_complex_hair_02",
+    "tile_index": 0,
+    "view_index": "0",
+    "view_file": "experiments/pseudo_views/zero123plus_first10_steps75/web_complex_hair_02_steps75/view_00_az030_el+20.png",
+    "accepted": false,
+    "reject_reasons": [
+      "low_reliability",
+      "full_photo_or_background_rotation",
+      "photo_frame_geometry_risk",
+      "hair_hallucination_risk"
+    ],
+    "mask_coverage": 0.685641627543036,
+    "mask_bbox_area": 0.8438086854460094,
+    "mask_bbox_occupancy": 0.8125557835193751,
+    "mask_center_offset": 0.05568083034457472,
+    "face_count": 0,
+    "reliability_score": 50.0,
+    "trusted_score": 63.031
+  },
+  {
+    "sample_id": "web_complex_hair_02",
+    "tile_index": 1,
+    "view_index": "5",
+    "view_file": "experiments/pseudo_views/zero123plus_first10_steps75/web_complex_hair_02_steps75/view_05_az330_el-10.png",
+    "accepted": false,
+    "reject_reasons": [
+      "low_reliability",
+      "full_photo_or_background_rotation",
+      "photo_frame_geometry_risk",
+      "hair_hallucination_risk"
+    ],
+    "mask_coverage": 0.632052034428795,
+    "mask_bbox_area": 0.788262910798122,
+    "mask_bbox_occupancy": 0.8018289656541592,
+    "mask_center_offset": 0.0834603311062208,
+    "face_count": 0,
+    "reliability_score": 50.0,
+    "trusted_score": 62.588
+  },
+  {
+    "sample_id": "web_complex_hair_02",
+    "tile_index": 2,
+    "view_index": "3",
+    "view_file": "experiments/pseudo_views/zero123plus_first10_steps75/web_complex_hair_02_steps75/view_03_az210_el-10.png",
+    "accepted": false,
+    "reject_reasons": [
+      "low_reliability",
+      "full_photo_or_background_rotation",
+      "overwide_mask_without_face",
+      "photo_frame_geometry_risk",
+      "hair_hallucination_risk"
+    ],
+    "mask_coverage": 0.6604949139280125,
+    "mask_bbox_area": 0.8873239436619719,
+    "mask_bbox_occupancy": 0.7443672839506172,
+    "mask_center_offset": 0.0540006580802802,
+    "face_count": 0,
+    "reliability_score": 50.0,
+    "trusted_score": 61.413
+  },
+  {
+    "sample_id": "web_complex_hair_02",
+    "tile_index": 3,
+    "view_index": "2",
+    "view_file": "experiments/pseudo_views/zero123plus_first10_steps75/web_complex_hair_02_steps75/view_02_az150_el+20.png",
+    "accepted": false,
+    "reject_reasons": [
+      "low_reliability",
+      "low_trusted_score",
+      "full_photo_or_background_rotation",
+      "hair_hallucination_risk"
+    ],
+    "mask_coverage": 0.5608274647887324,
+    "mask_bbox_area": 0.8685446009389671,
+    "mask_bbox_occupancy": 0.6457094594594595,
+    "mask_center_offset": 0.06808308655242627,
+    "face_count": 0,
+    "reliability_score": 50.0,
+    "trusted_score": 54.643
+  }
+]

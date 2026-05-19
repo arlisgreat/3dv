@@ -110,9 +110,14 @@ steps75 对 5/10 个样本提升、3/10 持平、2/10 变差。
 budget4 的 selected-view 平均可靠性高于盲目使用全部 6 视角。
 CLIP consistency proxy 确认 steps75 的 learned-image consistency 也更高，
 但仍会保留部分整图/背景旋转视图，后续必须叠加 mask 或 face-aware identity filter。
+trusted-region mask 将 raw75 CLIP-budget4 的 40 个候选筛到 25 个可用。
+subject cutout 输入把 cutout75 CLIP-budget4 可用 mask 提升到 37/40，
+因此后续 pseudo-view frontend 默认改成 cutout -> steps75 -> budget4 -> mask。
 ```
 
 这一轮支持原假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。
+也进一步支持输入格式假设：先把人物从照片/相框背景中分离，会明显减少
+Zero123++ 旋转整张照片而不是旋转头部的失败。
 
 ### Week 3
 

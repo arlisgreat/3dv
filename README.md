@@ -156,6 +156,8 @@ comparison figure: experiments/figures/zero123plus_first10_steps20_vs75_grids.pn
 budget figure: experiments/figures/view_budget_selection_first10_steps75_budget4.png
 application alignment: experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
 CLIP consistency proxy: experiments/metrics/clip_consistency_filter_observations_20260519.md
+trusted-region masks: experiments/metrics/trusted_region_mask_observations_20260519.md
+cutout input ablation: experiments/metrics/cutout_input_ablation_observations_20260519.md
 ```
 
 当前结论：
@@ -165,11 +167,13 @@ steps75 对 5 个样本有帮助、3 个基本持平、2 个变差。
 盲目使用全部 6 个伪视角不安全。
 steps75 + budget4 暂时是后续 trusted-view 输入的默认候选。
 CLIP consistency 只能辅助排序，不能替代 face-aware identity filtering。
+raw portrait 输入会导致 photo-frame/background rotation。
+subject cutout 输入把 CLIP-budget4 mask accepted views 从 25/40 提升到 37/40。
 ```
 
 下一步：
 
 1. 扩展到 first30 / first50。
 2. 将 cheap proxy 替换或增强为 face-embedding identity filtering。
-3. 建立可信区域 mask 规则，过滤 photo-frame / background rotation。
+3. 默认使用 subject cutout + trusted-region mask 规则，过滤 photo-frame / background rotation。
 4. 把 selected pseudo views 接入后续 Gaussian/PanoHead/FLAME 路线。

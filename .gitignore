@@ -13,10 +13,12 @@
 !/experiments/inputs/**/README.md
 !/experiments/inputs/**/*.csv
 !/experiments/inputs/**/*.json
+!/experiments/inputs/first10/cutouts/*.png
 !/experiments/pseudo_views/
 !/experiments/pseudo_views/**/
 !/experiments/pseudo_views/**/README.md
 !/experiments/pseudo_views/**/metadata.json
+!/experiments/pseudo_views/**/manifest.json
 !/experiments/pseudo_views/**/*.png
 !/experiments/reconstructions/
 !/experiments/reconstructions/**/
