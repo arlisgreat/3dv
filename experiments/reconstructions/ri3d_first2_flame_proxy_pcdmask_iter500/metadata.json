@@ -1,0 +1,7 @@
+{
+  "name": "ri3d_first2_flame_proxy_pcdmask_iter500",
+  "date": "2026-05-19",
+  "description": "RI3D first2 downstream 160px 500-iteration videos exported from ignored raw outputs.",
+  "source_run_root": "experiments/downstream_3d/ri3d_first2_flame_proxy_pcdmask_iter500",
+  "metrics_csv": "experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv"
+}

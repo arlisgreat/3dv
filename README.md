@@ -137,12 +137,14 @@ CLIP + reliability view ranking
 trusted-region masks
 subject cutout ablation
 face identity filter
-downstream dataset build
+downstream candidate-pool export
 RI3D first2 dataset conversion
 RI3D first2 160px iter50 smoke render
 RI3D first2 160px iter500 milestone
 RI3D first2 role-aware iter500 milestone
 RI3D first2 role-weighted iter500 milestone
+RI3D first2 mask-aware / foreground-canonical / point-cloud-filter milestones
+RI3D first2 FLAME proxy geometry-prior diagnostic
 ```
 
 当前默认 pseudo-view 前端：
@@ -156,7 +158,9 @@ subject cutout
 -> identity / geometry-only / reject split
 ```
 
-已经构建好三套下游输入：
+已经构建好三套下游候选池。注意：这里的历史目录名是
+`downstream_datasets`，但语义不是“已证明适合重建的训练集”，而是筛出来的
+伪视图候选池：
 
 ```text
 experiments/downstream_datasets/raw75_all6/
@@ -178,6 +182,29 @@ skills/3dv-experiment-orchestrator/
 ```text
 experiments/ri3d_datasets/first2/
 experiments/ri3d_datasets/first2_roleaware/
+experiments/ri3d_datasets/first2_fghead_maskaware/
+experiments/ri3d_datasets/first2_flame_proxy_pcdmask/
+```
+
+这些 RI3D 目录同样只是“下游可读候选导出”，不是 validated training set。
+G8-G14 的结果已经证明：候选筛选指标仍弱，候选视图即使更干净，也可能在
+RI3D 中产生卡片、碎片和身份/几何失败。
+
+当前最新结论：
+
+```text
+G13 foreground point-cloud filtering reduces the rectangular card background
+seeded by RI3D initialization, but still leaves detached foreground chunks.
+G14 FLAME proxy depth/conf priors run end-to-end and export valid MP4s, but do
+not repair the fragments and can remove subject support. The next stage should
+stabilize the paper as a failure-aware pseudo-view diagnostic study on first10,
+not claim that this RI3D repair path is a solved reconstruction method.
+
+Critical correction: the current experiments/downstream_datasets candidate pools
+are visually poor. Many selected views are split bodies, rotated photo cards,
+cropped fragments, or background/body-only pieces. Future milestones must pass
+a structural data audit and a VLM/manual visual audit before any reconstruction
+training.
 ```
 
 RI3D first2 smoke 复现命令：

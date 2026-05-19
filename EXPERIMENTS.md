@@ -25,7 +25,7 @@ view budget 实验
 subject cutout 输入消融
 trusted-region mask
 face identity filter
-downstream dataset 构建
+downstream candidate-pool export
 RI3D first2 160px downstream smoke
 RI3D first2 160px iter500 gate
 RI3D first2 role-aware iter500 gate
@@ -33,12 +33,13 @@ RI3D first2 role-weighted iter500 gate
 RI3D first2 mask-aware iter500 gate
 RI3D first2 foreground-canonical mask ablations
 RI3D first2 foreground point-cloud initialization filter
+RI3D first2 FLAME proxy geometry-prior diagnostic
 ```
 
 还没有完成：
 
 ```text
-LAM/FLAME/full-head mesh/depth/silhouette prior 是否能修复 G13 仍存在的碎片 artifact
+candidate-pool recovery and VLM-gated regeneration before any more reconstruction
 ```
 
 当前默认 pseudo-view 前端：
@@ -391,12 +392,13 @@ geometry_only 只给侧后脑等几何补全信号
 identity_reject 不进入下游监督
 ```
 
-## 10. Stage 08: Downstream Dataset Build
+## 10. Stage 08: Downstream Candidate Pool Export
 
 目的：
 
 ```text
-把伪视角结果整理成下游 3D reconstruction 可以读取的格式
+把伪视角候选整理成下游 3D reconstruction 可以读取的格式。
+这不是 validated training dataset；只是 candidate pool / candidate export。
 ```
 
 输出：
@@ -405,7 +407,7 @@ identity_reject 不进入下游监督
 experiments/downstream_datasets/
 ```
 
-三套数据：
+三套候选池：
 
 ```text
 raw75_all6/
@@ -438,7 +440,8 @@ python3 scripts/build_downstream_dataset.py --overwrite
 注意：
 
 ```text
-这一步只是准备下游输入数据，不等于已经证明 3D reconstruction 被提升
+这一步只是准备下游可读候选池，不等于已经证明这些候选适合做训练监督，
+也不等于已经证明 3D reconstruction 被提升。
 ```
 
 ## 11. Stage 09: Downstream 3D Reconstruction
@@ -452,23 +455,46 @@ RI3D first2 role-aware iter500 gate 已完成，但非侵入版本仍 ambiguous
 RI3D first2 role-weighted iter500 gate 已完成，但 scalar weights 仍 ambiguous
 RI3D first2 mask-aware iter500 gate 已完成，但 foreground-only loss 仍没有修复视觉 artifact
 RI3D first2 foreground-canonical ablations 已完成，但尺度对齐和 mask-loss ablation 仍没有修复视觉 artifact
+RI3D first2 foreground point-cloud / FLAME proxy diagnostics 已完成，但当前解释必须受 candidate-pool 质量限制
 ```
 
-下一步要验证：
+重要更新：
 
 ```text
-raw75_all6 -> 3D reconstruction
-raw75_budget4 -> 3D reconstruction
-cutout75_budget4_masked -> 3D reconstruction
-roleaware_cutout75_budget4 -> 3D reconstruction
-roleweighted_cutout75_budget4 -> 3D reconstruction
-maskaware_cutout75_budget4 -> 3D reconstruction
+Stage 09 暂停作为重建方法实验继续推进。
+原因不是 RI3D/Gaussian 一定失败，而是上游 candidate pool 没有过前提 gate。
+experiments/downstream_datasets 中大量候选图本身是 split body、rotated
+photo card、cropped fragment 或背景/身体片段。
+```
+
+已用于验证的候选池/导出：
+
+```text
+raw75_all6 candidate pool -> RI3D diagnostic
+raw75_budget4 candidate pool -> RI3D diagnostic
+cutout75_budget4_masked candidate pool -> RI3D diagnostic
+roleaware_cutout75_budget4 candidate pool -> RI3D diagnostic
+roleweighted_cutout75_budget4 candidate export -> RI3D diagnostic
+maskaware_cutout75_budget4 candidate export -> RI3D diagnostic
 ```
 
 目标问题：
 
 ```text
-更可靠的伪视角前端是否真的提升最终 3D 重建结果？
+这些弱指标筛出来的伪视角候选为什么不能作为可靠 3D reconstruction 监督？
+下一轮如何通过 VLM/manual visual gate 重建候选池？
+```
+
+最新 gate artifacts：
+
+```text
+experiments/metrics/milestone_data_audit_protocol_20260519.md
+experiments/metrics/downstream_candidate_pool_semantics_20260519.md
+experiments/metrics/first10_candidate_pool_audit_gate_20260519.csv
+experiments/metrics/first10_candidate_pool_audit_gate_20260519.md
+experiments/metrics/first10_candidate_pool_visual_audit_20260519.md
+experiments/figures/first10_candidate_pool_audit_gate_20260519.png
+experiments/figures/first10_candidate_pool_visual_audit_20260519.png
 ```
 
 建议先只选 2 个样本：
@@ -478,7 +504,7 @@ web_clean_frontal_03      # cutout 明显帮助
 web_clean_frontal_01      # cutout 可能伤害
 ```
 
-本地已生成 RI3D 输入：
+本地已生成 RI3D-readable candidate exports：
 
 ```text
 experiments/ri3d_datasets/first2/
@@ -603,6 +629,26 @@ experiments/figures/ri3d_first2_fghead_pcdmask_iter500_inputs.png
 experiments/figures/ri3d_first2_fghead_pcdmask_iter500_renders.png
 experiments/figures/ri3d_first2_fghead_pcdmask_vs_maskaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_fghead_pcdmask_iter500/
+experiments/metrics/flame_geometry_prior_first2_plan.md
+experiments/metrics/flame_geometry_prior_first2_observations.md
+experiments/geometry_priors/flame_first2_proxy/
+experiments/ri3d_datasets/first2_flame_proxy_pcdmask/
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_observations.md
+experiments/figures/flame_geometry_prior_first2_proxy_sheet.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_inputs.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_renders.png
+experiments/figures/ri3d_first2_flame_proxy_vs_pcdmask_iter500_renders.png
+experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/
+```
+
+G14 结论：
+
+```text
+FLAME proxy depth/conf prior 能生成并接入 RI3D，所有 MP4 可读。
+但它没有修复 G13 仍有的 detached foreground fragments，并且会削弱部分主体支持。
+因此它是 diagnostic negative：后续 first10 应作为 failure taxonomy 和 protocol
+验证，而不是宣称该 RI3D+FLAME proxy 路线已经解决重建质量。
 ```
 
 阶段结论：

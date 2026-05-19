@@ -9,6 +9,7 @@ experiments/
   inputs/           # 输入头像
   pseudo_views/     # Zero123++ 等生成的伪多视角
   reconstructions/  # LAM / baseline 输出
+  downstream_datasets/ # pseudo-view candidate pools, not validated training datasets
   downstream_3d/    # 下游 3D 工作目录，本地 ignored
   metrics/          # CSV / JSON 指标
   figures/          # 论文图
@@ -43,7 +44,11 @@ data_manifest.csv
 
 不要把实验结果散落在 `external/` 里。第三方代码可以临时产出结果，但最终要复制或导出到 `experiments/`。
 
-实验结果需要回传到仓库：伪视角 PNG、重建 MP4、指标和索引文件都提交。权重、cache、第三方源码产物仍然不要提交。
+实验结果需要回传到仓库：伪视角 PNG、重建 MP4、指标和索引文件都提交。
+权重、cache、第三方源码产物仍然不要提交。
+
+`experiments/downstream_datasets/` 是历史路径名，语义上只是伪视角候选池
+导出，不是已经证明适合重建的训练集。
 
 ```text
 experiments/pseudo_views/**/metadata.json
@@ -89,6 +94,12 @@ experiments/metrics/view_budget_selection_first10_steps20_75.csv
 experiments/metrics/steps20_vs75_comparison_first10.csv
 experiments/metrics/zero123plus_first10_steps75_view_budget_observations_20260519.md
 experiments/metrics/application_alignment_and_iteration_ideas_20260519.md
+experiments/metrics/downstream_candidate_pool_semantics_20260519.md
+experiments/metrics/milestone_data_audit_protocol_20260519.md
+experiments/metrics/first10_candidate_pool_audit_gate_20260519.md
+experiments/metrics/first10_candidate_pool_visual_audit_20260519.md
+experiments/figures/first10_candidate_pool_audit_gate_20260519.png
+experiments/figures/first10_candidate_pool_visual_audit_20260519.png
 experiments/metrics/pseudo_view_clip_consistency_first10_steps20_75.csv
 experiments/metrics/view_budget_clip_selection_first10_steps20_75.csv
 experiments/figures/view_budget_clip_selection_first10_steps75_budget4.png
@@ -155,4 +166,15 @@ experiments/figures/ri3d_first2_fghead_pcdmask_iter500_inputs.png
 experiments/figures/ri3d_first2_fghead_pcdmask_iter500_renders.png
 experiments/figures/ri3d_first2_fghead_pcdmask_vs_maskaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_fghead_pcdmask_iter500/
+experiments/metrics/flame_geometry_prior_first2_plan.md
+experiments/metrics/flame_geometry_prior_first2_observations.md
+experiments/geometry_priors/flame_first2_proxy/
+experiments/ri3d_datasets/first2_flame_proxy_pcdmask/
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_observations.md
+experiments/figures/flame_geometry_prior_first2_proxy_sheet.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_inputs.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_renders.png
+experiments/figures/ri3d_first2_flame_proxy_vs_pcdmask_iter500_renders.png
+experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/
 ```

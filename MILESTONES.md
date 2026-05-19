@@ -53,9 +53,39 @@ subject cutout
 Current unresolved claim:
 
 ```text
-Filtered pseudo views and role metadata look more reliable as 2D supervision,
-but have not yet been proven to improve final downstream 3D reconstruction
-quality without explicit role-weighted losses.
+Filtered pseudo views and role metadata are only candidate pools. They look
+more reliable as 2D candidates, but G8-G14 show they have not been proven to be
+valid reconstruction training supervision.
+```
+
+## Mandatory Data Audit Gate
+
+Every new milestone must pass a data audit gate before training or reconstruction.
+
+```text
+1. State the premise.
+2. Run structural audit with scripts/audit_data_gate.py.
+3. Generate a visual audit sheet for candidate PNGs.
+4. Inspect generated images with VLM/manual visual checking.
+5. Record PASS_RECONSTRUCTION_TRAINING, PASS_DIAGNOSTIC_ONLY, or BLOCKED.
+6. Update this file before any GPU experiment starts.
+```
+
+The current candidate-pool gate is:
+
+```text
+experiments/metrics/first10_candidate_pool_audit_gate_20260519.md
+experiments/metrics/first10_candidate_pool_visual_audit_20260519.md
+experiments/figures/first10_candidate_pool_audit_gate_20260519.png
+experiments/figures/first10_candidate_pool_visual_audit_20260519.png
+```
+
+Current verdict:
+
+```text
+BLOCKED for reconstruction training.
+The existing experiments/downstream_datasets candidate pools are visually poor
+and only usable as failure evidence.
 ```
 
 ## Completed Milestones
@@ -68,7 +98,7 @@ quality without explicit role-weighted losses.
 | G3 | done | Rank and budget pseudo views | `experiments/metrics/view_budget_selection_first10_steps20_75.csv` | Budget4 is a better compromise than blind budget6. |
 | G4 | done | Test subject cutout input ablation | `experiments/metrics/cutout_input_ablation_observations_20260519.md` | Cutout improves average reliability and CLIP consistency. |
 | G5 | done | Add trusted-region masks | `experiments/metrics/trusted_region_mask_observations_20260519.md` | Masking rejects full-photo/background rotation regions. |
-| G6 | done | Add face identity filtering | `experiments/metrics/face_identity_filter_observations_20260519.md` | Cutout75 budget4 splits into identity, geometry-only, and reject roles. |
+| G6 | done | Add face identity filtering | `experiments/metrics/face_identity_filter_observations_20260519.md` | Cutout75 budget4 splits pseudo-view candidates into identity, geometry-only, and reject roles. |
 | G7 | done | Close RI3D first2 iter50 smoke | `experiments/metrics/ri3d_first2_160_iter50.csv` | Downstream loop runs, but render quality is smoke-level. |
 | G8 | done, ambiguous | Run RI3D first2 iter500 gate | `experiments/metrics/ri3d_first2_160_iter500.csv` | Execution passed; method conclusion is not strong enough to scale data. |
 | G9 | done, ambiguous | Non-invasive role-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_roleaware_iter500.csv` | Role metadata/desaturation runs, but explicit role-weighted loss is still needed. |
@@ -76,6 +106,8 @@ quality without explicit role-weighted losses.
 | G11 | done, negative | Spatial mask-aware RI3D first2 iter500 | `experiments/metrics/ri3d_first2_maskaware_iter500.csv` | Mask-aware loss runs and exports valid videos, but visual artifacts remain and recentering/priors are needed. |
 | G12 | done, negative | Foreground-canonical mask ablation on first2 | `experiments/metrics/ri3d_first2_fghead_unmasked_iter500.csv` | Foreground scale/crop and mask-loss ablations improve inputs but still render card-like fragments. |
 | G13 | done, partial positive | RI3D foreground point-cloud initialization filter | `experiments/metrics/ri3d_first2_fghead_pcdmask_iter500.csv` | Card backgrounds are reduced, but detached foreground fragments remain; a stronger FLAME/LAM structural prior is still needed. |
+| G14 | done, diagnostic negative | FLAME proxy depth/conf prior on G13 | `experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv` | FLAME proxy priors run and export valid videos, but lose subject support and do not repair detached fragments. |
+| G15a | done, blocked | Candidate-pool structural and visual audit | `experiments/metrics/first10_candidate_pool_audit_gate_20260519.md` | Existing downstream candidate pools fail the reconstruction-training premise. |
 
 ## G8 Result
 
@@ -158,6 +190,13 @@ experiments/metrics/ri3d_first2_roleaware_observations.md
 experiments/figures/ri3d_first2_roleaware_iter500_inputs.png
 experiments/figures/ri3d_first2_roleaware_iter500_renders.png
 experiments/reconstructions/ri3d_first2_roleaware_iter500/
+```
+
+Semantic note:
+
+```text
+experiments/downstream_datasets/roleaware_cutout75_budget4/ is a candidate pool,
+not validated training data.
 ```
 
 Loss summary:
@@ -451,7 +490,7 @@ prior. The next milestone should use actual LAM/FLAME mesh/depth/silhouette
 structure or pivot the paper toward a diagnostic negative result.
 ```
 
-## Active Milestone: G14
+## G14 Result
 
 Name:
 
@@ -468,42 +507,108 @@ LAM-rendered positive-control baseline. Compare against G13 to decide whether
 RI3D can be repaired enough for this paper sprint.
 ```
 
-Planned outputs:
+Implemented outputs:
 
 ```text
 experiments/metrics/flame_geometry_prior_first2_plan.md
 experiments/metrics/flame_geometry_prior_first2_observations.md
-experiments/figures/flame_geometry_prior_first2_*.png
-experiments/reconstructions/flame_geometry_prior_first2_*/
-patches/ri3d/flame_geometry_prior_*.patch if RI3D is changed
+scripts/render_flame_proxy_priors.py
+experiments/geometry_priors/flame_first2_proxy/
+experiments/ri3d_datasets/first2_flame_proxy_pcdmask/
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_iter500.csv
+experiments/metrics/ri3d_first2_flame_proxy_pcdmask_observations.md
+experiments/figures/flame_geometry_prior_first2_proxy_sheet.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_inputs.png
+experiments/figures/ri3d_first2_flame_proxy_pcdmask_iter500_renders.png
+experiments/figures/ri3d_first2_flame_proxy_vs_pcdmask_iter500_renders.png
+experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/
+```
+
+Point-count and loss summary:
+
+```text
+web_clean_frontal_03:
+  G13 foreground points/view: 6766
+  G14 FLAME/conf points/view: 5341
+  G13 final loss: 0.1139016
+  G14 final loss: 0.1279854
+
+web_clean_frontal_01:
+  G13 foreground points/view: 9516
+  G14 FLAME/conf points/view: 6358
+  G13 final loss: 0.2007467
+  G14 final loss: 0.2391389
+```
+
+Interpretation:
+
+```text
+The FLAME proxy prior is generated successfully and all four G14 RGB/depth MP4s
+validate as 120 frames at 160x160.
+
+However, simple FLAME proxy depth/conf does not improve final visual quality
+beyond G13. It reduces some remaining card/background support but also removes
+too much subject support: web_clean_frontal_03 loses upper-face texture in
+several frames, and web_clean_frontal_01 remains split into detached fragments.
+
+Conclusion: G14 is a diagnostic negative result. It supports the paper pivot
+toward failure-aware pseudo-view supervision and failure taxonomy, not a claim
+that RI3D plus generic FLAME proxy is already a strong reconstruction method.
+```
+
+## Active Milestone: G15
+
+Name:
+
+```text
+candidate-pool recovery and VLM-gated regeneration
+```
+
+Purpose:
+
+```text
+Recover from the failed candidate-pool premise. The existing selected pseudo
+views are too poor to support reconstruction training, so the next milestone is
+to regenerate or repair candidate pools with a stronger visual/VLM gate before
+any more RI3D/Gaussian experiments.
+```
+
+Planned outputs:
+
+```text
+experiments/metrics/milestone_data_audit_protocol_20260519.md
+experiments/metrics/first10_diagnostic_plan.md
+experiments/metrics/first10_candidate_pool_recovery_plan.md
+experiments/metrics/first10_candidate_pool_audit_gate_*.csv
+experiments/metrics/first10_candidate_pool_visual_audit_*.md
+experiments/figures/first10_candidate_pool_visual_audit_*.png
+experiments/pseudo_views/<regenerated_or_repaired_candidates>/
+experiments/metrics/<regenerated_candidate_quality>.csv
+experiments/metrics/downstream_candidate_pool_semantics_20260519.md
 ```
 
 Pass criteria:
 
 ```text
-1. A LAM/FLAME-derived structural proxy is generated for web_clean_frontal_03 and web_clean_frontal_01.
-2. The proxy is consumed without overwriting G8-G13 artifacts.
-3. Render sheets reduce detached foreground fragments beyond G13, or clearly
-   prove RI3D is the wrong downstream baseline for the final paper framing.
-```
-
-Failure criteria:
-
-```text
-1. Available LAM/FLAME outputs cannot provide usable first2 depth/silhouette/mesh priors.
-2. Integration requires a large risky rewrite beyond the paper sprint budget.
-3. Outputs still collapse to fragments, pushing the claim toward pseudo-view
-   failure diagnosis rather than a reconstruction method win.
+1. Candidate pools pass structural audit with no stale paths or missing refs.
+2. VLM/manual visual audit rejects split bodies, rotated photo cards, cropped
+   fragments, and background/body-only candidates.
+3. The gate explicitly records whether candidates are PASS_RECONSTRUCTION_TRAINING
+   or PASS_DIAGNOSTIC_ONLY.
+4. Only after PASS_RECONSTRUCTION_TRAINING may a new RI3D/Gaussian milestone
+   consume the candidate pool.
+5. PNG/CSV/MD artifacts are synced; MP4s are synced only for selected compact
+   reconstruction examples, not raw ignored RI3D working directories.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G14 | LAM/FLAME structural prior first2 repair | G13 remains fragmented | LAM/FLAME/normal/depth prior either helps or is rejected |
-| G15 | Expand to first10 downstream | G14 positive or paper pivots to diagnostic baseline comparison | Per-group result table across clean/side/glasses/hair/occlusion |
-| G16 | Expand to first30/first50 | first10 trend stable | Main paper table and failure taxonomy stable |
-| G17 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
+| G15 | candidate-pool recovery and VLM-gated regeneration | G15a blocked current candidate pools | Candidate pool passes visual/VLM gate or is rejected as diagnostic-only |
+| G16 | first10 diagnostic or reconstruction rerun | G15 gate verdict decides path | If pass: compact reconstruction rerun; if blocked: failure-taxonomy paper |
+| G17 | Expand to first30/first50 | first10 trend stable and data gate passes | Main table and failure taxonomy stable |
+| G18 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
 ## Rollback And Sync Policy
 

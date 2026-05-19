@@ -110,7 +110,7 @@ mask_rejected:
 
 ## Decision
 
-The current best validated pseudo-view policy is:
+The current best pseudo-view candidate policy is:
 
 ```text
 cutout -> Zero123++ steps75 -> CLIP/reliability budget4
@@ -119,10 +119,11 @@ cutout -> Zero123++ steps75 -> CLIP/reliability budget4
 -> split selected views into identity, geometry-only, and reject sets
 ```
 
-For downstream Gaussian/PanoHead/FLAME experiments, only the
-identity-supervision candidates should supervise visible face identity. The
-geometry-only candidates can be useful for coarse side/back coverage but should
-not be used as direct identity or expression constraints.
+For downstream Gaussian/PanoHead/FLAME diagnostics, only the
+identity-supervision candidates should be considered for visible face identity.
+That still does not prove they are valid training supervision. The geometry-only
+candidates can be useful for coarse side/back coverage audits but should not be
+used as direct identity or expression constraints.
 
 ## Next Experiment
 

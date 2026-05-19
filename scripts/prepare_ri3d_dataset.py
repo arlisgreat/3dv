@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Convert downstream pseudo-view datasets into RI3D-compatible scene folders.
+"""Convert pseudo-view candidate pools into RI3D-compatible scene folders.
 
 This script does the CPU-side preparation only. It creates the files that the
 local RI3D checkout expects:
@@ -12,10 +12,9 @@ local RI3D checkout expects:
   images/depth_rel/inpv2<image_stem>_<N>.npy
   images/depth_rel/inp_dust3r<image_stem>_<N>.npy
 
-The generated depth maps are geometry priors for a controlled pilot run, not
-ground-truth depth. They are deliberately simple so the first downstream test
-can isolate whether filtered pseudo views are more stable than raw pseudo
-views.
+The source folders under `experiments/downstream_datasets/` are candidate pools,
+not validated training datasets. The generated depth maps are geometry priors
+for controlled diagnostic runs, not ground-truth depth.
 """
 
 from __future__ import annotations
@@ -443,6 +442,13 @@ def convert_scene(
     write_json(
         dst_scene / "source_metadata.json",
         {
+            "semantic_type": "ri3d_readable_candidate_export",
+            "validated_training_dataset": False,
+            "semantic_note": (
+                "This scene is an RI3D-readable export of pseudo-view "
+                "candidates. It is for diagnostic ablations and is not proof "
+                "that the source views are valid reconstruction supervision."
+            ),
             "variant": variant,
             "sample_id": sample_id,
             "source_scene": str(src_scene),

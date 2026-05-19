@@ -1,0 +1,54 @@
+{
+  "variant": "roleaware_cutout75_budget4",
+  "sample_id": "web_clean_frontal_03",
+  "source_scene": "experiments/ri3d_datasets/first2_fghead_maskaware/roleaware_cutout75_budget4/web_clean_frontal_03",
+  "ri3d_scene": "experiments/ri3d_datasets/first2_flame_proxy_pcdmask/roleaware_cutout75_budget4/web_clean_frontal_03",
+  "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+  "image_size": 160,
+  "frames": [
+    {
+      "source": "lam_tracking_flame_obj",
+      "mode": "replace_depth_and_conf",
+      "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+      "depth_path": "depth/000_view05.npy",
+      "conf_path": "conf/000_view05.npy",
+      "mask_path": "mask/000_view05.png",
+      "valid_pixel_ratio": 0.320625,
+      "depth_min": 1.0,
+      "depth_max": 1.350000023841858
+    },
+    {
+      "source": "lam_tracking_flame_obj",
+      "mode": "replace_depth_and_conf",
+      "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+      "depth_path": "depth/001_view00.npy",
+      "conf_path": "conf/001_view00.npy",
+      "mask_path": "mask/001_view00.png",
+      "valid_pixel_ratio": 0.3126953125,
+      "depth_min": 1.0,
+      "depth_max": 1.350000023841858
+    },
+    {
+      "source": "lam_tracking_flame_obj",
+      "mode": "replace_depth_and_conf",
+      "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+      "depth_path": "depth/002_view03.npy",
+      "conf_path": "conf/002_view03.npy",
+      "mask_path": "mask/002_view03.png",
+      "valid_pixel_ratio": 0.3174609375,
+      "depth_min": 1.0,
+      "depth_max": 1.350000023841858
+    },
+    {
+      "source": "lam_tracking_flame_obj",
+      "mode": "replace_depth_and_conf",
+      "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+      "depth_path": "depth/003_view01.npy",
+      "conf_path": "conf/003_view01.npy",
+      "mask_path": "mask/003_view01.png",
+      "valid_pixel_ratio": 0.339296875,
+      "depth_min": 1.0,
+      "depth_max": 1.350000023841858
+    }
+  ]
+}

@@ -194,6 +194,11 @@ Medium-term architecture:
     repair switch: it removes much of the rectangular card background. Do not
     treat it as the final prior because detached foreground chunks remain.
     The next iteration should use actual LAM/FLAME mesh/depth/silhouette.
+13. After G14, treat the simple FLAME proxy as a diagnostic negative result:
+    it can provide nonblank depth/conf support, but it does not repair RI3D
+    into a coherent head and can suppress useful subject texture. The next
+    iteration should stabilize the claim on first10 failure taxonomy or switch
+    to a stronger LAM/PanoLAM-style head backbone as a positive control.
 ```
 
 High-risk / rollback-monitored work:
@@ -234,9 +239,25 @@ RI3D first2 foreground point-cloud filtering validates the initialization
 failure hypothesis: card backgrounds are reduced after background points are
 removed from the initial point cloud. It still leaves detached foreground
 fragments, so an actual LAM/FLAME structure prior is still needed.
+RI3D first2 FLAME proxy priors validate that generic mesh depth/conf is not
+enough: the prior can be generated and all MP4s render, but the result remains
+fragmented and sometimes loses subject support.
 ```
 
-The next concrete experiment should keep the same first2 samples and introduce
-a LAM/FLAME/full-head geometry proxy before further RI3D pseudo-view variants.
-Expand to first10 or first30/first50 only after the geometry-prior path changes
-the render sheets, not merely the training loss.
+The next concrete experiment should be first10 diagnostic expansion and paper
+claim stabilization. Expand the pseudo-view reliability/identity/mask/failure
+taxonomy across the first10 groups, while treating RI3D/G13/G14 as evidence of
+where sparse-view Gaussian repair fails without a stronger head-specific
+backbone.
+
+Update after candidate-pool visual audit:
+
+```text
+The existing experiments/downstream_datasets candidate pools are too poor to
+stand as reconstruction premises. Many selected views are split bodies, rotated
+photo cards, cropped fragments, or body/background-only pieces.
+
+Next iteration must be candidate-pool recovery with a VLM/manual visual gate.
+No reconstruction milestone should run until the generated PNG candidates pass
+that gate or are explicitly labeled diagnostic-only.
+```

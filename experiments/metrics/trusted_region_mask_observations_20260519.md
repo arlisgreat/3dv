@@ -75,7 +75,7 @@ Only compare reconstruction quality after the pseudo-view input format is sane.
 
 ## Decision
 
-The current best validated route is:
+The current best pseudo-view candidate route is:
 
 ```text
 Zero123++ steps75
@@ -85,6 +85,8 @@ Zero123++ steps75
 -> rerun/repair with subject cutouts before Gaussian or PanoHead fusion
 ```
 
-This partially validates the application hypothesis: pseudo views can add useful
-coverage, but only after failure-aware selection and masking. It also falsifies
-the weaker idea that more diffusion steps alone make pseudo views safe.
+This partially supports the application hypothesis at the candidate-screening
+level: pseudo views may add useful coverage, but only after failure-aware
+selection and masking. It does not validate those candidates as reconstruction
+training data. It also falsifies the weaker idea that more diffusion steps alone
+make pseudo views safe.

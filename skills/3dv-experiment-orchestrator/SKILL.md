@@ -61,7 +61,7 @@ If a GitHub release is slow, benchmark mirrors such as `ghfast.top` and
 
 ## Experiment Policy
 
-Current validated pseudo-view frontend:
+Current pseudo-view candidate frontend:
 
 ```text
 subject cutout
@@ -72,10 +72,32 @@ subject cutout
 -> identity / geometry-only / reject split
 ```
 
-Do not feed all pseudo views blindly into downstream Gaussian/PanoHead/FLAME
-experiments. Identity-accepted views may supervise face identity. Geometry-only
-views may supervise coarse side/back coverage. Mask-rejected and identity-reject
-views are excluded unless explicitly used in a failure ablation.
+Important: `experiments/downstream_datasets/` is a candidate-pool export, not a
+validated reconstruction training dataset. The 2026-05-19 visual audit found
+many selected candidates are split bodies, rotated photo cards, cropped
+fragments, or background/body-only pieces.
+
+Every milestone that consumes generated images must pass a data audit gate
+before GPU reconstruction:
+
+```bash
+python scripts/audit_data_gate.py --milestone <Gxx> --premise "<premise>"
+python scripts/make_candidate_pool_visual_audit.py --output experiments/figures/<audit>.png
+```
+
+Then inspect generated PNGs with VLM/manual visual checking and record a gate
+verdict under `experiments/metrics/`:
+
+```text
+PASS_RECONSTRUCTION_TRAINING
+PASS_DIAGNOSTIC_ONLY
+BLOCKED
+```
+
+Do not feed pseudo views into downstream Gaussian/PanoHead/FLAME experiments
+unless the milestone has an explicit `PASS_RECONSTRUCTION_TRAINING` gate. If
+the gate is diagnostic-only or blocked, use the candidates only for failure
+taxonomy and do not describe them as training data.
 
 ## Sync Policy
 

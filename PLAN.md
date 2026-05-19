@@ -135,7 +135,7 @@ Zero123++ 旋转整张照片而不是旋转头部的失败。
 也已经闭合下游重建循环。iter500 的结论是：raw75_all6 仍然更差，但
 cutout75_budget4_masked 只在一个 first2 样本上优于 raw75_budget4。
 G9 已把 downstream reconstruction ablation 的输入从“selected views”
-改成显式的 `identity / geometry-only / reject / mask_reject` 四路协议，
+改成显式的 `identity / geometry-only / reject / mask_reject` 四路候选协议，
 并完成 first2 role-aware iter500 训练/渲染。结果仍然 ambiguous：角色
 metadata 和 geometry-only desaturation 不足以稳定改善 RI3D 输出。
 G10 已让 RI3D loss 显式消费 per-view/per-role 权重，但 render sheet
@@ -152,6 +152,29 @@ G13 已完成 RI3D foreground point-cloud initialization filter：它去掉了 G
 明显的灰色矩形卡片背景，说明初始化确实是一个关键失效源；但输出仍是
 前景碎片，不是稳定 3D head。因此下一步 G14 应使用现有 LAM tracking export
 里的 FLAME mesh/depth/silhouette 做更强结构先验，或把论文主张转向诊断负结果。
+G14 已完成 FLAME proxy depth/conf prior：代理先验可生成、可接入 RI3D，并且
+所有 MP4 可读；但它没有修复 G13 的 detached fragments，反而会削弱部分主体
+支持。因此当前不应继续堆 RI3D 修补变量，应转向 first10 diagnostic expansion：
+把 paper claim 固定为 failure-aware pseudo-view supervision / failure taxonomy，
+而不是宣称 RI3D+generic FLAME proxy 已经解决单图 head reconstruction。
+重要语义修正：`experiments/downstream_datasets/` 只是伪视图 candidate pool
+的历史目录名，不是“已证明可用于重建训练的数据集”。当前筛选指标仍弱，
+G8-G14 已经显示候选池即使更干净也会产生碎片/卡片 artifact。后续 first10
+应先做 candidate quality audit 和 failure taxonomy，而不是把候选池直接当
+validated training set 扩展。
+进一步审计后，当前 candidate pool 质量本身极差：大量 selected views 是
+split body、rotated photo card、cropped fragment 或背景/身体片段。这个前提
+没有站住，所以 G8-G14 的科学解释必须降级为“弱候选池 + RI3D 的失败证据”，
+不能说成“可靠伪视角监督协议失败”。之后每个 milestone 必须先过 data audit
+gate：结构审计 + PNG 可视/VLM 审计 + 明确 gate verdict，然后才能启动训练。
+
+### Replanned Gate After G15a
+
+```text
+G15: candidate-pool recovery and VLM-gated regeneration.
+G16: only if G15 passes, rerun compact reconstruction; otherwise write failure taxonomy.
+G17: only after first10 gate passes, consider first30/first50 expansion.
+```
 
 ### Week 4
 

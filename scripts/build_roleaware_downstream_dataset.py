@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a conservative role-aware downstream dataset from identity-filter CSVs.
+"""Build a conservative role-aware pseudo-view candidate pool.
 
 Default output:
 
@@ -7,6 +7,10 @@ experiments/downstream_datasets/roleaware_cutout75_budget4/<sample_id>/
   images/
   masks/
   metadata.json
+
+The `downstream_datasets` path name is historical. The output is a candidate
+pool for controlled downstream diagnostics, not a validated reconstruction
+training set.
 
 The builder is intentionally CSV-driven: it does not re-run identity models or
 mask analysis, and it preserves reject decisions as metadata roles.
@@ -202,6 +206,13 @@ def build_dataset(
             )
 
         metadata = {
+            "semantic_type": "pseudo_view_candidate_pool",
+            "validated_training_dataset": False,
+            "semantic_note": (
+                "This historical downstream_datasets path stores role-aware "
+                "pseudo-view candidates. Roles mark candidate use, not proof "
+                "that the views are suitable reconstruction supervision."
+            ),
             "sample_id": sample_id,
             "group": sample.get("group", ""),
             "variant": variant,
@@ -311,7 +322,7 @@ def main() -> None:
         overwrite=args.overwrite,
     )
 
-    print(f"Built role-aware downstream dataset under {output_root / args.variant}")
+    print(f"Built role-aware pseudo-view candidate pool under {output_root / args.variant}")
     for sample_id in samples:
         roles = Counter(supervision_role(row) for row in identity_rows[sample_id])
         role_text = ", ".join(f"{role}={roles.get(role, 0)}" for role in ROLE_VALUES)

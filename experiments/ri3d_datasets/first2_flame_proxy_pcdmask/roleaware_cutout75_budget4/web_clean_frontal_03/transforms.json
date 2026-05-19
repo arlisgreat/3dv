@@ -1,0 +1,322 @@
+{
+  "camera_model": "OPENCV",
+  "fl_x": 219.7981935563698,
+  "fl_y": 219.7981935563698,
+  "cx": 80.0,
+  "cy": 80.0,
+  "w": 160,
+  "h": 160,
+  "aabb_scale": 1,
+  "frames": [
+    {
+      "file_path": "images/000_view05.png",
+      "mask_path": "masks/000_view05_mask.png",
+      "source_mask": "/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_03/masks/00_view_05_az330_el-10_mask.png",
+      "mask_coverage": 0.39189162754303597,
+      "mask_coverage_resized": 0.3194921875,
+      "foreground_crop": true,
+      "foreground_crop_mode": "mask_width_anchor",
+      "foreground_crop_box_source": [
+        -67,
+        151,
+        234,
+        452
+      ],
+      "foreground_crop_margin": 0.2,
+      "foreground_width_scale": 1.8,
+      "foreground_height_fraction": 0.55,
+      "foreground_y_anchor": 0.45,
+      "foreground_component_pixels": 29027,
+      "transform_matrix": [
+        [
+          0.8660254037844384,
+          -0.08682408883346526,
+          -0.49240387650610445,
+          -1.3787308542170924
+        ],
+        [
+          -0.0,
+          0.9848077530122081,
+          -0.17364817766693033,
+          -0.48621489746740487
+        ],
+        [
+          0.5000000000000004,
+          0.15038373318043527,
+          0.8528685319524429,
+          2.38803188946684
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "view_index": 5,
+      "azimuth": 330.0,
+      "elevation": -10.0,
+      "source_image": "experiments/pseudo_views/zero123plus_first10_cutout_steps75/web_clean_frontal_03_steps75/view_05_az330_el-10.png",
+      "trusted_score": 76.559,
+      "reliability_score": 72.0,
+      "trusted_accepted": true,
+      "supervision_role": "identity_supervision",
+      "ri3d_train_candidate": true,
+      "identity_decision": "identity_accept",
+      "identity_labels": [
+        "strong_identity"
+      ],
+      "identity_supervision_candidate": true,
+      "geometry_only_candidate": false,
+      "face_embedding_cosine": 0.752523,
+      "role_confidence_multiplier": 1.0,
+      "role_rgb_weight": 1.0,
+      "role_depth_weight": 1.0,
+      "role_rgb_policy": "rgb",
+      "geometry_prior": {
+        "source": "lam_tracking_flame_obj",
+        "mode": "replace_depth_and_conf",
+        "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+        "depth_path": "depth/000_view05.npy",
+        "conf_path": "conf/000_view05.npy",
+        "mask_path": "mask/000_view05.png",
+        "valid_pixel_ratio": 0.320625,
+        "depth_min": 1.0,
+        "depth_max": 1.350000023841858
+      }
+    },
+    {
+      "file_path": "images/001_view00.png",
+      "mask_path": "masks/001_view00_mask.png",
+      "source_mask": "/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_03/masks/01_view_00_az030_el+20_mask.png",
+      "mask_coverage": 0.35196596244131456,
+      "mask_coverage_resized": 0.2894921875,
+      "foreground_crop": true,
+      "foreground_crop_mode": "mask_width_anchor",
+      "foreground_crop_box_source": [
+        -14,
+        23,
+        278,
+        315
+      ],
+      "foreground_crop_margin": 0.2,
+      "foreground_width_scale": 1.8,
+      "foreground_height_fraction": 0.55,
+      "foreground_y_anchor": 0.45,
+      "foreground_component_pixels": 24753,
+      "transform_matrix": [
+        [
+          0.8660254037844387,
+          -0.17101007166283433,
+          0.46984631039295405,
+          1.3155696691002714
+        ],
+        [
+          0.0,
+          0.9396926207859084,
+          0.34202014332566866,
+          0.9576564013118724
+        ],
+        [
+          -0.4999999999999999,
+          -0.29619813272602386,
+          0.8137976813493737,
+          2.2786335077782467
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "view_index": 0,
+      "azimuth": 30.0,
+      "elevation": 20.0,
+      "source_image": "experiments/pseudo_views/zero123plus_first10_cutout_steps75/web_clean_frontal_03_steps75/view_00_az030_el+20.png",
+      "trusted_score": 75.916,
+      "reliability_score": 72.0,
+      "trusted_accepted": true,
+      "supervision_role": "identity_supervision",
+      "ri3d_train_candidate": true,
+      "identity_decision": "identity_accept",
+      "identity_labels": [
+        "strong_identity"
+      ],
+      "identity_supervision_candidate": true,
+      "geometry_only_candidate": false,
+      "face_embedding_cosine": 0.805583,
+      "role_confidence_multiplier": 1.0,
+      "role_rgb_weight": 1.0,
+      "role_depth_weight": 1.0,
+      "role_rgb_policy": "rgb",
+      "geometry_prior": {
+        "source": "lam_tracking_flame_obj",
+        "mode": "replace_depth_and_conf",
+        "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+        "depth_path": "depth/001_view00.npy",
+        "conf_path": "conf/001_view00.npy",
+        "mask_path": "mask/001_view00.png",
+        "valid_pixel_ratio": 0.3126953125,
+        "depth_min": 1.0,
+        "depth_max": 1.350000023841858
+      }
+    },
+    {
+      "file_path": "images/002_view03.png",
+      "mask_path": "masks/002_view03_mask.png",
+      "source_mask": "/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_03/masks/02_view_03_az210_el-10_mask.png",
+      "mask_coverage": 0.3692488262910798,
+      "mask_coverage_resized": 0.2995703125,
+      "foreground_crop": true,
+      "foreground_crop_mode": "mask_width_anchor",
+      "foreground_crop_box_source": [
+        -26,
+        165,
+        282,
+        473
+      ],
+      "foreground_crop_margin": 0.2,
+      "foreground_width_scale": 1.8,
+      "foreground_height_fraction": 0.55,
+      "foreground_y_anchor": 0.45,
+      "foreground_component_pixels": 28539,
+      "transform_matrix": [
+        [
+          -0.8660254037844386,
+          -0.0868240888334652,
+          -0.4924038765061041,
+          -1.3787308542170913
+        ],
+        [
+          0.0,
+          0.9848077530122081,
+          -0.17364817766693036,
+          -0.48621489746740487
+        ],
+        [
+          0.5000000000000001,
+          -0.1503837331804353,
+          -0.8528685319524432,
+          -2.3880318894668404
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "view_index": 3,
+      "azimuth": 210.0,
+      "elevation": -10.0,
+      "source_image": "experiments/pseudo_views/zero123plus_first10_cutout_steps75/web_clean_frontal_03_steps75/view_03_az210_el-10.png",
+      "trusted_score": 73.894,
+      "reliability_score": 72.0,
+      "trusted_accepted": true,
+      "supervision_role": "geometry_only",
+      "ri3d_train_candidate": true,
+      "identity_decision": "identity_unverified",
+      "identity_labels": [
+        "no_detected_face",
+        "geometry_only_candidate"
+      ],
+      "identity_supervision_candidate": false,
+      "geometry_only_candidate": true,
+      "face_embedding_cosine": null,
+      "role_confidence_multiplier": 0.35,
+      "role_rgb_weight": 0.25,
+      "role_depth_weight": 1.0,
+      "role_rgb_policy": "desaturated_rgb",
+      "geometry_prior": {
+        "source": "lam_tracking_flame_obj",
+        "mode": "replace_depth_and_conf",
+        "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+        "depth_path": "depth/002_view03.npy",
+        "conf_path": "conf/002_view03.npy",
+        "mask_path": "mask/002_view03.png",
+        "valid_pixel_ratio": 0.3174609375,
+        "depth_min": 1.0,
+        "depth_max": 1.350000023841858
+      }
+    },
+    {
+      "file_path": "images/003_view01.png",
+      "mask_path": "masks/003_view01_mask.png",
+      "source_mask": "/data1/workspace/airulan/3dv/experiments/downstream_datasets/roleaware_cutout75_budget4/web_clean_frontal_03/masks/03_view_01_az090_el-10_mask.png",
+      "mask_coverage": 0.08275625978090767,
+      "mask_coverage_resized": 0.264296875,
+      "foreground_crop": true,
+      "foreground_crop_mode": "mask_width_anchor",
+      "foreground_crop_box_source": [
+        124,
+        87,
+        254,
+        217
+      ],
+      "foreground_crop_margin": 0.2,
+      "foreground_width_scale": 1.8,
+      "foreground_height_fraction": 0.55,
+      "foreground_y_anchor": 0.45,
+      "foreground_component_pixels": 7475,
+      "transform_matrix": [
+        [
+          6.123233995736766e-17,
+          0.17364817766693036,
+          0.984807753012208,
+          2.757461708434182
+        ],
+        [
+          0.0,
+          0.9848077530122081,
+          -0.17364817766693033,
+          -0.48621489746740487
+        ],
+        [
+          -1.0,
+          1.0632884247878858e-17,
+          6.030208312509488e-17,
+          1.6884583275026566e-16
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "view_index": 1,
+      "azimuth": 90.0,
+      "elevation": -10.0,
+      "source_image": "experiments/pseudo_views/zero123plus_first10_cutout_steps75/web_clean_frontal_03_steps75/view_01_az090_el-10.png",
+      "trusted_score": 72.569,
+      "reliability_score": 72.0,
+      "trusted_accepted": true,
+      "supervision_role": "geometry_only",
+      "ri3d_train_candidate": true,
+      "identity_decision": "identity_unverified",
+      "identity_labels": [
+        "no_detected_face",
+        "geometry_only_candidate"
+      ],
+      "identity_supervision_candidate": false,
+      "geometry_only_candidate": true,
+      "face_embedding_cosine": null,
+      "role_confidence_multiplier": 0.35,
+      "role_rgb_weight": 0.25,
+      "role_depth_weight": 1.0,
+      "role_rgb_policy": "desaturated_rgb",
+      "geometry_prior": {
+        "source": "lam_tracking_flame_obj",
+        "mode": "replace_depth_and_conf",
+        "obj_path": "external/LAM/tracking_output/tracking/2026-05-18_22-18-58/train/mesh/frame_00000_499_lmk_init_all.obj",
+        "depth_path": "depth/003_view01.npy",
+        "conf_path": "conf/003_view01.npy",
+        "mask_path": "mask/003_view01.png",
+        "valid_pixel_ratio": 0.339296875,
+        "depth_min": 1.0,
+        "depth_max": 1.350000023841858
+      }
+    }
+  ]
+}

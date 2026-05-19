@@ -205,17 +205,17 @@ def write_observations(
 
     if has_roleaware:
         purpose_lines = [
-            "Test whether identity-filter roles can improve the first2 RI3D gate without invasive third-party loss changes.",
-            "Use identity_supervision RGB frames and geometry_only desaturated frames from cutout75 budget4.",
+            "Test whether selected pseudo-view candidates can improve the first2 RI3D gate.",
+            "Use identity_supervision and geometry_only candidate roles from cutout75 budget4, without assuming they are validated training data.",
         ]
         observation_intro = [
             "The pipeline is now end-to-end executable with role-aware first2 RI3D inputs.",
             "This run deliberately keeps RI3D loss code unchanged; role effects enter through prepared images and metadata.",
         ]
         quality_note = [
-            "This run tests role-aware RI3D inputs rather than another uniform filtered-view baseline.",
+            "This run tests role-aware RI3D candidate exports rather than another uniform filtered-view baseline.",
             "identity_supervision frames keep RGB texture; geometry_only frames are desaturated and have lower depth-confidence metadata.",
-            "RI3D still applies a uniform RGB reconstruction loss, so this is a conservative non-invasive G9 pass.",
+            "The candidate roles are diagnostics, not proof that the selected views are suitable reconstruction supervision.",
         ]
         next_lines = [
             "Compare role-aware videos against raw75_budget4 and cutout75_budget4_masked iter500.",

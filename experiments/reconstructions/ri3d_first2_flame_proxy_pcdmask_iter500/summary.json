@@ -1,0 +1,45 @@
+{
+  "data_root": "experiments/ri3d_datasets/first2_flame_proxy_pcdmask",
+  "run_root": "experiments/downstream_3d/ri3d_first2_flame_proxy_pcdmask_iter500",
+  "iteration": 500,
+  "rows": [
+    {
+      "tag": "web_clean_frontal_03_roleaware_cutout75_budget4_4v",
+      "sample_id": "web_clean_frontal_03",
+      "variant": "roleaware_cutout75_budget4",
+      "view_count": 4,
+      "image_size": 160,
+      "role_counts": "{\"geometry_only\": 2, \"identity_supervision\": 2}",
+      "identity_supervision_count": 2,
+      "geometry_only_count": 2,
+      "iterations": 500,
+      "final_loss": 0.1279854,
+      "progress_splats": 21364,
+      "point_count": 21364,
+      "init_ply_bytes": 3504701,
+      "train_ply_bytes": 3504701,
+      "train_log": "experiments/downstream_3d/ri3d_first2_flame_proxy_pcdmask_iter500/logs/web_clean_frontal_03_roleaware_cutout75_budget4_4v_train.log",
+      "render_rgb_mp4": "experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/web_clean_frontal_03_roleaware_cutout75_budget4_4v_rgb.mp4",
+      "render_depth_mp4": "experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/web_clean_frontal_03_roleaware_cutout75_budget4_4v_depth.mp4"
+    },
+    {
+      "tag": "web_clean_frontal_01_roleaware_cutout75_budget4_4v",
+      "sample_id": "web_clean_frontal_01",
+      "variant": "roleaware_cutout75_budget4",
+      "view_count": 4,
+      "image_size": 160,
+      "role_counts": "{\"identity_supervision\": 4}",
+      "identity_supervision_count": 4,
+      "geometry_only_count": 0,
+      "iterations": 500,
+      "final_loss": 0.2391389,
+      "progress_splats": 25432,
+      "point_count": 25432,
+      "init_ply_bytes": 4171853,
+      "train_ply_bytes": 4171853,
+      "train_log": "experiments/downstream_3d/ri3d_first2_flame_proxy_pcdmask_iter500/logs/web_clean_frontal_01_roleaware_cutout75_budget4_4v_train.log",
+      "render_rgb_mp4": "experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/web_clean_frontal_01_roleaware_cutout75_budget4_4v_rgb.mp4",
+      "render_depth_mp4": "experiments/reconstructions/ri3d_first2_flame_proxy_pcdmask_iter500/web_clean_frontal_01_roleaware_cutout75_budget4_4v_depth.mp4"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build downstream pseudo-view datasets for 3D reconstruction experiments.
+"""Build downstream-readable pseudo-view candidate pools.
 
 The output is intentionally simple and tool-agnostic:
 
@@ -7,6 +7,9 @@ experiments/downstream_datasets/<variant>/<sample_id>/
   images/
   masks/
   metadata.json
+
+The directory name is historical. These outputs are candidate pools for
+controlled downstream ablations, not validated reconstruction training sets.
 
 Variants:
   raw75_all6                 all raw Zero123++ steps75 views
@@ -205,6 +208,13 @@ def build_variant(
                 records.append(rec)
 
         metadata = {
+            "semantic_type": "pseudo_view_candidate_pool",
+            "validated_training_dataset": False,
+            "semantic_note": (
+                "This historical downstream_datasets path stores pseudo-view "
+                "candidates exported for downstream diagnostics. It does not "
+                "prove the views are suitable reconstruction supervision."
+            ),
             "sample_id": sample_id,
             "group": group,
             "variant": variant,
@@ -236,7 +246,7 @@ def build_variant(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build downstream datasets from pseudo-view experiments.")
+    parser = argparse.ArgumentParser(description="Build downstream-readable pseudo-view candidate pools.")
     parser.add_argument("--manifest", default="experiments/inputs/first10/manifest.csv")
     parser.add_argument("--budget-csv", default="experiments/metrics/view_budget_clip_selection_raw_vs_cutout_steps75.csv")
     parser.add_argument("--trusted-root", default="experiments/pseudo_views/trusted_region_masks_cutout75_budget4")
@@ -271,10 +281,9 @@ def main() -> None:
     build_variant(variant="raw75_budget4", source_run="raw75", all_views=False, require_accepted=False, **common)
     build_variant(variant="cutout75_budget4_masked", source_run="cutout75", all_views=False, require_accepted=True, **common)
 
-    print(f"Built downstream datasets under {output_root}")
+    print(f"Built downstream-readable pseudo-view candidate pools under {output_root}")
     print("Variants: raw75_all6, raw75_budget4, cutout75_budget4_masked")
 
 
 if __name__ == "__main__":
     main()
-
