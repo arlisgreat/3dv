@@ -113,6 +113,9 @@ CLIP consistency proxy 确认 steps75 的 learned-image consistency 也更高，
 trusted-region mask 将 raw75 CLIP-budget4 的 40 个候选筛到 25 个可用。
 subject cutout 输入把 cutout75 CLIP-budget4 可用 mask 提升到 37/40，
 因此后续 pseudo-view frontend 默认改成 cutout -> steps75 -> budget4 -> mask。
+face-embedding identity filter 进一步把 cutout75+budget4 的 40 个视角分成
+20 个 identity-supervision candidates、14 个 geometry-only candidates、
+1 个 identity reject 和 mask-rejected views。
 ```
 
 这一轮支持原假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。
@@ -127,6 +130,10 @@ Zero123++ 旋转整张照片而不是旋转头部的失败。
 2. failure taxonomy。
 3. identity filtering。
 4. 可选：depth / FLAME 小实验。
+
+当前 identity filtering 已在 first10 上跑通。下一步应扩展到 first30/first50，
+并把 downstream reconstruction ablation 的输入从“selected views”改成显式的
+`identity / geometry-only / reject` 三路协议。
 
 ### Week 4
 

@@ -134,7 +134,9 @@ Zero123++ raw steps20 / steps75
 CLIP + reliability view ranking
 trusted-region masks
 subject cutout ablation
+face identity filter
 downstream dataset build
+RI3D first2 dataset conversion
 ```
 
 当前默认 pseudo-view 前端：
@@ -144,6 +146,8 @@ subject cutout
 -> Zero123++ steps75
 -> CLIP + reliability budget4
 -> trusted-region mask
+-> face identity filter
+-> identity / geometry-only / reject split
 ```
 
 已经构建好三套下游输入：
@@ -152,6 +156,15 @@ subject cutout
 experiments/downstream_datasets/raw75_all6/
 experiments/downstream_datasets/raw75_budget4/
 experiments/downstream_datasets/cutout75_budget4_masked/
+```
+
+identity filter 结果和仓库内 skill：
+
+```text
+experiments/metrics/face_identity_filter_observations_20260519.md
+experiments/metrics/face_identity_filter_first10_cutout75_budget4.csv
+experiments/figures/face_identity_filter_first10_cutout75_budget4.png
+skills/3dv-experiment-orchestrator/
 ```
 
 并且已经转换出 RI3D 可直接读取的 first2 pilot 数据：
@@ -170,6 +183,8 @@ bash scripts/run_ri3d_first2.sh
 
 ```text
 filtered pseudo-view frontend 已经比 raw pseudo views 更可靠。
+face-embedding filter 在 cutout75+budget4 上得到 20/40 identity candidates、
+14/40 geometry-only candidates、1/40 identity reject。
 但还没有证明它能提升最终 3D reconstruction。
 ```
 
@@ -178,4 +193,5 @@ filtered pseudo-view frontend 已经比 raw pseudo views 更可靠。
 1. 不急着扩 first30 / first50。
 2. 先选 2 个 first10 样本做下游 3D 重建闭环。
 3. 对比 `raw75_all6`、`raw75_budget4`、`cutout75_budget4_masked`。
-4. 验证 filtered pseudo views 是否真的改善最终 3D 输出。
+4. 在下游闭环中显式使用 identity / geometry-only / reject 三路协议。
+5. 验证 filtered pseudo views 是否真的改善最终 3D 输出，再扩 first30 / first50。

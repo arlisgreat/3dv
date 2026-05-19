@@ -1,0 +1,11 @@
+sample_id,group,run,steps,budget,selected_view_count,mask_accepted_count,view_face_detected_count,identity_supervision_count,geometry_only_count,identity_reject_count,mean_detected_face_cosine,min_detected_face_cosine,dominant_identity_labels
+web_clean_frontal_01,clean_frontal,cutout75,75,4,4,4,4,4,0,0,0.513906,0.380044,strong_identity:2;weak_identity:2
+web_clean_frontal_02,clean_frontal,cutout75,75,4,4,4,2,2,2,0,0.683244,0.600902,strong_identity:2;no_detected_face:2;geometry_only_candidate:2
+web_clean_frontal_03,clean_frontal,cutout75,75,4,4,4,2,2,2,0,0.779053,0.752523,strong_identity:2;no_detected_face:2;geometry_only_candidate:2
+web_complex_hair_01,complex_hair,cutout75,75,4,4,4,2,2,2,0,0.715110,0.534795,strong_identity:2;no_detected_face:2;geometry_only_candidate:2
+web_complex_hair_02,complex_hair,cutout75,75,4,4,4,2,2,2,0,0.872255,0.869968,strong_identity:2;no_detected_face:2;geometry_only_candidate:2
+web_glasses_01,glasses,cutout75,75,4,4,3,3,3,0,0,0.792664,0.663728,strong_identity:3;mask_rejected:1
+web_glasses_02,glasses,cutout75,75,4,4,3,0,0,3,0,,,input_face_missing:4;no_detected_face:3;geometry_only_candidate:3;mask_rejected:1
+web_mild_side_01,mild_side,cutout75,75,4,4,4,2,2,1,0,0.764992,0.709278,strong_identity:2;no_detected_face:2;geometry_only_candidate:1
+web_mild_side_02,mild_side,cutout75,75,4,4,3,2,2,1,0,0.789234,0.716988,strong_identity:2;mask_rejected:1;no_detected_face:1;geometry_only_candidate:1
+web_occlusion_lowq_01,occlusion_lowq,cutout75,75,4,4,4,2,1,1,1,0.444568,0.259572,no_detected_face:2;strong_identity:1;identity_reject:1;geometry_only_candidate:1
