@@ -37,4 +37,7 @@ g30_post_guard_heldout_eval_smoke_20260520.md
 g31_guarded_loss_component_audit_20260520.md
 g32_monodisp_scale_guard_train10_20260520.md
 g33_combined_guarded_train10_eval_20260520.md
+g34_post_g33_route_reset_20260520.md
+g35_public_benchmark_availability_20260520.md
+g36_method_redesign_direction_20260520.md
 ```

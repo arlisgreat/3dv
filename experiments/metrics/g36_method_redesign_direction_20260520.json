@@ -1,0 +1,53 @@
+{
+  "date": "2026-05-20",
+  "gate": "G36",
+  "verdict": "PASS_METHOD_REDESIGN_DIRECTION_NO_LONGER_RI3D_SCALING",
+  "scope": "Update the method direction after G33 and the latest 2026 head-avatar literature scan.",
+  "monitor_report": "/data1/workspace/airulan/3dv_work/agent_reports/monitor_g34_20260520.md",
+  "literature_signal": [
+    {
+      "name": "FFAvatar",
+      "date": "2026-05-14",
+      "source": "https://arxiv.org/abs/2605.15320",
+      "implication": "Few-shot feed-forward Gaussian head reconstruction now uses multi-view fusion, FLAME prediction, and high-quality 360 capture fine-tuning; this supports learned-prior redesign over ad hoc RI3D iteration scaling."
+    },
+    {
+      "name": "OMEGA-Avatar",
+      "date": "2026-02-12",
+      "source": "https://arxiv.org/abs/2602.11693",
+      "implication": "One-shot 360 full-head Gaussian avatars are framed as feed-forward, full-head, animation-ready systems with semantic mesh deformation and multi-view feature splatting."
+    },
+    {
+      "name": "OMG-Avatar",
+      "date": "2026-03-02",
+      "source": "https://arxiv.org/abs/2603.01506",
+      "implication": "Recent work emphasizes transformer features, depth-buffer-guided local sampling, and multi-region decomposition."
+    },
+    {
+      "name": "PanoLAM",
+      "date": "2025-09-09",
+      "source": "https://arxiv.org/abs/2509.07552",
+      "implication": "Full-head Gaussian synthesis from one unposed image uses synthetic-data-trained feed-forward priors and FLAME/triplane-style structure."
+    },
+    {
+      "name": "LAM",
+      "date": "2025-02-25",
+      "source": "https://arxiv.org/abs/2502.17796",
+      "implication": "A strong single-image Gaussian-head baseline already exists; repo work should not claim novelty as merely one-shot Gaussian head output."
+    },
+    {
+      "name": "RI3D",
+      "date": "2025-03-13",
+      "source": "https://arxiv.org/abs/2503.10860",
+      "implication": "RI3D is appropriate for coherent sparse inputs with repair/inpainting priors, not for malformed pseudo-view candidate pools or quality claims after init-level metrics."
+    }
+  ],
+  "method_decision": [
+    "Do not scale current RI3D iterations as the next method.",
+    "Use current RI3D results as numerical/diagnostic evidence.",
+    "If implementation continues, the next minimal method should be feed-forward or learned-prior anchored: LAM/PanoLAM/OMEGA/FFAvatar style, with real-GT held-out metrics and VLM/manual gates.",
+    "Pseudo views can only re-enter as audited conditional priors, never as ground-truth training views."
+  ],
+  "next_allowed_milestone": "Acquire or construct a benchmark/method premise that can pass PASS_REAL_GT_BENCHMARK plus method-specific preflight; otherwise stop at paper packaging.",
+  "artifact_policy": "No new media was generated for this method direction gate."
+}

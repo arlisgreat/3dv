@@ -52,16 +52,18 @@ G30 post-guard held-out eval smoke
 G31 guarded loss-component audit
 G32 monodisp scale guard train10
 G33 combined guarded train10 held-out eval
+G34 post-G33 route reset
+G35 public/stronger benchmark availability audit
+G36 method redesign direction and 2026 literature update
 ```
 
 还没有完成：
 
 ```text
-reconstruction rerun on real cameras + mesh/point-cloud GT
-quantitative real-GT reconstruction evaluation
+redesigned method implementation on a passing real-GT benchmark
+quantitative real-GT reconstruction evaluation beyond init-level smoke metrics
 publishable artifact review for any identifiable Multiface RGB/mesh result
 public/stronger real-GT benchmark access
-method redesign beyond current RI3D adapter/loss setup
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -102,7 +104,12 @@ optimizer steps. G29 clears only the L1-only train10 blocker by guarding
 zero-weight branches. G30 shows post-guard held-out eval still runs but remains
 at G26 init-level metrics. G31-G33 close the component and combined guarded
 train10 smoke loop, but held-out metrics still match init-level values, so the
-route remains non-quality.
+route remains non-quality. G34 explicitly closes longer-training scaling on the
+current RI3D setup. G35 finds no additional ready public/local real-GT benchmark
+beyond the current local Multiface debug case and the CC0 positive control.
+G36 resets the method direction toward learned/feed-forward head-specific priors
+with real-GT held-out metrics; pseudo views may only re-enter as audited
+conditional priors, never as ground-truth training views.
 ```
 
 ## 2. Stage 00: Inputs
@@ -859,6 +866,8 @@ Multiface local-only adapter 和 RI3D file contract 补到可 smoke 的状态，
 已证明 RI3D 能加载 adapter 并保存初始化点云。G26 已证明 held-out render/eval
 指标链路能跑且不保存可识别媒体。G27 证明当前 RI3D train loop 数值不健康；
 G28/G29 证明其中 L1-only NaN 类问题来自 zero-weight branch contamination
-并可用 guard 清除；G30 证明这没有带来 held-out 质量提升。不要从现有 web
-first10 candidate pool 继续训练，也不要把 G23-G33 或旧 RI3D 结果解释成质量结论。
+并可用 guard 清除；G30-G33 证明 guarded small-step train/eval 仍没有带来
+held-out 质量提升。G34-G36 已把当前 RI3D scaling 关闭为方法路线，并把下一步
+限定为更强 benchmark 或 learned-prior/head-anchored 方法重设。不要从现有 web
+first10 candidate pool 继续训练，也不要把 G23-G36 或旧 RI3D 结果解释成质量结论。
 ```

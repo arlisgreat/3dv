@@ -228,6 +228,12 @@ G32: monodisp scale guard. Done; depth-only train10 becomes finite after
      clamping monodisp normalization scales.
 G33: combined guarded train10 and held-out eval. Done; numerically finite, but
      held-out metrics match init-only smoke.
+G34: post-G33 route reset. Done; longer RI3D training on the current adapter is
+     closed as a method-quality milestone.
+G35: public/stronger benchmark availability audit. Done but blocked; no
+     additional ready local/public real-GT benchmark exists.
+G36: method redesign direction. Done; next method must be learned-prior /
+     feed-forward / head-anchored and real-GT gated.
 ```
 
 Current G16 access result:

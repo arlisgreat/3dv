@@ -97,8 +97,10 @@ zero-weight branch contamination after optimizer steps; G29 clears only the
 L1-only train10 blocker with guarded zero-weight losses; G30 held-out eval still
 matches init-only metrics. G31-G33 close component audit, monodisp scale guard,
 and combined guarded train10/eval, but held-out metrics remain init-level. Do
-not run longer/default-loss training from this setup as a method result; require
-method redesign or stronger public real-GT benchmark access first.
+not run longer/default-loss training from this setup as a method result. G34-G36
+explicitly close current RI3D scaling, confirm no additional ready public/local
+benchmark is available, and reset the method direction toward learned-prior /
+feed-forward / head-anchored Gaussian reconstruction under real-GT gates.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate
@@ -140,7 +142,9 @@ For the current Multiface path, G25 was run by calling RI3D
 Do not use `scripts/run_ri3d_first2.sh` for G25-G33; it is a historical
 pseudo-view runner. Repeat data, visual/VLM, adapter, render/eval, and
 model/data distribution gates before any post-G33 training step and record them
-in `experiments/metrics/`.
+in `experiments/metrics/`. After G34-G36, no post-G33 training step is
+authorized unless it opens a redesigned-method milestone with a fresh
+real-GT/data/VLM gate.
 
 ## Sync Policy
 

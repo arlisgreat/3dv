@@ -22,6 +22,10 @@ G30: held-out eval still runs, but metrics match init-only G26.
 G31: SSIM-only and silhouette-only train10 are finite; mono-depth-only is NaN.
 G32: clamping monodisp scale denominators fixes depth-only train10 NaN.
 G33: combined guarded train10 is finite, but held-out eval is still init-level.
+G34: route reset closes longer RI3D training as a method-quality milestone.
+G35: no additional ready public/local real-GT benchmark is available locally.
+G36: method direction resets toward learned-prior/feed-forward/head-anchored
+     Gaussian reconstruction under real-GT gates.
 ```
 
 Therefore the next valid experiment was not a longer run. It was:
@@ -100,5 +104,7 @@ Updated stop condition:
 ```text
 The numerical-smoke loop is closed, but quality is not. Do not scale RI3D
 iterations from this setup as a method result; the next scientific step is
-method redesign or stronger public real-GT benchmark access.
+method redesign or stronger public real-GT benchmark access. Pseudo views can
+only re-enter as audited conditional priors, never as ground-truth training
+views.
 ```

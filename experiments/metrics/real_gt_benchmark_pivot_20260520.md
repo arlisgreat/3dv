@@ -22,6 +22,9 @@ G30_POST_GUARD_HELDOUT_EVAL_SMOKE_PASS_NO_QUALITY_CLAIM
 G31_COMPONENT_AUDIT_BLOCKED_MONODEPTH
 G32_MONODISP_SCALE_GUARD_PASS
 G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN
+G34_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING
+G35_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK
+G36_METHOD_REDESIGN_DIRECTION_PASS
 ```
 
 ## Core Purpose After Pivot
@@ -127,6 +130,9 @@ do use old pseudo-view/RI3D outputs only for diagnostic figures and failure taxo
 | G31 | complete, component blocked | SSIM-only and silhouette-only are finite; mono-depth-only is NaN with and without mask. |
 | G32 | complete, numerical pass | Clamping monodisp normalization scales makes depth-only train10 finite. |
 | G33 | complete, no quality gain | Combined guarded train10 and held-out eval are finite, but held-out metrics remain init-level. |
+| G34 | complete, route closed | Current RI3D adapter/loss setup is closed for longer-training method scaling after G33 shows no held-out quality gain. |
+| G35 | complete, benchmark blocked | No additional ready local/public real-GT benchmark exists; H3DS/FaceScape/NeRSemble require access/license. |
+| G36 | complete, method reset | Literature scan supports learned-prior/feed-forward/head-anchored redesign under real-GT gates. |
 
 The benchmark premise is locally satisfied for controlled real-GT gates, but
 this is not a method result. No GPU experiment should start from the old web
@@ -137,7 +143,9 @@ contamination; G29 clears only the L1-only train10 blocker; and G30 confirms
 post-guard eval still runs without a quality gain. G31-G33 close the guarded
 component and combined train10 loop, but still do not produce held-out quality
 improvement. The next action is method redesign or stronger public real-GT
-benchmark access, not default-loss scaling or longer training.
+benchmark access, not default-loss scaling or longer training. G34-G36 record
+this as the current closure state: no RI3D scaling, no newly ready benchmark,
+and a method reset toward learned head-specific priors.
 
 G22 follow-up:
 
@@ -166,4 +174,10 @@ experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md
 PASS_MONODISP_SCALE_GUARD_DEPTH_TRAIN10
 experiments/metrics/g33_combined_guarded_train10_eval_20260520.md
 PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN
+experiments/metrics/g34_post_g33_route_reset_20260520.md
+PASS_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING
+experiments/metrics/g35_public_benchmark_availability_20260520.md
+BLOCKED_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK
+experiments/metrics/g36_method_redesign_direction_20260520.md
+PASS_METHOD_REDESIGN_DIRECTION_NO_LONGER_RI3D_SCALING
 ```

@@ -52,7 +52,10 @@ No milestone may restart reconstruction training from a generated candidate pool
 or RI3D export. `PASS_REAL_GT_BENCHMARK` only authorizes real-GT adapter,
 initialization, render/eval, or training gates on the passing captured benchmark
 case or an equivalent licensed case. G23/G24/G25 are not reconstruction-quality
-results. G26-G33 also remain plumbing/numerical gates, not quality claims.
+results. G26-G33 also remain plumbing/numerical gates, not quality claims. G34
+closes the current RI3D scaling route; G35 confirms no additional ready
+public/local real-GT benchmark is available; G36 resets the method direction
+toward learned-prior/full-head Gaussian approaches.
 
 ## Real GT Benchmark Pivot
 
@@ -102,6 +105,10 @@ G2-G6: generate, rank, mask, cut out, and role-label pseudo-view candidates.
 G7-G14: test RI3D reconstruction plumbing and several repair priors.
 G15: audit data assumptions and discover that candidate-pool quality is too weak.
 G16: replace distorted pseudo-view training premises with a GT-data gate.
+G20-G33: acquire one local real-GT compact case, repair adapter/numerical
+         plumbing, and show no held-out quality gain.
+G34-G36: stop current RI3D scaling, audit benchmark availability, and reset the
+         method direction with current literature.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -224,6 +231,9 @@ positive control, so they are not the active G16b case.
 | G31 | Guarded loss-component audit | G29/G30 pass | Done: SSIM/silhouette finite, mono-depth NaN blocks default depth training |
 | G32 | Monodisp scale guard | G31 mono-depth blocked | Done: depth-only train10 becomes finite after clamping monodisp normalization scales |
 | G33 | Combined guarded train10/eval | G32 pass | Done: combined guarded train10 finite, but held-out metrics match init-only values |
+| G34 | Post-G33 route reset | G33 no-quality-gain result | Done: no longer RI3D scaling milestone is authorized from the current adapter/objective |
+| G35 | Public/stronger benchmark availability audit | G34 route stop | Done, blocked: no additional ready local/public real-GT benchmark beyond current Multiface debug route and synthetic positive control |
+| G36 | Method redesign direction | G34/G35 | Done: next method must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views are conditional priors only |
 
 ## Expected Final Outputs
 
@@ -266,5 +276,8 @@ G30 verifies post-guard held-out eval still runs, but metrics match the init-onl
 smoke. G31-G33 close the component/combined numerical-smoke loop, but still show
 no held-out quality gain. The next action is method redesign or stronger public
 real-GT benchmark access, not renewed web pseudo-view training or longer RI3D
-training.
+training. G34-G36 record that stop condition explicitly: the current RI3D path
+is closed for method scaling, no additional ready benchmark exists locally, and
+the method story should pivot to learned-prior/full-head Gaussian reconstruction
+under real-GT gates.
 ```

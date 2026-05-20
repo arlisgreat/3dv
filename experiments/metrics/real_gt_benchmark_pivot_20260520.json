@@ -18,7 +18,10 @@
         "G30_POST_GUARD_HELDOUT_EVAL_SMOKE_PASS_NO_QUALITY_CLAIM",
         "G31_COMPONENT_AUDIT_BLOCKED_MONODEPTH",
         "G32_MONODISP_SCALE_GUARD_PASS",
-        "G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN"
+        "G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN",
+        "G34_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING",
+        "G35_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK",
+        "G36_METHOD_REDESIGN_DIRECTION_PASS"
   ],
   "core_purpose_after_pivot": "Establish a licensed, auditable real-GT benchmark for single-image/few-view head reconstruction before making any reconstruction-quality claim.",
   "benchmark_acceptance_criteria": [
@@ -141,6 +144,21 @@
       "gate": "G33",
       "state": "complete_no_quality_gain",
       "meaning": "Combined guarded train10 and held-out eval are finite, but held-out metrics remain init-level."
+    },
+    {
+      "gate": "G34",
+      "state": "complete_route_closed",
+      "meaning": "Current RI3D adapter/loss setup is closed for longer-training method scaling after G33 shows no held-out quality gain."
+    },
+    {
+      "gate": "G35",
+      "state": "complete_benchmark_blocked",
+      "meaning": "No additional ready local/public real-GT benchmark exists; H3DS, FaceScape, and NeRSemble require access or license."
+    },
+    {
+      "gate": "G36",
+      "state": "complete_method_reset",
+      "meaning": "Literature scan supports learned-prior/feed-forward/head-anchored redesign under real-GT gates."
     }
     ],
     "next_gate": "Method redesign or stronger public real-GT benchmark access; no longer-training milestone is authorized from current RI3D evidence.",
@@ -210,5 +228,17 @@
             "PSNR": 4.268513361612956,
             "LPIPS": 0.5011390447616577
         }
+    },
+    "g34_route_reset": {
+        "artifact": "experiments/metrics/g34_post_g33_route_reset_20260520.md",
+        "verdict": "PASS_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING"
+    },
+    "g35_public_benchmark_availability": {
+        "artifact": "experiments/metrics/g35_public_benchmark_availability_20260520.md",
+        "verdict": "BLOCKED_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK"
+    },
+    "g36_method_redesign_direction": {
+        "artifact": "experiments/metrics/g36_method_redesign_direction_20260520.md",
+        "verdict": "PASS_METHOD_REDESIGN_DIRECTION_NO_LONGER_RI3D_SCALING"
     }
 }

@@ -21,12 +21,12 @@ active goal:
   reconstruction-quality claim.
 
 hard stop:
-  no web pseudo-view/RI3D scaling; after G21, only real-GT adapter/preflight
-  gates are valid.
+  no web pseudo-view/RI3D scaling; after G34-G36, the current RI3D adapter/loss
+  setup is closed for method-quality scaling.
 ```
 
 G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、弱筛选指标、
-伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G31：
+伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G36：
 
 ```text
 G20: benchmark-first pivot and route audit, complete.
@@ -51,6 +51,12 @@ G31: guarded SSIM/silhouette/depth component audit, complete; mono-depth NaN
 G32: monodisp scale guard, complete; depth-only train10 finite.
 G33: combined guarded train10 + held-out eval, complete; finite but no quality
      gain over init-only metrics.
+G34: post-G33 route reset, complete; no longer-training RI3D milestone is
+     authorized from this evidence.
+G35: public/stronger benchmark availability audit, complete but blocked; no
+     additional ready local/public real-GT benchmark exists.
+G36: method redesign direction, complete; next method must be learned-prior /
+     feed-forward / head-anchored and real-GT gated.
 ```
 
 ## 目录怎么用
@@ -171,6 +177,8 @@ Zero123++ 3x2 grid split correction and head-cutout diagnostic probe
 FaceScape sample metadata access gate
 CC0 human-head mesh positive-control gate
 real-GT benchmark pivot and distribution audit
+Multiface local real-GT compact-case gate and adapter/init/eval/numerical gates
+post-G33 route reset, benchmark availability audit, and method redesign update
 ```
 
 历史 diagnostic pseudo-view 前端：

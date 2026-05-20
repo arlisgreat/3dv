@@ -1,0 +1,41 @@
+{
+  "date": "2026-05-20",
+  "gate": "G35",
+  "verdict": "BLOCKED_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK",
+  "scope": "Audit whether another public or local real-GT head benchmark is immediately ready after G33.",
+  "monitor_report": "/data1/workspace/airulan/3dv_work/agent_reports/benchmark_availability_g35_20260520.md",
+  "routes": [
+    {
+      "name": "H3DS v2",
+      "status": "blocked",
+      "reason": "Local wheel/config only; no H3DS_ACCESS_TOKEN or dataset files available.",
+      "source": "https://pypi.org/project/h3ds/"
+    },
+    {
+      "name": "FaceScape",
+      "status": "blocked",
+      "reason": "Toolkit/sample metadata exists locally, but sample has only limited images and redistribution is blocked; full licensed case is required.",
+      "source": "https://nju-3dv.github.io/projects/FaceScape/"
+    },
+    {
+      "name": "Multiface",
+      "status": "current_route_only",
+      "reason": "Local debug compact case is already the current G21-G33 route; it is not a new benchmark and G33 shows no quality gain.",
+      "source": "https://github.com/facebookresearch/multiface"
+    },
+    {
+      "name": "NeRSemble",
+      "status": "blocked",
+      "reason": "No compact local dataset found; access/download is required before a gate.",
+      "source": "https://tobias-kirschstein.github.io/nersemble/"
+    },
+    {
+      "name": "Wikimedia/Blender CC0 head",
+      "status": "positive_control_only",
+      "reason": "Repo-safe synthetic plumbing control, not a real-capture benchmark.",
+      "source": "https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl"
+    }
+  ],
+  "decision": "No additional ready real-GT quality benchmark is available locally. A new quality milestone requires H3DS token/access, licensed FaceScape/NeRSemble data, or another audited real-capture dataset.",
+  "artifact_policy": "No new media was generated for this benchmark availability gate."
+}

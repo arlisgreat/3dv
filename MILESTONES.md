@@ -69,8 +69,11 @@ valid reconstruction training supervision. The route is now invalid for
 quality claims even after G21; `PASS_REAL_GT_BENCHMARK` only authorizes
 real-GT adapter and reconstruction preflights, not renewed web pseudo-view/RI3D
 training. G23/G24 pass only the local adapter and CPU file-contract gates. G25-G33
-prove init, eval, one numerical diagnosis, one L1-only train10 guard, and
-post-guard eval plumbing. None of these is a reconstruction-quality result.
+prove init, eval, numerical diagnosis, guarded train10, and post-guard eval
+plumbing. G34-G36 close the current RI3D scaling route, confirm no additional
+ready public/local real-GT benchmark is available, and reset the method direction
+toward learned-prior/full-head Gaussian approaches. None of these is a
+reconstruction-quality result.
 ```
 
 ## Mandatory Data Audit Gate
@@ -113,7 +116,10 @@ preserve real-camera assumptions. G23/G24 now repair the local adapter contract
 enough to allow only the smallest RI3D init smoke on an explicitly selected
 idle GPU. G28-G33 then clear two numerical NaN classes and confirm combined
 guarded train10/eval still runs; they do not produce held-out quality gain or
-authorize longer/default-loss training.
+authorize longer/default-loss training. G34-G36 turn that into the current
+closure: no scaling from this RI3D route, no additional ready benchmark
+locally, and no new method-quality milestone without a redesigned method plus
+fresh data/VLM gate.
 ```
 
 ## Completed Milestones
@@ -160,12 +166,15 @@ authorize longer/default-loss training.
 | G31 | done, component blocked | Guarded loss-component audit | `experiments/metrics/g31_guarded_loss_component_audit_20260520.md` | SSIM-only and silhouette-only train10 are finite; mono-depth-only is NaN with and without mask, blocking combined/default depth training. |
 | G32 | done, numerical pass | Monodisp scale guard and depth-only rerun | `experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md`, `patches/ri3d/g32_monodisp_scale_guard.patch` | Clamping monodisp scale denominators clears depth-only train10 NaNs; metrics remain init-level. |
 | G33 | done, numerical/eval pass no quality gain | Combined guarded train10 and held-out eval | `experiments/metrics/g33_combined_guarded_train10_eval_20260520.md` | Combined guarded losses are finite, but held-out SSIM/PSNR/LPIPS match G26/G30 init-level values; quality remains unproven. |
+| G34 | done, route-stop pass | Post-G33 route reset | `experiments/metrics/g34_post_g33_route_reset_20260520.md` | Longer RI3D training on the current adapter is closed as a method-quality milestone; no web pseudo-view candidate pool may become training data. |
+| G35 | done, benchmark blocked | Public/stronger benchmark availability audit | `experiments/metrics/g35_public_benchmark_availability_20260520.md` | No additional ready local/public real-GT benchmark exists; H3DS/FaceScape/NeRSemble require access/license, and Multiface is the current local route only. |
+| G36 | done, method direction pass | Method redesign and latest literature update | `experiments/metrics/g36_method_redesign_direction_20260520.md` | Next method work must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views can only be audited conditional priors. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G33 finite combined train10 but init-level held-out metrics | Method redesign or stronger public real-GT benchmark access is required before opening a longer-training milestone. |
+| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G34 route reset + G35 benchmark audit + G36 method redesign direction | Open a new milestone only after a passing method premise and real-GT/data/VLM gate; no longer-training milestone is authorized from current RI3D evidence. |
 
 ## G8 Result
 

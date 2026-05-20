@@ -16,7 +16,9 @@ After G20/G21, the old pseudo-view/RI3D route remains invalid for positive
 quality claims. G21 supplies the benchmark premise locally; quality claims still
 need method redesign or a stronger public real-GT benchmark plus real-GT
 training and held-out evaluation beyond the G23-G33 adapter/init/eval/numerical
-gates.
+gates. G34-G36 now close current RI3D scaling, confirm no additional ready
+public/local benchmark is available, and reset the method direction toward
+learned-prior/full-head Gaussian reconstruction under real-GT gates.
 
 ## Main Claim
 
@@ -53,6 +55,9 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | G31 component audit | `experiments/metrics/g31_guarded_loss_component_audit_20260520.md` | SSIM/silhouette components are finite; mono-depth-only is NaN before the scale guard. |
 | G32 monodisp guard | `experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md` | Clamping monodisp scales fixes depth-only train10 NaNs. |
 | G33 combined guarded eval | `experiments/metrics/g33_combined_guarded_train10_eval_20260520.md` | Combined guarded train10 is finite, but held-out metrics still match init-only values. |
+| G34 route reset | `experiments/metrics/g34_post_g33_route_reset_20260520.md` | Current RI3D setup is closed for longer-training method scaling after no held-out quality gain. |
+| G35 benchmark availability | `experiments/metrics/g35_public_benchmark_availability_20260520.md` | No additional ready public/local real-GT benchmark exists locally; access/license is still required. |
+| G36 method direction | `experiments/metrics/g36_method_redesign_direction_20260520.md` | Latest literature supports learned-prior/feed-forward/head-anchored redesign, not ad hoc RI3D scaling. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -133,6 +138,9 @@ G31 result: BLOCKED_MONODEPTH_COMPONENT_NUMERICAL_HEALTH
 G32 result: PASS_MONODISP_SCALE_GUARD_DEPTH_TRAIN10, final_loss=0.6245082
 G33 result: PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN,
   final_loss=0.5910920, PSNR=4.2685, LPIPS=0.5011
+G34 result: PASS_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING
+G35 result: BLOCKED_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK
+G36 result: PASS_METHOD_REDESIGN_DIRECTION_NO_LONGER_RI3D_SCALING
 ```
 
 ## Limitations
@@ -152,6 +160,8 @@ G33 result: PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN,
    finite, but held-out metrics remain init-level. The paper still cannot be
    framed as a positive reconstruction method result until a redesigned method
    or stronger benchmark produces held-out/geometry improvement on real GT.
+7. G34-G36 close the current RI3D scaling route; they are planning/positioning
+   gates, not new reconstruction evidence.
 ```
 
 ## Final Milestone Status
@@ -182,4 +192,9 @@ G30: complete as post-guard held-out eval smoke; no quality improvement.
 G31: complete as guarded component audit; mono-depth blocks before scale guard.
 G32: complete as monodisp scale guard; depth-only train10 finite.
 G33: complete as combined guarded train10/eval; finite but no quality gain.
+G34: complete as route reset; current RI3D scaling is closed.
+G35: complete as benchmark availability audit; no additional ready public/local
+     real-GT benchmark exists locally.
+G36: complete as method redesign direction; next method must be learned-prior /
+     feed-forward / head-anchored and real-GT gated.
 ```

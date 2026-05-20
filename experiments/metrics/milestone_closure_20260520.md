@@ -24,6 +24,9 @@ G30_POST_GUARD_HELDOUT_EVAL_SMOKE_PASS_NO_QUALITY_CLAIM
 G31_COMPONENT_AUDIT_BLOCKED_MONODEPTH
 G32_MONODISP_SCALE_GUARD_PASS
 G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN
+G34_ROUTE_RESET_CLOSE_CURRENT_RI3D_SCALING
+G35_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK
+G36_METHOD_REDESIGN_DIRECTION_PASS
 ```
 
 Completed or closed milestones:
@@ -53,6 +56,9 @@ Completed or closed milestones:
 | G31 | complete, component blocked | SSIM-only and silhouette-only are finite; mono-depth-only is NaN with and without mask. |
 | G32 | complete, numerical pass | Monodisp scale clamping makes depth-only train10 finite; metrics remain init-level. |
 | G33 | complete, no quality gain | Combined guarded train10 and held-out eval are finite, but metrics match G26/G30 init-level values. |
+| G34 | complete, route closed | Current RI3D adapter/loss setup is closed for longer-training method scaling after G33 shows no held-out quality gain. |
+| G35 | complete, benchmark blocked | No additional ready public/local real-GT benchmark is available locally; H3DS/FaceScape/NeRSemble need access/license. |
+| G36 | complete, method reset | Latest literature scan supports a learned-prior/feed-forward/head-anchored redesign under real-GT gates; pseudo views are conditional priors only. |
 
 Current stop condition:
 
@@ -63,7 +69,9 @@ and the current RI3D reconstruction path is not a solved quality route. Further
 quality claims require method redesign or stronger public real-GT benchmark
 access, then separate real-GT training and held-out evaluation gates. G29/G32
 resolve numerical NaN classes and G33 is finite, but G33 shows no quality gain
-over init-only eval.
+over init-only eval. G34-G36 explicitly close current RI3D scaling, record that
+no additional ready benchmark exists locally, and define the next method premise
+as learned-prior/full-head Gaussian reconstruction under real-GT gates.
 ```
 
 Do not do next:
