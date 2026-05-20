@@ -13,6 +13,7 @@ REAL_GT_INTAKE_READY_LOCALLY
 G20_BENCHMARK_PIVOT_COMPLETE
 G21_REAL_GT_COMPACT_CASE_PASS_LOCAL
 G22_REAL_GT_RECONSTRUCTION_PREFLIGHT_REQUIRED
+G22_BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
 ```
 
 Completed or closed milestones:
@@ -30,6 +31,7 @@ Completed or closed milestones:
 | G19 | complete | Conservative paper package, figure list, claims, and limitations recorded. |
 | G20 | complete | Real-GT benchmark pivot, route audit, and model/data distribution gate recorded in `experiments/metrics/real_gt_benchmark_pivot_20260520.md`. |
 | G21 | complete locally | Multiface debug compact case passes structural and VLM/manual real-GT gate; raw person-identifying assets stay under `3dv_work`, and repo records only metrics/hashes/mask-only summary. |
+| G22 | blocked before training | Current RI3D/evaluation adapter does not preserve Multiface per-view intrinsics, real-camera depth/conf priors, or held-out/mesh metrics; no GPU training started. |
 
 Current stop condition:
 
@@ -37,7 +39,7 @@ Current stop condition:
 The local sprint has verified the old route enough for diagnostic value only:
 failure-aware gating is necessary, candidate hygiene is not training validity,
 and the current RI3D reconstruction path is not a solved quality route. Further
-quality claims require a real-GT reconstruction/evaluation preflight first.
+quality claims require fixing the G22 real-camera adapter blockers first.
 ```
 
 Do not do next:
@@ -53,10 +55,10 @@ Do not treat synthetic positive control as a real-capture benchmark.
 Next legitimate branches:
 
 ```text
-1. Real GT branch: run G22 on the G21 Multiface debug case, or replace it with
-   H3DS/FaceScape/Multiface full access after repeating the gate.
-2. Benchmark branch: extend the compact case into quantitative Chamfer/normal/
-   silhouette/novel-view metrics without committing raw person-identifying data.
+1. Real GT branch: implement a local-only Multiface real-camera adapter, then
+   rerun G21/G22 before selecting an idle GPU.
+2. Benchmark branch: add mesh z-buffer depth/conf and held-out/mesh metrics
+   without committing raw person-identifying data.
 3. Writing branch: draft the diagnostic/gate paper, with G21 as the benchmark
-   premise pass and G22 as the next method-evidence milestone.
+   premise pass and G22 as a model/data mismatch stop condition.
 ```

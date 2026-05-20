@@ -200,8 +200,9 @@ G19: conservative paper package and closure.
 G20: benchmark-first pivot and route/distribution audit. Done.
 G21: compact real-GT benchmark acquisition. Done locally on Multiface debug data;
      raw person-identifying RGB/mesh assets remain under 3dv_work.
-G22: real-GT reconstruction/evaluation preflight. Planned; must re-run data/VLM/
-     distribution gate before any GPU training.
+G22: real-GT reconstruction/evaluation preflight. Blocked before training:
+     current RI3D/evaluation adapter does not preserve Multiface real-camera
+     intrinsics, depth/confidence priors, or metrics.
 ```
 
 Current G16 access result:
@@ -221,9 +222,9 @@ Multiface now has a local debug compact case with 9 same-frame real captured
 views, KRT cameras, projected mesh masks, and tracked OBJ; it passes G21 as a
 local real-GT benchmark premise.
 FaceScape remains viable only after licensed full-case access.
-No pseudo-view/RI3D scaling is allowed from web candidate pools. The only valid
-next method experiment is a real-GT G22 preflight on the G21 case or an
-equivalent licensed benchmark.
+No pseudo-view/RI3D scaling is allowed from web candidate pools. The current
+G22 preflight blocks GPU training until a real-camera adapter and metric
+pipeline are implemented and re-gated.
 ```
 
 ### Week 4

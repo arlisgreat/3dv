@@ -32,6 +32,9 @@ G20: benchmark-first pivot and route audit, complete.
 G21: local Multiface debug compact real-GT benchmark gate, complete.
      Raw RGB/mesh assets remain under 3dv_work; repo sync contains metrics,
      hashes, and a mask-only PNG summary.
+G22: real-GT reconstruction/evaluation preflight, blocked before training
+     because current RI3D/evaluation adapter does not preserve Multiface
+     per-view intrinsics/depth/metric assumptions.
 ```
 
 ## 目录怎么用
@@ -352,16 +355,15 @@ RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景�
 但仍有 detached foreground fragments，不是最终 method win。
 G20 已完成 benchmark-first pivot：旧 pseudo-view/RI3D 路线 invalid for
 quality claims。G21 已完成本地 Multiface debug compact real-GT gate，下一步
-只能在该真实 GT case 或 H3DS/FaceScape/Multiface 等同级真实 benchmark 上
-设计 G22 reconstruction/evaluation preflight；不能回到 web pseudo-view 训练。
+G22 已在训练前阻塞：当前 RI3D/evaluation adapter 不安全匹配 Multiface 真实相机。
+不能回到 web pseudo-view 训练，也不能硬跑这个不匹配 adapter。
 ```
 
 下一步：
 
 1. 不扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
-2. 优先获取 H3DS token；本地则使用已 gate-pass 的 Multiface debug compact case
-   做下一轮最小 reconstruction/evaluation preflight。
-3. G22 开始前再次跑 structural + visual/VLM + distribution audit，确认不要把
-   old candidate-pool mistake 带回来。
-4. 只允许在真实 GT case 上恢复受控重建实验；web first10 和旧 RI3D 结果只保留为
-   failure taxonomy / diagnostic evidence。
+2. 优先获取 H3DS token；本地则先实现 Multiface real-camera adapter：per-frame
+   intrinsics/extrinsics、mesh z-buffer depth/conf、held-out view/mesh metrics。
+3. adapter 完成后重跑 G21/G22 structural + visual/VLM + distribution audit。
+4. 只允许在真实 GT case 且 G22 通过后恢复受控重建实验；web first10 和旧 RI3D
+   结果只保留为 failure taxonomy / diagnostic evidence。

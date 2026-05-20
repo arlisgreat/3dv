@@ -110,3 +110,10 @@ preflight, but this is not a method result. No GPU experiment should start from
 the old web pseudo-view route. The next action is G22: rerun the G21 gate,
 verify model/test-data distribution, then run a minimal real-GT reconstruction
 or block before training if the audit regresses.
+
+G22 follow-up:
+
+```text
+experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md
+BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
+```

@@ -144,7 +144,7 @@ web pseudo-view candidate pool valid for reconstruction training.
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G22 | planned | Real-GT reconstruction/evaluation preflight on the G21 case | Re-run G21 gate, verify model/test-data distribution, choose an idle GPU if training starts | Quantitative/visual real-GT result recorded, or blocked before training if any data/VLM/distribution check regresses |
+| G22 | blocked before training | Real-GT reconstruction/evaluation preflight on the G21 case | `experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md` | Current RI3D/evaluation adapter does not preserve Multiface per-view intrinsics, real-camera depth/conf priors, or metrics; no GPU training started. |
 
 ## G8 Result
 
@@ -604,6 +604,9 @@ quality claims.
 G20 benchmark-first pivot is complete.
 G21 compact real-GT benchmark acquisition is complete locally on a Multiface
 debug case. Raw RGB/mesh assets remain local pending artifact review.
+G22 real-GT reconstruction/evaluation preflight is blocked before training by
+model/data adapter mismatch; current RI3D plumbing should not be run on the
+Multiface case until per-frame camera, depth, and metric adapters exist.
 ```
 
 Final purpose:
@@ -611,8 +614,8 @@ Final purpose:
 ```text
 Do not claim solved single-image full-head reconstruction.
 Use G2-G19 as failure taxonomy and stop-loss diagnostics.
-Resume quality experiments only through G22 on the G21 real-GT case or an
-equivalent licensed benchmark.
+Resume quality experiments only after the G22 adapter blockers are fixed and
+G21/G22 gates are rerun.
 ```
 
 Closure artifacts:

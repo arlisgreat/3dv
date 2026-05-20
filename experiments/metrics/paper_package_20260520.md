@@ -39,6 +39,7 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | GT intake readiness | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is ready as a local intake route; G21 later closes the compact-case gate locally. |
 | Real-GT benchmark pivot | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D results are diagnostic-only; H3DS/FaceScape/Multiface compact real-GT benchmark is the mandatory next gate. |
 | G21 local real-GT gate | `experiments/metrics/g21_multiface_debug_gate_20260520.md` | A Multiface debug compact case satisfies the real-GT benchmark premise locally; raw RGB/mesh artifacts remain outside git. |
+| G22 preflight | `experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md` | Current RI3D/evaluation plumbing is blocked before training on real Multiface cameras. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -103,6 +104,7 @@ local benchmark route: Multiface debug 6795937 / E001_Neutral_Eyes_Open /
 hard stop: no new web pseudo-view/RI3D scaling; next method work must be G22 on
   a real-GT case
 repo-safe result: experiments/figures/g21_multiface_debug_mask_gate_20260520.png
+G22 result: BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
 ```
 
 ## Limitations
@@ -136,5 +138,5 @@ G19: complete as conservative paper package and claim boundary.
 G20: complete as benchmark-first pivot and route/distribution audit.
 G21: complete locally on Multiface debug compact real-GT case; raw RGB/mesh stay
      local pending artifact review.
-G22: required next milestone for any reconstruction-quality claim.
+G22: blocked before training by real-camera adapter and metric mismatch.
 ```

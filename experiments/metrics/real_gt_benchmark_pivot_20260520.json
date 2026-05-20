@@ -72,5 +72,10 @@
             "meaning": "Multiface debug compact case passes PASS_REAL_GT_BENCHMARK; repo records metrics, hashes, and a mask-only PNG while raw RGB/mesh remain local."
         }
     ],
-    "next_gate": "G22 real-GT reconstruction/evaluation preflight on the G21 case or an equivalent licensed benchmark"
+    "next_gate": "G22 real-GT reconstruction/evaluation preflight on the G21 case or an equivalent licensed benchmark",
+    "g22_preflight": {
+        "artifact": "experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md",
+        "verdict": "BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER",
+        "meaning": "G21 benchmark premise passes, but current RI3D/evaluation adapter does not yet preserve Multiface per-view intrinsics, real-camera depth/conf priors, or held-out/mesh metrics."
+    }
 }

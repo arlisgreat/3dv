@@ -84,6 +84,9 @@ G21 PASS_REAL_GT_BENCHMARK exists only for the local Multiface debug compact
 case under /data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/.
 Repo sync should include metrics, hashes, and repo-safe mask-only summaries, not
 raw person-identifying RGB images or meshes unless explicitly reviewed.
+G22 currently blocks before training because the current RI3D/evaluation adapter
+does not preserve Multiface per-view intrinsics, real-camera depth/conf priors,
+or held-out/mesh metrics.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate

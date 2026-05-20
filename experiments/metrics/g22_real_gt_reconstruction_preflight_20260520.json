@@ -1,0 +1,163 @@
+{
+  "case_dir": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/gate_case",
+  "checks": {
+    "crop_risk_acceptable_for_training_start": false,
+    "evaluation_metrics_adapter_available": false,
+    "g21_real_gt_gate_passed": true,
+    "manifest_cameras_masks_mesh_present": true,
+    "raw_assets_remain_local_only": true,
+    "real_camera_depth_priors_available": false,
+    "ri3d_current_adapter_preserves_per_view_intrinsics": false
+  },
+  "closure": "BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER: G21 benchmark premise passes, but current RI3D/evaluation plumbing does not yet preserve Multiface real-camera intrinsics/depth/metric assumptions. Do not start GPU training.",
+  "date": "2026-05-20",
+  "details": {
+    "crop_risk_acceptable_for_training_start": "High mask coverage/crop-risk views: 400012, 400017, 400041, 400042",
+    "evaluation_metrics_adapter_available": "No committed adapter yet for held-out view metrics or mesh/point-cloud distance on Multiface.",
+    "g21_real_gt_gate_passed": "PASS_REAL_GT_BENCHMARK",
+    "manifest_cameras_masks_mesh_present": "9 rows, 9 cameras, mesh_present=True",
+    "raw_assets_remain_local_only": "Raw RGB/OBJ/contact sheet stay under 3dv_work; repo contains metrics/hash/mask-only PNG.",
+    "real_camera_depth_priors_available": "No real-camera z-buffer depth/conf maps exist in the G21 manifest.",
+    "ri3d_current_adapter_preserves_per_view_intrinsics": "256px effective principal point ranges: cx=42.43px, cy=26.91px; current RI3D exports use one global intrinsics block."
+  },
+  "failed_checks": [
+    "ri3d_current_adapter_preserves_per_view_intrinsics",
+    "real_camera_depth_priors_available",
+    "evaluation_metrics_adapter_available",
+    "crop_risk_acceptable_for_training_start"
+  ],
+  "gate": "G22",
+  "intrinsics_audit": {
+    "cx": {
+      "max": 149.57782500000002,
+      "mean": 131.10191125,
+      "min": 107.1428675,
+      "range": 42.434957500000024
+    },
+    "cy": {
+      "max": 127.48597,
+      "mean": 117.19881819444444,
+      "min": 100.5729825,
+      "range": 26.9129875
+    },
+    "effective_intrinsics": [
+      {
+        "cx": 148.4226,
+        "cy": 117.1767575,
+        "fx": 965.9015,
+        "fy": 965.934875,
+        "scale": 0.125,
+        "view_id": "400012",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 120.666775,
+        "cy": 119.3653875,
+        "fx": 965.91725,
+        "fy": 965.9158375,
+        "scale": 0.125,
+        "view_id": "400017",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 119.6988375,
+        "cy": 127.0341875,
+        "fx": 633.662125,
+        "fy": 633.5874625,
+        "scale": 0.125,
+        "view_id": "400023",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 132.1905625,
+        "cy": 119.66785,
+        "fx": 968.574125,
+        "fy": 968.6187125,
+        "scale": 0.125,
+        "view_id": "400041",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 149.57782500000002,
+        "cy": 120.266525,
+        "fx": 964.492675,
+        "fy": 964.24075,
+        "scale": 0.125,
+        "view_id": "400042",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 123.41072125,
+        "cy": 127.48597,
+        "fx": 962.430625,
+        "fy": 962.2575,
+        "scale": 0.125,
+        "view_id": "400050",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 107.1428675,
+        "cy": 100.5729825,
+        "fx": 970.338125,
+        "fy": 969.3200625,
+        "scale": 0.125,
+        "view_id": "400055",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 145.98093749999998,
+        "cy": 118.70009625,
+        "fx": 963.07495,
+        "fy": 963.140375,
+        "scale": 0.125,
+        "view_id": "400067",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      },
+      {
+        "cx": 132.826075,
+        "cy": 104.5196075,
+        "fx": 969.154175,
+        "fy": 969.50745,
+        "scale": 0.125,
+        "view_id": "400070",
+        "x_offset": 44.625,
+        "y_offset": 0.0
+      }
+    ],
+    "fx": {
+      "max": 970.338125,
+      "mean": 929.2828388888888,
+      "min": 633.662125,
+      "range": 336.67600000000004
+    },
+    "fy": {
+      "max": 969.50745,
+      "mean": 929.169225,
+      "min": 633.5874625,
+      "range": 335.91998749999993
+    },
+    "image_size": 256
+  },
+  "mask_coverage": {
+    "high_crop_risk_views": [
+      "400012",
+      "400017",
+      "400041",
+      "400042"
+    ],
+    "max": 0.802761,
+    "mean": 0.6952231111111111,
+    "min": 0.409422
+  },
+  "next_allowed_action": "Implement local-only real-camera adapter and metric preflight, then rerun G21/G22 before selecting an idle GPU.",
+  "no_gpu_training_started": true,
+  "verdict": "BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER"
+}

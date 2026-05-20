@@ -210,7 +210,7 @@ positive control, so they are not the active G16b case.
 | G19 | Paper packaging | G17 and G18 are stable | Claims, figures, limitations, and milestone closure are recorded |
 | G20 | Real-GT benchmark pivot | Old route cannot support quality claims | Benchmark spec, route audit, and distribution gate recorded |
 | G21 | Compact real-GT benchmark acquisition | H3DS token or FaceScape/Multiface raw access | Done locally on Multiface debug case with PASS_REAL_GT_BENCHMARK; raw assets remain local |
-| G22 | Real-GT reconstruction/evaluation preflight | G21 local pass, repeated data/VLM/distribution audit | Quantitative/visual result on real captured cameras + mesh, or blocked before training |
+| G22 | Real-GT reconstruction/evaluation preflight | G21 local pass, repeated data/VLM/distribution audit | Blocked before training: current RI3D/evaluation adapter does not preserve Multiface per-view intrinsics/depth/metrics |
 
 ## Expected Final Outputs
 
@@ -242,7 +242,8 @@ G18 corrected first10 taxonomy is complete and diagnostic-only.
 G19 paper package and milestone closure are complete.
 G20 real-GT benchmark pivot is complete.
 G21 compact real-GT acquisition is complete locally with
-PASS_REAL_GT_BENCHMARK. The next legitimate experiment is G22 on this real-GT
-case or an H3DS/FaceScape/Multiface equivalent, not renewed web pseudo-view
-training.
+PASS_REAL_GT_BENCHMARK. G22 blocks before training because the current
+RI3D/evaluation adapter does not preserve Multiface real-camera intrinsics,
+depth/confidence priors, or metrics. The next action is adapter work and
+re-gating, not renewed web pseudo-view training.
 ```

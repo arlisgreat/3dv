@@ -40,6 +40,7 @@ Multiface real-GT intake readiness gate
 CC0 mesh positive-control gate and RI3D visual fail
 real-GT benchmark-first pivot
 G21 local Multiface debug real-GT benchmark gate
+G22 real-GT reconstruction/evaluation preflight gate
 ```
 
 还没有完成：
@@ -48,6 +49,7 @@ G21 local Multiface debug real-GT benchmark gate
 reconstruction rerun on real cameras + mesh/point-cloud GT
 quantitative real-GT reconstruction evaluation
 publishable artifact review for any identifiable Multiface RGB/mesh result
+real-camera RI3D/evaluation adapter for per-view intrinsics, depth/conf, metrics
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -75,8 +77,9 @@ The old pseudo-view/RI3D route is invalid for reconstruction-quality claims.
 Its value is diagnostic: failure taxonomy, gate design, and stop-loss evidence.
 G21 now provides a local Multiface debug real-GT case with
 PASS_REAL_GT_BENCHMARK; new method claims still require a separate G22
-reconstruction/evaluation preflight on that real captured case, not on web
-pseudo-view candidate pools.
+reconstruction/evaluation preflight on that real captured case. G22 is currently
+blocked before training because the existing RI3D/evaluation adapter assumes a
+global synthetic-style camera model and lacks real-camera depth/metric plumbing.
 ```
 
 ## 2. Stage 00: Inputs
@@ -824,4 +827,6 @@ PASS_REAL_GT_BENCHMARK with real captured cameras, masks, and tracked mesh.
 下一步应转 G22：在真实 captured cameras + mesh 上做最小 reconstruction/evaluation
 preflight，并在训练前再次做数据、VLM 和模型/测试数据分布审计。不要从现有
 web first10 candidate pool 继续训练，也不要把 RI3D 旧结果解释成质量结论。
+当前 G22 审计已阻塞训练：per-view intrinsics、real-camera depth/conf maps、
+held-out view / mesh metrics adapter 都未站住。
 ```
