@@ -21,4 +21,5 @@ application_alignment_and_iteration_ideas_20260519.md
 clip_consistency_filter_observations_20260519.md
 trusted_region_mask_observations_20260519.md
 cutout_input_ablation_observations_20260519.md
+real_gt_benchmark_pivot_20260520.md
 ```

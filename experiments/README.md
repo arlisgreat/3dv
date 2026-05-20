@@ -50,6 +50,8 @@ data_manifest.csv
 
 `experiments/downstream_datasets/` 是历史路径名，语义上只是伪视角候选池
 导出，不是已经证明适合重建的训练集。
+G20 之后，没有 `PASS_REAL_GT_BENCHMARK` 就不能从这些候选池继续训练或做
+重建质量结论。
 
 真实人脸/人头数据集同样必须先看许可证。FaceScape sample 已经做过本地
 metadata access audit，但 sample readme 明确不允许分发，因此 raw images、

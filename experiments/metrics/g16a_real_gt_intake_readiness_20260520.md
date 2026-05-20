@@ -84,7 +84,7 @@ Stop conditions:
 ```text
 Do not start RI3D or other reconstruction training from Multiface until the
 actual compact case exists and a visual/manual gate records
-PASS_RECONSTRUCTION_TRAINING.
+PASS_REAL_GT_BENCHMARK.
 
 Do not treat this intake gate as a quality result. It is a readiness result.
 

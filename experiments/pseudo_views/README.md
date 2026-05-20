@@ -25,6 +25,7 @@ The second first10 pass uses `steps=75`; it improves many samples but still
 contains unsafe pseudo views. Use the view-budget CSVs before feeding generated
 views into downstream reconstruction.
 
-The cutout pass uses subject-only gray-background inputs. It reduces
-photo-frame/background rotation failures and is the preferred pseudo-view
-frontend for the next reconstruction experiment.
+The cutout pass uses subject-only gray-background inputs. It reduces some
+photo-frame/background rotation failures, but corrected 3x2 audit still shows
+identity and geometry distortions. Treat these PNGs as diagnostic artifacts
+only until a later benchmark gate explicitly passes.

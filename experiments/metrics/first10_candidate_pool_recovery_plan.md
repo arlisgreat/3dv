@@ -41,7 +41,8 @@ G15.2 Zero123++ head-cutout probe
 
 G15.3 candidate pool export only if G15.2 passes
   update downstream candidate pool semantics
-  no RI3D/Gaussian training until PASS_RECONSTRUCTION_TRAINING
+  no RI3D/Gaussian training until a real-GT benchmark records
+  PASS_REAL_GT_BENCHMARK
 ```
 
 ## Current G15.1 Result

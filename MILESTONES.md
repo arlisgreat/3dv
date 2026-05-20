@@ -24,29 +24,32 @@ single portrait/head image
 ```
 
 That full system is too large for the current one-month paper sprint. The
-compressed paper goal is:
+old compressed paper goal was:
 
 ```text
 Diagnose when diffusion pseudo views help or hurt single-image Gaussian head
 reconstruction, and define a failure-aware pseudo-view supervision protocol.
 ```
 
-The strongest current framing is:
+G2-G19 show that this old route is useful only as a diagnostic/stop-loss study.
+The current active goal is benchmark-first:
 
 ```text
-Failure-aware pseudo-view supervision for single-image Gaussian head reconstruction.
+Establish a licensed, auditable real-GT benchmark before making any
+single-image/few-view head reconstruction-quality claim.
 ```
 
 ## Working Thesis
 
-Current hypothesis:
+Current hypothesis after the benchmark pivot:
 
 ```text
-View selection and failure-aware filtering matter more than blindly adding more
-diffusion pseudo views.
+No pseudo-view or RI3D result is credible as a method-quality claim until it is
+tested against a licensed real-GT benchmark with real captured views, cameras,
+masks, and GT mesh/point-cloud geometry.
 ```
 
-Current diagnostic pseudo-view frontend:
+Historical diagnostic pseudo-view frontend:
 
 ```text
 subject cutout
@@ -62,7 +65,8 @@ Current unresolved claim:
 ```text
 Filtered pseudo views and role metadata are only candidate pools. They look
 more reliable as 2D candidates, but G8-G14 show they have not been proven to be
-valid reconstruction training supervision.
+valid reconstruction training supervision. The route is now invalid for
+quality claims until a real-GT benchmark gate passes.
 ```
 
 ## Mandatory Data Audit Gate
@@ -74,7 +78,8 @@ Every new milestone must pass a data audit gate before training or reconstructio
 2. Run structural audit with scripts/audit_data_gate.py.
 3. Generate a visual audit sheet for candidate PNGs.
 4. Inspect generated images with VLM/manual visual checking.
-5. Record PASS_RECONSTRUCTION_TRAINING, PASS_DIAGNOSTIC_ONLY, or BLOCKED.
+5. Record PASS_REAL_GT_BENCHMARK, PASS_RECONSTRUCTION_TRAINING,
+   PASS_DIAGNOSTIC_ONLY, or BLOCKED.
 6. Update this file before any GPU experiment starts.
 ```
 
@@ -96,6 +101,8 @@ training. A later audit also found a severe Zero123++ 2x3/3x2 grid split bug
 that contaminates historical per-view PNGs.
 After correct 3x2 resplitting, the head-cutout pseudo views are still visibly
 distorted, so web first10 remains diagnostic-only.
+No new pseudo-view or RI3D scaling is allowed until a compact real-GT benchmark
+records PASS_REAL_GT_BENCHMARK.
 ```
 
 ## Completed Milestones
@@ -128,6 +135,8 @@ distorted, so web first10 remains diagnostic-only.
 | G17c | done, quality fail | RI3D positive-control iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | 500 iterations execute and export valid MP4s, but visual audit still shows ghosted fragments; current RI3D route is not a quality solution. |
 | G18 | done, diagnostic-only | Corrected first10 failure taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | 60 corrected views audited; 10 identity, 37 geometry-only, 13 reject; budget4 still includes 8 severe/reject views. |
 | G19 | done | Paper package and milestone closure | `experiments/metrics/paper_package_20260520.md` | Conservative claim, figure set, limitations, and closure state recorded. |
+| G20 | done | Real-GT benchmark pivot and distribution audit | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D route is invalid for quality claims; real-GT benchmark is the mandatory next gate. |
+| G21 | blocked externally | Compact licensed real-GT benchmark acquisition | `experiments/metrics/real_gt_benchmark_pivot_20260520.md`, `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | H3DS token or FaceScape/Multiface raw case is required before any reconstruction training resumes. |
 
 ## G8 Result
 
@@ -581,17 +590,20 @@ that RI3D plus generic FLAME proxy is already a strong reconstruction method.
 Closure:
 
 ```text
-No feasible local milestone remains unrecorded.
-Real-capture GT access remains externally blocked for reconstruction, but the
-local intake/readiness gate is now complete.
-The paper package is ready for drafting with conservative claims.
+No feasible local milestone remains unrecorded on the old route.
+The old pseudo-view/RI3D route is closed as diagnostic-only and invalid for
+quality claims.
+G20 benchmark-first pivot is complete.
+G21 compact real-GT benchmark acquisition is externally blocked until H3DS,
+FaceScape, Multiface, or an equivalent licensed case is available.
 ```
 
 Final purpose:
 
 ```text
-Package the sprint as a failure-aware pseudo-view supervision diagnostic study.
 Do not claim solved single-image full-head reconstruction.
+Use G2-G19 as failure taxonomy and stop-loss diagnostics.
+Resume quality experiments only after PASS_REAL_GT_BENCHMARK.
 ```
 
 Closure artifacts:
@@ -607,6 +619,8 @@ experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.json
 experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
 experiments/metrics/g16a_real_gt_intake_readiness_20260520.json
+experiments/metrics/real_gt_benchmark_pivot_20260520.md
+experiments/metrics/real_gt_benchmark_pivot_20260520.json
 experiments/metrics/gt_positive_control_route_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json

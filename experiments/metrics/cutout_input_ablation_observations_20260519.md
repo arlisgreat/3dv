@@ -104,9 +104,10 @@ The input-format ablation validates the current iteration idea:
 ```text
 Use subject cutouts before Zero123++ pseudo-view generation.
 Keep steps75 and budget4 as the default pseudo-view setting.
-Keep trusted-region masks before downstream 3D supervision.
+Keep trusted-region masks before any diagnostic downstream export.
 Do not rely on cutouts alone; identity/filter checks are still required.
 ```
 
-This is now the preferred pseudo-view frontend for the later
-Gaussian/PanoHead/FLAME route.
+Post-G20 note: this remains a historical diagnostic frontend only. Corrected
+3x2 audits later found visible pseudo-view distortions, so it is not an approved
+training route without `PASS_REAL_GT_BENCHMARK`.

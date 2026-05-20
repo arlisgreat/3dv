@@ -24,9 +24,13 @@ new downstream training run.
 ## Gate States
 
 ```text
+PASS_REAL_GT_BENCHMARK:
+  A licensed real-capture case has same-frame views, cameras, masks, GT
+  mesh/point-cloud geometry, and visual/VLM + distribution audit evidence.
+
 PASS_RECONSTRUCTION_TRAINING:
-  The candidates are structurally valid and visually satisfy the stated
-  reconstruction premise. This requires explicit VLM/manual evidence.
+  A method-specific training milestone may proceed only after
+  PASS_REAL_GT_BENCHMARK exists for the benchmark case.
 
 PASS_DIAGNOSTIC_ONLY:
   The candidates are usable for failure taxonomy or negative diagnostics, but
@@ -41,4 +45,6 @@ BLOCKED:
 
 `experiments/downstream_datasets/` is a candidate-pool export. It is never a
 validated training dataset by path alone. A milestone-specific audit verdict is
-required each time before using generated candidates for reconstruction.
+required each time before using generated candidates for diagnostics. G20 adds
+a stronger rule: no new reconstruction-quality experiment starts without
+PASS_REAL_GT_BENCHMARK.

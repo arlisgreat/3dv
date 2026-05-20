@@ -12,27 +12,25 @@
 
 ## 现在要做什么
 
-先跑通两个最小闭环：
-
-1. **LAM**：单张头像 -> Gaussian head baseline。
-2. **Zero123++**：同一张头像 -> 6 个伪多视角。
-
-跑通后做 first10 实验：
+旧的 pseudo-view/RI3D 路线已经关闭为诊断资产。下一步不是继续生成更多
+伪视角，也不是继续从 `experiments/downstream_datasets` 训练 RI3D。
 
 ```text
-3 张干净正脸
-2 张轻微侧脸
-2 张眼镜
-2 张复杂头发
-1 张遮挡或低质量
+active goal:
+  establish a licensed, auditable real-GT benchmark before any new
+  reconstruction-quality claim.
+
+hard stop:
+  no pseudo-view/RI3D scaling without PASS_REAL_GT_BENCHMARK.
 ```
 
-核心观察：
+G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、弱筛选指标、
+伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20/G21：
 
 ```text
-伪多视角是否改善后脑/侧脸？
-伪多视角是否改变身份、发型、眼镜、脸型？
-视角选择和筛选是否比盲目增加视图更有效？
+G20: benchmark-first pivot and route audit, complete.
+G21: compact real-GT benchmark acquisition, blocked until H3DS token or
+     FaceScape/Multiface raw case is available and visually audited.
 ```
 
 ## 目录怎么用
@@ -108,7 +106,8 @@ bash scripts/server/05_run_zero123plus_sample.sh
 
 ## 技术路线是否合理
 
-合理。当前路线跟 2025-2026 年单图 3D avatar / Gaussian head 的趋势一致：
+方向本身合理，但旧实验路线不能支撑正向质量结论。2025-2026 年单图 3D
+avatar / Gaussian head 的趋势仍然支持这个问题设置：
 
 1. NeRF full-head 正在转向 Gaussian head / Gaussian avatar。
 2. LAM / PanoLAM 说明 one-shot Gaussian head/full-head 是近期主线。
@@ -116,9 +115,10 @@ bash scripts/server/05_run_zero123plus_sample.sh
 4. Zero123++ 提供单图一致多视角先验。
 5. RI3D 说明 sparse-view 3DGS 中 diffusion repair / inpainting 是有效方向。
 
-我们不从零造大系统，而是基于现有开源项目做一个清晰、可复现、有诊断价值的问题：
+当前不能再把问题写成“筛出来的伪视角是否已经提升重建”。更合理的写法是：
 
-> diffusion pseudo views 对单图 Gaussian head reconstruction 的收益、风险和筛选策略。
+> pseudo-view supervision needs a real-GT benchmark gate before it can support
+> single-image Gaussian head reconstruction claims.
 
 ## 下一步
 
@@ -150,9 +150,10 @@ RI3D first2 FLAME proxy geometry-prior diagnostic
 Zero123++ 3x2 grid split correction and head-cutout diagnostic probe
 FaceScape sample metadata access gate
 CC0 human-head mesh positive-control gate
+real-GT benchmark pivot and distribution audit
 ```
 
-当前默认 pseudo-view 前端：
+历史 diagnostic pseudo-view 前端：
 
 ```text
 subject cutout
@@ -195,6 +196,9 @@ experiments/ri3d_datasets/first2_flame_proxy_pcdmask/
 G8-G14 的结果已经证明：候选筛选指标仍弱，候选视图即使更干净，也可能在
 RI3D 中产生卡片、碎片和身份/几何失败。
 
+G20 已经把该结论升级为硬规则：没有 `PASS_REAL_GT_BENCHMARK`，这些候选池
+和 RI3D 导出只能用于 failure taxonomy，不能作为新训练集或质量主实验。
+
 当前最新结论：
 
 ```text
@@ -217,9 +221,13 @@ split-view tiles, but the generated head-cutout pseudo views still have visible
 identity and geometry distortions. Web first10 is therefore diagnostic-only.
 
 Current reconstruction-quality route: use a real GT multi-view dataset case
-with cameras and mesh/point-cloud ground truth. FaceScape is the primary route:
-its sample was inspected locally for metadata only, but its readme says not to
-distribute the sample, so raw images/meshes stay out of git.
+with captured views, cameras, masks, and mesh/point-cloud ground truth. H3DS v2
+is the preferred technical route if access token/license can be obtained.
+FaceScape and Multiface remain viable; Multiface has the strongest local intake
+record so far, but raw images/mesh for a compact case still need acquisition and
+visual/VLM audit. FaceScape sample was inspected locally for metadata only, but
+its readme says not to distribute the sample, so raw images/meshes stay out of
+git.
 
 While real-capture access is pending, G16b has passed a repo-safe synthetic
 positive-control gate using the Wikimedia/Blender CC0 realistic human head mesh.
@@ -233,6 +241,7 @@ experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
 experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md
 experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md
 experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
+experiments/metrics/real_gt_benchmark_pivot_20260520.md
 experiments/metrics/paper_package_20260520.md
 experiments/metrics/milestone_closure_20260520.md
 experiments/reconstructions/ri3d_gt_positive_control_iter10/
@@ -249,7 +258,12 @@ experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
 experiments/metrics/gt_dataset_route_plan_20260519.md
 experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
+experiments/metrics/real_gt_benchmark_pivot_20260520.md
 ```
+
+The RI3D commands below are historical reproduction commands only. Do not run
+them as a new quality experiment while G21 is blocked.
 
 RI3D first2 smoke 复现命令：
 
@@ -308,7 +322,7 @@ GPU=0 ITERATION=500 DATA_ROOT=experiments/ri3d_datasets/first2_fghead_maskaware 
 当前结论：
 
 ```text
-filtered pseudo-view frontend 已经比 raw pseudo views 更可靠。
+filtered pseudo-view frontend 比 raw pseudo views 更干净，但不是可靠训练集。
 face-embedding filter 在 cutout75+budget4 上得到 20/40 identity candidates、
 14/40 geometry-only candidates、1/40 identity reject。
 RI3D first2 160px iter50 已跑通下游闭环，但还只是 smoke 级验证。
@@ -326,13 +340,14 @@ RI3D first2 foreground-canonical ablations 已完成；输入尺度和主体对�
 但 USE_MASK=1/0 都仍输出卡片/碎片，不是最终 method win。
 RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景明显减少，
 但仍有 detached foreground fragments，不是最终 method win。
+G20 已完成 benchmark-first pivot：旧 pseudo-view/RI3D 路线 invalid for
+quality claims；G21 仍等待真实 GT compact case。
 ```
 
 下一步：
 
-1. 不急着扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
-2. G17 先从 `wikimedia_blender_head_cc0` 正控 case 做 camera/provenance sanity check。
-3. 真实采集 GT 数据继续走 G16a license/access gate。
-4. G16a-local intake readiness 已完成；真实 GT reconstruction 仍要等 compact
-   raw image/mesh case 通过视觉 gate。
-5. web first10 只做 corrected 3x2 failure taxonomy，直到有新 gate 明确通过训练前提。
+1. 不扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
+2. 优先获取 H3DS token，或完成 FaceScape/Multiface compact raw case。
+3. 对真实 GT case 跑 structural + visual/VLM + distribution audit。
+4. 只有记录 `PASS_REAL_GT_BENCHMARK` 后，才恢复重建主实验。
+5. web first10 和旧 RI3D 结果只保留为 failure taxonomy / diagnostic evidence。

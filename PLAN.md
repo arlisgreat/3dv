@@ -10,27 +10,42 @@ PanoHead + Gaussian Splatting + Diffusion + Transformer + FLAME / 3DMM
 
 这个适合一年项目，不适合一个月论文。
 
-当前压缩为一个可实验的问题：
+旧压缩问题是：
 
 > Diffusion 生成的伪多视角，在单图 Gaussian 人头重建中什么时候有帮助，什么时候会伤害身份一致性？
 
+G2-G19 已经证明这条旧路线只能提供诊断和止损价值。当前问题改为：
+
+> 在没有真实 GT benchmark 的情况下，pseudo-view/RI3D 不能产生可信重建结论；
+> 下一步必须先建立 licensed real-GT benchmark gate。
+
 ## 2. 论文贡献点
 
-建议最终写成三点：
+当前建议最终写成三点：
 
-1. 系统分析 diffusion pseudo views 在单图 Gaussian head reconstruction 中的收益和风险。
-2. 提出轻量级 active view selection / identity filtering 协议。
-3. 构建一套 failure taxonomy，分析身份漂移、几何塌陷、纹理不一致、漂浮点和 diffusion 幻觉。
+1. 系统分析 diffusion pseudo views 的失败模式和数据前提错误。
+2. 提出 gate-first 的 benchmark/data audit protocol。
+3. 明确真实 GT benchmark 是任何重建质量结论的前置条件。
 
 ## 3. 实验设计
 
 ### Main Comparison
+
+历史 pseudo-view comparison 已关闭为 diagnostic-only：
 
 ```text
 single image only
 fixed pseudo views
 active selected pseudo views
 active + identity filtering
+```
+
+当前可信 comparison 必须等 G21 完成：
+
+```text
+licensed real-GT compact case
+single-image baseline on the same case
+method variants only after PASS_REAL_GT_BENCHMARK
 ```
 
 ### View Budget
@@ -95,12 +110,12 @@ data_manifest.csv
 
 ### Week 2
 
-目标：主实验。
+原目标：主实验。该目标已经取消为质量主实验，只保留诊断价值。
 
-1. 扩展到 30-50 张。
-2. 比较 single / fixed / active / active+filtering。
-3. 做第一张主表。
-4. 做第一张主图。
+1. 不扩展到 30-50 张。
+2. 不从 `experiments/downstream_datasets` 训练。
+3. 保留 first10 pseudo-view 作为 failure taxonomy。
+4. 主实验必须等待 real-GT benchmark。
 
 当前 first10 进展：
 
@@ -112,15 +127,16 @@ CLIP consistency proxy 确认 steps75 的 learned-image consistency 也更高，
 但仍会保留部分整图/背景旋转视图，后续必须叠加 mask 或 face-aware identity filter。
 trusted-region mask 将 raw75 CLIP-budget4 的 40 个候选筛到 25 个可用。
 subject cutout 输入把 cutout75 CLIP-budget4 可用 mask 提升到 37/40，
-因此后续 pseudo-view frontend 默认改成 cutout -> steps75 -> budget4 -> mask。
+因此当时的 diagnostic frontend 改成 cutout -> steps75 -> budget4 -> mask。
 face-embedding identity filter 进一步把 cutout75+budget4 的 40 个视角分成
 20 个 identity-supervision candidates、14 个 geometry-only candidates、
 1 个 identity reject 和 mask-rejected views。
 ```
 
-这一轮支持原假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。
+这一轮只支持诊断假设：视角选择和过滤比单纯增加 diffusion steps 或视角数更关键。
 也进一步支持输入格式假设：先把人物从照片/相框背景中分离，会明显减少
 Zero123++ 旋转整张照片而不是旋转头部的失败。
+它不证明这些伪视角可以作为重建训练集。
 
 ### Week 3
 
@@ -180,6 +196,10 @@ G16: GT multi-view dataset access gate. Use FaceScape/Multiface/NeRSemble/UEA,
      not web pseudo views, for reconstruction-quality validation.
 G17: compact GT case export and reconstruction rerun only after G16 passes.
 G18: first10 pseudo-view failure taxonomy using corrected 3x2 grids.
+G19: conservative paper package and closure.
+G20: benchmark-first pivot and route/distribution audit. Done.
+G21: compact licensed real-GT benchmark acquisition. Externally blocked until
+     H3DS token or FaceScape/Multiface raw case passes visual/VLM gate.
 ```
 
 Current G16 access result:
@@ -189,6 +209,16 @@ FaceScape sample metadata confirms 58 camera entries, 52 valid views, 2 public
 sample images, and a corresponding mesh. The sample readme says not to distribute
 it, so only metadata audits are committed. A reconstruction rerun remains blocked
 until licensed/publishable or otherwise redistributable GT assets are available.
+```
+
+Current G20/G21 result:
+
+```text
+H3DS v2 is the preferred technical route but needs access token/license.
+Multiface has the strongest local intake record, but raw compact image/mesh
+case is not acquired or visually audited.
+FaceScape remains viable only after licensed full-case access.
+No pseudo-view/RI3D scaling is allowed before PASS_REAL_GT_BENCHMARK.
 ```
 
 ### Week 4

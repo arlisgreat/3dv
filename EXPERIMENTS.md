@@ -36,6 +36,9 @@ RI3D first2 foreground point-cloud initialization filter
 RI3D first2 FLAME proxy geometry-prior diagnostic
 Zero123++ 3x2 split correction and head-cutout diagnostic probe
 FaceScape sample metadata access gate
+Multiface real-GT intake readiness gate
+CC0 mesh positive-control gate and RI3D visual fail
+real-GT benchmark-first pivot
 ```
 
 还没有完成：
@@ -43,9 +46,10 @@ FaceScape sample metadata access gate
 ```text
 licensed or redistributable GT multi-view case export
 reconstruction rerun on real cameras + mesh/point-cloud GT
+PASS_REAL_GT_BENCHMARK
 ```
 
-当前默认 pseudo-view 前端：
+历史 diagnostic pseudo-view 前端：
 
 ```text
 subject cutout
@@ -62,8 +66,11 @@ Current gate status:
 Web first10 pseudo views are diagnostic-only.
 Correcting Zero123++ grid splitting from 2x3 to 3x2 fixes an artificial crop
 bug, but visual inspection still shows multi-view distortions. No more
-reconstruction training should consume web pseudo-view candidates until a gate
-explicitly passes PASS_RECONSTRUCTION_TRAINING.
+reconstruction training should consume web pseudo-view candidates or RI3D
+exports until a real-GT benchmark explicitly passes PASS_REAL_GT_BENCHMARK.
+
+The old pseudo-view/RI3D route is invalid for reconstruction-quality claims.
+Its value is diagnostic: failure taxonomy, gate design, and stop-loss evidence.
 ```
 
 ## 2. Stage 00: Inputs
@@ -359,10 +366,11 @@ raw75 CLIP-budget4 accepted masks: 25 / 40
 cutout75 CLIP-budget4 accepted masks: 37 / 40
 ```
 
-这是当前最强的阶段性证据：
+这曾经是最强的 2D candidate-hygiene 证据：
 
 ```text
-cutout + budget4 + trusted mask 明显比 raw pseudo views 更适合下游 3D 监督
+cutout + budget4 + trusted mask 比 raw pseudo views 更干净，但它没有证明
+这些伪视角适合下游 3D reconstruction 训练监督。
 ```
 
 ## 9. Stage 07: Face Identity Filter
@@ -756,6 +764,9 @@ G19 已收口为 paper package：failure-aware gating 是主结论，web first10
 readiness：Multiface route 的 metadata/KRT/frame schema 已经站住，但原始
 image/mesh compact case 还没有完整下载和视觉审计，因此真实 GT 质量结论仍等待
 许可数据和 artifact review。
+G20 进一步把路线正式切换为 benchmark-first：旧 pseudo-view/RI3D 路线只保留
+诊断价值，不再作为质量主实验；G21 的 compact real-GT benchmark acquisition
+在没有 H3DS token 或 FaceScape/Multiface raw case 前是 externally blocked。
 ```
 
 对比指标：
@@ -771,7 +782,7 @@ rendered output integrity
 
 ## 12. 当前默认路线
 
-当前推荐 pseudo-view 前端：
+历史 diagnostic pseudo-view 前端：
 
 ```text
 subject cutout
@@ -782,20 +793,21 @@ subject cutout
 -> face identity / geometry-only / reject split
 ```
 
-当前推荐下游对比：
+当前允许继续推进的下游对比：
 
 ```text
-A: single-image baseline
-B: mesh-derived CC0 positive-control case with deterministic 8-view cameras
-C: real GT sparse multi-view case with 6-12 calibrated views, after license gate
+A: licensed real GT sparse multi-view case with 6-12 calibrated views, masks,
+   and GT mesh/point cloud, after PASS_REAL_GT_BENCHMARK
+B: single-image baseline on the same real-GT case
+C: method variants only after the benchmark gate passes
 D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 ```
 
 当前最重要的未闭环问题：
 
 ```text
-真实多视角/mesh/point-cloud GT case 仍受许可/访问约束。下一步若继续实验，
-应先走新分支：要么完成 Multiface/H3DS/FaceScape 等 licensed real GT compact
-case 的 raw image/mesh acquisition 和 visual gate，要么引入更强
-geometry/initialization 方法；不要从现有 web first10 candidate pool 继续训练。
+真实多视角/mesh/point-cloud GT case 仍受许可/访问约束。下一步必须先完成
+H3DS/FaceScape/Multiface 等 licensed real GT compact case 的 raw image/mesh
+acquisition、visual/VLM gate 和 model/data distribution audit。不要从现有
+web first10 candidate pool 继续训练，也不要把 RI3D 旧结果解释成质量结论。
 ```

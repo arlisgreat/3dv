@@ -1,0 +1,74 @@
+{
+  "date": "2026-05-20",
+  "gate": "G20",
+  "verdict": [
+    "OLD_PSEUDOVIEW_RI3D_ROUTE_INVALID_FOR_QUALITY_CLAIMS",
+    "REAL_GT_BENCHMARK_REQUIRED_BEFORE_ANY_NEW_RECONSTRUCTION_CLAIM",
+    "NO_PSEUDOVIEW_OR_RI3D_SCALING_WITHOUT_PASS_REAL_GT_BENCHMARK",
+    "G20_BENCHMARK_SPEC_COMPLETE",
+    "G21_REAL_GT_COMPACT_CASE_BLOCKED_EXTERNALLY"
+  ],
+  "core_purpose_after_pivot": "Establish a licensed, auditable real-GT benchmark for single-image/few-view head reconstruction before making any reconstruction-quality claim.",
+  "benchmark_acceptance_criteria": [
+    "same identity and static expression/frame",
+    "6-12 real captured RGB views",
+    "camera intrinsics and extrinsics for every selected view",
+    "foreground masks or reliable segmentation route",
+    "GT full-head mesh or point cloud",
+    "license/privacy status allows compact derived audit artifacts in repo",
+    "visual/VLM audit passes",
+    "model/data distribution audit recorded before interpreting results"
+  ],
+  "required_verdict": "PASS_REAL_GT_BENCHMARK",
+  "routes": [
+    {
+      "name": "H3DS v2",
+      "fit": "best technical fit",
+      "local_status": "package and configs audited locally; no H3DS_ACCESS_TOKEN available",
+      "decision": "preferred next acquisition route, blocked by access token/license"
+    },
+    {
+      "name": "FaceScape multi-view data",
+      "fit": "strong face multi-view route",
+      "local_status": "sample metadata confirms structure; only two mview images available locally; redistribution blocked",
+      "decision": "viable after licensed full case access"
+    },
+    {
+      "name": "Multiface",
+      "fit": "strong real-capture route",
+      "local_status": "metadata/KRT/frame-list intake passed for identity 6795937 and expression E001_Neutral_Eyes_Open; raw compact case not fully acquired",
+      "decision": "best local intake route, still blocked for reconstruction"
+    },
+    {
+      "name": "NeRSemble",
+      "fit": "potential dynamic head route",
+      "local_status": "not locally acquired in a compact, licensed, auditable form",
+      "decision": "secondary route"
+    },
+    {
+      "name": "Wikimedia/Blender CC0 mesh positive control",
+      "fit": "repo-safe synthetic plumbing check",
+      "local_status": "G16b/G17 provenance/export passed; RI3D visual quality failed",
+      "decision": "positive-control only, not real-capture benchmark"
+    }
+  ],
+  "hard_stop": [
+    "do not train from experiments/downstream_datasets",
+    "do not scale web first10/first30 pseudo-view reconstruction",
+    "do not use RI3D loss/render differences as reconstruction-quality evidence",
+    "do not report CC0 mesh positive-control quality as real-capture performance",
+    "do use old pseudo-view/RI3D outputs only for diagnostic figures and failure taxonomy"
+  ],
+  "milestones": [
+    {
+      "gate": "G20",
+      "state": "complete",
+      "meaning": "Benchmark-first pivot, route audit, and distribution gate are recorded."
+    },
+    {
+      "gate": "G21",
+      "state": "blocked_externally",
+      "meaning": "Compact licensed real-GT case still needs H3DS token or FaceScape/Multiface raw access, then visual/VLM audit."
+    }
+  ]
+}

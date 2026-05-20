@@ -5,12 +5,15 @@ Date: 2026-05-20
 ## Final Scope
 
 ```text
-Failure-aware pseudo-view supervision for single-image Gaussian head reconstruction.
+Failure-aware pseudo-view supervision as diagnostic evidence only, followed by
+a mandatory real-GT benchmark gate for any reconstruction-quality claim.
 ```
 
 This paper sprint does not claim solved single-image full-head reconstruction.
 It packages a diagnostic protocol and the evidence that generic diffusion
 pseudo views must be gated before they can supervise 3D reconstruction.
+After G20, the old pseudo-view/RI3D route is explicitly invalid for positive
+quality claims until `PASS_REAL_GT_BENCHMARK` exists.
 
 ## Main Claim
 
@@ -33,6 +36,7 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | Head-cutout corrected probe | `experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md` | Corrected pseudo views remain diagnostic-only. |
 | GT route gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | Real-capture quality claims need licensed cameras and GT geometry. |
 | GT intake readiness | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is ready as a local intake route, but real reconstruction remains blocked until raw image/mesh case and visual audit pass. |
+| Real-GT benchmark pivot | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D results are diagnostic-only; H3DS/FaceScape/Multiface compact real-GT benchmark is the mandatory next gate. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -86,6 +90,16 @@ iter500 MP4s: 120 frames at 256x256
 iter500 verdict: execution/export pass, reconstruction-quality fail
 ```
 
+G20 benchmark pivot:
+
+```text
+required next verdict: PASS_REAL_GT_BENCHMARK
+preferred route: H3DS v2, blocked by access token/license
+local intake route: Multiface 6795937 / E001_Neutral_Eyes_Open metadata ready,
+  raw compact case not yet acquired or visually audited
+hard stop: no new pseudo-view/RI3D scaling while G21 is blocked
+```
+
 ## Limitations
 
 ```text
@@ -98,6 +112,8 @@ iter500 verdict: execution/export pass, reconstruction-quality fail
    real-capture identity preservation or real multi-camera performance.
 5. Real reconstruction-quality claims require a licensed or redistributable
    real GT case with calibrated views and mesh/point-cloud geometry.
+6. After G20, the paper cannot be framed as a positive reconstruction method
+   result unless G21 later produces a passing real-GT benchmark.
 ```
 
 ## Final Milestone Status
@@ -111,4 +127,7 @@ G17: complete for current sprint; RI3D positive-control execution passes but
      visual reconstruction quality fails.
 G18: complete as corrected first10 diagnostic failure taxonomy.
 G19: complete as conservative paper package and claim boundary.
+G20: complete as benchmark-first pivot and route/distribution audit.
+G21: externally blocked until compact licensed real-GT case passes visual/VLM
+     and distribution gates.
 ```
