@@ -18,6 +18,7 @@ Current iteration notes:
 ```text
 zero123plus_first10_steps75_view_budget_observations_20260519.md
 application_alignment_and_iteration_ideas_20260519.md
+iteration_ideas_real_gt_guarded_losses_20260520.md
 clip_consistency_filter_observations_20260519.md
 trusted_region_mask_observations_20260519.md
 cutout_input_ablation_observations_20260519.md
@@ -30,4 +31,10 @@ g24_real_gt_adapter_contract_gate_20260520.md
 g25_ri3d_multiface_init_smoke_20260520.md
 g26_heldout_eval_smoke_20260520.md
 g27_ri3d_train10_numerical_gate_20260520.md
+g28_ri3d_loss_path_diagnosis_20260520.md
+g29_zero_weight_loss_guard_train10_20260520.md
+g30_post_guard_heldout_eval_smoke_20260520.md
+g31_guarded_loss_component_audit_20260520.md
+g32_monodisp_scale_guard_train10_20260520.md
+g33_combined_guarded_train10_eval_20260520.md
 ```

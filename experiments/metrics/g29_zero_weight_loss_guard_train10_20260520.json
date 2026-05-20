@@ -1,0 +1,54 @@
+{
+  "date": "2026-05-20",
+  "gate": "G29",
+  "verdict": "PASS_ZERO_WEIGHT_LOSS_GUARD_L1_TRAIN10",
+  "scope": "Resolve the G27 L1-only train10 NaN blocker on the local Multiface real-GT adapter.",
+  "does_not_claim": [
+    "default RI3D loss health",
+    "depth or silhouette supervision health",
+    "longer training health",
+    "reconstruction quality"
+  ],
+  "premise_gate": "G21 PASS_REAL_GT_BENCHMARK local Multiface compact case; G23/G24 adapter contracts; G25 init-only PLY; G28 loss-path diagnosis.",
+  "g28_diagnosis": {
+    "artifact": "experiments/metrics/g28_ri3d_loss_path_diagnosis_20260520.md",
+    "verdict": "BLOCKED_RI3D_LOSS_PATH_NUMERICAL_HEALTH",
+    "source": "Train-loop render and L1 stay finite, but mono-depth loss becomes NaN; zero-weight depth multiplication can still poison the total loss as 0*NaN."
+  },
+  "patch": {
+    "artifact": "patches/ri3d/g29_zero_weight_loss_guard.patch",
+    "target": "external/ri3d/scripts/train_gs.py",
+    "depends_on_existing_local_patches": [
+      "patches/ri3d/role_weighted_loss.patch",
+      "patches/ri3d/mask_aware_loss.patch"
+    ],
+    "summary": "Skip SSIM, silhouette, and mono-depth branches when their effective weights are zero, preventing zero-weight nonfinite terms from contaminating total loss."
+  },
+  "run": {
+    "run_root": "/data1/workspace/airulan/3dv_work/runs/g29_ri3d_multiface_train10_l1_guard_20260520",
+    "log": "/data1/workspace/airulan/3dv_work/runs/g29_ri3d_multiface_train10_l1_guard_20260520/train10_l1_guard.log",
+    "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+    "init_ply": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520/point_cloud/iteration_1/point_cloud.ply",
+    "selected_gpu": 0,
+    "iterations": 10,
+    "args": {
+      "lambda_dssim": 0.0,
+      "lambda_silhouette": 0.0,
+      "mono_depth_weight": 0.0,
+      "sparse_view_num": 6,
+      "resolution": 1,
+      "white_background": true
+    },
+    "exit_code": 0,
+    "final_progress_loss": 0.6124692,
+    "saved_iteration": 10,
+    "saved_point_count": 67410
+  },
+  "train_log_metrics": {
+    "test_l1": 0.5926034251848856,
+    "test_psnr": 4.268513361612955,
+    "train_l1": 0.6414766907691956,
+    "train_psnr": 3.526849460601807
+  },
+  "artifact_policy": "The iteration-10 PLY, cameras.json, cfg_args, and logs remain local under 3dv_work. No RGB renders, PNG/JPEG/MP4, mesh, raw person-identifying media, or full logs are committed."
+}

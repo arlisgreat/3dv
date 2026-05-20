@@ -14,8 +14,9 @@ It packages a diagnostic protocol and the evidence that generic diffusion
 pseudo views must be gated before they can supervise 3D reconstruction.
 After G20/G21, the old pseudo-view/RI3D route remains invalid for positive
 quality claims. G21 supplies the benchmark premise locally; quality claims still
-need a real-GT render/evaluation and training result beyond the G23-G25
-adapter/init gates.
+need method redesign or a stronger public real-GT benchmark plus real-GT
+training and held-out evaluation beyond the G23-G33 adapter/init/eval/numerical
+gates.
 
 ## Main Claim
 
@@ -46,6 +47,12 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | G25 init smoke | `experiments/metrics/g25_ri3d_multiface_init_smoke_20260520.md` | RI3D loads the adapter and saves an initialization point cloud; no full training or quality claim. |
 | G26 eval smoke | `experiments/metrics/g26_heldout_eval_smoke_20260520.md` | Held-out render/eval executes without saving identifiable media; metrics are init-only smoke values. |
 | G27 numerical gate | `experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md` | Tiny training is blocked by NaN loss even under plain L1-only settings. |
+| G28 loss-path diagnosis | `experiments/metrics/g28_ri3d_loss_path_diagnosis_20260520.md` | The NaN path is localized to train-loop zero-weight branch contamination after optimizer steps. |
+| G29 zero-weight guard | `experiments/metrics/g29_zero_weight_loss_guard_train10_20260520.md` | L1-only train10 finishes with finite loss after skipping zero-weight SSIM/silhouette/depth branches. |
+| G30 post-guard eval | `experiments/metrics/g30_post_guard_heldout_eval_smoke_20260520.md` | Held-out eval runs from the G29 checkpoint, but metrics match init-only G26 and remain non-quality. |
+| G31 component audit | `experiments/metrics/g31_guarded_loss_component_audit_20260520.md` | SSIM/silhouette components are finite; mono-depth-only is NaN before the scale guard. |
+| G32 monodisp guard | `experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md` | Clamping monodisp scales fixes depth-only train10 NaNs. |
+| G33 combined guarded eval | `experiments/metrics/g33_combined_guarded_train10_eval_20260520.md` | Combined guarded train10 is finite, but held-out metrics still match init-only values. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -117,6 +124,15 @@ G24 result: PASS_REAL_GT_ADAPTER_CONTRACT
 G25 result: PASS_RI3D_INIT_ONLY_SMOKE, point_count=67410
 G26 result: PASS_HELDOUT_RENDER_EVAL_SMOKE, PSNR=4.2685, LPIPS=0.5011
 G27 result: BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN
+G28 result: BLOCKED_RI3D_LOSS_PATH_NUMERICAL_HEALTH, zero-weight depth branch
+  can become NaN after optimizer steps
+G29 result: PASS_ZERO_WEIGHT_LOSS_GUARD_L1_TRAIN10, final_loss=0.6124692
+G30 result: PASS_POST_GUARD_HELDOUT_EVAL_SMOKE_NO_QUALITY_CLAIM,
+  PSNR=4.2685, LPIPS=0.5011
+G31 result: BLOCKED_MONODEPTH_COMPONENT_NUMERICAL_HEALTH
+G32 result: PASS_MONODISP_SCALE_GUARD_DEPTH_TRAIN10, final_loss=0.6245082
+G33 result: PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN,
+  final_loss=0.5910920, PSNR=4.2685, LPIPS=0.5011
 ```
 
 ## Limitations
@@ -131,10 +147,11 @@ G27 result: BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN
    real-capture identity preservation or real multi-camera performance.
 5. Real reconstruction-quality claims require a licensed or redistributable
    real GT case with calibrated views and mesh/point-cloud geometry.
-6. G23-G27 are adapter/init/eval/numerical gates, not positive reconstruction method results.
-   The paper still cannot be framed as a positive reconstruction method result
-   until the NaN training blocker is fixed and held-out evaluation passes after
-   actual training on real GT.
+6. G23-G33 are adapter/init/eval/numerical gates, not positive reconstruction method results.
+   G29 and G32 fix numerical NaN classes, and G33 shows combined train10 can be
+   finite, but held-out metrics remain init-level. The paper still cannot be
+   framed as a positive reconstruction method result until a redesigned method
+   or stronger benchmark produces held-out/geometry improvement on real GT.
 ```
 
 ## Final Milestone Status
@@ -158,4 +175,11 @@ G24: complete as CPU RI3D adapter contract gate.
 G25: complete as RI3D init-only smoke; no full training or quality claim.
 G26: complete as held-out eval smoke; metrics are not quality.
 G27: blocked by NaN training loss even under plain L1-only settings.
+G28: complete as loss-path diagnosis; zero-weight depth branch contamination
+     explains the train-loop NaN class.
+G29: complete as narrow L1-only train10 numerical pass after zero-weight guards.
+G30: complete as post-guard held-out eval smoke; no quality improvement.
+G31: complete as guarded component audit; mono-depth blocks before scale guard.
+G32: complete as monodisp scale guard; depth-only train10 finite.
+G33: complete as combined guarded train10/eval; finite but no quality gain.
 ```

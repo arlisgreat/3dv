@@ -1,0 +1,33 @@
+{
+  "date": "2026-05-20",
+  "gate": "G30",
+  "verdict": "PASS_POST_GUARD_HELDOUT_EVAL_SMOKE_NO_QUALITY_CLAIM",
+  "scope": "Confirm held-out evaluation still runs after the G29 zero-weight guard and L1-only train10 checkpoint.",
+  "does_not_claim": [
+    "method-quality improvement",
+    "valid default RI3D loss training",
+    "publishable reconstruction output"
+  ],
+  "run": {
+    "run_root": "/data1/workspace/airulan/3dv_work/runs/g29_ri3d_multiface_train10_l1_guard_20260520",
+    "eval_output_root": "/data1/workspace/airulan/3dv_work/runs/g29_ri3d_multiface_train10_l1_guard_20260520_g30_eval",
+    "log": "/data1/workspace/airulan/3dv_work/runs/g29_ri3d_multiface_train10_l1_guard_20260520/g30_heldout_eval_no_media.log",
+    "selected_gpu": 0,
+    "iteration": 10,
+    "skip_train": true,
+    "not_saveimages": true,
+    "not_generate_video": true,
+    "postfix": "_g30_eval",
+    "exit_code": 0
+  },
+  "metrics": {
+    "SSIM": 0.5905788938204447,
+    "PSNR": 4.268513361612956,
+    "LPIPS": 0.5011390447616577
+  },
+  "comparison": {
+    "matches_g26_init_eval_metrics": true,
+    "interpretation": "The L1-only train10 guard clears numerical execution but does not improve held-out quality over the init-only smoke."
+  },
+  "artifact_policy": "The eval directory contains only results.json. No PNG/JPG/JPEG/MP4/PLY files were generated or committed."
+}

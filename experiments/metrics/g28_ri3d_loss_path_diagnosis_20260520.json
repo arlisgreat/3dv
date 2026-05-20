@@ -1,0 +1,2175 @@
+{
+  "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+  "artifact_policy": "No RGB renders, PLYs, or raw media are written by this diagnosis; only compact metrics are committed.",
+  "checks": {
+    "all_train_loop_losses_finite": false,
+    "all_train_loop_render_finite": true,
+    "all_train_view_losses_finite": true,
+    "any_train_loop_loss_nonfinite_after_step": true,
+    "first_view_alpha_finite": true,
+    "first_view_current_formula_with_zero_depth_weight_finite": true,
+    "first_view_default_loss_finite": true,
+    "first_view_depth_finite": true,
+    "first_view_depth_loss_finite": true,
+    "first_view_gt_finite": true,
+    "first_view_l1_finite": true,
+    "first_view_lambda_zero_current_loss_finite": true,
+    "first_view_lambda_zero_guarded_loss_finite": true,
+    "first_view_mono_depth_finite": true,
+    "first_view_mono_depth_present": true,
+    "first_view_render_finite": true,
+    "first_view_ssim_clamped_finite": true,
+    "first_view_ssim_finite": true
+  },
+  "date": "2026-05-20",
+  "failed_checks": [
+    "all_train_loop_losses_finite"
+  ],
+  "first_view_probe": {
+    "checks": {
+      "alpha_finite": true,
+      "current_formula_with_zero_depth_weight_finite": true,
+      "default_loss_finite": true,
+      "depth_finite": true,
+      "depth_loss_finite": true,
+      "gt_finite": true,
+      "l1_finite": true,
+      "lambda_zero_current_loss_finite": true,
+      "lambda_zero_guarded_loss_finite": true,
+      "mono_depth_finite": true,
+      "mono_depth_present": true,
+      "render_finite": true,
+      "ssim_clamped_finite": true,
+      "ssim_finite": true
+    },
+    "loss_terms": {
+      "depth_loss_monodisp": {
+        "finite": true,
+        "value": 2.0
+      },
+      "l1": {
+        "finite": true,
+        "value": 0.5528423190116882
+      },
+      "loss_current_formula_with_zero_depth_weight": {
+        "finite": true,
+        "value": 0.5528423190116882
+      },
+      "loss_default_lambda_0_2": {
+        "finite": true,
+        "value": 0.5227157473564148
+      },
+      "loss_lambda_zero_current_formula": {
+        "finite": true,
+        "value": 0.5528423190116882
+      },
+      "loss_lambda_zero_guarded_l1_only": {
+        "finite": true,
+        "value": 0.5528423190116882
+      },
+      "lssim": {
+        "finite": true,
+        "value": 0.4022095203399658
+      },
+      "lssim_clamped_render": {
+        "finite": true,
+        "value": 0.4022095203399658
+      }
+    },
+    "tensor_stats": {
+      "alpha": {
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "max": 0.30100947618484497,
+        "mean": 0.053288958966732025,
+        "min": 0.0,
+        "nonfinite_count": 0,
+        "shape": [
+          1,
+          256,
+          256
+        ]
+      },
+      "depth": {
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "max": 0.33337870240211487,
+        "mean": 0.05379985272884369,
+        "min": 0.0,
+        "nonfinite_count": 0,
+        "shape": [
+          1,
+          256,
+          256
+        ]
+      },
+      "gt": {
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "max": 1.0,
+        "mean": 0.40489625930786133,
+        "min": 0.0,
+        "nonfinite_count": 0,
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      },
+      "mono_depth": {
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "max": 1.14766526222229,
+        "mean": 1.1105499267578125,
+        "min": 0.9616005420684814,
+        "nonfinite_count": 0,
+        "shape": [
+          1,
+          256,
+          256
+        ]
+      },
+      "render": {
+        "device": "cuda:0",
+        "dtype": "torch.float32",
+        "finite": true,
+        "max": 1.0,
+        "mean": 0.9577354788780212,
+        "min": 0.7226554751396179,
+        "nonfinite_count": 0,
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      }
+    },
+    "viewpoint": "000_400017"
+  },
+  "first_view_source": "First-view source is finite.",
+  "first_viewpoint": "000_400017",
+  "gate": "G28",
+  "likely_source": "Training loop becomes non-finite at iteration 8 on view 004_400067.",
+  "per_view_probe": [
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5227157473564148
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4022095203399658
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4022095203399658
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.30100947618484497,
+          "mean": 0.053288958966732025,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.33337870240211487,
+          "mean": 0.05379985272884369,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.40489625930786133,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.14766526222229,
+          "mean": 1.1105499267578125,
+          "min": 0.9616005420684814,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9577354788780212,
+          "min": 0.7226554751396179,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "000_400017"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 1.9999995231628418
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.7059242725372314
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.6732064485549927
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.6732064485549927
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.26147645711898804,
+          "mean": 0.05479276180267334,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.2745343744754791,
+          "mean": 0.05485882982611656,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.5137255191802979,
+          "mean": 0.24120603501796722,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0931367874145508,
+          "mean": 1.0678038597106934,
+          "min": 0.9419477581977844,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9553097486495972,
+          "min": 0.7557833790779114,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "001_400023"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5328143835067749
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4182281494140625
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4182281494140625
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3118446469306946,
+          "mean": 0.05266436189413071,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.32272231578826904,
+          "mean": 0.053004924207925797,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3950638771057129,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.1292363405227661,
+          "mean": 1.0984070301055908,
+          "min": 0.9719621539115906,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9565043449401855,
+          "min": 0.7032318711280823,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "002_400050"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5434119701385498
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4342067241668701
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4342067241668701
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3089548647403717,
+          "mean": 0.051876187324523926,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.35566169023513794,
+          "mean": 0.05290215089917183,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38322365283966064,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.2239885330200195,
+          "mean": 1.184321641921997,
+          "min": 0.9632943272590637,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.953905463218689,
+          "min": 0.697148323059082,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "003_400055"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.536872148513794
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4243232011795044
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4243232011795044
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.30833229422569275,
+          "mean": 0.05246360972523689,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.32996582984924316,
+          "mean": 0.05242333561182022,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3901178240776062,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.14080810546875,
+          "mean": 1.0833778381347656,
+          "min": 0.95782870054245,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9551271796226501,
+          "min": 0.7048425674438477,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "004_400067"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.54273921251297
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4277228116989136
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4277228116989136
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3086259961128235,
+          "mean": 0.05133461579680443,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3560062050819397,
+          "mean": 0.052089888602495193,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38294410705566406,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.215824842453003,
+          "mean": 1.1784422397613525,
+          "min": 0.9668155312538147,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9544197916984558,
+          "min": 0.6967865824699402,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "005_400070"
+    }
+  ],
+  "ply_path": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520/point_cloud/iteration_1/point_cloud.ply",
+  "run_root": "/data1/workspace/airulan/3dv_work/runs/g28_ri3d_loss_path_probe_20260520",
+  "seed": 0,
+  "train_loop_probe": [
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 1,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5434119701385498
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.570713222026825
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4342067241668701
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4342067241668701
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3089548647403717,
+          "mean": 0.051876187324523926,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.35566169023513794,
+          "mean": 0.05290215089917183,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38322365283966064,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.2239885330200195,
+          "mean": 1.184321641921997,
+          "min": 0.9632943272590637,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.953905463218689,
+          "min": 0.697148323059082,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "003_400055"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 2,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.536872148513794
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.565009355545044
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4243232011795044
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4243232011795044
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.30833229422569275,
+          "mean": 0.05246360972523689,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.32996582984924316,
+          "mean": 0.05242333561182022,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3901178240776062,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.14080810546875,
+          "mean": 1.0833778381347656,
+          "min": 0.95782870054245,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9551271796226501,
+          "min": 0.7048425674438477,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "004_400067"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 3,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5227157473564148
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5528423190116882
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4022095203399658
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4022095203399658
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.30100947618484497,
+          "mean": 0.053288958966732025,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.33337870240211487,
+          "mean": 0.05379985272884369,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.40489625930786133,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.14766526222229,
+          "mean": 1.1105499267578125,
+          "min": 0.9616005420684814,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9577354788780212,
+          "min": 0.7226554751396179,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "000_400017"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 4,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5328143835067749
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5614609122276306
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4182281494140625
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4182281494140625
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3118446469306946,
+          "mean": 0.05266436189413071,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.32272231578826904,
+          "mean": 0.053004924207925797,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3950638771057129,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.1292363405227661,
+          "mean": 1.0984070301055908,
+          "min": 0.9719621539115906,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9565043449401855,
+          "min": 0.7032318711280823,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "002_400050"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 5,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 2.0
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.54273921251297
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.5714933276176453
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4277228116989136
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4277228116989136
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3086259961128235,
+          "mean": 0.05133461579680443,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.3560062050819397,
+          "mean": 0.052089888602495193,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38294410705566406,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.215824842453003,
+          "mean": 1.1784422397613525,
+          "min": 0.9668155312538147,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9544197916984558,
+          "min": 0.6967865824699402,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "005_400070"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 6,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 1.9999995231628418
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.7059242725372314
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.7141036987304688
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.6732064485549927
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.6732064485549927
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.26147645711898804,
+          "mean": 0.05479276180267334,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.2745343744754791,
+          "mean": 0.05485882982611656,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.5137255191802979,
+          "mean": 0.24120603501796722,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0931367874145508,
+          "mean": 1.0678038597106934,
+          "min": 0.9419477581977844,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9553097486495972,
+          "min": 0.7557833790779114,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "001_400023"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": true,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": true,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 7,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": true,
+          "value": 1.9999998807907104
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.6046016216278076
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": true,
+          "value": 0.6046016216278076
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5699123740196228
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.6046016216278076
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.6046016216278076
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.43115532398223877
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.43115532398223877
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.22244545817375183,
+          "mean": 0.00037270819302648306,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.28859055042266846,
+          "mean": 0.000489776604808867,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3950638771057129,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.1292363405227661,
+          "mean": 1.0984070301055908,
+          "min": 0.9719621539115906,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.9996654987335205,
+          "min": 0.7870599031448364,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "002_400050"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": false,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": false,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 8,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": false,
+          "value": NaN
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.6098822355270386
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": false,
+          "value": NaN
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.574654757976532
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.6098822355270386
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.6098822355270386
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.43374478816986084
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.43374478816986084
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.3901178240776062,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.14080810546875,
+          "mean": 1.0833778381347656,
+          "min": 0.95782870054245,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "004_400067"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": false,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": false,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 9,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": false,
+          "value": NaN
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.6167763471603394
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": false,
+          "value": NaN
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5810297131538391
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.6167763471603394
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.6167763471603394
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.43804311752319336
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.43804311752319336
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38322365283966064,
+          "min": 0.007843137718737125,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.2239885330200195,
+          "mean": 1.184321641921997,
+          "min": 0.9632943272590637,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "003_400055"
+    },
+    {
+      "checks": {
+        "alpha_finite": true,
+        "current_formula_with_zero_depth_weight_finite": false,
+        "default_loss_finite": true,
+        "depth_finite": true,
+        "depth_loss_finite": false,
+        "gt_finite": true,
+        "l1_finite": true,
+        "lambda_zero_current_loss_finite": true,
+        "lambda_zero_guarded_loss_finite": true,
+        "mono_depth_finite": true,
+        "mono_depth_present": true,
+        "render_finite": true,
+        "ssim_clamped_finite": true,
+        "ssim_finite": true
+      },
+      "iteration": 10,
+      "loss_terms": {
+        "depth_loss_monodisp": {
+          "finite": false,
+          "value": NaN
+        },
+        "l1": {
+          "finite": true,
+          "value": 0.6170558929443359
+        },
+        "loss_current_formula_with_zero_depth_weight": {
+          "finite": false,
+          "value": NaN
+        },
+        "loss_default_lambda_0_2": {
+          "finite": true,
+          "value": 0.5813019871711731
+        },
+        "loss_lambda_zero_current_formula": {
+          "finite": true,
+          "value": 0.6170558929443359
+        },
+        "loss_lambda_zero_guarded_l1_only": {
+          "finite": true,
+          "value": 0.6170558929443359
+        },
+        "lssim": {
+          "finite": true,
+          "value": 0.4382862448692322
+        },
+        "lssim_clamped_render": {
+          "finite": true,
+          "value": 0.4382862448692322
+        }
+      },
+      "tensor_stats": {
+        "alpha": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 0.0,
+          "mean": 0.0,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "gt": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 0.38294410705566406,
+          "min": 0.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        },
+        "mono_depth": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.215824842453003,
+          "mean": 1.1784422397613525,
+          "min": 0.9668155312538147,
+          "nonfinite_count": 0,
+          "shape": [
+            1,
+            256,
+            256
+          ]
+        },
+        "render": {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "finite": true,
+          "max": 1.0,
+          "mean": 1.0,
+          "min": 1.0,
+          "nonfinite_count": 0,
+          "shape": [
+            3,
+            256,
+            256
+          ]
+        }
+      },
+      "viewpoint": "005_400070"
+    }
+  ],
+  "verdict": "BLOCKED_RI3D_LOSS_PATH_NUMERICAL_HEALTH"
+}

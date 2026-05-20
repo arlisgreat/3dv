@@ -26,7 +26,7 @@ hard stop:
 ```
 
 G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、弱筛选指标、
-伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G28：
+伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G31：
 
 ```text
 G20: benchmark-first pivot and route audit, complete.
@@ -41,7 +41,16 @@ G24: CPU RI3D adapter file-contract gate, complete.
 G25: smallest RI3D init-only smoke on the G24 adapter, complete.
 G26: held-out render/evaluation smoke from the G25 point cloud, complete.
 G27: ten-step RI3D training numerical gate, blocked by NaN loss.
-G28: loss-path numerical diagnostic, pending before any longer training.
+G28: loss-path numerical diagnostic, complete; zero-weight branch contamination
+     identified after optimizer steps.
+G29: zero-weight loss guard L1-only train10, complete; finite loss but no
+     default-loss or quality claim.
+G30: post-guard held-out eval smoke, complete; metrics match G26 init-only.
+G31: guarded SSIM/silhouette/depth component audit, complete; mono-depth NaN
+     blocked default depth training.
+G32: monodisp scale guard, complete; depth-only train10 finite.
+G33: combined guarded train10 + held-out eval, complete; finite but no quality
+     gain over init-only metrics.
 ```
 
 ## 目录怎么用
@@ -225,7 +234,12 @@ G25 passed a minimal init-only smoke on an explicitly selected idle GPU.
 G26 passed held-out render/eval locally and publishes compact metrics only.
 G27 blocks small-step training because RI3D loss becomes NaN even under plain
   L1-only settings.
-G28 must diagnose the loss path before any longer training.
+G28 identified zero-weight branch contamination after optimizer steps.
+G29 guards zero-weight SSIM/silhouette/depth branches and clears only the
+  L1-only train10 blocker.
+G30 held-out eval runs post-guard but matches G26 init-level metrics.
+G31 found mono-depth NaNs, G32 fixed the monodisp scale division, and G33 proved
+  combined guarded train10 is finite but still init-level on held-out metrics.
 None of these gates is a reconstruction-quality experiment.
 ```
 
@@ -380,15 +394,19 @@ G20 已完成 benchmark-first pivot：旧 pseudo-view/RI3D 路线 invalid for
 quality claims。G21 已完成本地 Multiface debug compact real-GT gate。G22 正确
 在训练前阻塞旧 adapter；G23/G24 已把 local-only adapter 和 CPU file contract
 补到可 smoke 的状态。G25 已通过最小 init-only smoke，G26 已通过 held-out
-render/eval smoke，但 G27 十步训练被 NaN loss 阻塞。不能回到 web pseudo-view
-训练，也不能把 adapter/init/eval pass 说成 reconstruction-quality pass。
+render/eval smoke，G27 暴露 train10 NaN，G28 定位到 zero-weight loss branch
+污染，G29 只清除了 L1-only train10 blocker，G30 证明 post-guard eval 能跑但
+指标仍是 init-level。G31-G33 进一步完成 component audit、monodisp guard 和
+combined guarded train10/eval，结论仍然是 finite plumbing 而不是 quality gain。
+不能回到 web pseudo-view 训练，也不能把
+adapter/init/eval/numerical pass 说成 reconstruction-quality pass。
 ```
 
 下一步：
 
 1. 不扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
-2. 优先获取 H3DS token；本地在 G23-G26 已通过的 Multiface adapter 路线上
-   只做 G28 loss-path 数值诊断。
-3. G27 已证明小步训练 loss 是 NaN；在定位并修复前不要跑更长训练。
+2. 优先获取 H3DS token 或更强公开 real-GT benchmark；本地 G33 已经把当前
+   RI3D 数值 smoke 跑到 combined guarded train10，但没有质量收益。
+3. 不开更长 RI3D 训练 milestone，除非先有方法重设或新 benchmark gate。
 4. 只允许在真实 GT case 且每轮 audit gate 通过后恢复受控重建实验；web first10 和旧 RI3D
    结果只保留为 failure taxonomy / diagnostic evidence。

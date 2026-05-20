@@ -237,9 +237,13 @@ GPU=1 bash scripts/run_ri3d_first2.sh
 当前可信路线是 real-GT benchmark first：G21 Multiface debug compact case 通过
 本地 benchmark gate，G22 阻塞旧 adapter，G23/G24 只通过 local-only adapter
 和 CPU file-contract gate，G25/G26 只通过 init/eval smoke。G27 已证明十步
-训练 loss 为 NaN，即使 plain L1-only 也不成立。当前唯一允许的下一步是 G28
-loss-path 数值诊断，不是更长训练；且必须直接对 Multiface adapter scene 调
-RI3D，不使用 `scripts/run_ri3d_first2.sh`。
+训练 loss 为 NaN，即使 plain L1-only 也不成立。G28 已定位 zero-weight
+branch contamination，G29 只清除了 L1-only train10 blocker，G30 held-out eval
+仍是 init-level 指标。G31-G33 已完成 component audit、monodisp guard 和
+combined guarded train10/eval，结果仍是 finite plumbing 而不是 quality gain。
+当前不再允许更长训练 milestone；若继续，必须先做方法重设或更强 public
+real-GT benchmark gate。所有 RI3D 调用必须直接对 Multiface adapter scene，
+不使用 `scripts/run_ri3d_first2.sh`。
 
 G25 参考命令：
 
@@ -259,7 +263,7 @@ PYTHONPATH=$PWD python scripts/train_gs_init.py \
   --pointcloud_min_points 256 --pointcloud_points_per_view 0
 ```
 
-G25-G27 输出必须留在 `3dv_work`。不要提交 RGB、PLY、mesh、长日志或可识别渲染图；
+G25-G33 输出必须留在 `3dv_work`。不要提交 RGB、PLY、mesh、长日志或可识别渲染图；
 仓库只记录 compact metrics、命令、GPU、RI3D commit、pass/fail 和失败尾部。
 
 ## 9. 常见问题

@@ -52,7 +52,7 @@ No milestone may restart reconstruction training from a generated candidate pool
 or RI3D export. `PASS_REAL_GT_BENCHMARK` only authorizes real-GT adapter,
 initialization, render/eval, or training gates on the passing captured benchmark
 case or an equivalent licensed case. G23/G24/G25 are not reconstruction-quality
-results. G26/G27 also remain plumbing/numerical gates, not quality claims.
+results. G26-G33 also remain plumbing/numerical gates, not quality claims.
 
 ## Real GT Benchmark Pivot
 
@@ -218,7 +218,12 @@ positive control, so they are not the active G16b case.
 | G25 | RI3D init-only smoke | G24 pass and idle GPU selected | RI3D loads adapter and saves iteration-1 point cloud; no quality claim |
 | G26 | Held-out render/eval smoke | G25 pass | Done: numeric held-out metrics recorded; no identifiable PNG/JPEG/MP4 committed |
 | G27 | Tiny train10 numerical gate | G26 pass | Blocked: RI3D training loss is NaN even for plain L1-only |
-| G28 | Loss-path numerical diagnostic | G27 blocked | Pending before any longer training |
+| G28 | Loss-path numerical diagnostic | G27 blocked | Done: train-loop zero-weight depth branch contamination identified |
+| G29 | Zero-weight loss guard train10 | G28 diagnosis | Done: L1-only train10 finite after skipping zero-weight branches; no default-loss or quality claim |
+| G30 | Post-guard held-out eval smoke | G29 pass | Done: eval runs without media export, but metrics match init-only G26 |
+| G31 | Guarded loss-component audit | G29/G30 pass | Done: SSIM/silhouette finite, mono-depth NaN blocks default depth training |
+| G32 | Monodisp scale guard | G31 mono-depth blocked | Done: depth-only train10 becomes finite after clamping monodisp normalization scales |
+| G33 | Combined guarded train10/eval | G32 pass | Done: combined guarded train10 finite, but held-out metrics match init-only values |
 
 ## Expected Final Outputs
 
@@ -255,6 +260,11 @@ G23/G24 pass the local-only Multiface adapter and CPU contract gates. G25 passes
 RI3D init-only loading and saves a local point cloud. G26 passes held-out
 render/eval plumbing without saving identifiable media. G27 blocks training
 because the RI3D train loop reports NaN loss even in plain L1-only settings.
-The next action is G28 numerical diagnosis, not renewed web pseudo-view
-training or longer RI3D training.
+G28 localizes the failure to zero-weight branch contamination after optimizer
+steps. G29 clears only the L1-only train10 path by guarding zero-weight losses.
+G30 verifies post-guard held-out eval still runs, but metrics match the init-only
+smoke. G31-G33 close the component/combined numerical-smoke loop, but still show
+no held-out quality gain. The next action is method redesign or stronger public
+real-GT benchmark access, not renewed web pseudo-view training or longer RI3D
+training.
 ```

@@ -1,0 +1,41 @@
+{
+  "date": "2026-05-20",
+  "gate": "G32",
+  "verdict": "PASS_MONODISP_SCALE_GUARD_DEPTH_TRAIN10",
+  "scope": "Fix the G31 mono-depth NaN by clamping monodisp normalization scales.",
+  "patch": {
+    "artifact": "patches/ri3d/g32_monodisp_scale_guard.patch",
+    "target": "external/ri3d/utils/loss_utils.py",
+    "summary": "Clamp monodisp dynamic and GT median-absolute-deviation denominators to at least 1e-6."
+  },
+  "cases": [
+    {
+      "name": "G32a_depth_only_unmasked",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g32a_ri3d_monodisp_guard_depth_only_train10_20260520",
+      "mono_depth_weight": 0.01,
+      "use_mask": false,
+      "exit_code": 0,
+      "final_progress_loss": 0.6245082,
+      "finite_loss": true,
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414766907691956,
+      "train_psnr": 3.526849460601807
+    },
+    {
+      "name": "G32b_depth_only_masked",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g32b_ri3d_monodisp_guard_depth_masked_train10_20260520",
+      "mono_depth_weight": 0.01,
+      "use_mask": true,
+      "exit_code": 0,
+      "final_progress_loss": 0.6245082,
+      "finite_loss": true,
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414766907691956,
+      "train_psnr": 3.526849460601807
+    }
+  ],
+  "artifact_policy": "All PLYs and logs remain local under 3dv_work. No PNG/JPG/JPEG/MP4 files were generated or committed.",
+  "does_not_claim": "Depth loss finite train10 is a numerical repair only; held-out quality remains unchanged."
+}

@@ -12,7 +12,13 @@
         "G24_REAL_GT_ADAPTER_CONTRACT_PASS",
         "G25_RI3D_INIT_ONLY_SMOKE_PASS",
         "G26_HELDOUT_RENDER_EVAL_SMOKE_PASS",
-        "G27_TRAIN10_NUMERICAL_HEALTH_BLOCKED_NAN"
+        "G27_TRAIN10_NUMERICAL_HEALTH_BLOCKED_NAN",
+        "G28_LOSS_PATH_DIAGNOSIS_BLOCKED_ZERO_WEIGHT_DEPTH_NAN",
+        "G29_ZERO_WEIGHT_LOSS_GUARD_L1_TRAIN10_PASS",
+        "G30_POST_GUARD_HELDOUT_EVAL_SMOKE_PASS_NO_QUALITY_CLAIM",
+        "G31_COMPONENT_AUDIT_BLOCKED_MONODEPTH",
+        "G32_MONODISP_SCALE_GUARD_PASS",
+        "G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN"
   ],
   "core_purpose_after_pivot": "Establish a licensed, auditable real-GT benchmark for single-image/few-view head reconstruction before making any reconstruction-quality claim.",
   "benchmark_acceptance_criteria": [
@@ -105,9 +111,39 @@
       "gate": "G27",
       "state": "blocked",
       "meaning": "Tiny train10 reports NaN loss even under plain L1-only settings; longer training is blocked."
-        }
+        },
+    {
+      "gate": "G28",
+      "state": "complete_diagnostic_blocked",
+      "meaning": "Static loss probes are finite, but train-loop mono-depth loss becomes NaN after optimizer steps; zero-weight branches can poison total loss."
+    },
+    {
+      "gate": "G29",
+      "state": "complete_narrow_pass",
+      "meaning": "Zero-weight branch guards let L1-only train10 finish with finite loss; default-loss and longer-training health remain unverified."
+    },
+    {
+      "gate": "G30",
+      "state": "complete_eval_smoke",
+      "meaning": "Held-out eval from G29 iteration 10 runs without media export, but metrics match G26 init-only smoke values."
+    },
+    {
+      "gate": "G31",
+      "state": "complete_component_blocked",
+      "meaning": "SSIM-only and silhouette-only are finite; mono-depth-only is NaN with and without mask."
+    },
+    {
+      "gate": "G32",
+      "state": "complete_numerical_pass",
+      "meaning": "Clamping monodisp normalization scales makes depth-only train10 finite."
+    },
+    {
+      "gate": "G33",
+      "state": "complete_no_quality_gain",
+      "meaning": "Combined guarded train10 and held-out eval are finite, but held-out metrics remain init-level."
+    }
     ],
-    "next_gate": "G28 loss-path numerical diagnostic",
+    "next_gate": "Method redesign or stronger public real-GT benchmark access; no longer-training milestone is authorized from current RI3D evidence.",
     "g22_preflight": {
         "artifact": "experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md",
         "verdict": "BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER",
@@ -138,5 +174,41 @@
     "g27_train10_numerical_gate": {
         "artifact": "experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md",
         "verdict": "BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN"
+    },
+    "g28_loss_path_diagnosis": {
+        "artifact": "experiments/metrics/g28_ri3d_loss_path_diagnosis_20260520.md",
+        "verdict": "BLOCKED_RI3D_LOSS_PATH_NUMERICAL_HEALTH"
+    },
+    "g29_zero_weight_loss_guard_train10": {
+        "artifact": "experiments/metrics/g29_zero_weight_loss_guard_train10_20260520.md",
+        "verdict": "PASS_ZERO_WEIGHT_LOSS_GUARD_L1_TRAIN10",
+        "final_progress_loss": 0.6124692
+    },
+    "g30_post_guard_heldout_eval_smoke": {
+        "artifact": "experiments/metrics/g30_post_guard_heldout_eval_smoke_20260520.md",
+        "verdict": "PASS_POST_GUARD_HELDOUT_EVAL_SMOKE_NO_QUALITY_CLAIM",
+        "metrics": {
+            "SSIM": 0.5905788938204447,
+            "PSNR": 4.268513361612956,
+            "LPIPS": 0.5011390447616577
+        }
+    },
+    "g31_guarded_loss_component_audit": {
+        "artifact": "experiments/metrics/g31_guarded_loss_component_audit_20260520.md",
+        "verdict": "BLOCKED_MONODEPTH_COMPONENT_NUMERICAL_HEALTH"
+    },
+    "g32_monodisp_scale_guard_train10": {
+        "artifact": "experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md",
+        "verdict": "PASS_MONODISP_SCALE_GUARD_DEPTH_TRAIN10",
+        "final_progress_loss": 0.6245082
+    },
+    "g33_combined_guarded_train10_eval": {
+        "artifact": "experiments/metrics/g33_combined_guarded_train10_eval_20260520.md",
+        "verdict": "PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN",
+        "metrics": {
+            "SSIM": 0.5905788938204447,
+            "PSNR": 4.268513361612956,
+            "LPIPS": 0.5011390447616577
+        }
     }
 }

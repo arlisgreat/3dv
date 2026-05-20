@@ -68,8 +68,9 @@ more reliable as 2D candidates, but G8-G14 show they have not been proven to be
 valid reconstruction training supervision. The route is now invalid for
 quality claims even after G21; `PASS_REAL_GT_BENCHMARK` only authorizes
 real-GT adapter and reconstruction preflights, not renewed web pseudo-view/RI3D
-training. G23/G24 pass only the local adapter and CPU file-contract gates; they
-are not reconstruction-quality results.
+training. G23/G24 pass only the local adapter and CPU file-contract gates. G25-G33
+prove init, eval, one numerical diagnosis, one L1-only train10 guard, and
+post-guard eval plumbing. None of these is a reconstruction-quality result.
 ```
 
 ## Mandatory Data Audit Gate
@@ -110,7 +111,9 @@ web pseudo-view candidate pool valid for reconstruction training.
 G22 correctly blocked direct GPU reconstruction because the old adapter did not
 preserve real-camera assumptions. G23/G24 now repair the local adapter contract
 enough to allow only the smallest RI3D init smoke on an explicitly selected
-idle GPU.
+idle GPU. G28-G33 then clear two numerical NaN classes and confirm combined
+guarded train10/eval still runs; they do not produce held-out quality gain or
+authorize longer/default-loss training.
 ```
 
 ## Completed Milestones
@@ -151,12 +154,18 @@ idle GPU.
 | G25 | done, init-only pass | Minimal RI3D init-only smoke on the G24 adapter | `experiments/metrics/g25_ri3d_multiface_init_smoke_20260520.md` | RI3D loads the adapter and saves an iteration-1 point cloud with 67,410 points; no full training or quality claim. |
 | G26 | done, eval smoke pass | Held-out render/evaluation smoke from the G25 point cloud | `experiments/metrics/g26_heldout_eval_smoke_20260520.md` | Held-out metrics execute without saving PNG/JPEG/MP4; PSNR 4.2685, LPIPS 0.5011 are init-only smoke numbers, not quality. |
 | G27 | done, blocked | Tiny RI3D train10 numerical gate | `experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md` | Training executes but reports NaN loss even for plain L1-only; longer training and quality claims are blocked. |
+| G28 | done, diagnostic blocked | RI3D loss-path numerical diagnostic | `experiments/metrics/g28_ri3d_loss_path_diagnosis_20260520.md` | Static losses are finite, but train-loop depth loss becomes NaN after optimizer steps; zero-weight loss branches can still poison total loss. |
+| G29 | done, narrow numerical pass | Zero-weight loss guard and L1-only train10 rerun | `experiments/metrics/g29_zero_weight_loss_guard_train10_20260520.md`, `patches/ri3d/g29_zero_weight_loss_guard.patch` | L1-only train10 completes with finite loss after skipping zero-weight SSIM/silhouette/depth branches; no default-loss or quality claim. |
+| G30 | done, eval smoke pass | Held-out eval from the G29 iteration-10 checkpoint | `experiments/metrics/g30_post_guard_heldout_eval_smoke_20260520.md` | Eval runs without saving identifiable media; metrics match G26 init-level smoke, so numerical execution is fixed but quality remains unproven. |
+| G31 | done, component blocked | Guarded loss-component audit | `experiments/metrics/g31_guarded_loss_component_audit_20260520.md` | SSIM-only and silhouette-only train10 are finite; mono-depth-only is NaN with and without mask, blocking combined/default depth training. |
+| G32 | done, numerical pass | Monodisp scale guard and depth-only rerun | `experiments/metrics/g32_monodisp_scale_guard_train10_20260520.md`, `patches/ri3d/g32_monodisp_scale_guard.patch` | Clamping monodisp scale denominators clears depth-only train10 NaNs; metrics remain init-level. |
+| G33 | done, numerical/eval pass no quality gain | Combined guarded train10 and held-out eval | `experiments/metrics/g33_combined_guarded_train10_eval_20260520.md` | Combined guarded losses are finite, but held-out SSIM/PSNR/LPIPS match G26/G30 init-level values; quality remains unproven. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G28 | blocked/pending diagnostic | RI3D loss-path numerical diagnostic | G27 `BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN` | Inspect first-step render/loss tensors and fix/patch only if the source of NaN is identified. No longer-run training before this gate. |
+| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G33 finite combined train10 but init-level held-out metrics | Method redesign or stronger public real-GT benchmark access is required before opening a longer-training milestone. |
 
 ## G8 Result
 

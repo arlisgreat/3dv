@@ -215,7 +215,19 @@ G26: held-out render/evaluation smoke from the G25 point cloud. Done; metrics
      execute without saving identifiable PNG/JPEG/MP4. Not a quality result.
 G27: ten-step RI3D training numerical gate. Blocked: loss becomes NaN even
      under plain L1-only settings.
-G28: loss-path numerical diagnostic. Pending before any longer training.
+G28: loss-path numerical diagnostic. Done; train-loop zero-weight depth branch
+     contamination is identified after optimizer steps.
+G29: zero-weight loss guard L1-only train10. Done; finite loss after skipping
+     zero-weight SSIM/silhouette/depth branches, but no default-loss or quality
+     claim.
+G30: post-guard held-out eval smoke. Done; eval runs without media export, but
+     metrics match G26 init-only smoke.
+G31: guarded loss-component audit. Done; SSIM-only and silhouette-only are
+     finite, but mono-depth-only is NaN.
+G32: monodisp scale guard. Done; depth-only train10 becomes finite after
+     clamping monodisp normalization scales.
+G33: combined guarded train10 and held-out eval. Done; numerically finite, but
+     held-out metrics match init-only smoke.
 ```
 
 Current G16 access result:
@@ -239,8 +251,11 @@ No pseudo-view/RI3D scaling is allowed from web candidate pools. The current
 G22 preflight blocked GPU training until a real-camera adapter and metric
 pipeline were implemented and re-gated. G23/G24 now pass adapter/contract gates,
 G25 passes init-only loading, and G26 passes held-out eval plumbing. G27 blocks
-training on NaN loss, so the next step is numerical diagnosis, not a longer
-training run or quality claim.
+training on NaN loss; G28 identifies the zero-weight branch contamination; G29
+clears only the L1-only train10 path; and G30 shows no post-guard quality gain.
+G31-G33 close the component/combined numerical-smoke loop but still show no
+held-out quality gain. The next step is method redesign or stronger public
+real-GT benchmark access, not a longer training run or quality claim.
 ```
 
 ### Week 4

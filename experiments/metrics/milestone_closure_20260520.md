@@ -18,6 +18,12 @@ G24_REAL_GT_ADAPTER_CONTRACT_PASS
 G25_RI3D_INIT_ONLY_SMOKE_PASS
 G26_HELDOUT_RENDER_EVAL_SMOKE_PASS
 G27_TRAIN10_NUMERICAL_HEALTH_BLOCKED_NAN
+G28_LOSS_PATH_DIAGNOSIS_BLOCKED_ZERO_WEIGHT_DEPTH_NAN
+G29_ZERO_WEIGHT_LOSS_GUARD_L1_TRAIN10_PASS
+G30_POST_GUARD_HELDOUT_EVAL_SMOKE_PASS_NO_QUALITY_CLAIM
+G31_COMPONENT_AUDIT_BLOCKED_MONODEPTH
+G32_MONODISP_SCALE_GUARD_PASS
+G33_COMBINED_GUARDED_TRAIN10_EVAL_PASS_NO_QUALITY_GAIN
 ```
 
 Completed or closed milestones:
@@ -41,6 +47,12 @@ Completed or closed milestones:
 | G25 | complete, init-only pass | RI3D loads the G24 adapter and saves a 67,410-point iteration-1 point cloud; no full training or quality claim. |
 | G26 | complete, eval smoke pass | Held-out render/eval metrics execute from the G25 point cloud without saving PNG/JPEG/MP4; metrics remain init-only smoke values. |
 | G27 | blocked | Tiny train10 executes but training loss is NaN even under plain L1-only settings; longer training is blocked. |
+| G28 | complete, diagnostic blocked | Static loss probes are finite, but train-loop mono-depth loss becomes NaN after optimizer steps; zero-weight branches can still contaminate total loss. |
+| G29 | complete, narrow numerical pass | A zero-weight branch guard lets L1-only train10 finish with finite loss; this clears only the G27 L1-only blocker. |
+| G30 | complete, eval smoke pass | Held-out eval from the G29 iteration-10 checkpoint runs without image/video export, but metrics match G26 init-level values. |
+| G31 | complete, component blocked | SSIM-only and silhouette-only are finite; mono-depth-only is NaN with and without mask. |
+| G32 | complete, numerical pass | Monodisp scale clamping makes depth-only train10 finite; metrics remain init-level. |
+| G33 | complete, no quality gain | Combined guarded train10 and held-out eval are finite, but metrics match G26/G30 init-level values. |
 
 Current stop condition:
 
@@ -48,8 +60,10 @@ Current stop condition:
 The local sprint has verified the old route enough for diagnostic value only:
 failure-aware gating is necessary, candidate hygiene is not training validity,
 and the current RI3D reconstruction path is not a solved quality route. Further
-quality claims require first resolving the G27 NaN loss blocker, then passing
-separate real-GT training and held-out evaluation gates.
+quality claims require method redesign or stronger public real-GT benchmark
+access, then separate real-GT training and held-out evaluation gates. G29/G32
+resolve numerical NaN classes and G33 is finite, but G33 shows no quality gain
+over init-only eval.
 ```
 
 Do not do next:
@@ -65,9 +79,9 @@ Do not treat synthetic positive control as a real-capture benchmark.
 Next legitimate branches:
 
 ```text
-1. Real GT branch: G28 loss-path numerical diagnosis for the NaN train loss.
-2. Benchmark branch: once G28 is fixed, implement held-out silhouette/RGB/depth/
-   mesh metrics without committing raw person-identifying data.
+1. Real GT branch: method redesign beyond current RI3D adapter/loss setup.
+2. Benchmark branch: stronger public/licensed benchmark access plus held-out
+   silhouette/RGB/depth/mesh metrics without committing raw person-identifying data.
 3. Writing branch: draft the diagnostic/gate paper, with G21 as the benchmark
-   premise pass and G22-G27 as adapter/init/eval/numerical gate history.
+   premise pass and G22-G33 as adapter/init/eval/numerical gate history.
 ```

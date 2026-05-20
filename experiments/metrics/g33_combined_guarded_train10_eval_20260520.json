@@ -1,0 +1,36 @@
+{
+  "date": "2026-05-20",
+  "gate": "G33",
+  "verdict": "PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN",
+  "scope": "Run combined guarded SSIM, silhouette, and mono-depth train10 after G29 and G32 numerical guards.",
+  "run": {
+    "run_root": "/data1/workspace/airulan/3dv_work/runs/g33_ri3d_combined_guarded_train10_20260520",
+    "train_log": "/data1/workspace/airulan/3dv_work/runs/g33_ri3d_combined_guarded_train10_20260520/train10.log",
+    "eval_log": "/data1/workspace/airulan/3dv_work/runs/g33_ri3d_combined_guarded_train10_20260520/heldout_eval_no_media.log",
+    "eval_output_root": "/data1/workspace/airulan/3dv_work/runs/g33_ri3d_combined_guarded_train10_20260520_g33_eval",
+    "selected_gpu": 0,
+    "iterations": 10,
+    "lambda_dssim": 0.2,
+    "lambda_silhouette": 0.01,
+    "mono_depth_weight": 0.01,
+    "use_mask": true,
+    "exit_code": 0,
+    "final_progress_loss": 0.5910920
+  },
+  "train_eval_metrics": {
+    "test_l1": 0.5926034251848856,
+    "test_psnr": 4.268513361612955,
+    "train_l1": 0.6414348959922791,
+    "train_psnr": 3.5272224426269534
+  },
+  "heldout_eval_metrics": {
+    "SSIM": 0.5905788938204447,
+    "PSNR": 4.268513361612956,
+    "LPIPS": 0.5011390447616577
+  },
+  "comparison": {
+    "matches_g26_init_eval_metrics": true,
+    "interpretation": "Combined guarded train10 is numerically finite, but held-out quality remains init-level."
+  },
+  "artifact_policy": "The iteration-10 PLY and logs remain local under 3dv_work. Eval output contains only results.json. No PNG/JPG/JPEG/MP4 files were generated or committed."
+}

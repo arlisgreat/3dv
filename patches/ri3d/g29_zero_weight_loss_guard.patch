@@ -1,0 +1,32 @@
+diff --git a/scripts/train_gs.py b/scripts/train_gs.py
+index 6135ed9..ad7d330 100755
+--- a/scripts/train_gs.py
++++ b/scripts/train_gs.py
+@@ -258,8 +258,12 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+     if mask3 is not None:
+         Ll1 = (torch.abs(image - gt_image) * mask3).sum() / mask3.sum().clamp_min(1.0)
+-        image_for_ssim = image * mask3 + gt_image * (1.0 - mask3)
+-        Lssim = (1.0 - ssim(image_for_ssim, gt_image))
++        if opt.lambda_dssim > 0:
++            image_for_ssim = image * mask3 + gt_image * (1.0 - mask3)
++            Lssim = (1.0 - ssim(image_for_ssim, gt_image))
++        else:
++            Lssim = torch.zeros_like(Ll1)
+     else:
+         Ll1 = l1_loss(image, gt_image)
+-        Lssim = (1.0 - ssim(image, gt_image))
++        Lssim = (1.0 - ssim(image, gt_image)) if opt.lambda_dssim > 0 else torch.zeros_like(Ll1)
+@@ -274,7 +278,7 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+         tb_writer.add_scalar('loss/role_rgb_weight', role_rgb_weight, iteration)
+         tb_writer.add_scalar('loss/role_depth_weight', role_depth_weight, iteration)
+-    if mask is not None and "rendered_alpha" in render_pkg:
++    if opt.lambda_silhouette > 0 and role_depth_weight > 0 and mask is not None and "rendered_alpha" in render_pkg:
+         alpha = render_pkg["rendered_alpha"].to(image.dtype).clamp(1e-4, 1.0 - 1e-4)
+         silhouette_loss = F.binary_cross_entropy(alpha, mask)
+@@ -283,7 +287,7 @@ def cal_loss(opt, args, image, render_pkg, viewpoint_cam, bg, silhouette_loss_ty
+         if tb_writer is not None:
+             tb_writer.add_scalar('loss/silhouette_loss', silhouette_loss, iteration)
+-    if hasattr(viewpoint_cam, "mono_depth") and viewpoint_cam.mono_depth is not None:
++    if args.mono_depth_weight > 0 and role_depth_weight > 0 and hasattr(viewpoint_cam, "mono_depth") and viewpoint_cam.mono_depth is not None:
+         # print('here')
+         if mono_loss_type == "mid":

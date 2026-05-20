@@ -46,6 +46,12 @@ G24 CPU real-GT adapter contract gate
 G25 RI3D Multiface init-only smoke
 G26 held-out render/evaluation smoke
 G27 RI3D train10 numerical gate
+G28 RI3D loss-path numerical diagnostic
+G29 zero-weight loss guard L1-only train10
+G30 post-guard held-out eval smoke
+G31 guarded loss-component audit
+G32 monodisp scale guard train10
+G33 combined guarded train10 held-out eval
 ```
 
 还没有完成：
@@ -54,8 +60,8 @@ G27 RI3D train10 numerical gate
 reconstruction rerun on real cameras + mesh/point-cloud GT
 quantitative real-GT reconstruction evaluation
 publishable artifact review for any identifiable Multiface RGB/mesh result
-G28 loss-path numerical diagnostic before any longer training
-small-step real-GT training only after G28 resolves the NaN blocker
+public/stronger real-GT benchmark access
+method redesign beyond current RI3D adapter/loss setup
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -91,7 +97,12 @@ they authorize a smallest init-only smoke, not a reconstruction-quality claim.
 G25 passes that init-only smoke and saves a point cloud locally; the active next
 gate then became G26 held-out render/eval smoke. G26 passes eval plumbing, but
 G27 blocks training because RI3D reports NaN loss even under plain L1-only
-settings.
+settings. G28 identifies train-loop zero-weight loss contamination after
+optimizer steps. G29 clears only the L1-only train10 blocker by guarding
+zero-weight branches. G30 shows post-guard held-out eval still runs but remains
+at G26 init-level metrics. G31-G33 close the component and combined guarded
+train10 smoke loop, but held-out metrics still match init-level values, so the
+route remains non-quality.
 ```
 
 ## 2. Stage 00: Inputs
@@ -795,8 +806,11 @@ readiness：Multiface route 的 metadata/KRT/frame schema 已经站住。G21 进
 G20 进一步把路线正式切换为 benchmark-first：旧 pseudo-view/RI3D 路线只保留
 诊断价值，不再作为质量主实验。G22 已阻塞直接训练；G23/G24 已完成 local-only
 Multiface adapter 和 CPU contract gate；G25 已完成最小 init-only smoke；G26
-已完成 held-out render/eval smoke。G27 十步训练被 NaN loss 阻塞，下一步只能
-是 G28 loss-path 数值诊断。
+已完成 held-out render/eval smoke。G27 十步训练被 NaN loss 阻塞，G28 定位
+到 zero-weight branch contamination，G29 只清除了 L1-only train10 blocker，
+G30 证明 post-guard eval 能跑但指标仍是 init-level；G31-G33 完成 component
+audit、monodisp guard 和 combined guarded train10/eval，但质量仍未提升。下一步
+不是更长训练，而是方法重设或更强 public real-GT benchmark。
 ```
 
 对比指标：
@@ -843,7 +857,8 @@ G22 已阻塞直接训练，因为旧 adapter 的 per-view intrinsics、real-cam
 depth/conf maps、held-out view / mesh metrics 没站住。G23/G24 现在只把
 Multiface local-only adapter 和 RI3D file contract 补到可 smoke 的状态，G25
 已证明 RI3D 能加载 adapter 并保存初始化点云。G26 已证明 held-out render/eval
-指标链路能跑且不保存可识别媒体。G27 证明当前 RI3D train loop 数值不健康：
-十步训练 loss 为 NaN，且 plain L1-only 也无法消除。不要从现有 web first10
-candidate pool 继续训练，也不要把 G23-G27 或旧 RI3D 结果解释成质量结论。
+指标链路能跑且不保存可识别媒体。G27 证明当前 RI3D train loop 数值不健康；
+G28/G29 证明其中 L1-only NaN 类问题来自 zero-weight branch contamination
+并可用 guard 清除；G30 证明这没有带来 held-out 质量提升。不要从现有 web
+first10 candidate pool 继续训练，也不要把 G23-G33 或旧 RI3D 结果解释成质量结论。
 ```

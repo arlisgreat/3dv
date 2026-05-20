@@ -1,0 +1,12 @@
+diff --git a/utils/loss_utils.py b/utils/loss_utils.py
+index 507cb24..0ed4969 100644
+--- a/utils/loss_utils.py
++++ b/utils/loss_utils.py
+@@ -69,7 +69,7 @@ def monodisp(gt_depth: torch.Tensor, dyn_depth: torch.Tensor, loss_type: str = "
+     t_d = torch.median(dyn_depth, dim=-1, keepdim=True).values
+-    s_d = torch.mean(torch.abs(dyn_depth - t_d), dim=-1, keepdim=True)
++    s_d = torch.mean(torch.abs(dyn_depth - t_d), dim=-1, keepdim=True).clamp_min(1e-6)
+@@ -73,7 +73,7 @@ def monodisp(gt_depth: torch.Tensor, dyn_depth: torch.Tensor, loss_type: str = "
+     t_gt = torch.median(gt_depth, dim=-1, keepdim=True).values
+-    s_gt = torch.mean(torch.abs(gt_depth - t_gt), dim=-1, keepdim=True)
++    s_gt = torch.mean(torch.abs(gt_depth - t_gt), dim=-1, keepdim=True).clamp_min(1e-6)
