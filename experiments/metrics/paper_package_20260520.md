@@ -36,6 +36,7 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
+| Final synthesis | `experiments/metrics/final_experiment_synthesis_and_gate_review_20260520.md` | Full experiment thread, gate review, literature update, and stop rules are recorded. |
 
 ## Figure Set
 
