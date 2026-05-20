@@ -670,6 +670,8 @@ experiments/metrics/gt_dataset_route_plan_20260519.md
 experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.json
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.json
 experiments/metrics/gt_positive_control_route_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json
@@ -750,7 +752,10 @@ ghosted multi-fragment head，不是重建质量通过。G18 已完成 corrected
 first10 taxonomy：60 个 view 中 10 个 identity_supervision、37 个
 geometry_only、13 个 reject；budget4 选中的 40 个 view 仍有 8 个 severe/reject。
 G19 已收口为 paper package：failure-aware gating 是主结论，web first10
-仍 blocked for reconstruction training，真实 GT 质量结论仍等待许可数据。
+仍 blocked for reconstruction training。G16a-local 又完成了真实 GT intake
+readiness：Multiface route 的 metadata/KRT/frame schema 已经站住，但原始
+image/mesh compact case 还没有完整下载和视觉审计，因此真实 GT 质量结论仍等待
+许可数据和 artifact review。
 ```
 
 对比指标：
@@ -790,6 +795,7 @@ D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 
 ```text
 真实多视角/mesh/point-cloud GT case 仍受许可/访问约束。下一步若继续实验，
-应先走新分支：要么获取 licensed real GT case，要么引入更强 geometry/initialization
-方法；不要从现有 web first10 candidate pool 继续训练。
+应先走新分支：要么完成 Multiface/H3DS/FaceScape 等 licensed real GT compact
+case 的 raw image/mesh acquisition 和 visual gate，要么引入更强
+geometry/initialization 方法；不要从现有 web first10 candidate pool 继续训练。
 ```

@@ -7,6 +7,7 @@ Closure verdict:
 ```text
 NO_FEASIBLE_LOCAL_MILESTONE_LEFT_UNRECORDED
 REAL_CAPTURE_GT_ACCESS_BLOCKED_EXTERNALLY
+REAL_GT_INTAKE_READY_LOCALLY
 PAPER_PACKAGE_READY_FOR_DRAFTING
 ```
 
@@ -18,6 +19,7 @@ Completed or closed milestones:
 | G8-G14 | diagnostic complete | RI3D repair attempts run, but quality claims are downgraded. |
 | G15 | complete, training blocked | Candidate-pool and corrected 3x2 audits block web first10 training. |
 | G16a | externally blocked | Real GT dataset access/license not available for publishable compact case. |
+| G16a-local | complete, intake-only | Multiface route/schema recorded; metadata/KRT/frame-list checks pass, but raw compact case is not fully acquired or visually audited. |
 | G16b | complete | CC0 head positive-control gate passes. |
 | G17 | complete for sprint | Positive-control RI3D iter10/iter500 execute and export, but visual quality fails. |
 | G18 | complete | Corrected first10 failure taxonomy records diagnostic-only conclusion. |

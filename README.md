@@ -232,6 +232,7 @@ experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md
 experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
 experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md
 experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
 experiments/metrics/paper_package_20260520.md
 experiments/metrics/milestone_closure_20260520.md
 experiments/reconstructions/ri3d_gt_positive_control_iter10/
@@ -332,4 +333,6 @@ RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景�
 1. 不急着扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
 2. G17 先从 `wikimedia_blender_head_cc0` 正控 case 做 camera/provenance sanity check。
 3. 真实采集 GT 数据继续走 G16a license/access gate。
-4. web first10 只做 corrected 3x2 failure taxonomy，直到有新 gate 明确通过训练前提。
+4. G16a-local intake readiness 已完成；真实 GT reconstruction 仍要等 compact
+   raw image/mesh case 通过视觉 gate。
+5. web first10 只做 corrected 3x2 failure taxonomy，直到有新 gate 明确通过训练前提。

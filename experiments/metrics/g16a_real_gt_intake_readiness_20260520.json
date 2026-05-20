@@ -1,0 +1,57 @@
+{
+  "date": "2026-05-20",
+  "gate": "G16a-local",
+  "name": "real_gt_intake_readiness",
+  "verdict": [
+    "PASS_INTAKE_READY",
+    "BLOCKED_REAL_CAPTURE_RECONSTRUCTION",
+    "NO_TRAINING_STARTED"
+  ],
+  "primary_route": {
+    "dataset": "Multiface",
+    "identity": "6795937",
+    "target_expression": "E001_Neutral_Eyes_Open",
+    "source_repo": "external/multiface",
+    "source_commit": "db70c1a",
+    "license": "CC-BY-NC 4.0",
+    "official_repo": "https://github.com/facebookresearch/multiface"
+  },
+  "local_checks": {
+    "metadata_tar": "/data1/workspace/airulan/3dv_work/datasets/multiface_6795937_e001/metadata.tar",
+    "metadata_sha256": "995deae0aa2058c5df5848b1088f0862984a096fb24383217f8168fe585f58da",
+    "krt_camera_count": 38,
+    "frame_list_rows": 13478,
+    "e001_frame_count": 26,
+    "e001_first_frame": "000102",
+    "e001_last_frame": "000177",
+    "camera_split_train_count": 38,
+    "camera_split_test_count": 38,
+    "camera_split_visual_count": 2
+  },
+  "remote_size_checks_mib": {
+    "images_E001_Neutral_Eyes_Open_tar": 2964.31,
+    "tracked_mesh_E001_Neutral_Eyes_Open_tar": 34.0,
+    "images_E057_Cheeks_Puffed_tar": 5784.39,
+    "images_E061_Lips_Puffed_tar": 7309.18,
+    "metadata_tar": 1.76
+  },
+  "download_status": {
+    "metadata": "downloaded_and_extracted",
+    "tracked_mesh_E001": "partial_download_stopped_due_to_slow_transfer",
+    "partial_quarantine": "/data1/workspace/airulan/3dv_work/quarantine/20260520_multiface_partial/",
+    "raw_images": "not_downloaded"
+  },
+  "required_future_case_artifacts": [
+    "experiments/gt_cases/<case_id>/README.md",
+    "experiments/gt_cases/<case_id>/manifest.csv",
+    "experiments/gt_cases/<case_id>/cameras.json",
+    "experiments/gt_cases/<case_id>/views/*.png",
+    "experiments/gt_cases/<case_id>/masks/*.png",
+    "experiments/figures/<case_id>_contact_sheet.png",
+    "experiments/metrics/<case_id>_real_gt_gate_YYYYMMDD.md",
+    "experiments/metrics/<case_id>_real_gt_gate_YYYYMMDD.json"
+  ],
+  "blocking_reason": "A licensed real-capture route is identified and locally schematized, but raw images/mesh for a compact case have not been fully acquired and visually audited.",
+  "allowed_claim": "The repo is ready to ingest a real-capture GT compact case once raw data is available and artifact review passes.",
+  "disallowed_claim": "Do not claim real-capture reconstruction quality, do not run reconstruction training, and do not replace this gate with the synthetic positive-control result."
+}

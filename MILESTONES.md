@@ -121,6 +121,7 @@ distorted, so web first10 remains diagnostic-only.
 | G15b | done, probe input pass | Head-cutout input recovery gate | `experiments/metrics/first10_head_cutout_input_gate_20260519.md` | Tighter gray-background head crops pass only for a small generation probe, not reconstruction training. |
 | G15c | done, blocked for training | Zero123++ 3x2 split correction and head-cutout probe | `experiments/metrics/zero123plus_grid_split_bug_20260519.md` | Correct 3x2 splitting fixes a major preprocessing bug, but pseudo views still show visible distortions and remain diagnostic-only. |
 | G16a | blocked externally | GT dataset access gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | FaceScape sample metadata confirms the right data structure, but real-capture reconstruction claims remain blocked until a licensed/repo-safe case exists. |
+| G16a-local | done, intake-only | Real GT intake readiness gate | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is schematized as the current best real-capture route; metadata/KRT/frame checks pass, but raw images/mesh are not fully acquired or visually audited, so reconstruction remains blocked. |
 | G16b | done, positive-control pass | Mesh-derived repo-safe GT case | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | A CC0 realistic human head mesh was rendered into 8 deterministic RGB/depth/mask/normal views with camera metadata; visual gate passes only for synthetic positive-control work. |
 | G17a | done, provenance pass | Positive-control case structural sanity | `experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md` | Manifest, cameras, PNG dimensions, masks, MP4, and raw-mesh exclusion all pass; scope remains positive-control only. |
 | G17b | done, smoke pass | RI3D positive-control iter10 smoke | `experiments/metrics/ri3d_gt_positive_control_iter10_observations.md` | Conversion, init, 10-iteration train, render, and MP4 export all pass; visual quality is smoke-only with ghosted fragments, so not a quality win. |
@@ -581,7 +582,8 @@ Closure:
 
 ```text
 No feasible local milestone remains unrecorded.
-Real-capture GT access remains externally blocked.
+Real-capture GT access remains externally blocked for reconstruction, but the
+local intake/readiness gate is now complete.
 The paper package is ready for drafting with conservative claims.
 ```
 
@@ -603,6 +605,8 @@ experiments/metrics/gt_dataset_route_plan_20260519.md
 experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.json
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
+experiments/metrics/g16a_real_gt_intake_readiness_20260520.json
 experiments/metrics/gt_positive_control_route_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json
@@ -655,6 +659,7 @@ Stop criteria met:
 | Gate | Planned milestone | Closure |
 | --- | --- | --- |
 | G16a | Real GT dataset access gate | Blocked externally by license/access; next branch requires approved data. |
+| G16a-local | Real GT intake/readiness gate | Complete as planning/schema gate; not a reconstruction pass. |
 | G16b | Mesh-derived positive-control gate | Complete. |
 | G17 | Compact positive-control reconstruction rerun | Complete for sprint: execution/export pass, visual quality fail. |
 | G18 | first10 pseudo-view failure taxonomy | Complete, diagnostic-only. |

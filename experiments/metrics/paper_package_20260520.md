@@ -32,6 +32,7 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | Candidate-pool audit | `experiments/metrics/first10_candidate_pool_audit_gate_20260519.md` | `experiments/downstream_datasets` is not a validated training set. |
 | Head-cutout corrected probe | `experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md` | Corrected pseudo views remain diagnostic-only. |
 | GT route gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | Real-capture quality claims need licensed cameras and GT geometry. |
+| GT intake readiness | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is ready as a local intake route, but real reconstruction remains blocked until raw image/mesh case and visual audit pass. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -104,6 +105,7 @@ iter500 verdict: execution/export pass, reconstruction-quality fail
 ```text
 G0-G15: complete, with G8-G14 downgraded to diagnostic evidence.
 G16a: externally blocked by real dataset access/license constraints.
+G16a-local: complete as real-GT intake/readiness, not reconstruction.
 G16b: complete for positive-control scope.
 G17: complete for current sprint; RI3D positive-control execution passes but
      visual reconstruction quality fails.

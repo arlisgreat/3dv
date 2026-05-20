@@ -106,6 +106,14 @@ remain useful, but each route has access, license, size, or redistribution
 constraints. Until one compact case is licensed and auditable, it cannot support
 public reconstruction-quality claims.
 
+`G16a-local` is now the local intake/readiness closure for that route. Multiface
+is the current best real-capture candidate because its official assets include
+multi-view raw images, camera calibration metadata, tracked meshes, and headpose.
+The repo has verified metadata/KRT/frame-list structure for identity `6795937`,
+but raw images and mesh for a compact case have not been fully acquired or
+visually audited. This is `PASS_INTAKE_READY`, not
+`PASS_RECONSTRUCTION_TRAINING`.
+
 `G16b` is the repo-safe positive-control route. A public mesh case can be rendered
 into deterministic multi-view RGB/depth/mask/camera artifacts. This validates the
 pipeline and gate mechanics without pretending to be real captured multi-view
@@ -130,6 +138,7 @@ positive control, so they are not the active G16b case.
 | Gate | Purpose | Start condition | Stop condition |
 | --- | --- | --- | --- |
 | G16a | Real GT access gate | Web first10 remains diagnostic-only | Licensed compact real case with images, cameras, and GT mesh/point cloud |
+| G16a-local | Real GT intake readiness | Real GT remains externally blocked | Multiface route/schema recorded; no training until raw compact case passes visual audit |
 | G16b | Mesh-derived positive-control gate | Public mesh with redistributable derived outputs | 6-12 rendered views, cameras, depth/mask, contact sheet, and visual audit |
 | G17 | Reconstruction positive-control rerun | G16b passes | Iter10/iter500 execute and export; visual quality fails, so current RI3D route is diagnostic only |
 | G18 | Corrected first10 failure taxonomy | G15c/G16 gates block web training | 60 corrected views labeled; web first10 remains diagnostic-only |
@@ -153,6 +162,8 @@ As of 2026-05-20:
 
 ```text
 G16a real-capture GT remains externally blocked by access/license constraints.
+G16a-local real-GT intake readiness is complete; Multiface metadata/KRT/frame
+structure is verified, but no real-capture reconstruction training is allowed.
 G16b positive-control data gate passes.
 G17 iter10 and iter500 both execute and export valid MP4s, but iter500 still
 fails visual reconstruction quality with ghosted multi-fragment heads.
