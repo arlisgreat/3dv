@@ -55,13 +55,19 @@ G33 combined guarded train10 held-out eval
 G34 post-G33 route reset
 G35 public/stronger benchmark availability audit
 G36 method redesign direction and 2026 literature update
+G37 model/data distribution audit
+G38 artifact sync gate
+G39 learned-prior/feed-forward/head-anchored Gaussian method gate
+G40 LAM-20K local Multiface learned-prior smoke
+G41 learned-prior held-out evaluation contract
 ```
 
 还没有完成：
 
 ```text
 redesigned method implementation on a passing real-GT benchmark
-quantitative real-GT reconstruction evaluation beyond init-level smoke metrics
+camera-aligned learned-prior held-out rendering or geometry export
+quantitative real-GT reconstruction evaluation beyond init/smoke metrics
 publishable artifact review for any identifiable Multiface RGB/mesh result
 public/stronger real-GT benchmark access
 ```
@@ -109,7 +115,15 @@ current RI3D setup. G35 finds no additional ready public/local real-GT benchmark
 beyond the current local Multiface debug case and the CC0 positive control.
 G36 resets the method direction toward learned/feed-forward head-specific priors
 with real-GT held-out metrics; pseudo views may only re-enter as audited
-conditional priors, never as ground-truth training views.
+conditional priors, never as ground-truth training views. G37-G38 add the
+distribution and artifact-sync safeguards. G39-G41 complete the first
+learned-prior smoke loop: LAM-20K can run locally on a real Multiface train
+view after a PyTorch 2.6+ TorchScript loading patch, but private MP4s stay out
+of GitHub and visual audit is only PASS_LOCAL_SMOKE_ONLY. The repo-safe CC0
+point-splat positive-control image is outside LAM's natural portrait input
+distribution and fails face tracking. The next credible method milestone must
+add camera-aligned held-out rendering or geometry export before any quality
+claim.
 ```
 
 ## 2. Stage 00: Inputs

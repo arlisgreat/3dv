@@ -74,7 +74,11 @@ plumbing. G34-G36 close the current RI3D scaling route, confirm no additional
 ready public/local real-GT benchmark is available, and reset the method direction
 toward learned-prior/full-head Gaussian approaches. G37-G38 add explicit
 model/data distribution and artifact-sync gates so that old candidate pools and
-raw/private assets cannot slip back into the main claim. None of these is a
+raw/private assets cannot slip back into the main claim. G39-G41 open and close
+the first learned-prior/feed-forward/head-anchored Gaussian smoke loop: LAM can
+run on the local real-GT Multiface train view, but only as local execution
+evidence because the current wrapper exports animation MP4s, not held-out
+camera-aligned renders or GT geometry metrics. None of these is a
 reconstruction-quality result.
 ```
 
@@ -89,7 +93,10 @@ Every new milestone must pass a data audit gate before training or reconstructio
 4. Inspect generated images with VLM/manual visual checking.
 5. Record PASS_REAL_GT_BENCHMARK, PASS_RECONSTRUCTION_TRAINING,
    PASS_DIAGNOSTIC_ONLY, or BLOCKED.
-6. Update this file before any GPU experiment starts.
+6. For learned-prior/feed-forward methods, declare the model training/test
+   distribution and held-out/geometry evaluation contract before interpreting
+   outputs.
+7. Update this file before any GPU experiment starts.
 ```
 
 The current candidate-pool gate is:
@@ -124,7 +131,13 @@ locally, and no new method-quality milestone without a redesigned method plus
 fresh data/VLM gate. G37 confirms that existing model/test pairs are
 interpretable only as qualitative, diagnostic, or plumbing/numerical evidence.
 G38 confirms the current repo-safe artifact sync set has no blocked raw/private
-paths.
+paths. G39 passes the learned-prior method premise under real-GT/data/VLM gates.
+G40 runs LAM-20K on one local Multiface train view and records only hashes and
+manual audit because the derived media are identifiable/private. G40 also blocks
+the repo-safe CC0 positive control as a LAM input-distribution smoke because the
+point-splat render fails face tracking. G41 records the evaluation contract:
+no learned-prior quality claim is allowed until the method can render held-out
+Multiface cameras or export geometry for GT metrics.
 ```
 
 ## Completed Milestones
@@ -176,12 +189,15 @@ paths.
 | G36 | done, method direction pass | Method redesign and latest literature update | `experiments/metrics/g36_method_redesign_direction_20260520.md` | Next method work must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views can only be audited conditional priors. |
 | G37 | done, distribution pass no quality claim | Model/data distribution audit | `experiments/metrics/g37_model_data_distribution_audit_20260520.md` | LAM first10 is qualitative-only; pseudo-view/RI3D exports are diagnostic-only; Multiface G21-G33 is real-GT plumbing/numerical evidence without quality gain. |
 | G38 | done, sync pass | Artifact sync gate | `experiments/metrics/g38_artifact_sync_gate_20260520.md`, `experiments/real_gt_benchmark/` | Current untracked repo-safe PNG/MP4/CSV/JSON/MD artifacts are sync candidates; blocked raw/private paths are zero. |
+| G39 | done, method gate pass local-only | Learned-prior/feed-forward/head-anchored Gaussian method gate | `experiments/metrics/g39_learned_prior_method_gate_20260520.md` | Real-GT/data/VLM/distribution gates authorize only local LAM smoke and repo-safe positive controls; no quality claim. |
+| G40 | done, local smoke pass no quality claim | LAM-20K learned-prior smoke after G39 | `experiments/metrics/g40_learned_prior_lam_smoke_20260520.md`, `patches/lam/torch26_vgghead_torchscript_load.patch` | Multiface train-view LAM smoke succeeds locally with private media hashes only; CC0 point-splat positive-control input is blocked by LAM face tracking. |
+| G41 | done, eval contract pass/block | Learned-prior held-out evaluation contract | `experiments/metrics/g41_learned_prior_eval_contract_20260520.md` | Current LAM wrapper cannot support held-out camera-aligned or geometry metrics; next work must implement/export those before a quality claim. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G34 route reset + G35 benchmark audit + G36 method redesign direction + G37 distribution audit + G38 sync gate | Open a new milestone only after a passing method premise, explicit model/data distribution statement, and real-GT/data/VLM gate; no longer-training milestone is authorized from current RI3D evidence. |
+| none | closed for current learned-prior smoke loop | Stop interpreting LAM MP4 smoke as reconstruction quality | G39 method gate + G40 local LAM smoke + G41 evaluation contract | Open a new milestone only to implement camera-aligned held-out rendering/geometry export for a head-anchored method, acquire a stronger licensed benchmark, or complete explicit artifact/privacy review for identifiable media. |
 
 ## G8 Result
 

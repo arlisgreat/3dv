@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="922" height="330" viewBox="0 0 922 330">
+<rect width="100%" height="100%" fill="#f8f8f8"/>
+<text x="10" y="22" font-family="DejaVu Sans, Arial, sans-serif" font-size="13" fill="#141414">G21 real-GT benchmark VLM/manual audit sheet</text>
+<text x="10" y="44" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#464646">Top: RGB views. Bottom: masks. Reviewer checks subject, view, crop, mask, and geometry consistency.</text>
+<text x="10" y="66" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#6e3232">Dry-run sheet is not a PASS unless visual_verdict=PASS and all structural checks pass.</text>
+<text x="10" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_00</text>
+<rect x="10" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="10" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_00_az000.png"/>
+<rect x="10" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="10" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_00_az000.png"/>
+<text x="124" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_01</text>
+<rect x="124" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="124" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_01_az045.png"/>
+<rect x="124" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="124" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_01_az045.png"/>
+<text x="238" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_02</text>
+<rect x="238" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="238" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_02_az090.png"/>
+<rect x="238" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="238" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_02_az090.png"/>
+<text x="352" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_03</text>
+<rect x="352" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="352" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_03_az135.png"/>
+<rect x="352" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="352" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_03_az135.png"/>
+<text x="466" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_04</text>
+<rect x="466" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="466" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_04_az180.png"/>
+<rect x="466" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="466" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_04_az180.png"/>
+<text x="580" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_05</text>
+<rect x="580" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="580" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_05_az225.png"/>
+<rect x="580" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="580" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_05_az225.png"/>
+<text x="694" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_06</text>
+<rect x="694" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="694" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_06_az270.png"/>
+<rect x="694" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="694" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_06_az270.png"/>
+<text x="808" y="96" font-family="DejaVu Sans, Arial, sans-serif" font-size="10" fill="#2d2d2d">view_07</text>
+<rect x="808" y="104" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="808" y="104" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_07_az315.png"/>
+<rect x="808" y="218" width="104" height="104" fill="#e1e1e1" stroke="#bebebe"/>
+<image x="808" y="218" width="104" height="104" preserveAspectRatio="xMidYMid meet" href="/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_07_az315.png"/>
+</svg>

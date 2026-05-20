@@ -13,14 +13,23 @@ Counts:
 | field | value |
 | --- | ---: |
 | tracked_result_artifacts | 1503 |
-| untracked_allowed_sync_candidates | 0 |
+| untracked_allowed_sync_candidates | 10 |
 | blocked_untracked_paths | 0 |
 | oversized_sync_candidates | 0 |
 
 Untracked allowed sync candidates:
 
 ```text
-none
+experiments/metrics/g39_learned_prior_method_gate_20260520.json
+experiments/metrics/g39_learned_prior_method_gate_20260520.md
+experiments/metrics/g40_learned_prior_lam_smoke_20260520.json
+experiments/metrics/g40_learned_prior_lam_smoke_20260520.md
+experiments/metrics/g41_learned_prior_eval_contract_20260520.json
+experiments/metrics/g41_learned_prior_eval_contract_20260520.md
+patches/lam/torch26_vgghead_torchscript_load.patch
+scripts/learned_prior_eval_contract.py
+scripts/learned_prior_method_gate.py
+scripts/summarize_learned_prior_smoke.py
 ```
 
 Blocked paths:
@@ -32,5 +41,5 @@ none
 Decision:
 
 ```text
-All current repo-safe result artifacts are tracked or staged; commit and push this checkpoint.
+All current untracked result artifacts are repo-safe sync candidates. Stage them with the milestone docs, commit, and push.
 ```

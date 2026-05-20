@@ -1,0 +1,14 @@
+*** Begin Patch
+*** Update File: external/LAM/external/vgghead_detector/VGGDetector.py
+@@
+     def _init_models(self,):
+         # vgg_heads_l
+-        self.model = torch.load(self.vggheadmodel_path, map_location='cpu')
++        # PyTorch 2.6+ defaults torch.load to weights_only=True, which rejects
++        # the trusted TorchScript VGGHead archive shipped with the LAM assets.
++        try:
++            self.model = torch.load(self.vggheadmodel_path, map_location='cpu', weights_only=False)
++        except TypeError:
++            self.model = torch.load(self.vggheadmodel_path, map_location='cpu')
+         self.model.to(self._device).eval()
+*** End Patch

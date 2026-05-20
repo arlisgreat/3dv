@@ -105,7 +105,14 @@ feed-forward / head-anchored Gaussian reconstruction under real-GT gates.
 G37 records model/data distribution interpretability: first10 LAM is qualitative
 only, pseudo-view/RI3D exports are diagnostic-only, and the Multiface route is
 real-GT plumbing/numerical evidence without a quality claim. G38 records the
-repo artifact sync gate for PNG/MP4/CSV/JSON/MD outputs.
+repo artifact sync gate for PNG/MP4/CSV/JSON/MD outputs. G39 opens the
+learned-prior/feed-forward/head-anchored Gaussian route only under real-GT,
+VLM/manual, distribution, and artifact gates. G40 runs LAM-20K on one local
+Multiface train view after a PyTorch 2.6+ TorchScript load compatibility patch,
+but records only hashes because the derived MP4s are identifiable/private; the
+repo-safe CC0 point-splat positive-control input is blocked by LAM face tracking.
+G41 blocks any learned-prior quality claim until camera-aligned held-out renders
+or GT geometry metrics are available.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate
@@ -123,6 +130,7 @@ verdict under `experiments/metrics/`:
 PASS_RECONSTRUCTION_TRAINING
 PASS_REAL_GT_BENCHMARK
 PASS_DIAGNOSTIC_ONLY
+PASS_LOCAL_SMOKE_ONLY
 BLOCKED
 ```
 
@@ -145,6 +153,19 @@ python scripts/model_data_distribution_audit.py
 python scripts/artifact_sync_gate.py
 ```
 
+For the learned-prior route, run these gates before interpreting any MP4:
+
+```bash
+python scripts/learned_prior_method_gate.py
+python scripts/summarize_learned_prior_smoke.py
+python scripts/learned_prior_eval_contract.py
+```
+
+LAM Multiface media is private by default. Move generated identifiable MP4s,
+tracking outputs, and contact sheets to `/data1/workspace/airulan/3dv_work/runs`
+and commit only hashes/metrics/MD unless explicit artifact review approves
+publication.
+
 For the current Multiface path, G25 was run by calling RI3D
 `scripts/train_gs_init.py` directly on:
 
@@ -157,7 +178,9 @@ pseudo-view runner. Repeat data, visual/VLM, adapter, render/eval, and
 model/data distribution gates before any post-G33 training step and record them
 in `experiments/metrics/`. After G34-G36, no post-G33 training step is
 authorized unless it opens a redesigned-method milestone with a fresh
-real-GT/data/VLM gate.
+real-GT/data/VLM gate. After G39-G41, no learned-prior MP4 should be called a
+quality result until the method can render held-out Multiface cameras or export
+geometry for GT metrics.
 
 ## Sync Policy
 

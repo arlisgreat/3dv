@@ -57,6 +57,9 @@ closes the current RI3D scaling route; G35 confirms no additional ready
 public/local real-GT benchmark is available; G36 resets the method direction
 toward learned-prior/full-head Gaussian approaches. G37-G38 add model/data
 distribution and artifact-sync safeguards before any future method claim.
+G39-G41 then open the learned-prior route under those gates, run a local LAM
+smoke on the Multiface real-GT train view, and block quality interpretation
+until camera-aligned held-out renders or GT geometry metrics exist.
 
 ## Real GT Benchmark Pivot
 
@@ -111,6 +114,8 @@ G20-G33: acquire one local real-GT compact case, repair adapter/numerical
 G34-G36: stop current RI3D scaling, audit benchmark availability, and reset the
          method direction with current literature.
 G37-G38: audit model/data distribution interpretability and repo artifact sync.
+G39-G41: gate learned-prior/head-anchored Gaussian work, run LAM local smoke,
+         and require held-out camera/geometry export before any quality claim.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -244,6 +249,9 @@ positive control, so they are not the active G16b case.
 | G36 | Method redesign direction | G34/G35 | Done: next method must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views are conditional priors only |
 | G37 | Model/data distribution audit | G36 method reset | Done: current results are qualitative, diagnostic, or plumbing/numerical evidence only; next method must declare in/out distribution before GPU work |
 | G38 | Artifact sync gate | G37 distribution audit and repo-safe manifests | Done: current repo-safe PNG/MP4/CSV/JSON/MD artifacts are sync candidates; blocked raw/private paths are zero |
+| G39 | Learned-prior method gate | G36-G38 pass | Done: real-GT/data/VLM/distribution gates authorize only local LAM smoke or repo-safe positive controls |
+| G40 | LAM learned-prior smoke | G39 pass | Done: Multiface train-view smoke succeeds locally with private hashes only; CC0 point-splat input is blocked by LAM face tracking |
+| G41 | Learned-prior evaluation contract | G40 smoke | Done: current LAM wrapper cannot provide held-out camera-aligned or geometry metrics, so quality claims remain blocked |
 
 ## Expected Final Outputs
 
@@ -255,6 +263,8 @@ The expected final package is:
 2. A corrected first10 failure taxonomy for diffusion pseudo views.
 3. A positive-control reconstruction case with known cameras and GT geometry.
 4. A real-GT benchmark requirement and route audit for the next credible claim.
+5. A learned-prior/head-anchored Gaussian method gate showing that LAM can run
+   locally on real-GT input, but MP4 smoke is not a reconstruction metric.
 ```
 
 ## Current Closure
@@ -292,5 +302,13 @@ the method story should pivot to learned-prior/full-head Gaussian reconstruction
 under real-GT gates. G37-G38 add the two safeguards requested after the
 candidate-pool mistake: model/data distribution must be declared before any
 interpretation, and repo-safe artifacts are explicitly checked for GitHub sync
-without admitting raw/private assets.
+without admitting raw/private assets. G39-G41 complete the first learned-prior
+iteration: the method family is fixed to feed-forward/head-anchored Gaussian;
+LAM-20K runs on a local Multiface train view after a PyTorch 2.6+ TorchScript
+load compatibility patch, but derived media stay private and visual audit shows
+only local execution quality, not a metric-backed reconstruction result. The
+repo-safe CC0 point-splat positive control is blocked for LAM input use because
+face tracking fails. The next action must be a camera-aligned render/geometry
+export adapter, stronger licensed benchmark access, or explicit artifact review,
+not more ungated MP4 generation.
 ```

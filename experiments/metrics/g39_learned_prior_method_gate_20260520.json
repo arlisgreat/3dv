@@ -1,0 +1,112 @@
+{
+  "application_alignment": "The application proposal targets single-image full-head modeling by replacing PanoHead's NeRF rendering with Gaussian representation, using diffusion only as an audited prior for invisible regions, using Transformer-style consistency, and anchoring geometry with FLAME/FaceVerse/3DMM.",
+  "authorized_next_experiments": [
+    "G40a: optional local-only LAM smoke on one Multiface train view; record command, hashes, timing, and manual/VLM notes only; no identifiable media sync.",
+    "G40b: repo-safe LAM smoke on the CC0 synthetic positive-control front view; sync MP4/PNG/JSON/MD, but label it positive-control only.",
+    "G41: design a true head-anchored Gaussian scaffold/adapter that can render held-out cameras or export mesh/point-cloud for GT metrics before any quality claim."
+  ],
+  "blocked_actions": [
+    "Do not train or evaluate reconstruction quality on experiments/downstream_datasets.",
+    "Do not use Multiface GT mesh as input to a single-image method; it is evaluation geometry only.",
+    "Do not publish identifiable Multiface RGB, generated avatar videos, meshes, or textured assets without artifact/privacy review.",
+    "Do not claim learned-prior quality from LAM videos alone; require held-out camera-aligned metrics or geometry metrics.",
+    "Do not restart longer RI3D training from G33 as a method milestone."
+  ],
+  "case_summary": {
+    "case_id": "multiface_debug_6795937_e001_000102_9view",
+    "dataset": "Multiface",
+    "license": "Creative Commons Attribution-NonCommercial 4.0 International",
+    "privacy_status": "recognizable human-subject dataset; public repo export limited to metadata/hashes unless artifact review approves derived contact sheets",
+    "repo_policy": "local benchmark case; commit compact metrics, hashes, and gate reports only unless user explicitly approves identifiable derived PNG export",
+    "view_count": 9
+  },
+  "checks": {
+    "g21_vlm_manual_gate_passed": true,
+    "g36_method_redesign_gate_passed": true,
+    "g37_distribution_audit_passed": true,
+    "g38_artifact_sync_gate_passed": true,
+    "lam_feed_forward_baseline_available_locally": true,
+    "private_multiface_media_export_blocked": true,
+    "pseudo_view_training_blocked": true,
+    "real_gt_case_status": true,
+    "real_gt_view_count_6_to_12": true
+  },
+  "date": "2026-05-20",
+  "decision": "Open G40 only as gated learned-prior smoke/positive-control work. The real-GT/data/VLM premise is satisfied locally, but model-quality claims remain blocked until a head-anchored method produces held-out camera-aligned renders or GT geometry metrics.",
+  "distribution_statement": "LAM-20K is documented as trained on VFHQ + NeRSemble. The current real-GT case is Multiface: a nearby multi-view head-capture domain but not proven in-distribution for the released LAM weights. Therefore LAM-on-Multiface can be interpreted only as local qualitative or plumbing evidence unless we obtain camera-aligned render/geometry outputs and compare against held-out views/GT geometry.",
+  "gate": "G39",
+  "lam_files": {
+    "lam_config": "external/LAM/configs/inference/lam-20k-8gpu.yaml",
+    "lam_flame_template": "external/LAM/model_zoo/human_parametric_models/flame_vhap/head_template_mesh.obj",
+    "lam_runner": "scripts/server/03_run_lam_sample.sh",
+    "lam_weights": "external/LAM/model_zoo/lam_models/releases/lam/lam-20k/step_045500/model.safetensors"
+  },
+  "literature_anchors": [
+    {
+      "date": "2025-02-25 / revised 2025-04-04",
+      "signal": "Single-forward-pass Gaussian head; FLAME canonical points query Transformer image features.",
+      "source": "https://arxiv.org/abs/2502.17796",
+      "work": "LAM"
+    },
+    {
+      "date": "2025-09-09 / revised 2025-10-10",
+      "signal": "One-shot full-head Gaussian synthesis; FLAME sparse points plus transformer, synthetic 3D-GAN priors.",
+      "source": "https://arxiv.org/abs/2509.07552",
+      "work": "PanoLAM"
+    },
+    {
+      "date": "2025-04-19 / revised 2026-03-11",
+      "signal": "Single-image drivable Gaussian head avatar with FLAME-based hierarchical UV Gaussian splatting.",
+      "source": "https://arxiv.org/abs/2504.14373",
+      "work": "SEGA"
+    },
+    {
+      "date": "2026-02-12",
+      "signal": "Feed-forward 360 full-head animatable Gaussian avatar with semantic-aware mesh deformation and UV fusion.",
+      "source": "https://arxiv.org/abs/2602.11693",
+      "work": "OMEGA-Avatar"
+    },
+    {
+      "date": "2026-04-15",
+      "signal": "Structured Plucker-aware Gaussian scaffold and one-step conditional denoising for single-image full-head reconstruction.",
+      "source": "https://arxiv.org/abs/2604.13856",
+      "work": "Any3DAvatar"
+    },
+    {
+      "date": "2026-04-23",
+      "signal": "Feed-forward one-shot animatable mesh head; useful successor signal for topology and texture anchoring.",
+      "source": "https://arxiv.org/abs/2604.22865",
+      "work": "MeshLAM"
+    },
+    {
+      "date": "2026-05-14",
+      "signal": "Few-shot feed-forward Gaussian head reconstruction with multi-view fusion, FLAME prediction, and NeRSemble metrics.",
+      "source": "https://arxiv.org/abs/2605.15320",
+      "work": "FFAvatar"
+    }
+  ],
+  "method_positioning": [
+    {
+      "implication": "Use only as a baseline/smoke until camera-aligned held-out rendering or geometry export is available; LAM uses FLAME canonical points as Transformer queries for Gaussian attributes.",
+      "item": "LAM-20K",
+      "status": "local_runnable_feed_forward_head_anchored_gaussian_baseline"
+    },
+    {
+      "implication": "They define the correct scientific direction: feed-forward full-head priors, FLAME/UV or structured Gaussian scaffolds, dense multi-view supervision, and benchmark metrics.",
+      "item": "PanoLAM / OMEGA / FFAvatar / Any3DAvatar",
+      "status": "latest_method_direction_not_locally_integrated"
+    },
+    {
+      "implication": "Keep as diagnostic evidence only; do not scale training without a new method premise.",
+      "item": "RI3D G21-G33",
+      "status": "closed_numerical_plumbing_route"
+    },
+    {
+      "implication": "May inform failure taxonomy or conditional priors after VLM audit, never GT training views.",
+      "item": "Zero123++ downstream candidate pools",
+      "status": "diagnostic_candidate_pool_only"
+    }
+  ],
+  "premise": "The next credible method route is learned-prior / feed-forward / head-anchored Gaussian head reconstruction, not longer RI3D optimization over pseudo-view candidates.",
+  "verdict": "PASS_REAL_GT_DATA_VLM_METHOD_GATE_LOCAL_ONLY"
+}
