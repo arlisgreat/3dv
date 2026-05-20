@@ -65,7 +65,10 @@ while preserving the same block on quality interpretation because neither gate
 uses held-out Multiface cameras or an aligned metric GT geometry frame. G44 then
 adds a similarity/ICP-aligned mesh diagnostic in the Multiface GT frame, but
 keeps the same no-quality-claim boundary because ICP alignment is not camera
-recovery, verified surface correspondence, or held-out view reconstruction.
+recovery, verified surface correspondence, or held-out view reconstruction. G45
+then renders the aligned LAM mesh into the three held-out Multiface cameras and
+passes silhouette/depth diagnostics, while still blocking RGB/SOTA quality
+claims because native LAM Gaussians and held-out appearance are not evaluated.
 
 ## Real GT Benchmark Pivot
 
@@ -126,6 +129,9 @@ G42-G43: verify LAM local PNG/MP4/PLY/OBJ export and weak normalized mesh sanity
          but keep all identifiable media private and block quality claims.
 G44: add similarity/ICP-aligned LAM-vs-Multiface mesh diagnostic, still
      diagnostic-only and private-artifact-safe.
+G45: project the aligned LAM mesh into held-out Multiface cameras and record
+     silhouette/depth diagnostics, still no RGB reconstruction claim.
+G46: record project completion forecast and user-check risks.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -265,6 +271,8 @@ positive control, so they are not the active G16b case.
 | G42 | LAM local export gate | G41 contract and private artifact policy | Done: local LAM exports 50 PNGs, 50 PLYs, canonical Gaussian PLY, MP4, and mesh OBJs; repo records hashes/metrics only |
 | G43 | LAM-vs-Multiface geometry sanity | G42 export gate | Done: bbox-normalized mesh sanity is non-catastrophic but not scale/camera aligned, so no quality claim |
 | G44 | Similarity/ICP geometry diagnostic | G43 weak geometry sanity | Done: similarity-aligned symmetric mean nearest-neighbor is 17.164824 GT units / 0.037132 normalized, but this remains diagnostic-only |
+| G45 | Held-out camera geometry diagnostic | G44 aligned geometry diagnostic | Done: held-out mask IoU mean 0.708083 and depth mean error 0.029646 of GT median pass diagnostic thresholds; still no RGB/SOTA claim |
+| G46 | Project completion forecast | G45 diagnostic closure and literature monitor | Done: fastest repo-safe diagnostic package is estimated at 2-4 focused work days; stronger RGB method-quality/full-proposal scope needs more time and user decisions |
 
 ## Expected Final Outputs
 

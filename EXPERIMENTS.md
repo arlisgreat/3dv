@@ -63,16 +63,18 @@ G41 learned-prior held-out evaluation contract
 G42 LAM local frame/geometry export gate
 G43 weak normalized LAM-vs-Multiface geometry sanity gate
 G44 similarity/ICP-aligned LAM-vs-Multiface geometry diagnostic gate
+G45 held-out-camera LAM geometry diagnostic gate
+G46 project completion forecast and risk register
 ```
 
 还没有完成：
 
 ```text
-redesigned method implementation on a passing real-GT benchmark
-camera-aligned learned-prior held-out rendering or benchmark-grade aligned GT geometry metric
-quantitative real-GT reconstruction evaluation beyond init/smoke metrics
+native learned-prior held-out RGB rendering without similarity/ICP post-alignment
+benchmark-grade geometry metric with verified correspondence/coverage trimming
+quantitative RGB reconstruction evaluation beyond geometry diagnostics
 publishable artifact review for any identifiable Multiface RGB/mesh result
-public/stronger real-GT benchmark access
+public/stronger real-GT benchmark access for a method-quality table
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -132,7 +134,10 @@ not a catastrophic geometry failure after scale-free normalization, but the
 renders are still LAM motion-camera renders and the geometry comparison is not
 camera/scale aligned. G44 adds a similarity/ICP-aligned mesh diagnostic in the
 Multiface GT frame, but it is still diagnostic-only because ICP alignment is not
-camera recovery, surface correspondence, or held-out view reconstruction.
+camera recovery, surface correspondence, or held-out view reconstruction. G45
+uses that aligned mesh in the three held-out Multiface cameras and passes a
+silhouette/depth geometry diagnostic, but it still does not render native LAM
+Gaussians or evaluate held-out RGB appearance.
 ```
 
 ## 2. Stage 00: Inputs

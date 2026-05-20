@@ -1,0 +1,85 @@
+{
+  "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+  "blocked_interpretations": [
+    "Do not report G45 as photometric reconstruction quality.",
+    "Do not compare G45 to RGB PSNR/SSIM/LPIPS or SOTA tables.",
+    "Do not treat similarity/ICP alignment as camera recovery or metric coordinate recovery.",
+    "Do not use held-out RGB pixels for training; this gate consumes only masks/depth arrays derived from the GT mesh.",
+    "Do not publish private Multiface/LAM PNG/MP4/PLY/OBJ outputs without explicit artifact review.",
+    "Do not reintroduce experiments/downstream_datasets as training or evaluation data."
+  ],
+  "case_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view",
+  "data_gate": "PASS_REAL_GT_HELDOUT_DIAGNOSTIC. Inputs are G21/G23 Multiface real captured cameras/masks/depth, G42 private LAM shaped mesh, and G44 similarity transform. No pseudo-view candidate pool, experiments/downstream_datasets export, LAM motion-camera MP4, or held-out RGB image is used for training or committed output.",
+  "date": "2026-05-20",
+  "decision": "G45 is the first held-out-camera geometry diagnostic for the learned-prior route. It checks whether the aligned LAM mesh projects into held-out Multiface cameras with non-catastrophic silhouette/depth agreement. It remains below a final method result because it uses similarity-aligned mesh geometry, not the native learned-prior camera frame or RGB held-out rendering.",
+  "g44_json": "/data1/workspace/airulan/3dv/experiments/metrics/g44_lam_similarity_geometry_gate_20260520.json",
+  "gate": "G45",
+  "heldout_cameras": [
+    "400012",
+    "400041",
+    "400042"
+  ],
+  "heldout_results": [
+    {
+      "camera": "400012",
+      "depth_abs_mean_mm": 24.334178919993526,
+      "depth_abs_mean_over_gt_median": 0.023465049747074126,
+      "depth_abs_median_mm": 22.61322588113194,
+      "depth_abs_p95_mm": 57.99402836387375,
+      "gt_coverage": 0.230316162109375,
+      "gt_depth_median_mm": 1037.039306640625,
+      "intersection_pixels": 11515,
+      "mask_iou": 0.7184302470676317,
+      "pred_coverage": 0.1899871826171875,
+      "pred_depth_median_mm": 1049.294763507942,
+      "projected_faces": 2667,
+      "union_pixels": 16028,
+      "view_index": 6
+    },
+    {
+      "camera": "400041",
+      "depth_abs_mean_mm": 49.08986422569444,
+      "depth_abs_mean_over_gt_median": 0.0472286506710804,
+      "depth_abs_median_mm": 41.885441515274124,
+      "depth_abs_p95_mm": 122.16234875225383,
+      "gt_coverage": 0.224578857421875,
+      "gt_depth_median_mm": 1039.4085693359375,
+      "intersection_pixels": 11117,
+      "mask_iou": 0.6729011561043521,
+      "pred_coverage": 0.1972198486328125,
+      "pred_depth_median_mm": 1082.735918630276,
+      "projected_faces": 2968,
+      "union_pixels": 16521,
+      "view_index": 7
+    },
+    {
+      "camera": "400042",
+      "depth_abs_mean_mm": 19.014322807667497,
+      "depth_abs_mean_over_gt_median": 0.018242888250723396,
+      "depth_abs_median_mm": 17.71764674391079,
+      "depth_abs_p95_mm": 43.00540331227751,
+      "gt_coverage": 0.2245330810546875,
+      "gt_depth_median_mm": 1042.286865234375,
+      "intersection_pixels": 11756,
+      "mask_iou": 0.7329177057356608,
+      "pred_coverage": 0.199676513671875,
+      "pred_depth_median_mm": 1050.97727445816,
+      "projected_faces": 2808,
+      "union_pixels": 16040,
+      "view_index": 8
+    }
+  ],
+  "lam_mesh": "/data1/workspace/airulan/3dv_work/runs/g42_lam_export_multiface_local_20260520/cano_gs/cano_gs/400017_000102_shaped_mesh.obj",
+  "premise": "Use the G44 similarity-aligned LAM shaped mesh and the G23 real-camera adapter to render geometry into held-out Multiface cameras, then compare silhouette and z-buffer depth against held-out GT masks/depth arrays without committing private images or meshes.",
+  "summary": {
+    "mean_depth_abs_over_gt_median": 0.02964552955629264,
+    "mean_mask_iou": 0.7080830363025482,
+    "min_mask_iou": 0.6729011561043521
+  },
+  "thresholds": {
+    "max_mean_depth_abs_over_gt_median": 0.12,
+    "min_mean_mask_iou": 0.45,
+    "min_per_view_mask_iou": 0.35
+  },
+  "verdict": "PASS_HELDOUT_CAMERA_RENDER_CONTRACT_DIAGNOSTIC_ONLY_NO_RECONSTRUCTION_QUALITY_CLAIM"
+}

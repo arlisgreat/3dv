@@ -145,7 +145,12 @@ catastrophic geometry/export failure, but it is not a camera-aligned or metric
 GT reconstruction result. G44 fits one similarity/ICP transform from the LAM
 shaped mesh into the Multiface GT mesh frame and records a stronger aligned
 geometry diagnostic; it still lacks held-out camera rendering, verified surface
-correspondence, and a publishable benchmark artifact package.
+correspondence, and a publishable benchmark artifact package. G45 renders the
+G44-aligned LAM mesh into the three held-out Multiface cameras and compares
+silhouette/depth against GT-derived masks/z-buffers. This is the first
+held-out-camera learned-prior geometry diagnostic, but still not RGB
+reconstruction quality because it depends on similarity/ICP alignment and does
+not render native LAM Gaussians or held-out RGB appearance.
 ```
 
 ## Completed Milestones
@@ -203,12 +208,14 @@ correspondence, and a publishable benchmark artifact package.
 | G42 | done, export pass no quality claim | LAM local frame/geometry export gate | `experiments/metrics/g42_lam_export_gate_20260520.md` | LAM exports 50 PNG frames, 50 per-frame PLYs, canonical Gaussian PLY, MP4, and mesh OBJs locally; private media remain under `3dv_work`, and the run is still not held-out camera aligned. |
 | G43 | done, geometry sanity pass no quality claim | Weak normalized LAM mesh vs Multiface GT mesh sanity | `experiments/metrics/g43_lam_geometry_sanity_gate_20260520.md` | Bbox-normalized nearest-neighbor sanity is non-catastrophic, but independent normalization and missing camera/scale alignment block any reconstruction-quality claim. |
 | G44 | done, aligned geometry diagnostic pass no quality claim | Similarity/ICP-aligned LAM mesh vs Multiface GT mesh diagnostic | `experiments/metrics/g44_lam_similarity_geometry_gate_20260520.md` | Symmetric mean nearest-neighbor distance after similarity/ICP alignment is 17.164824 GT units, normalized 0.037132 by GT bbox diagonal; this is diagnostic only, not final reconstruction quality. |
+| G45 | done, held-out geometry diagnostic pass no RGB quality claim | Render G44-aligned LAM mesh into Multiface held-out cameras | `experiments/metrics/g45_lam_heldout_camera_geometry_gate_20260520.md` | Held-out mask IoU mean 0.708083 and depth mean error 0.029646 of GT median pass geometry diagnostics; no held-out RGB/SOTA claim. |
+| G46 | done, forecast pass | Project completion forecast and risk register | `experiments/metrics/g46_project_completion_forecast_20260520.md` | Repo-safe diagnostic package can close in roughly 2-4 focused work days; RGB method-quality or full proposal scope needs more work and user decisions. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current learned-prior export/geometry diagnostic loop | Stop interpreting LAM MP4, exported PLY/OBJ, normalized mesh sanity, or ICP-aligned geometry diagnostics as reconstruction quality | G39 method gate + G40 local LAM smoke + G41 evaluation contract + G42 export gate + G43 geometry sanity + G44 aligned geometry diagnostic | Open a new milestone only to implement camera-aligned held-out rendering for a head-anchored method, benchmark-grade aligned geometry metrics with verified surface correspondence, acquire a stronger licensed benchmark, or complete explicit artifact/privacy review for identifiable media. |
+| none | closed for current learned-prior held-out geometry loop | Stop interpreting LAM MP4, exported PLY/OBJ, normalized mesh sanity, ICP-aligned geometry, or held-out silhouette/depth diagnostics as final RGB reconstruction quality | G39-G46 | Open a new milestone only to implement native held-out RGB/camera rendering, run artifact/privacy review, acquire a stronger licensed benchmark, or package the final paper/report. |
 
 ## G8 Result
 

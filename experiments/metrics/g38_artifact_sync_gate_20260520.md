@@ -13,14 +13,18 @@ Counts:
 | field | value |
 | --- | ---: |
 | tracked_result_artifacts | 1516 |
-| untracked_allowed_sync_candidates | 0 |
+| untracked_allowed_sync_candidates | 5 |
 | blocked_untracked_paths | 0 |
 | oversized_sync_candidates | 0 |
 
 Untracked allowed sync candidates:
 
 ```text
-none
+experiments/metrics/g45_lam_heldout_camera_geometry_gate_20260520.json
+experiments/metrics/g45_lam_heldout_camera_geometry_gate_20260520.md
+experiments/metrics/g46_project_completion_forecast_20260520.json
+experiments/metrics/g46_project_completion_forecast_20260520.md
+scripts/lam_heldout_camera_geometry_gate.py
 ```
 
 Blocked paths:
@@ -32,5 +36,5 @@ none
 Decision:
 
 ```text
-All current repo-safe result artifacts are tracked or staged; commit and push this checkpoint.
+All current untracked result artifacts are repo-safe sync candidates. Stage them with the milestone docs, commit, and push.
 ```
