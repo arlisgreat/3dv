@@ -1,0 +1,13 @@
+{
+  "date": "2026-05-20",
+  "milestone": "G17c",
+  "case_id": "wikimedia_blender_head_cc0",
+  "verdict": "PASS_EXECUTION_AND_EXPORT__FAIL_RECONSTRUCTION_QUALITY",
+  "scope": "POSITIVE_CONTROL_ONLY",
+  "rgb_mp4_frames": 120,
+  "depth_mp4_frames": 120,
+  "width": 256,
+  "height": 256,
+  "visual_audit": "Input views form a coherent head orbit; iter500 render remains ghosted and fragmented, so reconstruction quality fails.",
+  "decision": "Do not scale current RI3D positive-control route without a stronger geometry/initialization strategy."
+}

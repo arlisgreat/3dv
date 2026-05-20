@@ -683,6 +683,20 @@ experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
 experiments/figures/ri3d_gt_positive_control_iter10_inputs.png
 experiments/figures/ri3d_gt_positive_control_iter10_renders.png
 experiments/reconstructions/ri3d_gt_positive_control_iter10/
+experiments/metrics/wikimedia_blender_head_cc0_g17c_iter500_preflight_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_g17c_iter500_preflight_20260520.json
+experiments/metrics/ri3d_gt_positive_control_iter500.csv
+experiments/metrics/ri3d_gt_positive_control_iter500_observations.md
+experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md
+experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.json
+experiments/figures/ri3d_gt_positive_control_iter500_inputs.png
+experiments/figures/ri3d_gt_positive_control_iter500_renders.png
+experiments/reconstructions/ri3d_gt_positive_control_iter500/
+experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.csv
+experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md
+experiments/figures/first10_failure_taxonomy_resplit3x2_20260520.png
+experiments/metrics/paper_package_20260520.md
+experiments/metrics/milestone_closure_20260520.md
 ```
 
 G14 结论：
@@ -731,7 +745,12 @@ PNG/MP4 同步和下游重建 plumbing。G17a provenance sanity 已确认 8 个�
 8 条 camera 记录、PNG 尺寸、mask coverage、MP4 可读性和 raw mesh exclusion
 全部通过。G17b RI3D iter10 smoke 已完成 conversion/init/train/render/export，
 但 render sheet 仍是 smoke 质量且有 ghosted fragments，因此只是 execution pass，
-不是重建质量结论。
+不是重建质量结论。G17c iter500 继续通过执行和 MP4 导出 gate，但视觉上仍是
+ghosted multi-fragment head，不是重建质量通过。G18 已完成 corrected 3x2
+first10 taxonomy：60 个 view 中 10 个 identity_supervision、37 个
+geometry_only、13 个 reject；budget4 选中的 40 个 view 仍有 8 个 severe/reject。
+G19 已收口为 paper package：failure-aware gating 是主结论，web first10
+仍 blocked for reconstruction training，真实 GT 质量结论仍等待许可数据。
 ```
 
 对比指标：
@@ -770,6 +789,7 @@ D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 当前最重要的未闭环问题：
 
 ```text
-在真实多视角/mesh/point-cloud GT case 上，failure-aware pseudo-view protocol
-是否能解释或避免 web pseudo-view 路线中出现的身份漂移、几何畸变和碎片失败？
+真实多视角/mesh/point-cloud GT case 仍受许可/访问约束。下一步若继续实验，
+应先走新分支：要么获取 licensed real GT case，要么引入更强 geometry/initialization
+方法；不要从现有 web first10 candidate pool 继续训练。
 ```

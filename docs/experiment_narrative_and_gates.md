@@ -131,9 +131,9 @@ positive control, so they are not the active G16b case.
 | --- | --- | --- | --- |
 | G16a | Real GT access gate | Web first10 remains diagnostic-only | Licensed compact real case with images, cameras, and GT mesh/point cloud |
 | G16b | Mesh-derived positive-control gate | Public mesh with redistributable derived outputs | 6-12 rendered views, cameras, depth/mask, contact sheet, and visual audit |
-| G17 | Reconstruction positive-control rerun | G16b passes | End-to-end run on the GT case with PNG/MP4/metrics synced |
-| G18 | Corrected first10 failure taxonomy | G15c/G16 gates block web training | Stable taxonomy after corrected 3x2 split and visual review |
-| G19 | Paper packaging | G17 and G18 are stable | Claims, figures, tables, limitations, and supplementary record are ready |
+| G17 | Reconstruction positive-control rerun | G16b passes | Iter10/iter500 execute and export; visual quality fails, so current RI3D route is diagnostic only |
+| G18 | Corrected first10 failure taxonomy | G15c/G16 gates block web training | 60 corrected views labeled; web first10 remains diagnostic-only |
+| G19 | Paper packaging | G17 and G18 are stable | Claims, figures, limitations, and milestone closure are recorded |
 
 ## Expected Final Outputs
 
@@ -145,4 +145,17 @@ The expected final package is:
 3. A positive-control reconstruction case with known cameras and GT geometry.
 4. A paper claim that is conservative: pseudo views can guide reconstruction only
    after reliability, visual, and geometry gates pass.
+```
+
+## Current Closure
+
+As of 2026-05-20:
+
+```text
+G16a real-capture GT remains externally blocked by access/license constraints.
+G16b positive-control data gate passes.
+G17 iter10 and iter500 both execute and export valid MP4s, but iter500 still
+fails visual reconstruction quality with ghosted multi-fragment heads.
+G18 corrected first10 taxonomy is complete and diagnostic-only.
+G19 paper package and milestone closure are complete.
 ```

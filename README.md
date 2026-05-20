@@ -230,8 +230,14 @@ experiments/gt_cases/wikimedia_blender_head_cc0/
 experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
 experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md
 experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
+experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md
+experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md
+experiments/metrics/paper_package_20260520.md
+experiments/metrics/milestone_closure_20260520.md
 experiments/reconstructions/ri3d_gt_positive_control_iter10/
+experiments/reconstructions/ri3d_gt_positive_control_iter500/
 experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png
+experiments/figures/first10_failure_taxonomy_resplit3x2_20260520.png
 ```
 
 G16 access/audit records:

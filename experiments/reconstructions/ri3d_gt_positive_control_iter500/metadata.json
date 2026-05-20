@@ -1,0 +1,7 @@
+{
+  "name": "ri3d_gt_positive_control_iter500",
+  "date": "2026-05-20",
+  "description": "G17c CC0 mesh-derived positive-control RI3D 500-iteration run; execution pass but reconstruction-quality fail by visual audit.",
+  "source_run_root": "experiments/downstream_3d/ri3d_gt_positive_control_iter500",
+  "metrics_csv": "experiments/metrics/ri3d_gt_positive_control_iter500.csv"
+}
