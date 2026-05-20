@@ -84,9 +84,16 @@ G21 PASS_REAL_GT_BENCHMARK exists only for the local Multiface debug compact
 case under /data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/.
 Repo sync should include metrics, hashes, and repo-safe mask-only summaries, not
 raw person-identifying RGB images or meshes unless explicitly reviewed.
-G22 currently blocks before training because the current RI3D/evaluation adapter
-does not preserve Multiface per-view intrinsics, real-camera depth/conf priors,
-or held-out/mesh metrics.
+G22 blocked direct training because the old RI3D/evaluation adapter did not
+preserve Multiface per-view intrinsics, real-camera depth/conf priors, or
+held-out/mesh metrics.
+G23 passes a local-only Multiface real-camera adapter preflight.
+G24 passes the CPU file-contract gate for that adapter.
+G25 passes a minimal RI3D init-only smoke on the adapter; it is not a
+reconstruction-quality result. G26 passes held-out render/eval smoke with
+local-only outputs and compact metrics. G27 blocks small-step training because
+RI3D reports NaN loss even under plain L1-only settings. Do not run longer
+training until G28 loss-path diagnosis.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate
@@ -118,8 +125,17 @@ For real-GT milestones, run:
 python scripts/real_gt_benchmark_gate.py --case-root <case_root> --case-id <case_id> --visual-verdict PASS
 ```
 
-Repeat the gate before any G22 training/evaluation step and record model/data
-distribution assumptions in `experiments/metrics/`.
+For the current Multiface path, G25 was run by calling RI3D
+`scripts/train_gs_init.py` directly on:
+
+```text
+/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102
+```
+
+Do not use `scripts/run_ri3d_first2.sh` for G25/G26/G27; it is a historical
+pseudo-view runner. Repeat data, visual/VLM, adapter, render/eval, and
+model/data distribution gates before any post-G28 training step and record them
+in `experiments/metrics/`.
 
 ## Sync Policy
 

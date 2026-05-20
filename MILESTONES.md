@@ -66,8 +66,10 @@ Current unresolved claim:
 Filtered pseudo views and role metadata are only candidate pools. They look
 more reliable as 2D candidates, but G8-G14 show they have not been proven to be
 valid reconstruction training supervision. The route is now invalid for
-quality claims even after G21; `PASS_REAL_GT_BENCHMARK` only authorizes the
-real-GT G22 preflight, not renewed web pseudo-view/RI3D training.
+quality claims even after G21; `PASS_REAL_GT_BENCHMARK` only authorizes
+real-GT adapter and reconstruction preflights, not renewed web pseudo-view/RI3D
+training. G23/G24 pass only the local adapter and CPU file-contract gates; they
+are not reconstruction-quality results.
 ```
 
 ## Mandatory Data Audit Gate
@@ -105,6 +107,10 @@ distorted, so web first10 remains diagnostic-only.
 G21 now records PASS_REAL_GT_BENCHMARK on a local Multiface debug compact case.
 This unlocks only the next real-GT preflight. It does not make any historical
 web pseudo-view candidate pool valid for reconstruction training.
+G22 correctly blocked direct GPU reconstruction because the old adapter did not
+preserve real-camera assumptions. G23/G24 now repair the local adapter contract
+enough to allow only the smallest RI3D init smoke on an explicitly selected
+idle GPU.
 ```
 
 ## Completed Milestones
@@ -139,12 +145,18 @@ web pseudo-view candidate pool valid for reconstruction training.
 | G19 | done | Paper package and milestone closure | `experiments/metrics/paper_package_20260520.md` | Conservative claim, figure set, limitations, and closure state recorded. |
 | G20 | done | Real-GT benchmark pivot and distribution audit | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D route is invalid for quality claims; real-GT benchmark is the mandatory next gate. |
 | G21 | done, local pass | Compact real-GT benchmark acquisition and VLM/manual gate | `experiments/metrics/g21_multiface_debug_gate_20260520.md`, `experiments/metrics/g21_real_gt_benchmark_gate_20260520.md`, `experiments/figures/g21_multiface_debug_mask_gate_20260520.png` | Multiface debug case passes local real-GT gate with 9 real views, cameras, masks, and mesh; raw RGB/mesh remain in `3dv_work` pending artifact review. |
+| G22 | done, blocked before training | Real-GT reconstruction/evaluation preflight on G21 | `experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md` | Direct GPU training is blocked because the old RI3D/evaluation path did not preserve Multiface real-camera intrinsics, depth/confidence priors, or held-out/mesh metrics. |
+| G23 | done, adapter pass | Local-only Multiface real-camera adapter | `experiments/metrics/g23_multiface_real_camera_adapter_20260520.md`, `experiments/figures/g23_multiface_adapter_depth_mask_summary_20260520.png` | Affine-normalized RI3D-readable adapter, masks, depth/conf arrays, and train/heldout split pass preflight; raw RGB/mesh remain local. |
+| G24 | done, contract pass | CPU-only RI3D adapter file-contract gate | `experiments/metrics/g24_real_gt_adapter_contract_gate_20260520.md` | File contracts, centered intrinsics, local-only policy, train/test split, and metrics skeleton pass; no GPU training has started. |
+| G25 | done, init-only pass | Minimal RI3D init-only smoke on the G24 adapter | `experiments/metrics/g25_ri3d_multiface_init_smoke_20260520.md` | RI3D loads the adapter and saves an iteration-1 point cloud with 67,410 points; no full training or quality claim. |
+| G26 | done, eval smoke pass | Held-out render/evaluation smoke from the G25 point cloud | `experiments/metrics/g26_heldout_eval_smoke_20260520.md` | Held-out metrics execute without saving PNG/JPEG/MP4; PSNR 4.2685, LPIPS 0.5011 are init-only smoke numbers, not quality. |
+| G27 | done, blocked | Tiny RI3D train10 numerical gate | `experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md` | Training executes but reports NaN loss even for plain L1-only; longer training and quality claims are blocked. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G22 | blocked before training | Real-GT reconstruction/evaluation preflight on the G21 case | `experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md` | Current RI3D/evaluation adapter does not preserve Multiface per-view intrinsics, real-camera depth/conf priors, or metrics; no GPU training started. |
+| G28 | blocked/pending diagnostic | RI3D loss-path numerical diagnostic | G27 `BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN` | Inspect first-step render/loss tensors and fix/patch only if the source of NaN is identified. No longer-run training before this gate. |
 
 ## G8 Result
 
@@ -605,8 +617,11 @@ G20 benchmark-first pivot is complete.
 G21 compact real-GT benchmark acquisition is complete locally on a Multiface
 debug case. Raw RGB/mesh assets remain local pending artifact review.
 G22 real-GT reconstruction/evaluation preflight is blocked before training by
-model/data adapter mismatch; current RI3D plumbing should not be run on the
-Multiface case until per-frame camera, depth, and metric adapters exist.
+model/data adapter mismatch. G23/G24 repair the local-only adapter and file
+contract enough for smoke testing. G25 passes RI3D init-only loading and point
+cloud save, and G26 passes held-out eval plumbing without saving media. G27
+blocks training because the RI3D train loop reports NaN loss even under plain
+L1-only settings.
 ```
 
 Final purpose:
@@ -614,8 +629,10 @@ Final purpose:
 ```text
 Do not claim solved single-image full-head reconstruction.
 Use G2-G19 as failure taxonomy and stop-loss diagnostics.
-Resume quality experiments only after the G22 adapter blockers are fixed and
-G21/G22 gates are rerun.
+Resume quality experiments only after each real-GT data, visual/VLM, adapter,
+render/eval, and model/data distribution gate passes on the Multiface adapter
+or an equivalent licensed benchmark. The active next gate is G28 loss-path
+numerical diagnosis; no longer-run training should run before it.
 ```
 
 Closure artifacts:

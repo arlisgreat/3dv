@@ -1,0 +1,79 @@
+{
+  "date": "2026-05-20",
+  "gate": "G27",
+  "verdict": "BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN",
+  "secondary_verdict": "NO_QUALITY_CLAIM",
+  "scope": "Tiny real-GT RI3D training smoke from the G25 initialization",
+  "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+  "source_point_cloud": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520/point_cloud/iteration_1/point_cloud.ply",
+  "runs": [
+    {
+      "name": "g27_mask_depth_silhouette",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g27_ri3d_multiface_train10_20260520",
+      "exit_code": 0,
+      "iterations": 10,
+      "loss_status": "nan",
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414293766021729,
+      "train_psnr": 3.527279233932495
+    },
+    {
+      "name": "g27b_mask_rgb_only_no_depth_silhouette",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g27b_ri3d_multiface_train10_rgb_only_20260520",
+      "exit_code": 0,
+      "iterations": 10,
+      "loss_status": "nan",
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414293766021729,
+      "train_psnr": 3.527279233932495
+    },
+    {
+      "name": "g27c_plain_rgb_no_mask_no_random_background",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g27c_ri3d_multiface_train10_plain_rgb_20260520",
+      "exit_code": 0,
+      "iterations": 10,
+      "loss_status": "nan",
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414348959922791,
+      "train_psnr": 3.5272224426269534
+    },
+    {
+      "name": "g27d_plain_l1_only",
+      "run_root": "/data1/workspace/airulan/3dv_work/runs/g27d_ri3d_multiface_train10_l1_only_20260520",
+      "exit_code": 0,
+      "iterations": 10,
+      "loss_status": "nan",
+      "test_l1": 0.5926034251848856,
+      "test_psnr": 4.268513361612955,
+      "train_l1": 0.6414766907691956,
+      "train_psnr": 3.526849460601807
+    }
+  ],
+  "finite_point_cloud_check": {
+    "g25_iteration_1_nonfinite_total": 0,
+    "g27_iteration_10_nonfinite_total": 0,
+    "g27c_iteration_10_nonfinite_total": 0,
+    "point_count": 67410,
+    "interpretation": "Saved point clouds remain finite, so the blocker is in the training loss/render-loss path rather than a nonfinite PLY artifact."
+  },
+  "artifact_policy": {
+    "local_only_outputs": [
+      "iteration_10 point clouds",
+      "cfg_args",
+      "cameras.json",
+      "training logs"
+    ],
+    "repo_safe_outputs_only": true,
+    "do_not_commit": [
+      "PLY point clouds",
+      "local logs",
+      "adapter RGB",
+      "identifiable renders"
+    ]
+  },
+  "interpretation": "G27 executes but fails the numerical-health gate: loss is NaN even for plain L1-only training with no mask, no random background, no depth loss, and no silhouette loss. Metrics stay effectively identical to the initialization smoke, so no training-quality claim is allowed.",
+  "next_gate": "G28 loss-path numerical diagnostic before any further RI3D training."
+}

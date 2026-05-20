@@ -41,6 +41,11 @@ CC0 mesh positive-control gate and RI3D visual fail
 real-GT benchmark-first pivot
 G21 local Multiface debug real-GT benchmark gate
 G22 real-GT reconstruction/evaluation preflight gate
+G23 Multiface local-only real-camera adapter preflight
+G24 CPU real-GT adapter contract gate
+G25 RI3D Multiface init-only smoke
+G26 held-out render/evaluation smoke
+G27 RI3D train10 numerical gate
 ```
 
 还没有完成：
@@ -49,7 +54,8 @@ G22 real-GT reconstruction/evaluation preflight gate
 reconstruction rerun on real cameras + mesh/point-cloud GT
 quantitative real-GT reconstruction evaluation
 publishable artifact review for any identifiable Multiface RGB/mesh result
-real-camera RI3D/evaluation adapter for per-view intrinsics, depth/conf, metrics
+G28 loss-path numerical diagnostic before any longer training
+small-step real-GT training only after G28 resolves the NaN blocker
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -80,6 +86,12 @@ PASS_REAL_GT_BENCHMARK; new method claims still require a separate G22
 reconstruction/evaluation preflight on that real captured case. G22 is currently
 blocked before training because the existing RI3D/evaluation adapter assumes a
 global synthetic-style camera model and lacks real-camera depth/metric plumbing.
+G23/G24 resolve this only to the level of local adapter and CPU contract gates:
+they authorize a smallest init-only smoke, not a reconstruction-quality claim.
+G25 passes that init-only smoke and saves a point cloud locally; the active next
+gate then became G26 held-out render/eval smoke. G26 passes eval plumbing, but
+G27 blocks training because RI3D reports NaN loss even under plain L1-only
+settings.
 ```
 
 ## 2. Stage 00: Inputs
@@ -563,7 +575,8 @@ CPU 端准备脚本：
 
 ```text
 Historical diagnostic reproduction only. Do not run these as a new quality
-experiment; G21 permits only real-GT G22 preflight work.
+experiment; G21 permits only real-GT adapter/preflight work, and G23/G24 pass
+only the local adapter contract for the Multiface case.
 ```
 
 ```bash
@@ -780,8 +793,10 @@ readiness：Multiface route 的 metadata/KRT/frame schema 已经站住。G21 进
 9 个同帧真实 captured views、KRT cameras、projected masks 和 tracked OBJ 均
 满足 benchmark premise；原始 RGB/mesh 仍留在 3dv_work 等待 artifact review。
 G20 进一步把路线正式切换为 benchmark-first：旧 pseudo-view/RI3D 路线只保留
-诊断价值，不再作为质量主实验；下一步是 G22 real-GT reconstruction/evaluation
-preflight。
+诊断价值，不再作为质量主实验。G22 已阻塞直接训练；G23/G24 已完成 local-only
+Multiface adapter 和 CPU contract gate；G25 已完成最小 init-only smoke；G26
+已完成 held-out render/eval smoke。G27 十步训练被 NaN loss 阻塞，下一步只能
+是 G28 loss-path 数值诊断。
 ```
 
 对比指标：
@@ -824,9 +839,11 @@ D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 Full H3DS/publishable benchmark access and artifact publication review remain
 open, but G21 has completed the local Multiface debug compact case gate:
 PASS_REAL_GT_BENCHMARK with real captured cameras, masks, and tracked mesh.
-下一步应转 G22：在真实 captured cameras + mesh 上做最小 reconstruction/evaluation
-preflight，并在训练前再次做数据、VLM 和模型/测试数据分布审计。不要从现有
-web first10 candidate pool 继续训练，也不要把 RI3D 旧结果解释成质量结论。
-当前 G22 审计已阻塞训练：per-view intrinsics、real-camera depth/conf maps、
-held-out view / mesh metrics adapter 都未站住。
+G22 已阻塞直接训练，因为旧 adapter 的 per-view intrinsics、real-camera
+depth/conf maps、held-out view / mesh metrics 没站住。G23/G24 现在只把
+Multiface local-only adapter 和 RI3D file contract 补到可 smoke 的状态，G25
+已证明 RI3D 能加载 adapter 并保存初始化点云。G26 已证明 held-out render/eval
+指标链路能跑且不保存可识别媒体。G27 证明当前 RI3D train loop 数值不健康：
+十步训练 loss 为 NaN，且 plain L1-only 也无法消除。不要从现有 web first10
+candidate pool 继续训练，也不要把 G23-G27 或旧 RI3D 结果解释成质量结论。
 ```

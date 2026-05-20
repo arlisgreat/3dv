@@ -49,8 +49,10 @@ They remain diagnostic-only.
 ```
 
 No milestone may restart reconstruction training from a generated candidate pool
-or RI3D export. `PASS_REAL_GT_BENCHMARK` only authorizes a real-GT G22 preflight
-on the passing captured benchmark case or an equivalent licensed case.
+or RI3D export. `PASS_REAL_GT_BENCHMARK` only authorizes real-GT adapter,
+initialization, render/eval, or training gates on the passing captured benchmark
+case or an equivalent licensed case. G23/G24/G25 are not reconstruction-quality
+results. G26/G27 also remain plumbing/numerical gates, not quality claims.
 
 ## Real GT Benchmark Pivot
 
@@ -211,6 +213,12 @@ positive control, so they are not the active G16b case.
 | G20 | Real-GT benchmark pivot | Old route cannot support quality claims | Benchmark spec, route audit, and distribution gate recorded |
 | G21 | Compact real-GT benchmark acquisition | H3DS token or FaceScape/Multiface raw access | Done locally on Multiface debug case with PASS_REAL_GT_BENCHMARK; raw assets remain local |
 | G22 | Real-GT reconstruction/evaluation preflight | G21 local pass, repeated data/VLM/distribution audit | Blocked before training: current RI3D/evaluation adapter does not preserve Multiface per-view intrinsics/depth/metrics |
+| G23 | Local-only Multiface real-camera adapter | G22 blocker recorded | Adapter, depth/conf arrays, and mask/depth-only audit figure pass preflight |
+| G24 | CPU adapter contract gate | G23 pass | RI3D file contracts, local-only policy, split, and metrics skeleton pass |
+| G25 | RI3D init-only smoke | G24 pass and idle GPU selected | RI3D loads adapter and saves iteration-1 point cloud; no quality claim |
+| G26 | Held-out render/eval smoke | G25 pass | Done: numeric held-out metrics recorded; no identifiable PNG/JPEG/MP4 committed |
+| G27 | Tiny train10 numerical gate | G26 pass | Blocked: RI3D training loss is NaN even for plain L1-only |
+| G28 | Loss-path numerical diagnostic | G27 blocked | Pending before any longer training |
 
 ## Expected Final Outputs
 
@@ -242,8 +250,11 @@ G18 corrected first10 taxonomy is complete and diagnostic-only.
 G19 paper package and milestone closure are complete.
 G20 real-GT benchmark pivot is complete.
 G21 compact real-GT acquisition is complete locally with
-PASS_REAL_GT_BENCHMARK. G22 blocks before training because the current
-RI3D/evaluation adapter does not preserve Multiface real-camera intrinsics,
-depth/confidence priors, or metrics. The next action is adapter work and
-re-gating, not renewed web pseudo-view training.
+PASS_REAL_GT_BENCHMARK. G22 blocks direct training on the old adapter mismatch.
+G23/G24 pass the local-only Multiface adapter and CPU contract gates. G25 passes
+RI3D init-only loading and saves a local point cloud. G26 passes held-out
+render/eval plumbing without saving identifiable media. G27 blocks training
+because the RI3D train loop reports NaN loss even in plain L1-only settings.
+The next action is G28 numerical diagnosis, not renewed web pseudo-view
+training or longer RI3D training.
 ```

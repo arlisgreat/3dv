@@ -25,4 +25,9 @@ real_gt_benchmark_pivot_20260520.md
 g21_real_gt_benchmark_gate_20260520.md
 g21_multiface_debug_gate_20260520.md
 g22_real_gt_reconstruction_preflight_20260520.md
+g23_multiface_real_camera_adapter_20260520.md
+g24_real_gt_adapter_contract_gate_20260520.md
+g25_ri3d_multiface_init_smoke_20260520.md
+g26_heldout_eval_smoke_20260520.md
+g27_ri3d_train10_numerical_gate_20260520.md
 ```

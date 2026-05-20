@@ -11,6 +11,11 @@ NO_PSEUDOVIEW_OR_RI3D_SCALING_WITHOUT_PASS_REAL_GT_BENCHMARK
 G20_BENCHMARK_SPEC_COMPLETE
 G21_REAL_GT_COMPACT_CASE_PASS_LOCAL
 RAW_IDENTIFIABLE_ASSETS_LOCAL_ONLY_PENDING_ARTIFACT_REVIEW
+G23_REAL_CAMERA_ADAPTER_PREFLIGHT_PASS
+G24_REAL_GT_ADAPTER_CONTRACT_PASS
+G25_RI3D_INIT_ONLY_SMOKE_PASS
+G26_HELDOUT_RENDER_EVAL_SMOKE_PASS
+G27_TRAIN10_NUMERICAL_HEALTH_BLOCKED_NAN
 ```
 
 ## Core Purpose After Pivot
@@ -104,16 +109,33 @@ do use old pseudo-view/RI3D outputs only for diagnostic figures and failure taxo
 | --- | --- | --- |
 | G20 | complete | Benchmark-first pivot, route audit, and distribution gate are recorded. |
 | G21 | complete locally | Multiface debug compact case passes PASS_REAL_GT_BENCHMARK; repo records metrics/hashes/mask-only PNG, while raw RGB/mesh remain local. |
+| G22 | blocked before training | Old RI3D/evaluation adapter did not preserve Multiface real-camera assumptions. |
+| G23 | complete | Local-only Multiface adapter, z-buffer depth/conf, train/heldout split, and mask/depth-only audit figure pass. |
+| G24 | complete | CPU RI3D adapter file contract and local-only policy pass. |
+| G25 | complete | RI3D loads the adapter and saves a 67,410-point initialization; no full training or quality claim. |
+| G26 | complete | Held-out render/eval executes from the G25 point cloud without saving identifiable media. |
+| G27 | blocked | Tiny train10 reports NaN loss even under plain L1-only settings; longer training is blocked. |
 
-The benchmark premise is now locally satisfied for the next controlled
-preflight, but this is not a method result. No GPU experiment should start from
-the old web pseudo-view route. The next action is G22: rerun the G21 gate,
-verify model/test-data distribution, then run a minimal real-GT reconstruction
-or block before training if the audit regresses.
+The benchmark premise is locally satisfied for controlled real-GT gates, but
+this is not a method result. No GPU experiment should start from the old web
+pseudo-view route. G23-G25 move only through adapter, CPU contract, and
+initialization smoke. G26 passes held-out eval plumbing. G27 blocks actual
+training on numerical-health failure, so the next action is G28 loss-path
+diagnosis.
 
 G22 follow-up:
 
 ```text
 experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md
 BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
+experiments/metrics/g23_multiface_real_camera_adapter_20260520.md
+PASS_REAL_CAMERA_ADAPTER_PREFLIGHT
+experiments/metrics/g24_real_gt_adapter_contract_gate_20260520.md
+PASS_REAL_GT_ADAPTER_CONTRACT
+experiments/metrics/g25_ri3d_multiface_init_smoke_20260520.md
+PASS_RI3D_INIT_ONLY_SMOKE
+experiments/metrics/g26_heldout_eval_smoke_20260520.md
+PASS_HELDOUT_RENDER_EVAL_SMOKE
+experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md
+BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN
 ```

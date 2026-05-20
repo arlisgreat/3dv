@@ -203,6 +203,19 @@ G21: compact real-GT benchmark acquisition. Done locally on Multiface debug data
 G22: real-GT reconstruction/evaluation preflight. Blocked before training:
      current RI3D/evaluation adapter does not preserve Multiface real-camera
      intrinsics, depth/confidence priors, or metrics.
+G23: Multiface local-only real-camera adapter. Done; produces RI3D-readable
+     normalized cameras, masks, depth/conf arrays, and held-out views under
+     3dv_work, with only metrics and a mask/depth-only PNG in repo.
+G24: CPU real-GT adapter contract gate. Done; file contracts and local-only
+     policy pass, authorizing only the smallest init-only smoke.
+G25: minimal RI3D init-only smoke on the G24 adapter. Done; RI3D loads the
+     adapter and saves a 67,410-point initialization. Not a reconstruction-
+     quality result.
+G26: held-out render/evaluation smoke from the G25 point cloud. Done; metrics
+     execute without saving identifiable PNG/JPEG/MP4. Not a quality result.
+G27: ten-step RI3D training numerical gate. Blocked: loss becomes NaN even
+     under plain L1-only settings.
+G28: loss-path numerical diagnostic. Pending before any longer training.
 ```
 
 Current G16 access result:
@@ -223,8 +236,11 @@ views, KRT cameras, projected mesh masks, and tracked OBJ; it passes G21 as a
 local real-GT benchmark premise.
 FaceScape remains viable only after licensed full-case access.
 No pseudo-view/RI3D scaling is allowed from web candidate pools. The current
-G22 preflight blocks GPU training until a real-camera adapter and metric
-pipeline are implemented and re-gated.
+G22 preflight blocked GPU training until a real-camera adapter and metric
+pipeline were implemented and re-gated. G23/G24 now pass adapter/contract gates,
+G25 passes init-only loading, and G26 passes held-out eval plumbing. G27 blocks
+training on NaN loss, so the next step is numerical diagnosis, not a longer
+training run or quality claim.
 ```
 
 ### Week 4

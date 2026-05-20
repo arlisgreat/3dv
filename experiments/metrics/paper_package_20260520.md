@@ -14,7 +14,8 @@ It packages a diagnostic protocol and the evidence that generic diffusion
 pseudo views must be gated before they can supervise 3D reconstruction.
 After G20/G21, the old pseudo-view/RI3D route remains invalid for positive
 quality claims. G21 supplies the benchmark premise locally; quality claims still
-need a G22 real-GT reconstruction/evaluation result.
+need a real-GT render/evaluation and training result beyond the G23-G25
+adapter/init gates.
 
 ## Main Claim
 
@@ -40,6 +41,11 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | Real-GT benchmark pivot | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D results are diagnostic-only; H3DS/FaceScape/Multiface compact real-GT benchmark is the mandatory next gate. |
 | G21 local real-GT gate | `experiments/metrics/g21_multiface_debug_gate_20260520.md` | A Multiface debug compact case satisfies the real-GT benchmark premise locally; raw RGB/mesh artifacts remain outside git. |
 | G22 preflight | `experiments/metrics/g22_real_gt_reconstruction_preflight_20260520.md` | Current RI3D/evaluation plumbing is blocked before training on real Multiface cameras. |
+| G23 adapter | `experiments/metrics/g23_multiface_real_camera_adapter_20260520.md` | A local-only RI3D-readable Multiface adapter passes camera/depth/conf preflight; not a quality result. |
+| G24 contract | `experiments/metrics/g24_real_gt_adapter_contract_gate_20260520.md` | CPU file contracts, local-only policy, split, and metrics skeleton pass. |
+| G25 init smoke | `experiments/metrics/g25_ri3d_multiface_init_smoke_20260520.md` | RI3D loads the adapter and saves an initialization point cloud; no full training or quality claim. |
+| G26 eval smoke | `experiments/metrics/g26_heldout_eval_smoke_20260520.md` | Held-out render/eval executes without saving identifiable media; metrics are init-only smoke values. |
+| G27 numerical gate | `experiments/metrics/g27_ri3d_train10_numerical_gate_20260520.md` | Tiny training is blocked by NaN loss even under plain L1-only settings. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -97,14 +103,20 @@ G20/G21 benchmark pivot:
 
 ```text
 G21 verdict: PASS_REAL_GT_BENCHMARK on local Multiface debug compact case
-required next verdict: G22 real-GT reconstruction/evaluation preflight
+required next verdict: G28 loss-path numerical diagnosis before any longer
+  training/evaluation run
 preferred route: H3DS v2, blocked by access token/license
 local benchmark route: Multiface debug 6795937 / E001_Neutral_Eyes_Open /
   frame 000102 passes G21 with 9 real views, cameras, masks, and tracked mesh
-hard stop: no new web pseudo-view/RI3D scaling; next method work must be G22 on
-  a real-GT case
+hard stop: no new web pseudo-view/RI3D scaling; next method work must stay on
+  a real-GT adapter/eval gate
 repo-safe result: experiments/figures/g21_multiface_debug_mask_gate_20260520.png
 G22 result: BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
+G23 result: PASS_REAL_CAMERA_ADAPTER_PREFLIGHT
+G24 result: PASS_REAL_GT_ADAPTER_CONTRACT
+G25 result: PASS_RI3D_INIT_ONLY_SMOKE, point_count=67410
+G26 result: PASS_HELDOUT_RENDER_EVAL_SMOKE, PSNR=4.2685, LPIPS=0.5011
+G27 result: BLOCKED_RI3D_TRAINING_NUMERICAL_HEALTH_NAN
 ```
 
 ## Limitations
@@ -119,8 +131,10 @@ G22 result: BLOCKED_BEFORE_TRAINING_MODEL_DATA_ADAPTER
    real-capture identity preservation or real multi-camera performance.
 5. Real reconstruction-quality claims require a licensed or redistributable
    real GT case with calibrated views and mesh/point-cloud geometry.
-6. After G21, the paper still cannot be framed as a positive reconstruction
-   method result until G22 produces a real-GT reconstruction/evaluation result.
+6. G23-G27 are adapter/init/eval/numerical gates, not positive reconstruction method results.
+   The paper still cannot be framed as a positive reconstruction method result
+   until the NaN training blocker is fixed and held-out evaluation passes after
+   actual training on real GT.
 ```
 
 ## Final Milestone Status
@@ -139,4 +153,9 @@ G20: complete as benchmark-first pivot and route/distribution audit.
 G21: complete locally on Multiface debug compact real-GT case; raw RGB/mesh stay
      local pending artifact review.
 G22: blocked before training by real-camera adapter and metric mismatch.
+G23: complete as local-only Multiface adapter preflight.
+G24: complete as CPU RI3D adapter contract gate.
+G25: complete as RI3D init-only smoke; no full training or quality claim.
+G26: complete as held-out eval smoke; metrics are not quality.
+G27: blocked by NaN training loss even under plain L1-only settings.
 ```

@@ -170,9 +170,13 @@ conda activate lam
 bash scripts/server/03_run_lam_sample.sh experiments/inputs/first10/your_image.png
 ```
 
-## 8. 跑 downstream RI3D first2
+## 8. Historical downstream RI3D first2
 
-本地已经把下游输入转换成 RI3D 格式：
+这一节只保留历史复现价值。不要把这里的 first2 pseudo-view runner 当成当前
+实验主线，也不要从 `experiments/downstream_datasets` 重新启动质量实验。
+G8-G14 已证明这些结果只能作为 diagnostic/failure-taxonomy evidence。
+
+历史下游输入转换成 RI3D 格式的位置：
 
 ```text
 experiments/ri3d_datasets/first2/
@@ -190,7 +194,7 @@ cd ../..
 
 如果服务器已装好 RI3D 依赖，只需要激活对应环境。
 
-然后在 3dv 仓库根目录运行：
+历史复现时才在 3dv 仓库根目录运行：
 
 ```bash
 bash scripts/run_ri3d_first2.sh
@@ -229,7 +233,34 @@ GPU=1 bash scripts/run_ri3d_first2.sh
 
 ### 当前注意点
 
-这一步的目标是快速验证“filtered pseudo views 是否比 raw pseudo views 的最终 3D 输出更稳定”。`experiments/ri3d_datasets/first2/*/*/depth_rel` 里的 depth 是本地生成的简单 bootstrap prior，不是最终论文指标本身；如果 first2 有明显趋势，再升级成更强的单目深度或 RI3D 原生深度预处理。
+这一步不再验证“filtered pseudo views 是否比 raw pseudo views 的最终 3D 输出更稳定”。
+当前可信路线是 real-GT benchmark first：G21 Multiface debug compact case 通过
+本地 benchmark gate，G22 阻塞旧 adapter，G23/G24 只通过 local-only adapter
+和 CPU file-contract gate，G25/G26 只通过 init/eval smoke。G27 已证明十步
+训练 loss 为 NaN，即使 plain L1-only 也不成立。当前唯一允许的下一步是 G28
+loss-path 数值诊断，不是更长训练；且必须直接对 Multiface adapter scene 调
+RI3D，不使用 `scripts/run_ri3d_first2.sh`。
+
+G25 参考命令：
+
+```bash
+export PATH=/data1/workspace/airulan/conda/miniconda3/bin:$PATH
+source /data1/workspace/airulan/conda/miniconda3/etc/profile.d/conda.sh
+source /data1/workspace/airulan/env124.sh
+export LD_LIBRARY_PATH="$CUDA_HOME/lib64:${LD_LIBRARY_PATH#"$CUDA_HOME/lib64"}"
+export CUDA_VISIBLE_DEVICES="$(/home/airulan/.codex/skills/3dv-experiment-orchestrator/scripts/select_idle_gpu.sh)"
+
+cd external/ri3d
+PYTHONPATH=$PWD python scripts/train_gs_init.py \
+  -s /data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102 \
+  -m /data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520 \
+  -r 1 --sparse_view_num 6 --sh_degree 2 --white_background --random_background \
+  --iterations 1 --use_mask --pointcloud_mask_filter --pointcloud_conf_threshold 0.0 \
+  --pointcloud_min_points 256 --pointcloud_points_per_view 0
+```
+
+G25-G27 输出必须留在 `3dv_work`。不要提交 RGB、PLY、mesh、长日志或可识别渲染图；
+仓库只记录 compact metrics、命令、GPU、RI3D commit、pass/fail 和失败尾部。
 
 ## 9. 常见问题
 

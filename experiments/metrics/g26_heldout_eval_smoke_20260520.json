@@ -1,0 +1,50 @@
+{
+  "date": "2026-05-20",
+  "gate": "G26",
+  "verdict": "PASS_HELDOUT_RENDER_EVAL_SMOKE",
+  "secondary_verdict": "NO_TRAINING_STARTED_IN_G26",
+  "scope": "Held-out render/evaluation smoke from the G25 RI3D initialization",
+  "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+  "source_run_root": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520",
+  "eval_run_root": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520_g26_eval",
+  "gpu": {
+    "selected_visible_device": "0",
+    "name": "NVIDIA A800-SXM4-80GB",
+    "memory_at_launch_mib": "0 / 81920",
+    "utilization_at_launch_percent": 0
+  },
+  "environment": {
+    "conda_env": "lam",
+    "python": "/data1/workspace/airulan/conda/miniconda3/envs/lam/bin/python",
+    "python_version": "3.10.20",
+    "cuda_env": "/data1/workspace/airulan/env124.sh",
+    "cuda_home": "/usr/local/cuda-12.4",
+    "torch": "2.6.0+cu124",
+    "torch_cuda": "12.4",
+    "ld_library_path_repaired": true
+  },
+  "command": "PYTHONPATH=/data1/workspace/airulan/3dv/external/ri3d python scripts/render.py -s /data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102 -m /data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520 -r 1 --sparse_view_num 6 --sh_degree 2 --white_background --iteration 1 --skip_train --not_saveimages --not_generate_video --use_mask True --postfix _g26_eval",
+  "result": {
+    "exit_code": 0,
+    "heldout_views": 3,
+    "metrics": {
+      "SSIM": 0.5905788938204447,
+      "PSNR": 4.268513361612956,
+      "LPIPS": 0.5011390447616577
+    },
+    "metric_json": "/data1/workspace/airulan/3dv_work/runs/g25_ri3d_multiface_init_smoke_20260520_g26_eval/test/ours_1/results.json",
+    "png_jpg_mp4_outputs_found": 0
+  },
+  "artifact_policy": {
+    "repo_safe_outputs_only": true,
+    "not_saveimages_used": true,
+    "do_not_commit": [
+      "local result JSON with raw paths if expanded",
+      "RGB renders",
+      "ground-truth RGB images",
+      "videos"
+    ]
+  },
+  "interpretation": "G26 proves the held-out render/evaluation plumbing can execute from the G25 initialization without saving identifiable media. The low PSNR/LPIPS reflects an initialization-only point cloud and is not a reconstruction-quality result.",
+  "next_gate": "G27 small-step real-GT training smoke on the local adapter, followed by a separate held-out eval gate if it passes."
+}

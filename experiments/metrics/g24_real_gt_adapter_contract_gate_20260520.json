@@ -1,0 +1,252 @@
+{
+  "adapter_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/ri3d_real_camera_adapter_000102",
+  "checks": {
+    "adapter_root_local_only": true,
+    "all_files_exist_and_shapes_ok": true,
+    "g23_adapter_passed": true,
+    "heldout_metrics_defined": true,
+    "raw_asset_policy_recorded": true,
+    "train_masks_not_extreme": true,
+    "train_test_split_valid": true,
+    "transforms_global_centered_intrinsics": true
+  },
+  "closure": "PASS_REAL_GT_ADAPTER_CONTRACT: file contracts, local-only policy, train/heldout split, and depth/conf arrays pass CPU gate. GPU is still not started; next step must select an idle GPU and run the smallest smoke only.",
+  "date": "2026-05-20",
+  "failed_checks": [],
+  "frame_checks": [
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1170.2130126953125,
+        "mean": 1038.2529296875,
+        "min": 980.4927978515625
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 0,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.2230682373046875,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400017"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1141.3302001953125,
+        "mean": 1045.15283203125,
+        "min": 983.4756469726562
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 1,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.2721405029296875,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400023"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1177.1993408203125,
+        "mean": 1050.3238525390625,
+        "min": 1013.2450561523438
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 2,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.208099365234375,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400050"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1289.1815185546875,
+        "mean": 1080.2340087890625,
+        "min": 1014.6021118164062
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 3,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.18609619140625,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400055"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1198.569091796875,
+        "mean": 1052.582763671875,
+        "min": 1006.3251342773438
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 4,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.2025909423828125,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400067"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1279.8309326171875,
+        "mean": 1083.36083984375,
+        "min": 1017.7128295898438
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 5,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.1714324951171875,
+      "mask_exists": true,
+      "role": "real_gt_train",
+      "view_id": "400070"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1184.98583984375,
+        "mean": 1059.63720703125,
+        "min": 999.0982666015625
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 6,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.230316162109375,
+      "mask_exists": true,
+      "role": "heldout_eval",
+      "view_id": "400012"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1249.5968017578125,
+        "mean": 1083.2132568359375,
+        "min": 1000.1344604492188
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 7,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.224578857421875,
+      "mask_exists": true,
+      "role": "heldout_eval",
+      "view_id": "400041"
+    },
+    {
+      "confidence_exists": true,
+      "confidence_shape_ok": true,
+      "depth_dust3r_exists": true,
+      "depth_raw_exists": true,
+      "depth_raw_stats": {
+        "max": 1163.5084228515625,
+        "mean": 1050.7877197265625,
+        "min": 1008.3184814453125
+      },
+      "depth_rel_exists": true,
+      "depth_rel_shape_ok": true,
+      "idx": 8,
+      "image_exists": true,
+      "image_size": [
+        256,
+        256
+      ],
+      "mask_coverage": 0.2245330810546875,
+      "mask_exists": true,
+      "role": "heldout_eval",
+      "view_id": "400042"
+    }
+  ],
+  "gate": "G24",
+  "metrics_contract": {
+    "heldout": "3 held-out normalized real-camera views for silhouette IoU and later RGB/LPIPS after rendering.",
+    "mesh": "tracked OBJ remains local; depth_raw z-buffer arrays are available for geometry sanity.",
+    "train": "6 normalized real-camera views with RGB/mask/depth/conf arrays."
+  },
+  "next_allowed_action": "If PASS, choose idle GPU and run a minimal RI3D init-only smoke on the adapter; otherwise fix adapter.",
+  "no_gpu_training_started": true,
+  "test_ids": [
+    6,
+    7,
+    8
+  ],
+  "train_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "train_mask_coverage": {
+    "max": 0.2721405029296875,
+    "mean": 0.2105712890625,
+    "min": 0.1714324951171875
+  },
+  "verdict": "PASS_REAL_GT_ADAPTER_CONTRACT"
+}
