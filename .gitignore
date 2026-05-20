@@ -35,6 +35,8 @@
 !/experiments/gt_cases/**/*.csv
 !/experiments/gt_cases/**/*.json
 !/experiments/gt_cases/**/*.md
+!/experiments/gt_cases/**/*.png
+!/experiments/gt_cases/**/*.mp4
 !/experiments/metrics/
 !/experiments/metrics/**/
 !/experiments/metrics/**/*.csv

@@ -670,6 +670,19 @@ experiments/metrics/gt_dataset_route_plan_20260519.md
 experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.json
+experiments/metrics/gt_positive_control_route_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json
+experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.json
+experiments/gt_cases/wikimedia_blender_head_cc0/
+experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png
+experiments/ri3d_datasets/gt_positive_control/
+experiments/metrics/ri3d_gt_positive_control_iter10.csv
+experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
+experiments/figures/ri3d_gt_positive_control_iter10_inputs.png
+experiments/figures/ri3d_gt_positive_control_iter10_renders.png
+experiments/reconstructions/ri3d_gt_positive_control_iter10/
 ```
 
 G14 结论：
@@ -709,8 +722,16 @@ G11 已完成 spatial mask-aware RI3D loss：MP4/PNG/CSV 全部导出且训练�
 G12 已完成 foreground canonicalization 和 mask-loss ablation。largest_square
 和 mask_width_anchor 都让输入 sheet 更干净，但 USE_MASK=1/0 的 render sheet
 仍然是同类卡片/碎片失败。
-因此下一步不是 first10 扩展，而是 G13：接入 LAM/FLAME/full-head geometry prior。
-G15 之后的实际路线已经改为 G16：使用真实 GT 多视角数据集 case 做重建质量验证。
+之后 G13/G14 接入 foreground point-cloud filter 和 LAM/FLAME proxy prior，
+但仍未修复 detached foreground fragments。
+G15 之后的实际路线已经改为 G16/G17：真实 GT 多视角数据集 case 继续走
+license/access gate；在真实采集数据通过前，先用 Wikimedia/Blender CC0
+realistic human head mesh 做 G16b 正控，验证 camera、mask/depth、manifest、
+PNG/MP4 同步和下游重建 plumbing。G17a provenance sanity 已确认 8 个视图、
+8 条 camera 记录、PNG 尺寸、mask coverage、MP4 可读性和 raw mesh exclusion
+全部通过。G17b RI3D iter10 smoke 已完成 conversion/init/train/render/export，
+但 render sheet 仍是 smoke 质量且有 ghosted fragments，因此只是 execution pass，
+不是重建质量结论。
 ```
 
 对比指标：
@@ -741,8 +762,9 @@ subject cutout
 
 ```text
 A: single-image baseline
-B: real GT sparse multi-view case with 6-12 calibrated views
-C: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
+B: mesh-derived CC0 positive-control case with deterministic 8-view cameras
+C: real GT sparse multi-view case with 6-12 calibrated views, after license gate
+D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 ```
 
 当前最重要的未闭环问题：

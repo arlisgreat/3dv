@@ -78,3 +78,33 @@ Next pass condition:
 4. Confirm 6-12 valid calibrated views and GT mesh/point cloud.
 5. Run visual/VLM data audit on the actual case before any reconstruction.
 ```
+
+## 2026-05-20 Addendum
+
+The real-capture access route remains open, but a repo-safe positive-control
+route has now passed:
+
+```text
+case_id: wikimedia_blender_head_cc0
+source: https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl
+license: CC0 1.0 Universal Public Domain Dedication
+verdict: PASS_POSITIVE_CONTROL_ONLY
+```
+
+Artifacts:
+
+```text
+experiments/metrics/gt_positive_control_route_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json
+experiments/gt_cases/wikimedia_blender_head_cc0/
+experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png
+```
+
+Scope:
+
+```text
+This positive-control case can start G17 conversion/reconstruction plumbing.
+It does not replace the need for a licensed real multi-view GT case for
+real-capture reconstruction-quality claims.
+```

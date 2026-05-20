@@ -1,0 +1,11 @@
+[
+  {
+    "case_id": "wikimedia_blender_head_cc0",
+    "variant": "mesh_rendered",
+    "sample_id": "wikimedia_blender_head_cc0",
+    "scene_dir": "experiments/ri3d_datasets/gt_positive_control/mesh_rendered/wikimedia_blender_head_cc0",
+    "view_count": 8,
+    "image_size": 256,
+    "gate_scope": "positive_control_only"
+  }
+]

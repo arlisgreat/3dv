@@ -1,0 +1,100 @@
+{
+  "case_id": "wikimedia_blender_head_cc0",
+  "title": "Wikimedia Blender CC0 realistic human head",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl",
+  "download_url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Head_%28Sculpting%29_-_Realistic_by_Dan_Ulrich_%28CC0%29.stl",
+  "license": "CC0 1.0 Universal Public Domain Dedication",
+  "raw_mesh_sha256": "63cdcac1722ea6bf5d8f6758aafc7c8adee962d7b2e505c79f39eb4ea7e6c86b",
+  "canonicalization": {
+    "bbox_min": [
+      1.6537446975708008,
+      -0.16849830746650696,
+      0.5126091241836548
+    ],
+    "bbox_max": [
+      1.9179651737213135,
+      0.07697920501232147,
+      0.8787832260131836
+    ],
+    "bbox_extents": [
+      0.2642204761505127,
+      0.24547751247882843,
+      0.3661741018295288
+    ],
+    "bbox_center": [
+      1.7858549356460571,
+      -0.04575955122709274,
+      0.6956961750984192
+    ],
+    "normalization_scale": 0.3661741018295288,
+    "vertical_axis": 2,
+    "right_axis": 0,
+    "depth_axis": 1
+  },
+  "cameras": [
+    {
+      "view_id": "view_00",
+      "azimuth_degrees": 0.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_01",
+      "azimuth_degrees": 45.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_02",
+      "azimuth_degrees": 90.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_03",
+      "azimuth_degrees": 135.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_04",
+      "azimuth_degrees": 180.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_05",
+      "azimuth_degrees": 225.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_06",
+      "azimuth_degrees": 270.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    },
+    {
+      "view_id": "view_07",
+      "azimuth_degrees": 315.0,
+      "projection": "orthographic",
+      "normalized_bbox_scale": 0.3661741018295288,
+      "image_size": 512,
+      "coordinate_policy": "canonical right/vertical/depth axes, yaw around vertical axis"
+    }
+  ]
+}

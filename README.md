@@ -43,6 +43,7 @@
   PLAN.md                # 研究计划、论文结构、一个月安排
   EXPERIMENTS.md         # 实验阶段、结果、文件索引
   MILESTONES.md          # milestone ledger: 已完成 gate、当前 gate、下一步
+  docs/                  # 实验脉络和 gate 决策树
   SERVER.md              # 服务器运行步骤
   data_manifest.csv      # 样本清单
 
@@ -126,6 +127,7 @@ bash scripts/server/05_run_zero123plus_sample.sh
 ```text
 EXPERIMENTS.md
 MILESTONES.md
+docs/experiment_narrative_and_gates.md
 ```
 
 已经完成：
@@ -147,6 +149,7 @@ RI3D first2 mask-aware / foreground-canonical / point-cloud-filter milestones
 RI3D first2 FLAME proxy geometry-prior diagnostic
 Zero123++ 3x2 grid split correction and head-cutout diagnostic probe
 FaceScape sample metadata access gate
+CC0 human-head mesh positive-control gate
 ```
 
 当前默认 pseudo-view 前端：
@@ -217,6 +220,18 @@ Current reconstruction-quality route: use a real GT multi-view dataset case
 with cameras and mesh/point-cloud ground truth. FaceScape is the primary route:
 its sample was inspected locally for metadata only, but its readme says not to
 distribute the sample, so raw images/meshes stay out of git.
+
+While real-capture access is pending, G16b has passed a repo-safe synthetic
+positive-control gate using the Wikimedia/Blender CC0 realistic human head mesh.
+This case has deterministic RGB/depth/mask/normal PNG views, camera JSON,
+manifest CSV, a contact sheet, and an orbit MP4 under:
+
+experiments/gt_cases/wikimedia_blender_head_cc0/
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md
+experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
+experiments/reconstructions/ri3d_gt_positive_control_iter10/
+experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png
 ```
 
 G16 access/audit records:
@@ -308,7 +323,7 @@ RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景�
 
 下一步：
 
-1. 不急着扩 first30 / first50。
-2. 实现 G14：LAM/FLAME mesh/depth/silhouette structural prior first2 repair。
-3. 如果 G14 仍失败，把论文定位收紧为诊断负结果和 failure-aware protocol。
-4. 只有当结构先验证明 filtered pseudo views 稳定优于 raw，再扩 first10 / first30 / first50。
+1. 不急着扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
+2. G17 先从 `wikimedia_blender_head_cc0` 正控 case 做 camera/provenance sanity check。
+3. 真实采集 GT 数据继续走 G16a license/access gate。
+4. web first10 只做 corrected 3x2 failure taxonomy，直到有新 gate 明确通过训练前提。

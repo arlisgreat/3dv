@@ -1,0 +1,22 @@
+{
+  "case_id": "wikimedia_blender_head_cc0",
+  "title": "Wikimedia Blender CC0 realistic human head",
+  "date": "2026-05-20",
+  "gate_verdict": "PASS_POSITIVE_CONTROL_ONLY",
+  "visual_audit_verdict": "PASS_POSITIVE_CONTROL_ONLY",
+  "visual_audit_notes": "Contact sheet shows coherent front, side, rear, and oblique head views with no split body/card/cropped-fragment artifacts; scope is synthetic mesh-derived GT only.",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl",
+  "download_endpoint": "https://upload.wikimedia.org/wikipedia/commons/8/84/Head_%28Sculpting%29_-_Realistic_by_Dan_Ulrich_%28CC0%29.stl",
+  "license": "CC0 1.0 Universal Public Domain Dedication",
+  "raw_mesh_path": "/data1/workspace/airulan/3dv_work/datasets/wikimedia_blender_head_cc0/Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl",
+  "raw_mesh_sha256": "63cdcac1722ea6bf5d8f6758aafc7c8adee962d7b2e505c79f39eb4ea7e6c86b",
+  "vertices": 845442,
+  "faces": 1690880,
+  "views": 8,
+  "sample_count": 180000,
+  "manifest_csv": "experiments/gt_cases/wikimedia_blender_head_cc0/manifest.csv",
+  "camera_json": "experiments/gt_cases/wikimedia_blender_head_cc0/cameras.json",
+  "contact_sheet": "experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png",
+  "orbit_mp4": "experiments/gt_cases/wikimedia_blender_head_cc0/orbit_rgb.mp4",
+  "scope": "synthetic mesh-derived positive control only"
+}

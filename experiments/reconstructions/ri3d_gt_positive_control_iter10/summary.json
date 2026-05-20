@@ -1,0 +1,26 @@
+{
+  "data_root": "experiments/ri3d_datasets/gt_positive_control",
+  "run_root": "experiments/downstream_3d/ri3d_gt_positive_control_iter10",
+  "iteration": 10,
+  "rows": [
+    {
+      "tag": "wikimedia_blender_head_cc0_mesh_rendered_8v",
+      "sample_id": "wikimedia_blender_head_cc0",
+      "variant": "mesh_rendered",
+      "view_count": 8,
+      "image_size": 256,
+      "role_counts": "{\"positive_control_gt\": 8}",
+      "identity_supervision_count": 0,
+      "geometry_only_count": 0,
+      "iterations": 10,
+      "final_loss": 0.3389232,
+      "progress_splats": 109888,
+      "point_count": 109888,
+      "init_ply_bytes": 18022638,
+      "train_ply_bytes": 18022638,
+      "train_log": "experiments/downstream_3d/ri3d_gt_positive_control_iter10/logs/wikimedia_blender_head_cc0_mesh_rendered_8v_train.log",
+      "render_rgb_mp4": "experiments/reconstructions/ri3d_gt_positive_control_iter10/wikimedia_blender_head_cc0_mesh_rendered_8v_rgb.mp4",
+      "render_depth_mp4": "experiments/reconstructions/ri3d_gt_positive_control_iter10/wikimedia_blender_head_cc0_mesh_rendered_8v_depth.mp4"
+    }
+  ]
+}

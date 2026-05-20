@@ -1,0 +1,314 @@
+{
+  "case_id": "wikimedia_blender_head_cc0",
+  "date": "2026-05-20",
+  "verdict": "PASS_G17_PROVENANCE_SANITY",
+  "scope": "POSITIVE_CONTROL_ONLY",
+  "case_root": "experiments/gt_cases/wikimedia_blender_head_cc0",
+  "manifest_csv": "experiments/gt_cases/wikimedia_blender_head_cc0/manifest.csv",
+  "camera_json": "experiments/gt_cases/wikimedia_blender_head_cc0/cameras.json",
+  "orbit_mp4": "experiments/gt_cases/wikimedia_blender_head_cc0/orbit_rgb.mp4",
+  "manifest_rows": 8,
+  "camera_records": 8,
+  "missing_files": [],
+  "bad_dimensions": [],
+  "low_mask_coverage": [],
+  "raw_mesh_files_inside_case": [],
+  "mp4": {
+    "path": "experiments/gt_cases/wikimedia_blender_head_cc0/orbit_rgb.mp4",
+    "opened": true,
+    "frame_count": 24,
+    "width": 512,
+    "height": 512
+  },
+  "image_records": [
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_00_az000.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14089584350585938,
+      "view_id": "view_00",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_00_az000.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.2305450439453125,
+      "view_id": "view_00",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_00_az000.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.2305450439453125,
+      "view_id": "view_00",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_00_az000.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.140899658203125,
+      "view_id": "view_00",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_01_az045.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14565277099609375,
+      "view_id": "view_01",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_01_az045.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22524642944335938,
+      "view_id": "view_01",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_01_az045.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22524642944335938,
+      "view_id": "view_01",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_01_az045.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14567184448242188,
+      "view_id": "view_01",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_02_az090.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.12547683715820312,
+      "view_id": "view_02",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_02_az090.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.20949554443359375,
+      "view_id": "view_02",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_02_az090.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.20949554443359375,
+      "view_id": "view_02",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_02_az090.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.12549591064453125,
+      "view_id": "view_02",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_03_az135.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14513015747070312,
+      "view_id": "view_03",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_03_az135.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22530364990234375,
+      "view_id": "view_03",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_03_az135.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22530364990234375,
+      "view_id": "view_03",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_03_az135.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14513397216796875,
+      "view_id": "view_03",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_04_az180.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14089584350585938,
+      "view_id": "view_04",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_04_az180.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.23050308227539062,
+      "view_id": "view_04",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_04_az180.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.2305450439453125,
+      "view_id": "view_04",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_04_az180.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14096832275390625,
+      "view_id": "view_04",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_05_az225.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14565277099609375,
+      "view_id": "view_05",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_05_az225.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22524642944335938,
+      "view_id": "view_05",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_05_az225.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22524642944335938,
+      "view_id": "view_05",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_05_az225.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14565277099609375,
+      "view_id": "view_05",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_06_az270.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.12547683715820312,
+      "view_id": "view_06",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_06_az270.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.20949554443359375,
+      "view_id": "view_06",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_06_az270.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.20949554443359375,
+      "view_id": "view_06",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_06_az270.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.12549209594726562,
+      "view_id": "view_06",
+      "kind": "normal"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/rgb_07_az315.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.14513015747070312,
+      "view_id": "view_07",
+      "kind": "rgb"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/depth_07_az315.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22529220581054688,
+      "view_id": "view_07",
+      "kind": "depth"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/mask_07_az315.png",
+      "mode": "L",
+      "width": 512,
+      "height": 512,
+      "nonzero_ratio": 0.22530364990234375,
+      "view_id": "view_07",
+      "kind": "mask"
+    },
+    {
+      "path": "experiments/gt_cases/wikimedia_blender_head_cc0/views/normal_07_az315.png",
+      "mode": "RGB",
+      "width": 512,
+      "height": 512,
+      "non_background_ratio": 0.1451416015625,
+      "view_id": "view_07",
+      "kind": "normal"
+    }
+  ],
+  "interpretation": "The positive-control case is structurally ready for G17 conversion and no-training camera sanity checks. This does not authorize real-capture claims."
+}

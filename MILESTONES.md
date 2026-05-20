@@ -4,6 +4,12 @@ This file is the follow-up ledger for the 3DV sprint. `EXPERIMENTS.md` remains
 the detailed result index; this file records the final goal, completed gates,
 active decision point, and planned milestones.
 
+Full experiment narrative and gate decision tree:
+
+```text
+docs/experiment_narrative_and_gates.md
+```
+
 ## Final Goal
 
 The full application in `QY25181-申请书-6-13.pdf` targets:
@@ -115,6 +121,9 @@ distorted, so web first10 remains diagnostic-only.
 | G15b | done, probe input pass | Head-cutout input recovery gate | `experiments/metrics/first10_head_cutout_input_gate_20260519.md` | Tighter gray-background head crops pass only for a small generation probe, not reconstruction training. |
 | G15c | done, blocked for training | Zero123++ 3x2 split correction and head-cutout probe | `experiments/metrics/zero123plus_grid_split_bug_20260519.md` | Correct 3x2 splitting fixes a major preprocessing bug, but pseudo views still show visible distortions and remain diagnostic-only. |
 | G16a | in progress | GT dataset access gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | FaceScape sample metadata confirms the right data structure, Multiface/NeRSemble/UEA access risks are recorded, and reconstruction rerun remains blocked until a licensed/repo-safe case exists. |
+| G16b | done, positive-control pass | Mesh-derived repo-safe GT case | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | A CC0 realistic human head mesh was rendered into 8 deterministic RGB/depth/mask/normal views with camera metadata; visual gate passes only for synthetic positive-control work. |
+| G17a | done, provenance pass | Positive-control case structural sanity | `experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md` | Manifest, cameras, PNG dimensions, masks, MP4, and raw-mesh exclusion all pass; scope remains positive-control only. |
+| G17b | done, smoke pass | RI3D positive-control iter10 smoke | `experiments/metrics/ri3d_gt_positive_control_iter10_observations.md` | Conversion, init, 10-iteration train, render, and MP4 export all pass; visual quality is smoke-only with ghosted fragments, so not a quality win. |
 
 ## G8 Result
 
@@ -563,25 +572,26 @@ toward failure-aware pseudo-view supervision and failure taxonomy, not a claim
 that RI3D plus generic FLAME proxy is already a strong reconstruction method.
 ```
 
-## Active Milestone: G16
+## Active Milestone: G17
 
 Name:
 
 ```text
-GT multi-view dataset access and compact case export
+Positive-control reconstruction rerun
 ```
 
 Purpose:
 
 ```text
-Stop using distorted web pseudo views as reconstruction-training premises.
-Use a public dataset case with real multi-view images, camera calibration, and
-mesh/point-cloud ground truth for any reconstruction-quality claim.
+Use the G16b CC0 mesh-derived head case to validate reconstruction input
+conversion, camera provenance, output synchronization, and failure-aware gate
+mechanics before any real-capture reconstruction claim.
 ```
 
-Planned outputs:
+Starting artifacts:
 
 ```text
+docs/experiment_narrative_and_gates.md
 experiments/metrics/milestone_data_audit_protocol_20260519.md
 experiments/metrics/zero123plus_grid_split_bug_20260519.md
 experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md
@@ -589,8 +599,22 @@ experiments/metrics/gt_dataset_route_plan_20260519.md
 experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.json
-experiments/metrics/gt_case_manifest_*.csv
-experiments/figures/gt_case_*_contact_sheet.png
+experiments/metrics/gt_positive_control_route_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.json
+experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.md
+experiments/metrics/wikimedia_blender_head_cc0_g17_provenance_sanity_20260520.json
+experiments/gt_cases/wikimedia_blender_head_cc0/manifest.csv
+experiments/gt_cases/wikimedia_blender_head_cc0/cameras.json
+experiments/gt_cases/wikimedia_blender_head_cc0/views/*.png
+experiments/gt_cases/wikimedia_blender_head_cc0/orbit_rgb.mp4
+experiments/figures/g16b_wikimedia_blender_head_cc0_contact_sheet.png
+experiments/ri3d_datasets/gt_positive_control/
+experiments/metrics/ri3d_gt_positive_control_iter10.csv
+experiments/metrics/ri3d_gt_positive_control_iter10_observations.md
+experiments/figures/ri3d_gt_positive_control_iter10_inputs.png
+experiments/figures/ri3d_gt_positive_control_iter10_renders.png
+experiments/reconstructions/ri3d_gt_positive_control_iter10/
 experiments/metrics/first10_head_cutout_input_gate_20260519.md
 experiments/inputs/first10/head_cutouts/
 experiments/figures/first10_head_cutout_inputs.png
@@ -600,21 +624,23 @@ experiments/metrics/downstream_candidate_pool_semantics_20260519.md
 Pass criteria:
 
 ```text
-1. Dataset license/access is recorded before download or publication.
-2. One compact case has real multi-view images, cameras, and GT mesh/point cloud.
-3. Redistribution constraints are respected; restricted raw data stays out of
-   git unless the license permits it.
-4. A visual/VLM data audit passes before reconstruction rerun.
-5. PNG/CSV/MD artifacts are synced; MP4s are synced only for selected compact
-   reconstruction examples, not raw ignored working directories.
+1. Reconstruct only from a gate-passed case: wikimedia_blender_head_cc0 or a
+   later licensed real GT case.
+2. Convert 6-8 views, masks/depth, and cameras without stale paths or hidden raw
+   mesh dependency inside git.
+3. Run a no-training visual/camera sanity check before any GPU reconstruction.
+4. Publish compact PNG/CSV/JSON/MD/MP4 result records.
+5. Keep the claim scoped to positive-control plumbing unless a real-capture GT
+   case also passes G16a.
 ```
 
 ## Planned Milestones
 
 | Gate | Planned milestone | Start condition | Stop condition |
 | --- | --- | --- | --- |
-| G16 | GT dataset access gate | G15c blocks web pseudo views for training | Licensed or redistributable FaceScape/Multiface/NeRSemble/UEA case chosen and access constraints recorded |
-| G17 | compact GT case export and reconstruction rerun | G16 access passes | One GT case with 6-12 views, cameras, mesh/point cloud, and audit sheet |
+| G16a | Real GT dataset access gate | G15c blocks web pseudo views for training | Licensed or redistributable FaceScape/H3DS/Multiface/NeRSemble/UEA case chosen and access constraints recorded |
+| G16b | Mesh-derived positive-control gate | Need repo-safe GT while real access is pending | CC0 head case with rendered views, cameras, masks/depth, audit sheet, and MP4 |
+| G17 | Compact positive-control reconstruction rerun | G16b positive-control gate passes | Iter10 smoke passed; longer run requires a new gate and should be judged visually against source contact sheet |
 | G18 | first10 pseudo-view failure taxonomy | web pseudo views remain diagnostic-only | Failure labels stable after corrected 3x2 splitting |
 | G19 | Paper packaging | Main result stable | Figures, tables, limitations, supplementary ready |
 
