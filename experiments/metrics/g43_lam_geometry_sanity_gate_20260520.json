@@ -1,0 +1,91 @@
+{
+  "blocked_interpretations": [
+    "Do not report the normalized nearest-neighbor value as reconstruction accuracy.",
+    "Do not compare this weak mesh sanity to RI3D held-out PSNR/SSIM/LPIPS.",
+    "Do not publish the private LAM/Multiface OBJ, PLY, PNG, or MP4 artifacts without review.",
+    "Do not reintroduce pseudo-view candidate pools as training or evaluation data."
+  ],
+  "date": "2026-05-20",
+  "decision": "G43 passes as an export/geometry sanity check: LAM emits a non-degenerate head-shaped mesh near the local GT shape after scale-free normalization. The next real milestone remains camera-aligned held-out rendering or an explicitly aligned GT geometry metric.",
+  "gate": "G43",
+  "gt_bbox": {
+    "diag": 462.2646186544106,
+    "extent": [
+      199.1207275388,
+      345.310958863,
+      234.09368896499996
+    ],
+    "max": [
+      96.7759094238,
+      201.009857178,
+      1186.88671875
+    ],
+    "min": [
+      -102.344818115,
+      -144.301101685,
+      952.793029785
+    ],
+    "vertex_count": 7306
+  },
+  "gt_mesh": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/mesh/000102.obj",
+  "lam_bbox": {
+    "diag": 0.4516132928384395,
+    "extent": [
+      0.22137466,
+      0.3186418,
+      0.23111735
+    ],
+    "max": [
+      0.10973622,
+      0.13184944,
+      0.0777332
+    ],
+    "min": [
+      -0.11163844,
+      -0.18679236,
+      -0.15338415
+    ],
+    "vertex_count": 5023
+  },
+  "lam_mesh": "/data1/workspace/airulan/3dv_work/runs/g42_lam_export_multiface_local_20260520/cano_gs/cano_gs/400017_000102_shaped_mesh.obj",
+  "literature_monitor": [
+    {
+      "date": "2026-05-14",
+      "signal": "Few-shot feed-forward Gaussian heads report NeRSemble metrics and a 5.5 PSNR gain over LAM, so LAM should be treated as baseline/export probe, not final method.",
+      "source": "https://arxiv.org/abs/2605.15320",
+      "work": "FFAvatar"
+    },
+    {
+      "date": "2026-04-15",
+      "signal": "Single-image full-head work uses a structured Plucker-aware Gaussian scaffold and dense multi-view supervision.",
+      "source": "https://arxiv.org/abs/2604.13856",
+      "work": "Any3DAvatar"
+    },
+    {
+      "date": "2026-03-16",
+      "signal": "Recent feed-forward Gaussian registration predicts in a fixed UV/template correspondence layout from calibrated multi-view images.",
+      "source": "https://arxiv.org/abs/2603.15811",
+      "work": "MATCH"
+    },
+    {
+      "date": "2026-01-30",
+      "signal": "Uses feed-forward per-pixel Gaussians, transformer multi-view aggregation, and explicit geometry supervision from point maps.",
+      "source": "https://arxiv.org/abs/2601.13837",
+      "work": "FastGHA"
+    },
+    {
+      "date": "2025-10-10",
+      "signal": "Full-head Gaussian one-shot direction relies on FLAME sparse points, transformers, and synthetic 3D-GAN priors.",
+      "source": "https://arxiv.org/abs/2509.07552",
+      "work": "PanoLAM"
+    }
+  ],
+  "normalized_nn": {
+    "gt_to_lam_mean": 0.0351102368074859,
+    "lam_to_gt_mean": 0.03619894265081597,
+    "sample_count": 3000,
+    "symmetric_mean": 0.035654589729150934
+  },
+  "scope": "Weak normalized geometry sanity only. The LAM shaped mesh and Multiface tracked mesh are compared after independent bbox normalization, with no camera alignment, no scale recovery, and no held-out rendering. This can catch catastrophic shape/export failure but cannot support a quality claim.",
+  "verdict": "PASS_NORMALIZED_GEOMETRY_SANITY_NOT_QUALITY_METRIC"
+}

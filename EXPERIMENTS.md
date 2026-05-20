@@ -60,13 +60,15 @@ G38 artifact sync gate
 G39 learned-prior/feed-forward/head-anchored Gaussian method gate
 G40 LAM-20K local Multiface learned-prior smoke
 G41 learned-prior held-out evaluation contract
+G42 LAM local frame/geometry export gate
+G43 weak normalized LAM-vs-Multiface geometry sanity gate
 ```
 
 还没有完成：
 
 ```text
 redesigned method implementation on a passing real-GT benchmark
-camera-aligned learned-prior held-out rendering or geometry export
+camera-aligned learned-prior held-out rendering or aligned GT geometry metric
 quantitative real-GT reconstruction evaluation beyond init/smoke metrics
 publishable artifact review for any identifiable Multiface RGB/mesh result
 public/stronger real-GT benchmark access
@@ -122,8 +124,12 @@ view after a PyTorch 2.6+ TorchScript loading patch, but private MP4s stay out
 of GitHub and visual audit is only PASS_LOCAL_SMOKE_ONLY. The repo-safe CC0
 point-splat positive-control image is outside LAM's natural portrait input
 distribution and fails face tracking. The next credible method milestone must
-add camera-aligned held-out rendering or geometry export before any quality
-claim.
+add camera-aligned held-out rendering or an explicitly aligned GT geometry
+metric before any quality claim. G42-G43 now close the export/sanity part of
+that loop: LAM can export local PNG/MP4/PLY/OBJ artifacts and the shaped mesh is
+not a catastrophic geometry failure after scale-free normalization, but the
+renders are still LAM motion-camera renders and the geometry comparison is not
+camera/scale aligned.
 ```
 
 ## 2. Stage 00: Inputs

@@ -1,0 +1,80 @@
+{
+  "command_summary": "LAM-20K, Multiface E001 frame 000102 camera 400017, save_img=true, save_ply=true, test_sample=true, CUDA_VISIBLE_DEVICES=1.",
+  "date": "2026-05-20",
+  "decision": "G42 proves LAM can export canonical Gaussian PLY, per-frame Gaussian PLYs, PNG frames, and mesh OBJs locally. It still does not prove reconstruction quality because the exported renders use LAM motion cameras, not held-out Multiface cameras, and the coordinate relation to GT geometry remains unvalidated.",
+  "environment_notes": [
+    "A direct env-python command failed because torch was missing from base Python.",
+    "A second direct command reached LAM but nvdiffrast JIT failed because ninja was not on PATH.",
+    "The passing run used conda activate lam, env124.sh, CUDA_VISIBLE_DEVICES=1, and test_sample=true."
+  ],
+  "export_summary": {
+    "canonical_gaussian_vertices": 20018,
+    "frame0_gaussian_vertices": 20018,
+    "per_frame_ply_count": 50,
+    "private_run_root": "/data1/workspace/airulan/3dv_work/runs/g42_lam_export_multiface_local_20260520",
+    "render_png_count": 50,
+    "repo_sync_policy": "hashes/metrics only; private RGB/PNG/MP4/PLY/OBJ remain under 3dv_work",
+    "shaped_mesh_counts": {
+      "faces": 9976,
+      "vertices": 5023
+    },
+    "textured_mesh_counts": {
+      "faces": 9976,
+      "vertices": 20018
+    }
+  },
+  "gate": "G42",
+  "key_private_outputs": [
+    {
+      "basename": "400017_000102.mp4",
+      "exists": true,
+      "sha256": "559679b77b33093ec115c66c2ca2ecfb53b6ea3ec3a5b58375d932a8ab603235",
+      "size_bytes": 90118
+    },
+    {
+      "basename": "400017_000102_audio.mp4",
+      "exists": true,
+      "sha256": "971d5e4f46bd1f1b7450e115b1cb682918b6c3099d41926fb3ab37248be314bd",
+      "size_bytes": 366397
+    },
+    {
+      "basename": "g42_private_render_frame_sheet.png",
+      "exists": true,
+      "sha256": "eceef9964de78f45e83d93c0ad978bf040ca5268b2632a236961c4c2f797750e",
+      "size_bytes": 135696
+    },
+    {
+      "basename": "400017_000102_gs_offset.ply",
+      "exists": true,
+      "sha256": "3b5797c0d398a4a8f48fc8b6759b147b79544478572626193e5ac044c9d37888",
+      "size_bytes": 1361639
+    },
+    {
+      "basename": "400017_000102_shaped_mesh.obj",
+      "exists": true,
+      "sha256": "977b0910bd5af2852b9db78021515da8a3f8e080a2d4217caded19560d63f1fb",
+      "size_bytes": 345179
+    },
+    {
+      "basename": "400017_000102_textured_mesh.obj",
+      "exists": true,
+      "sha256": "16fedf824f055f4aeaec84933e484c5c0564dd378b47c9b7a76b4c8f96cf8c71",
+      "size_bytes": 1550293
+    },
+    {
+      "basename": "0000.png",
+      "exists": true,
+      "sha256": "d6d4f48a8ef7c8a240c7402007c3616bebb10bf4a5eeb477b228bcb4170c1f7d",
+      "size_bytes": 156736
+    },
+    {
+      "basename": "0000.ply",
+      "exists": true,
+      "sha256": "c04553f20a22cb79078422b4c0c78673d10102fd87af30175ef01c88b925dd8a",
+      "size_bytes": 1361639
+    }
+  ],
+  "manual_visual_audit": "PASS_LOCAL_EXPORT_ONLY. The private frame sheet shows a coherent animated head and exported frames, but it still has green color cast, blurred shoulder/neck support, and background residuals. These frames are not Multiface held-out camera renders.",
+  "purpose": "Verify whether the learned-prior LAM route can export frames and geometry-like artifacts that could become inputs to a later held-out camera or geometry metric adapter.",
+  "verdict": "PASS_LAM_EXPORT_LOCAL_ONLY_NO_QUALITY_CLAIM"
+}
