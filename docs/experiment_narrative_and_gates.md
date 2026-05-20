@@ -62,7 +62,10 @@ smoke on the Multiface real-GT train view, and block quality interpretation
 until camera-aligned held-out renders or GT geometry metrics exist. G42-G43
 verify local LAM frame/geometry export and a weak normalized mesh sanity check,
 while preserving the same block on quality interpretation because neither gate
-uses held-out Multiface cameras or an aligned metric GT geometry frame.
+uses held-out Multiface cameras or an aligned metric GT geometry frame. G44 then
+adds a similarity/ICP-aligned mesh diagnostic in the Multiface GT frame, but
+keeps the same no-quality-claim boundary because ICP alignment is not camera
+recovery, verified surface correspondence, or held-out view reconstruction.
 
 ## Real GT Benchmark Pivot
 
@@ -121,6 +124,8 @@ G39-G41: gate learned-prior/head-anchored Gaussian work, run LAM local smoke,
          and require held-out camera/geometry export before any quality claim.
 G42-G43: verify LAM local PNG/MP4/PLY/OBJ export and weak normalized mesh sanity,
          but keep all identifiable media private and block quality claims.
+G44: add similarity/ICP-aligned LAM-vs-Multiface mesh diagnostic, still
+     diagnostic-only and private-artifact-safe.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -259,6 +264,7 @@ positive control, so they are not the active G16b case.
 | G41 | Learned-prior evaluation contract | G40 smoke | Done: current LAM wrapper cannot provide held-out camera-aligned or geometry metrics, so quality claims remain blocked |
 | G42 | LAM local export gate | G41 contract and private artifact policy | Done: local LAM exports 50 PNGs, 50 PLYs, canonical Gaussian PLY, MP4, and mesh OBJs; repo records hashes/metrics only |
 | G43 | LAM-vs-Multiface geometry sanity | G42 export gate | Done: bbox-normalized mesh sanity is non-catastrophic but not scale/camera aligned, so no quality claim |
+| G44 | Similarity/ICP geometry diagnostic | G43 weak geometry sanity | Done: similarity-aligned symmetric mean nearest-neighbor is 17.164824 GT units / 0.037132 normalized, but this remains diagnostic-only |
 
 ## Expected Final Outputs
 

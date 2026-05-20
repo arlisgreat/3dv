@@ -142,7 +142,10 @@ export local PNG/MP4/PLY/OBJ artifacts, but keeps private identifiable media
 under `3dv_work` and records repo-safe hashes only. G43 adds a weak
 bbox-normalized LAM-mesh-vs-Multiface-mesh sanity check; it can catch a
 catastrophic geometry/export failure, but it is not a camera-aligned or metric
-GT reconstruction result.
+GT reconstruction result. G44 fits one similarity/ICP transform from the LAM
+shaped mesh into the Multiface GT mesh frame and records a stronger aligned
+geometry diagnostic; it still lacks held-out camera rendering, verified surface
+correspondence, and a publishable benchmark artifact package.
 ```
 
 ## Completed Milestones
@@ -199,12 +202,13 @@ GT reconstruction result.
 | G41 | done, eval contract pass/block | Learned-prior held-out evaluation contract | `experiments/metrics/g41_learned_prior_eval_contract_20260520.md` | Current LAM wrapper cannot support held-out camera-aligned or geometry metrics; next work must implement/export those before a quality claim. |
 | G42 | done, export pass no quality claim | LAM local frame/geometry export gate | `experiments/metrics/g42_lam_export_gate_20260520.md` | LAM exports 50 PNG frames, 50 per-frame PLYs, canonical Gaussian PLY, MP4, and mesh OBJs locally; private media remain under `3dv_work`, and the run is still not held-out camera aligned. |
 | G43 | done, geometry sanity pass no quality claim | Weak normalized LAM mesh vs Multiface GT mesh sanity | `experiments/metrics/g43_lam_geometry_sanity_gate_20260520.md` | Bbox-normalized nearest-neighbor sanity is non-catastrophic, but independent normalization and missing camera/scale alignment block any reconstruction-quality claim. |
+| G44 | done, aligned geometry diagnostic pass no quality claim | Similarity/ICP-aligned LAM mesh vs Multiface GT mesh diagnostic | `experiments/metrics/g44_lam_similarity_geometry_gate_20260520.md` | Symmetric mean nearest-neighbor distance after similarity/ICP alignment is 17.164824 GT units, normalized 0.037132 by GT bbox diagonal; this is diagnostic only, not final reconstruction quality. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current learned-prior export/sanity loop | Stop interpreting LAM MP4, exported PLY/OBJ, or normalized mesh sanity as reconstruction quality | G39 method gate + G40 local LAM smoke + G41 evaluation contract + G42 export gate + G43 geometry sanity | Open a new milestone only to implement camera-aligned held-out rendering or explicitly aligned GT geometry metrics for a head-anchored method, acquire a stronger licensed benchmark, or complete explicit artifact/privacy review for identifiable media. |
+| none | closed for current learned-prior export/geometry diagnostic loop | Stop interpreting LAM MP4, exported PLY/OBJ, normalized mesh sanity, or ICP-aligned geometry diagnostics as reconstruction quality | G39 method gate + G40 local LAM smoke + G41 evaluation contract + G42 export gate + G43 geometry sanity + G44 aligned geometry diagnostic | Open a new milestone only to implement camera-aligned held-out rendering for a head-anchored method, benchmark-grade aligned geometry metrics with verified surface correspondence, acquire a stronger licensed benchmark, or complete explicit artifact/privacy review for identifiable media. |
 
 ## G8 Result
 

@@ -62,13 +62,14 @@ G40 LAM-20K local Multiface learned-prior smoke
 G41 learned-prior held-out evaluation contract
 G42 LAM local frame/geometry export gate
 G43 weak normalized LAM-vs-Multiface geometry sanity gate
+G44 similarity/ICP-aligned LAM-vs-Multiface geometry diagnostic gate
 ```
 
 还没有完成：
 
 ```text
 redesigned method implementation on a passing real-GT benchmark
-camera-aligned learned-prior held-out rendering or aligned GT geometry metric
+camera-aligned learned-prior held-out rendering or benchmark-grade aligned GT geometry metric
 quantitative real-GT reconstruction evaluation beyond init/smoke metrics
 publishable artifact review for any identifiable Multiface RGB/mesh result
 public/stronger real-GT benchmark access
@@ -129,7 +130,9 @@ metric before any quality claim. G42-G43 now close the export/sanity part of
 that loop: LAM can export local PNG/MP4/PLY/OBJ artifacts and the shaped mesh is
 not a catastrophic geometry failure after scale-free normalization, but the
 renders are still LAM motion-camera renders and the geometry comparison is not
-camera/scale aligned.
+camera/scale aligned. G44 adds a similarity/ICP-aligned mesh diagnostic in the
+Multiface GT frame, but it is still diagnostic-only because ICP alignment is not
+camera recovery, surface correspondence, or held-out view reconstruction.
 ```
 
 ## 2. Stage 00: Inputs

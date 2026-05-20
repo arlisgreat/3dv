@@ -1,0 +1,247 @@
+{
+  "blocked_interpretations": [
+    "Do not report this as final reconstruction quality.",
+    "Do not compare this directly to held-out RGB PSNR/SSIM/LPIPS.",
+    "Do not treat ICP alignment as proof that LAM recovered the real camera or metric coordinate frame.",
+    "Do not ignore coverage/topology mismatch: LAM and Multiface meshes differ around hair, neck, shoulders, and boundary support.",
+    "Do not publish the private Multiface or LAM OBJ/PLY/PNG/MP4 artifacts without explicit review.",
+    "Do not use experiments/downstream_datasets as training or evaluation data."
+  ],
+  "data_gate": "PASS_REAL_GT_DIAGNOSTIC_ONLY. Inputs are the G42 private LAM shaped mesh and the G21 local Multiface GT mesh. No experiments/downstream_datasets candidate pool, generated pseudo-view training data, or held-out RGB media are consumed. G42 visual audit still applies.",
+  "date": "2026-05-20",
+  "decision": "G44 is an aligned geometry diagnostic only. It is stronger than G43's independent bbox-normalized sanity because one similarity/ICP transform is fit into the GT frame, but it still lacks held-out camera rendering, verified surface correspondence, coverage trimming, and a publishable benchmark artifact package.",
+  "final_metrics": {
+    "gt_to_lam": {
+      "max": 68.87280289960576,
+      "mean": 21.550445624943045,
+      "median": 21.45018413875968,
+      "p95": 42.06315058385847
+    },
+    "lam_to_gt": {
+      "max": 59.757089847294445,
+      "mean": 12.779202272093103,
+      "median": 10.628933245834922,
+      "p95": 29.746796272364634
+    },
+    "symmetric_mean": 17.164823948518073
+  },
+  "gate": "G44",
+  "gt_bbox": {
+    "center": [
+      -2.784454345599997,
+      28.354377746500006,
+      1069.8398742675
+    ],
+    "diag": 462.2646186544106,
+    "extent": [
+      199.1207275388,
+      345.310958863,
+      234.09368896499996
+    ],
+    "max": [
+      96.7759094238,
+      201.009857178,
+      1186.88671875
+    ],
+    "min": [
+      -102.344818115,
+      -144.301101685,
+      952.793029785
+    ],
+    "vertex_count": 7306
+  },
+  "gt_mesh": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/mesh/000102.obj",
+  "icp_iterations": 20,
+  "icp_trace": [
+    {
+      "iteration": 1.0,
+      "source_to_gt_mean": 14.289746632059178,
+      "source_to_gt_median": 11.703985459571683,
+      "source_to_gt_p95": 34.109840799511424
+    },
+    {
+      "iteration": 2.0,
+      "source_to_gt_mean": 13.543851471838888,
+      "source_to_gt_median": 10.801134233794103,
+      "source_to_gt_p95": 31.935624222374038
+    },
+    {
+      "iteration": 3.0,
+      "source_to_gt_mean": 13.31139402570674,
+      "source_to_gt_median": 10.67557374663356,
+      "source_to_gt_p95": 31.448270560710554
+    },
+    {
+      "iteration": 4.0,
+      "source_to_gt_mean": 13.199705773608308,
+      "source_to_gt_median": 10.61923012060528,
+      "source_to_gt_p95": 30.996628003288443
+    },
+    {
+      "iteration": 5.0,
+      "source_to_gt_mean": 13.110426857444816,
+      "source_to_gt_median": 10.587749271411258,
+      "source_to_gt_p95": 30.75293631134187
+    },
+    {
+      "iteration": 6.0,
+      "source_to_gt_mean": 13.048644453419984,
+      "source_to_gt_median": 10.611576315980749,
+      "source_to_gt_p95": 30.269108903412427
+    },
+    {
+      "iteration": 7.0,
+      "source_to_gt_mean": 12.998151654553599,
+      "source_to_gt_median": 10.581362967594892,
+      "source_to_gt_p95": 30.19423207296918
+    },
+    {
+      "iteration": 8.0,
+      "source_to_gt_mean": 12.96381863218678,
+      "source_to_gt_median": 10.5398119921656,
+      "source_to_gt_p95": 29.800031738806045
+    },
+    {
+      "iteration": 9.0,
+      "source_to_gt_mean": 12.938479512154435,
+      "source_to_gt_median": 10.49228812529135,
+      "source_to_gt_p95": 29.920578864893503
+    },
+    {
+      "iteration": 10.0,
+      "source_to_gt_mean": 12.923643502825396,
+      "source_to_gt_median": 10.496242079484123,
+      "source_to_gt_p95": 29.901653378393913
+    },
+    {
+      "iteration": 11.0,
+      "source_to_gt_mean": 12.914751142651154,
+      "source_to_gt_median": 10.519210610442816,
+      "source_to_gt_p95": 29.87764648285257
+    },
+    {
+      "iteration": 12.0,
+      "source_to_gt_mean": 12.907642405729973,
+      "source_to_gt_median": 10.565017632927624,
+      "source_to_gt_p95": 29.784386303198907
+    },
+    {
+      "iteration": 13.0,
+      "source_to_gt_mean": 12.900440612912204,
+      "source_to_gt_median": 10.648637605220431,
+      "source_to_gt_p95": 29.84467759044587
+    },
+    {
+      "iteration": 14.0,
+      "source_to_gt_mean": 12.89492434198676,
+      "source_to_gt_median": 10.653062978518662,
+      "source_to_gt_p95": 29.858574906926215
+    },
+    {
+      "iteration": 15.0,
+      "source_to_gt_mean": 12.88919683900605,
+      "source_to_gt_median": 10.70665989682513,
+      "source_to_gt_p95": 29.789841812300175
+    },
+    {
+      "iteration": 16.0,
+      "source_to_gt_mean": 12.881086712742464,
+      "source_to_gt_median": 10.665290944514584,
+      "source_to_gt_p95": 29.85661486673992
+    },
+    {
+      "iteration": 17.0,
+      "source_to_gt_mean": 12.868670294832475,
+      "source_to_gt_median": 10.623969585031734,
+      "source_to_gt_p95": 29.784331216966695
+    },
+    {
+      "iteration": 18.0,
+      "source_to_gt_mean": 12.851755436318257,
+      "source_to_gt_median": 10.609090273378293,
+      "source_to_gt_p95": 29.8604225363276
+    },
+    {
+      "iteration": 19.0,
+      "source_to_gt_mean": 12.815704474692714,
+      "source_to_gt_median": 10.596865913281764,
+      "source_to_gt_p95": 29.71591035207492
+    },
+    {
+      "iteration": 20.0,
+      "source_to_gt_mean": 12.779202272093103,
+      "source_to_gt_median": 10.628933245834922,
+      "source_to_gt_p95": 29.746796272364634
+    }
+  ],
+  "lam_bbox": {
+    "center": [
+      -0.000951110000000005,
+      -0.02747145999999999,
+      -0.037825475
+    ],
+    "diag": 0.4516132928384395,
+    "extent": [
+      0.22137466,
+      0.3186418,
+      0.23111735
+    ],
+    "max": [
+      0.10973622,
+      0.13184944,
+      0.0777332
+    ],
+    "min": [
+      -0.11163844,
+      -0.18679236,
+      -0.15338415
+    ],
+    "vertex_count": 5023
+  },
+  "lam_mesh": "/data1/workspace/airulan/3dv_work/runs/g42_lam_export_multiface_local_20260520/cano_gs/cano_gs/400017_000102_shaped_mesh.obj",
+  "normalized_by_gt_bbox_diag": {
+    "gt_to_lam": {
+      "max": 0.14898999430258175,
+      "mean": 0.0466192841833179,
+      "median": 0.04640239220816477,
+      "p95": 0.09099366225842372
+    },
+    "lam_to_gt": {
+      "max": 0.12927030846799223,
+      "mean": 0.027644776944624538,
+      "median": 0.022993179267698016,
+      "p95": 0.0643501472359133
+    },
+    "symmetric_mean": 0.03713203056397122
+  },
+  "pass_threshold_normalized_symmetric_mean": 0.08,
+  "premise": "Given the G42 local LAM export and G21 real-GT Multiface mesh, fit a similarity/ICP transform from the LAM shaped mesh to the Multiface GT mesh and record a weak aligned geometry diagnostic without publishing private mesh/media artifacts.",
+  "sample_count": 3000,
+  "transform": {
+    "determinant_rotation": 1.0000000000000004,
+    "rotation": [
+      [
+        0.9994871244427473,
+        -0.006470334069977995,
+        -0.03136276215819238
+      ],
+      [
+        0.013527591698853387,
+        0.9730097103975864,
+        0.23036733217805488
+      ],
+      [
+        0.029025718526809532,
+        -0.23067344504521525,
+        0.9725982055376079
+      ]
+    ],
+    "scale": 884.2383356201759,
+    "translation": [
+      -3.766094578171187,
+      40.8655993601615,
+      1109.844525796506
+    ]
+  },
+  "verdict": "PASS_ALIGNED_GEOMETRY_DIAGNOSTIC_ONLY_NO_RECONSTRUCTION_QUALITY_CLAIM"
+}
