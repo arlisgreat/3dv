@@ -1,12 +1,13 @@
 {
   "date": "2026-05-20",
-  "gate": "G20",
+    "gate": "G20",
   "verdict": [
     "OLD_PSEUDOVIEW_RI3D_ROUTE_INVALID_FOR_QUALITY_CLAIMS",
     "REAL_GT_BENCHMARK_REQUIRED_BEFORE_ANY_NEW_RECONSTRUCTION_CLAIM",
     "NO_PSEUDOVIEW_OR_RI3D_SCALING_WITHOUT_PASS_REAL_GT_BENCHMARK",
-    "G20_BENCHMARK_SPEC_COMPLETE",
-    "G21_REAL_GT_COMPACT_CASE_BLOCKED_EXTERNALLY"
+        "G20_BENCHMARK_SPEC_COMPLETE",
+        "G21_REAL_GT_COMPACT_CASE_PASS_LOCAL",
+        "RAW_IDENTIFIABLE_ASSETS_LOCAL_ONLY_PENDING_ARTIFACT_REVIEW"
   ],
   "core_purpose_after_pivot": "Establish a licensed, auditable real-GT benchmark for single-image/few-view head reconstruction before making any reconstruction-quality claim.",
   "benchmark_acceptance_criteria": [
@@ -36,8 +37,8 @@
     {
       "name": "Multiface",
       "fit": "strong real-capture route",
-      "local_status": "metadata/KRT/frame-list intake passed for identity 6795937 and expression E001_Neutral_Eyes_Open; raw compact case not fully acquired",
-      "decision": "best local intake route, still blocked for reconstruction"
+            "local_status": "debug compact case passes local G21 with 9 same-frame RGB views, KRT cameras, projected mesh masks, and tracked OBJ; identity 6795937, expression E001_Neutral_Eyes_Open, frame 000102",
+            "decision": "current executable local benchmark route; raw RGB/mesh stay in 3dv_work pending artifact review"
     },
     {
       "name": "NeRSemble",
@@ -67,8 +68,9 @@
     },
     {
       "gate": "G21",
-      "state": "blocked_externally",
-      "meaning": "Compact licensed real-GT case still needs H3DS token or FaceScape/Multiface raw access, then visual/VLM audit."
-    }
-  ]
+            "state": "complete_local",
+            "meaning": "Multiface debug compact case passes PASS_REAL_GT_BENCHMARK; repo records metrics, hashes, and a mask-only PNG while raw RGB/mesh remain local."
+        }
+    ],
+    "next_gate": "G22 real-GT reconstruction/evaluation preflight on the G21 case or an equivalent licensed benchmark"
 }

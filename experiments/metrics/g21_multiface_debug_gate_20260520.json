@@ -1,0 +1,53 @@
+{
+  "audit_sheet": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/audit/g21_multiface_gate_audit_sheet.png",
+  "case_root": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view",
+  "cases": [
+    {
+      "artifact_policy_text": "local benchmark case; commit compact metrics, hashes, and gate reports only unless user explicitly approves identifiable derived PNG export metadata and hash summaries may be committed; raw RGB, masks, mesh, and identifiable contact sheets remain in 3dv_work pending artifact review",
+      "camera_count": 9,
+      "case_dir": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/gate_case",
+      "case_id": "gate_case",
+      "checks": {
+        "camera_count_matches_views": true,
+        "camera_extrinsics_present": true,
+        "camera_intrinsics_present": true,
+        "cameras_json_exists": true,
+        "compact_artifact_policy_recorded": true,
+        "distribution_audit_recorded": true,
+        "license_recorded": true,
+        "manifest_exists": true,
+        "masks_exist": true,
+        "mesh_or_point_cloud_exists": true,
+        "not_diffusion_or_pseudoview": true,
+        "privacy_or_subject_policy_recorded": true,
+        "real_capture_not_synthetic": true,
+        "rgb_images_exist": true,
+        "same_identity_static_frame_recorded": true,
+        "view_count_6_to_12": true,
+        "visual_audit_sheet_passed": true
+      },
+      "distribution_text": "Multiface real multi-camera head capture distribution; within sparse-view real-capture domain for G21, unlike web pseudo-view candidate pools real captured 9-view same-frame calibrated head images with tracked mesh; suitable for local gate before reconstruction-quality experiments",
+      "failed_checks": [],
+      "geometry_count": 1,
+      "geometry_paths": [
+        "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/mesh/000102.obj"
+      ],
+      "license_text": "CC-BY-NC 4.0 Creative Commons Attribution-NonCommercial 4.0 International",
+      "mask_count": 9,
+      "privacy_text": "recognizable human-subject dataset; public repo export limited to metadata/hashes unless artifact review approves derived contact sheets",
+      "rgb_image_count": 9,
+      "verdict": "PASS_REAL_GT_BENCHMARK",
+      "view_count": 9,
+      "visual_verdict": "PASS"
+    }
+  ],
+  "closure": "PASS_REAL_GT_BENCHMARK: at least one compact real-capture case passed the gate.",
+  "date": "2026-05-20",
+  "gate": "G21",
+  "output_json": "experiments/metrics/g21_multiface_debug_gate_20260520.json",
+  "output_md": "experiments/metrics/g21_multiface_debug_gate_20260520.md",
+  "required_verdict": "PASS_REAL_GT_BENCHMARK",
+  "repo_safe_artifact": "experiments/figures/g21_multiface_debug_mask_gate_20260520.png",
+  "visual_audit_notes": "Full local RGB/mask/overlay sheet was inspected before visual_verdict=PASS. Views are same-subject same-frame real captures; projected masks broadly align with head/neck geometry. Some close/top views are cropped, so this is a benchmark-premise pass, not a reconstruction-quality result. Raw RGB/OBJ/contact-sheet artifacts remain in 3dv_work.",
+  "verdict": "PASS_REAL_GT_BENCHMARK"
+}

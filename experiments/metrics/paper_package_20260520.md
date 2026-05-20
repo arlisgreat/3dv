@@ -12,8 +12,9 @@ a mandatory real-GT benchmark gate for any reconstruction-quality claim.
 This paper sprint does not claim solved single-image full-head reconstruction.
 It packages a diagnostic protocol and the evidence that generic diffusion
 pseudo views must be gated before they can supervise 3D reconstruction.
-After G20, the old pseudo-view/RI3D route is explicitly invalid for positive
-quality claims until `PASS_REAL_GT_BENCHMARK` exists.
+After G20/G21, the old pseudo-view/RI3D route remains invalid for positive
+quality claims. G21 supplies the benchmark premise locally; quality claims still
+need a G22 real-GT reconstruction/evaluation result.
 
 ## Main Claim
 
@@ -35,8 +36,9 @@ plumbing, but the current RI3D path still fails visual reconstruction quality.
 | Candidate-pool audit | `experiments/metrics/first10_candidate_pool_audit_gate_20260519.md` | `experiments/downstream_datasets` is not a validated training set. |
 | Head-cutout corrected probe | `experiments/metrics/head_cutout_probe_resplit3x2_gate_20260519.md` | Corrected pseudo views remain diagnostic-only. |
 | GT route gate | `experiments/metrics/gt_dataset_access_gate_20260519.md` | Real-capture quality claims need licensed cameras and GT geometry. |
-| GT intake readiness | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is ready as a local intake route, but real reconstruction remains blocked until raw image/mesh case and visual audit pass. |
+| GT intake readiness | `experiments/metrics/g16a_real_gt_intake_readiness_20260520.md` | Multiface is ready as a local intake route; G21 later closes the compact-case gate locally. |
 | Real-GT benchmark pivot | `experiments/metrics/real_gt_benchmark_pivot_20260520.md` | Old pseudo-view/RI3D results are diagnostic-only; H3DS/FaceScape/Multiface compact real-GT benchmark is the mandatory next gate. |
+| G21 local real-GT gate | `experiments/metrics/g21_multiface_debug_gate_20260520.md` | A Multiface debug compact case satisfies the real-GT benchmark premise locally; raw RGB/mesh artifacts remain outside git. |
 | CC0 positive control | `experiments/metrics/wikimedia_blender_head_cc0_gt_gate_20260520.md` | Repo-safe GT-derived case passes positive-control-only gate. |
 | G17 iter500 visual gate | `experiments/metrics/ri3d_gt_positive_control_iter500_visual_gate_20260520.md` | Current RI3D path executes but fails reconstruction quality even on positive control. |
 | G18 taxonomy | `experiments/metrics/first10_failure_taxonomy_resplit3x2_20260520.md` | Corrected first10 pseudo views support failure taxonomy, not training. |
@@ -90,14 +92,17 @@ iter500 MP4s: 120 frames at 256x256
 iter500 verdict: execution/export pass, reconstruction-quality fail
 ```
 
-G20 benchmark pivot:
+G20/G21 benchmark pivot:
 
 ```text
-required next verdict: PASS_REAL_GT_BENCHMARK
+G21 verdict: PASS_REAL_GT_BENCHMARK on local Multiface debug compact case
+required next verdict: G22 real-GT reconstruction/evaluation preflight
 preferred route: H3DS v2, blocked by access token/license
-local intake route: Multiface 6795937 / E001_Neutral_Eyes_Open metadata ready,
-  raw compact case not yet acquired or visually audited
-hard stop: no new pseudo-view/RI3D scaling while G21 is blocked
+local benchmark route: Multiface debug 6795937 / E001_Neutral_Eyes_Open /
+  frame 000102 passes G21 with 9 real views, cameras, masks, and tracked mesh
+hard stop: no new web pseudo-view/RI3D scaling; next method work must be G22 on
+  a real-GT case
+repo-safe result: experiments/figures/g21_multiface_debug_mask_gate_20260520.png
 ```
 
 ## Limitations
@@ -112,15 +117,16 @@ hard stop: no new pseudo-view/RI3D scaling while G21 is blocked
    real-capture identity preservation or real multi-camera performance.
 5. Real reconstruction-quality claims require a licensed or redistributable
    real GT case with calibrated views and mesh/point-cloud geometry.
-6. After G20, the paper cannot be framed as a positive reconstruction method
-   result unless G21 later produces a passing real-GT benchmark.
+6. After G21, the paper still cannot be framed as a positive reconstruction
+   method result until G22 produces a real-GT reconstruction/evaluation result.
 ```
 
 ## Final Milestone Status
 
 ```text
 G0-G15: complete, with G8-G14 downgraded to diagnostic evidence.
-G16a: externally blocked by real dataset access/license constraints.
+G16a: H3DS/full benchmark access still externally constrained; G21 provides a
+      local Multiface debug compact-case pass.
 G16a-local: complete as real-GT intake/readiness, not reconstruction.
 G16b: complete for positive-control scope.
 G17: complete for current sprint; RI3D positive-control execution passes but
@@ -128,6 +134,7 @@ G17: complete for current sprint; RI3D positive-control execution passes but
 G18: complete as corrected first10 diagnostic failure taxonomy.
 G19: complete as conservative paper package and claim boundary.
 G20: complete as benchmark-first pivot and route/distribution audit.
-G21: externally blocked until compact licensed real-GT case passes visual/VLM
-     and distribution gates.
+G21: complete locally on Multiface debug compact real-GT case; raw RGB/mesh stay
+     local pending artifact review.
+G22: required next milestone for any reconstruction-quality claim.
 ```

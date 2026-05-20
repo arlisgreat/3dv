@@ -49,8 +49,8 @@ They remain diagnostic-only.
 ```
 
 No milestone may restart reconstruction training from a generated candidate pool
-or RI3D export unless a real-GT benchmark first records
-`PASS_REAL_GT_BENCHMARK`.
+or RI3D export. `PASS_REAL_GT_BENCHMARK` only authorizes a real-GT G22 preflight
+on the passing captured benchmark case or an equivalent licensed case.
 
 ## Real GT Benchmark Pivot
 
@@ -85,6 +85,9 @@ Current pivot artifact:
 ```text
 experiments/metrics/real_gt_benchmark_pivot_20260520.md
 experiments/metrics/real_gt_benchmark_pivot_20260520.json
+experiments/metrics/g21_multiface_debug_gate_20260520.md
+experiments/metrics/g21_multiface_debug_gate_20260520.json
+experiments/figures/g21_multiface_debug_mask_gate_20260520.png
 ```
 
 ## Experiment Thread
@@ -160,19 +163,21 @@ public reconstruction-quality claims.
 H3DS v2: best technical fit, but blocked by H3DS_ACCESS_TOKEN/license.
 FaceScape: strong multi-view face route, but local sample is not repo-safe and
   full case requires licensed access.
-Multiface: best local intake route; metadata/KRT/frame-list checks pass, but
-  raw compact image/mesh case is not fully acquired or visually audited.
+Multiface: local G21 pass route; debug compact case has 9 same-frame real
+  captured views, KRT cameras, projected mesh masks, and tracked OBJ. Raw
+  RGB/mesh assets remain under 3dv_work pending artifact review.
 NeRSemble/UEA: secondary until compact licensed access exists.
 CC0 mesh positive control: pipeline sanity only, not real capture.
 ```
 
-`G16a-local` is now the local intake/readiness closure for that route. Multiface
-is the current best real-capture candidate because its official assets include
+`G16a-local` remains the intake/readiness closure for that route. Multiface is
+the current best real-capture candidate because its official assets include
 multi-view raw images, camera calibration metadata, tracked meshes, and headpose.
-The repo has verified metadata/KRT/frame-list structure for identity `6795937`,
-but raw images and mesh for a compact case have not been fully acquired or
-visually audited. This is `PASS_INTAKE_READY`, not
-`PASS_RECONSTRUCTION_TRAINING`.
+`G21` upgrades that route from intake-ready to a local real-GT benchmark pass
+using the Multiface debug dataset: 9 same-frame real captured views, KRT cameras,
+projected mesh masks, and a tracked OBJ all pass structural plus VLM/manual
+audit. Raw RGB/mesh assets remain under `3dv_work`; the repo only publishes
+metrics, hashes, and a mask-only PNG summary.
 
 `G16b` is the repo-safe positive-control route. A public mesh case can be rendered
 into deterministic multi-view RGB/depth/mask/camera artifacts. This validates the
@@ -198,13 +203,14 @@ positive control, so they are not the active G16b case.
 | Gate | Purpose | Start condition | Stop condition |
 | --- | --- | --- | --- |
 | G16a | Real GT access gate | Web first10 remains diagnostic-only | Licensed compact real case with images, cameras, and GT mesh/point cloud |
-| G16a-local | Real GT intake readiness | Real GT remains externally blocked | Multiface route/schema recorded; no training until raw compact case passes visual audit |
+| G16a-local | Real GT intake readiness | Real GT was externally blocked at full-benchmark level | Multiface route/schema recorded; no training until G21 or equivalent real-GT gate passes |
 | G16b | Mesh-derived positive-control gate | Public mesh with redistributable derived outputs | 6-12 rendered views, cameras, depth/mask, contact sheet, and visual audit |
 | G17 | Reconstruction positive-control rerun | G16b passes | Iter10/iter500 execute and export; visual quality fails, so current RI3D route is diagnostic only |
 | G18 | Corrected first10 failure taxonomy | G15c/G16 gates block web training | 60 corrected views labeled; web first10 remains diagnostic-only |
 | G19 | Paper packaging | G17 and G18 are stable | Claims, figures, limitations, and milestone closure are recorded |
 | G20 | Real-GT benchmark pivot | Old route cannot support quality claims | Benchmark spec, route audit, and distribution gate recorded |
-| G21 | Compact real-GT benchmark acquisition | H3DS token or FaceScape/Multiface raw access | PASS_REAL_GT_BENCHMARK, or externally blocked status |
+| G21 | Compact real-GT benchmark acquisition | H3DS token or FaceScape/Multiface raw access | Done locally on Multiface debug case with PASS_REAL_GT_BENCHMARK; raw assets remain local |
+| G22 | Real-GT reconstruction/evaluation preflight | G21 local pass, repeated data/VLM/distribution audit | Quantitative/visual result on real captured cameras + mesh, or blocked before training |
 
 ## Expected Final Outputs
 
@@ -223,15 +229,20 @@ The expected final package is:
 As of 2026-05-20:
 
 ```text
-G16a real-capture GT remains externally blocked by access/license constraints.
+G16a real-capture GT is no longer blocked at the local compact-case level:
+G21 passes on Multiface debug data. H3DS remains preferred for a stronger
+full-head benchmark, and any identifiable Multiface artifact publication still
+requires review.
 G16a-local real-GT intake readiness is complete; Multiface metadata/KRT/frame
-structure is verified, but no real-capture reconstruction training is allowed.
+structure is verified.
 G16b positive-control data gate passes.
 G17 iter10 and iter500 both execute and export valid MP4s, but iter500 still
 fails visual reconstruction quality with ghosted multi-fragment heads.
 G18 corrected first10 taxonomy is complete and diagnostic-only.
 G19 paper package and milestone closure are complete.
 G20 real-GT benchmark pivot is complete.
-G21 compact real-GT acquisition is externally blocked; no reconstruction-quality
-claims or new pseudo-view/RI3D scaling are allowed before PASS_REAL_GT_BENCHMARK.
+G21 compact real-GT acquisition is complete locally with
+PASS_REAL_GT_BENCHMARK. The next legitimate experiment is G22 on this real-GT
+case or an H3DS/FaceScape/Multiface equivalent, not renewed web pseudo-view
+training.
 ```

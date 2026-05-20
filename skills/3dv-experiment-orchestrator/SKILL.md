@@ -77,6 +77,15 @@ validated reconstruction training dataset. The 2026-05-19 visual audit found
 many selected candidates are split bodies, rotated photo cards, cropped
 fragments, or background/body-only pieces.
 
+Current real-GT status:
+
+```text
+G21 PASS_REAL_GT_BENCHMARK exists only for the local Multiface debug compact
+case under /data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/.
+Repo sync should include metrics, hashes, and repo-safe mask-only summaries, not
+raw person-identifying RGB images or meshes unless explicitly reviewed.
+```
+
 Every milestone that consumes generated images must pass a data audit gate
 before GPU reconstruction:
 
@@ -90,6 +99,7 @@ verdict under `experiments/metrics/`:
 
 ```text
 PASS_RECONSTRUCTION_TRAINING
+PASS_REAL_GT_BENCHMARK
 PASS_DIAGNOSTIC_ONLY
 BLOCKED
 ```
@@ -98,6 +108,15 @@ Do not feed pseudo views into downstream Gaussian/PanoHead/FLAME experiments
 unless the milestone has an explicit `PASS_RECONSTRUCTION_TRAINING` gate. If
 the gate is diagnostic-only or blocked, use the candidates only for failure
 taxonomy and do not describe them as training data.
+
+For real-GT milestones, run:
+
+```bash
+python scripts/real_gt_benchmark_gate.py --case-root <case_root> --case-id <case_id> --visual-verdict PASS
+```
+
+Repeat the gate before any G22 training/evaluation step and record model/data
+distribution assumptions in `experiments/metrics/`.
 
 ## Sync Policy
 

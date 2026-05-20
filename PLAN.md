@@ -40,12 +40,12 @@ active selected pseudo views
 active + identity filtering
 ```
 
-当前可信 comparison 必须等 G21 完成：
+当前可信 comparison 必须走 G21->G22：
 
 ```text
-licensed real-GT compact case
+G21 local licensed real-GT compact case
 single-image baseline on the same case
-method variants only after PASS_REAL_GT_BENCHMARK
+method variants only inside G22 after repeated data/VLM/distribution gate
 ```
 
 ### View Budget
@@ -198,8 +198,10 @@ G17: compact GT case export and reconstruction rerun only after G16 passes.
 G18: first10 pseudo-view failure taxonomy using corrected 3x2 grids.
 G19: conservative paper package and closure.
 G20: benchmark-first pivot and route/distribution audit. Done.
-G21: compact licensed real-GT benchmark acquisition. Externally blocked until
-     H3DS token or FaceScape/Multiface raw case passes visual/VLM gate.
+G21: compact real-GT benchmark acquisition. Done locally on Multiface debug data;
+     raw person-identifying RGB/mesh assets remain under 3dv_work.
+G22: real-GT reconstruction/evaluation preflight. Planned; must re-run data/VLM/
+     distribution gate before any GPU training.
 ```
 
 Current G16 access result:
@@ -215,10 +217,13 @@ Current G20/G21 result:
 
 ```text
 H3DS v2 is the preferred technical route but needs access token/license.
-Multiface has the strongest local intake record, but raw compact image/mesh
-case is not acquired or visually audited.
+Multiface now has a local debug compact case with 9 same-frame real captured
+views, KRT cameras, projected mesh masks, and tracked OBJ; it passes G21 as a
+local real-GT benchmark premise.
 FaceScape remains viable only after licensed full-case access.
-No pseudo-view/RI3D scaling is allowed before PASS_REAL_GT_BENCHMARK.
+No pseudo-view/RI3D scaling is allowed from web candidate pools. The only valid
+next method experiment is a real-GT G22 preflight on the G21 case or an
+equivalent licensed benchmark.
 ```
 
 ### Week 4

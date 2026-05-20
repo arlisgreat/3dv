@@ -10,6 +10,16 @@ BLOCKED_REAL_CAPTURE_RECONSTRUCTION
 NO_TRAINING_STARTED
 ```
 
+Post-G21 update:
+
+```text
+This file remains the historical intake/readiness gate. G21 later acquired and
+audited a local Multiface debug compact case with 9 same-frame real views,
+KRT cameras, projected masks, and tracked mesh, recording
+PASS_REAL_GT_BENCHMARK in experiments/metrics/g21_multiface_debug_gate_20260520.md.
+Raw RGB/mesh assets remain under 3dv_work pending artifact review.
+```
+
 Purpose:
 
 ```text

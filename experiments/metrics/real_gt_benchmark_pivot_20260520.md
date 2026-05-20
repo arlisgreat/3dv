@@ -9,7 +9,8 @@ OLD_PSEUDOVIEW_RI3D_ROUTE_INVALID_FOR_QUALITY_CLAIMS
 REAL_GT_BENCHMARK_REQUIRED_BEFORE_ANY_NEW_RECONSTRUCTION_CLAIM
 NO_PSEUDOVIEW_OR_RI3D_SCALING_WITHOUT_PASS_REAL_GT_BENCHMARK
 G20_BENCHMARK_SPEC_COMPLETE
-G21_REAL_GT_COMPACT_CASE_BLOCKED_EXTERNALLY
+G21_REAL_GT_COMPACT_CASE_PASS_LOCAL
+RAW_IDENTIFIABLE_ASSETS_LOCAL_ONLY_PENDING_ARTIFACT_REVIEW
 ```
 
 ## Core Purpose After Pivot
@@ -60,7 +61,7 @@ Any weaker verdict is not enough for reconstruction-quality claims.
 | --- | --- | --- | --- |
 | H3DS v2 | Best technical fit for this sprint: full-head mesh, images, masks, cameras, default sparse-view configs, evaluation code | Python package/config audited locally; no `H3DS_ACCESS_TOKEN` available | Preferred next acquisition route, blocked by access token/license |
 | FaceScape multi-view data | Strong face multi-view route with images, camera parameters, and corresponding 3D face mesh | Local sample metadata confirms the right structure, but sample redistribution is blocked and only two mview images are available locally | Viable after licensed full case access; not repo-safe today |
-| Multiface | Strong real-capture route with high-resolution multi-view images, calibrations, tracked meshes, headpose, textures, audio | Metadata/KRT/frame-list intake passed for identity `6795937`, expression `E001_Neutral_Eyes_Open`; raw compact image/mesh case not fully acquired or visually audited | Current best local intake route, still blocked for reconstruction |
+| Multiface | Strong real-capture route with high-resolution multi-view images, calibrations, tracked meshes, headpose, textures, audio | Debug compact case passes local G21: 9 same-frame RGB views, KRT cameras, projected mesh masks, and tracked OBJ; identity `6795937`, expression `E001_Neutral_Eyes_Open`, frame `000102` | Current executable local benchmark route; raw RGB/mesh stay in `3dv_work` pending artifact review |
 | NeRSemble | Potentially useful dynamic head/face route | Not locally acquired in a compact, licensed, auditable form | Secondary route only |
 | Wikimedia/Blender CC0 mesh positive control | Repo-safe synthetic camera/geometry plumbing check | G16b/G17 passed provenance/export; RI3D visual quality failed | Positive-control only; not a real-capture benchmark |
 
@@ -87,7 +88,7 @@ It cannot replace real captured multi-view data with GT geometry.
 
 ## Hard Stop
 
-Until `PASS_REAL_GT_BENCHMARK` exists:
+For old pseudo-view/RI3D assets, regardless of the G21 local pass:
 
 ```text
 do not train from experiments/downstream_datasets
@@ -102,8 +103,10 @@ do use old pseudo-view/RI3D outputs only for diagnostic figures and failure taxo
 | Gate | State | Meaning |
 | --- | --- | --- |
 | G20 | complete | Benchmark-first pivot, route audit, and distribution gate are recorded. |
-| G21 | blocked externally | A compact licensed real-GT case still needs H3DS token or FaceScape/Multiface raw access, then visual/VLM audit. |
+| G21 | complete locally | Multiface debug compact case passes PASS_REAL_GT_BENCHMARK; repo records metrics/hashes/mask-only PNG, while raw RGB/mesh remain local. |
 
-The local milestone is complete because the next action is externally gated by
-dataset access. No GPU experiment should start from the old route while G21 is
-blocked.
+The benchmark premise is now locally satisfied for the next controlled
+preflight, but this is not a method result. No GPU experiment should start from
+the old web pseudo-view route. The next action is G22: rerun the G21 gate,
+verify model/test-data distribution, then run a minimal real-GT reconstruction
+or block before training if the audit regresses.

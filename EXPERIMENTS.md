@@ -39,14 +39,15 @@ FaceScape sample metadata access gate
 Multiface real-GT intake readiness gate
 CC0 mesh positive-control gate and RI3D visual fail
 real-GT benchmark-first pivot
+G21 local Multiface debug real-GT benchmark gate
 ```
 
 还没有完成：
 
 ```text
-licensed or redistributable GT multi-view case export
 reconstruction rerun on real cameras + mesh/point-cloud GT
-PASS_REAL_GT_BENCHMARK
+quantitative real-GT reconstruction evaluation
+publishable artifact review for any identifiable Multiface RGB/mesh result
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -67,10 +68,15 @@ Web first10 pseudo views are diagnostic-only.
 Correcting Zero123++ grid splitting from 2x3 to 3x2 fixes an artificial crop
 bug, but visual inspection still shows multi-view distortions. No more
 reconstruction training should consume web pseudo-view candidates or RI3D
-exports until a real-GT benchmark explicitly passes PASS_REAL_GT_BENCHMARK.
+exports; G21's PASS_REAL_GT_BENCHMARK applies to the real captured Multiface
+case only.
 
 The old pseudo-view/RI3D route is invalid for reconstruction-quality claims.
 Its value is diagnostic: failure taxonomy, gate design, and stop-loss evidence.
+G21 now provides a local Multiface debug real-GT case with
+PASS_REAL_GT_BENCHMARK; new method claims still require a separate G22
+reconstruction/evaluation preflight on that real captured case, not on web
+pseudo-view candidate pools.
 ```
 
 ## 2. Stage 00: Inputs
@@ -552,6 +558,11 @@ fgcenter/fghead: foreground connected-component crop metadata and resized masks
 
 CPU 端准备脚本：
 
+```text
+Historical diagnostic reproduction only. Do not run these as a new quality
+experiment; G21 permits only real-GT G22 preflight work.
+```
+
 ```bash
 python3 scripts/prepare_ri3d_dataset.py --overwrite
 python3 scripts/prepare_ri3d_dataset.py --output-root experiments/ri3d_datasets/first2_160 --image-size 160 --overwrite
@@ -760,13 +771,14 @@ ghosted multi-fragment head，不是重建质量通过。G18 已完成 corrected
 first10 taxonomy：60 个 view 中 10 个 identity_supervision、37 个
 geometry_only、13 个 reject；budget4 选中的 40 个 view 仍有 8 个 severe/reject。
 G19 已收口为 paper package：failure-aware gating 是主结论，web first10
-仍 blocked for reconstruction training。G16a-local 又完成了真实 GT intake
-readiness：Multiface route 的 metadata/KRT/frame schema 已经站住，但原始
-image/mesh compact case 还没有完整下载和视觉审计，因此真实 GT 质量结论仍等待
-许可数据和 artifact review。
+仍 blocked for reconstruction training。G16a-local 完成了真实 GT intake
+readiness：Multiface route 的 metadata/KRT/frame schema 已经站住。G21 进一步
+完成了本地 Multiface debug compact case 的 structural + VLM/manual gate：
+9 个同帧真实 captured views、KRT cameras、projected masks 和 tracked OBJ 均
+满足 benchmark premise；原始 RGB/mesh 仍留在 3dv_work 等待 artifact review。
 G20 进一步把路线正式切换为 benchmark-first：旧 pseudo-view/RI3D 路线只保留
-诊断价值，不再作为质量主实验；G21 的 compact real-GT benchmark acquisition
-在没有 H3DS token 或 FaceScape/Multiface raw case 前是 externally blocked。
+诊断价值，不再作为质量主实验；下一步是 G22 real-GT reconstruction/evaluation
+preflight。
 ```
 
 对比指标：
@@ -806,8 +818,10 @@ D: pseudo-view diagnostic/failure taxonomy on corrected 3x2 first10 grids
 当前最重要的未闭环问题：
 
 ```text
-真实多视角/mesh/point-cloud GT case 仍受许可/访问约束。下一步必须先完成
-H3DS/FaceScape/Multiface 等 licensed real GT compact case 的 raw image/mesh
-acquisition、visual/VLM gate 和 model/data distribution audit。不要从现有
+Full H3DS/publishable benchmark access and artifact publication review remain
+open, but G21 has completed the local Multiface debug compact case gate:
+PASS_REAL_GT_BENCHMARK with real captured cameras, masks, and tracked mesh.
+下一步应转 G22：在真实 captured cameras + mesh 上做最小 reconstruction/evaluation
+preflight，并在训练前再次做数据、VLM 和模型/测试数据分布审计。不要从现有
 web first10 candidate pool 继续训练，也不要把 RI3D 旧结果解释成质量结论。
 ```

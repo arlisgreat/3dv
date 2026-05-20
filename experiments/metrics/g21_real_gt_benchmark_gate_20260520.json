@@ -1,0 +1,60 @@
+{
+  "audit_sheet": "experiments/figures/g21_real_gt_benchmark_audit_sheet_20260520.svg",
+  "case_root": "experiments/gt_cases",
+  "cases": [
+    {
+      "artifact_policy_text": "",
+      "camera_count": 8,
+      "case_dir": "/data1/workspace/airulan/3dv/experiments/gt_cases/wikimedia_blender_head_cc0",
+      "case_id": "wikimedia_blender_head_cc0",
+      "checks": {
+        "camera_count_matches_views": true,
+        "camera_extrinsics_present": false,
+        "camera_intrinsics_present": false,
+        "cameras_json_exists": true,
+        "compact_artifact_policy_recorded": false,
+        "distribution_audit_recorded": false,
+        "license_recorded": true,
+        "manifest_exists": true,
+        "masks_exist": true,
+        "mesh_or_point_cloud_exists": false,
+        "not_diffusion_or_pseudoview": true,
+        "privacy_or_subject_policy_recorded": false,
+        "real_capture_not_synthetic": false,
+        "rgb_images_exist": true,
+        "same_identity_static_frame_recorded": false,
+        "view_count_6_to_12": true,
+        "visual_audit_sheet_passed": false
+      },
+      "distribution_text": "",
+      "failed_checks": [
+        "camera_intrinsics_present",
+        "camera_extrinsics_present",
+        "mesh_or_point_cloud_exists",
+        "compact_artifact_policy_recorded",
+        "distribution_audit_recorded",
+        "privacy_or_subject_policy_recorded",
+        "same_identity_static_frame_recorded",
+        "real_capture_not_synthetic",
+        "visual_audit_sheet_passed"
+      ],
+      "geometry_count": 0,
+      "geometry_paths": [],
+      "license_text": "CC0 1.0 Universal Public Domain Dedication",
+      "mask_count": 8,
+      "privacy_text": "",
+      "rgb_image_count": 8,
+      "verdict": "BLOCKED_EXTERNAL_ACCESS",
+      "view_count": 8,
+      "visual_verdict": "MANUAL_REVIEW_REQUIRED"
+    }
+  ],
+  "closure": "REPO_ONLY_DRY_RUN_BLOCKED_EXTERNAL_ACCESS: experiments/gt_cases contains only synthetic positive-control data. The local Multiface debug real-capture case is recorded separately in experiments/metrics/g21_multiface_debug_gate_20260520.md and passes PASS_REAL_GT_BENCHMARK; raw RGB/mesh assets stay outside the repo.",
+  "date": "2026-05-20",
+  "gate": "G21",
+  "output_json": "experiments/metrics/g21_real_gt_benchmark_gate_20260520.json",
+  "output_md": "experiments/metrics/g21_real_gt_benchmark_gate_20260520.md",
+  "required_verdict": "PASS_REAL_GT_BENCHMARK",
+  "scope_note": "Repo-only dry run over experiments/gt_cases remains blocked because only synthetic positive-control data is present. Local Multiface debug real-capture case under 3dv_work is recorded in experiments/metrics/g21_multiface_debug_gate_20260520.md and passes PASS_REAL_GT_BENCHMARK; raw Multiface RGB/mesh assets are intentionally not copied into experiments/gt_cases.",
+  "verdict": "BLOCKED_EXTERNAL_ACCESS"
+}

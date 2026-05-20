@@ -21,7 +21,7 @@ active goal:
   reconstruction-quality claim.
 
 hard stop:
-  no pseudo-view/RI3D scaling without PASS_REAL_GT_BENCHMARK.
+  no web pseudo-view/RI3D scaling; after G21, only real-GT G22 preflight is valid.
 ```
 
 G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、弱筛选指标、
@@ -29,8 +29,9 @@ G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、
 
 ```text
 G20: benchmark-first pivot and route audit, complete.
-G21: compact real-GT benchmark acquisition, blocked until H3DS token or
-     FaceScape/Multiface raw case is available and visually audited.
+G21: local Multiface debug compact real-GT benchmark gate, complete.
+     Raw RGB/mesh assets remain under 3dv_work; repo sync contains metrics,
+     hashes, and a mask-only PNG summary.
 ```
 
 ## 目录怎么用
@@ -198,6 +199,9 @@ RI3D 中产生卡片、碎片和身份/几何失败。
 
 G20 已经把该结论升级为硬规则：没有 `PASS_REAL_GT_BENCHMARK`，这些候选池
 和 RI3D 导出只能用于 failure taxonomy，不能作为新训练集或质量主实验。
+G21 已在本地 Multiface debug case 上通过该 gate；这只解除“是否有真实 GT
+case 可用于下一轮受控实验”的阻塞，不改变旧 pseudo-view candidate pools 的
+diagnostic-only 状态。
 
 当前最新结论：
 
@@ -222,14 +226,16 @@ identity and geometry distortions. Web first10 is therefore diagnostic-only.
 
 Current reconstruction-quality route: use a real GT multi-view dataset case
 with captured views, cameras, masks, and mesh/point-cloud ground truth. H3DS v2
-is the preferred technical route if access token/license can be obtained.
-FaceScape and Multiface remain viable; Multiface has the strongest local intake
-record so far, but raw images/mesh for a compact case still need acquisition and
-visual/VLM audit. FaceScape sample was inspected locally for metadata only, but
-its readme says not to distribute the sample, so raw images/meshes stay out of
-git.
+is still the preferred full-head benchmark if access token/license can be
+obtained. Locally, G21 now has a Multiface debug compact case with 9 same-frame
+real captured views, KRT cameras, projected mesh masks, and tracked mesh. It
+passed `PASS_REAL_GT_BENCHMARK` for local controlled experiments, but raw
+person-identifying RGB/mesh assets stay under `3dv_work` unless explicitly
+reviewed for artifact publication. FaceScape sample was inspected locally for
+metadata only, but its readme says not to distribute the sample, so raw
+images/meshes stay out of git.
 
-While real-capture access is pending, G16b has passed a repo-safe synthetic
+Separately, before the G21 local Multiface pass, G16b passed a repo-safe synthetic
 positive-control gate using the Wikimedia/Blender CC0 realistic human head mesh.
 This case has deterministic RGB/depth/mask/normal PNG views, camera JSON,
 manifest CSV, a contact sheet, and an orbit MP4 under:
@@ -260,10 +266,14 @@ experiments/metrics/gt_dataset_access_gate_20260519.md
 experiments/metrics/facescape_sample_access_audit_20260519.md
 experiments/metrics/g16a_real_gt_intake_readiness_20260520.md
 experiments/metrics/real_gt_benchmark_pivot_20260520.md
+experiments/metrics/g21_real_gt_benchmark_gate_20260520.md
+experiments/metrics/g21_multiface_debug_gate_20260520.md
+experiments/figures/g21_multiface_debug_mask_gate_20260520.png
 ```
 
 The RI3D commands below are historical reproduction commands only. Do not run
-them as a new quality experiment while G21 is blocked.
+them as a new quality experiment; G21 passes only for the real captured
+Multiface debug case, not for web pseudo-view candidate pools.
 
 RI3D first2 smoke 复现命令：
 
@@ -341,13 +351,17 @@ RI3D first2 foreground-canonical ablations 已完成；输入尺度和主体对�
 RI3D first2 foreground point-cloud filter 已完成；G12 的矩形卡片背景明显减少，
 但仍有 detached foreground fragments，不是最终 method win。
 G20 已完成 benchmark-first pivot：旧 pseudo-view/RI3D 路线 invalid for
-quality claims；G21 仍等待真实 GT compact case。
+quality claims。G21 已完成本地 Multiface debug compact real-GT gate，下一步
+只能在该真实 GT case 或 H3DS/FaceScape/Multiface 等同级真实 benchmark 上
+设计 G22 reconstruction/evaluation preflight；不能回到 web pseudo-view 训练。
 ```
 
 下一步：
 
 1. 不扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
-2. 优先获取 H3DS token，或完成 FaceScape/Multiface compact raw case。
-3. 对真实 GT case 跑 structural + visual/VLM + distribution audit。
-4. 只有记录 `PASS_REAL_GT_BENCHMARK` 后，才恢复重建主实验。
-5. web first10 和旧 RI3D 结果只保留为 failure taxonomy / diagnostic evidence。
+2. 优先获取 H3DS token；本地则使用已 gate-pass 的 Multiface debug compact case
+   做下一轮最小 reconstruction/evaluation preflight。
+3. G22 开始前再次跑 structural + visual/VLM + distribution audit，确认不要把
+   old candidate-pool mistake 带回来。
+4. 只允许在真实 GT case 上恢复受控重建实验；web first10 和旧 RI3D 结果只保留为
+   failure taxonomy / diagnostic evidence。
