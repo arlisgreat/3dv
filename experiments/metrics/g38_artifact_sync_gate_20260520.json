@@ -3,17 +3,13 @@
   "counts": {
     "blocked_untracked_paths": 0,
     "oversized_sync_candidates": 0,
-    "tracked_result_artifacts": 1514,
-    "untracked_allowed_sync_candidates": 3
+    "tracked_result_artifacts": 1516,
+    "untracked_allowed_sync_candidates": 0
   },
   "date": "2026-05-20",
-  "decision": "All current untracked result artifacts are repo-safe sync candidates. Stage them with the milestone docs, commit, and push.",
+  "decision": "All current repo-safe result artifacts are tracked or staged; commit and push this checkpoint.",
   "gate": "G38",
   "oversized_sync_candidates": [],
-  "untracked_allowed_sync_candidates": [
-    "experiments/metrics/g44_lam_similarity_geometry_gate_20260520.json",
-    "experiments/metrics/g44_lam_similarity_geometry_gate_20260520.md",
-    "scripts/lam_similarity_geometry_gate.py"
-  ],
+  "untracked_allowed_sync_candidates": [],
   "verdict": "PASS_ARTIFACT_SYNC_GATE_READY"
 }
