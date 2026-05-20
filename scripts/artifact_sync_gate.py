@@ -18,7 +18,7 @@ from typing import Any
 DATE = "2026-05-20"
 PASS_VERDICT = "PASS_ARTIFACT_SYNC_GATE_READY"
 BLOCKED_VERDICT = "BLOCKED_ARTIFACT_SYNC_GATE"
-RESULT_SUFFIXES = {".csv", ".json", ".md", ".png", ".mp4", ".svg"}
+RESULT_SUFFIXES = {".csv", ".json", ".md", ".mp4", ".png", ".svg", ".tsv"}
 ALLOWED_PREFIXES = (
     "experiments/inputs/",
     "experiments/pseudo_views/",
@@ -49,7 +49,16 @@ def is_result_artifact(path: str) -> bool:
 
 
 def is_allowed_path(path: str) -> bool:
-    return path in {"README.md", "MILESTONES.md", "EXPERIMENTS.md", ".gitignore"} or path.startswith(ALLOWED_PREFIXES)
+    return path in {
+        "README.md",
+        "MILESTONES.md",
+        "EXPERIMENTS.md",
+        ".gitignore",
+        "datasets/README.md",
+        "datasets/access_manifest.tsv",
+        "external/repos.tsv",
+        "external/repos.lock.tsv",
+    } or path.startswith(ALLOWED_PREFIXES)
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:

@@ -1,0 +1,203 @@
+{
+  "access_manifest_rows": [
+    {
+      "access_state": "official_public_download_license_restricted",
+      "dataset": "FaceScape SVFR benchmark",
+      "local_path": "datasets/facescape_benchmark",
+      "notes": "Contains benchmark images, GT meshes, and camera params; do not publish raw portraits/renders except as allowed by FaceScape license.",
+      "size_or_expected": "707M",
+      "source": "https://github.com/zhuhao-nju/facescape/tree/master/benchmark",
+      "status": "downloaded_extracted"
+    },
+    {
+      "access_state": "official_public_sample_license_restricted",
+      "dataset": "FaceScape sample",
+      "local_path": "datasets/facescape_sample",
+      "notes": "Local parser/sample access only; existing audit blocks repo image export.",
+      "size_or_expected": "95M",
+      "source": "https://github.com/zhuhao-nju/facescape/tree/master/samples",
+      "status": "downloaded_extracted"
+    },
+    {
+      "access_state": "tool_ready_data_blocked",
+      "dataset": "NeRSemble benchmark toolkit",
+      "local_path": "datasets/_tools/nersemble-benchmark",
+      "notes": "Needs NERSEMBLE_BENCHMARK_URL from official approval before data download.",
+      "size_or_expected": "4.6M",
+      "source": "https://github.com/tobias-kirschstein/nersemble-benchmark",
+      "status": "cloned"
+    },
+    {
+      "access_state": "tool_ready_data_blocked",
+      "dataset": "NeRSemble v2 toolkit",
+      "local_path": "datasets/_tools/nersemble-data",
+      "notes": "Needs NERSEMBLE_DATA_URL from official approval before full dataset download.",
+      "size_or_expected": "4.4M",
+      "source": "https://github.com/tobias-kirschstein/nersemble-data",
+      "status": "cloned"
+    },
+    {
+      "access_state": "tool_ready_data_blocked",
+      "dataset": "H3DS toolkit",
+      "local_path": "datasets/_tools/h3ds",
+      "notes": "Needs H3DS_ACCESS_TOKEN before encrypted v2 data can be extracted.",
+      "size_or_expected": "1.4M",
+      "source": "https://github.com/CrisalixSA/h3ds",
+      "status": "cloned"
+    },
+    {
+      "access_state": "unofficial_no_card_no_license",
+      "dataset": "HuggingFace xzw123/NeRSemble",
+      "local_path": "datasets/hf_candidates/xzw123_NeRSemble",
+      "notes": "Public HF mirror listing found; not downloaded because provenance/license is unclear.",
+      "size_or_expected": "139GB",
+      "source": "https://hf-mirror.com/datasets/xzw123/NeRSemble",
+      "status": "not_downloaded"
+    },
+    {
+      "access_state": "unofficial_provenance_unclear",
+      "dataset": "HuggingFace rendered_mini_FaceScape_db",
+      "local_path": "datasets/hf_candidates/rendered_mini_FaceScape_db",
+      "notes": "HF card only says MIT; not downloaded because FaceScape-derived redistribution policy is unclear.",
+      "size_or_expected": "694M",
+      "source": "https://hf-mirror.com/datasets/MahdiGhafourian/rendered_mini_FaceScape_db",
+      "status": "not_downloaded"
+    }
+  ],
+  "benchmark_contracts": [
+    {
+      "benchmark": "NeRSemble benchmark NVS",
+      "contract": "Official toolkit; 13 training cameras and 3 held-out cameras are used for benchmark metrics.",
+      "expected_gate_use": "future native held-out RGB/geometry evaluation only after official URL approval",
+      "source": "https://pypi.org/project/nersemble-benchmark/"
+    },
+    {
+      "benchmark": "NeRSemble benchmark Mono FLAME Avatar",
+      "contract": "Single training camera plus held-out sequences/cameras; official 2026 update uses flame2023_tracking_v2.",
+      "expected_gate_use": "head-anchored/feed-forward method evaluation, not pseudo-view training",
+      "source": "https://pypi.org/project/nersemble-benchmark/"
+    },
+    {
+      "benchmark": "NeRSemble benchmark SVFR",
+      "contract": "391 images from 20 identities; submitted meshes are evaluated against held-out point clouds.",
+      "expected_gate_use": "single-view geometry benchmark once data is official and license-reviewed",
+      "source": "https://pypi.org/project/nersemble-benchmark/"
+    },
+    {
+      "benchmark": "H3DS v2",
+      "contract": "Official h3ds loader returns mesh, images, masks, and cameras; default view configs include 1, 3, 4, 6, 8, 16, and 32 views; evaluator reports comparable scene metrics.",
+      "expected_gate_use": "few-shot full-head geometry/RGB support after H3DS_ACCESS_TOKEN and license review",
+      "source": "https://pypi.org/project/h3ds/"
+    }
+  ],
+  "blocked_interpretations": [
+    "Do not treat empty credential-gated directories as available benchmarks.",
+    "Do not use unofficial HF mirrors as source data without explicit provenance/license review.",
+    "Do not substitute FaceScape sample data for NeRSemble/H3DS method-quality claims.",
+    "Do not reintroduce experiments/downstream_datasets as training or evaluation data.",
+    "Do not publish identifiable benchmark RGB/mesh/pointcloud artifacts without explicit review."
+  ],
+  "credential_state": [
+    {
+      "name": "NERSEMBLE_BENCHMARK_URL",
+      "present": false,
+      "target": "official NeRSemble benchmark toolkit download"
+    },
+    {
+      "name": "NERSEMBLE_DATA_URL",
+      "present": false,
+      "target": "official NeRSemble v2 full data download"
+    },
+    {
+      "name": "H3DS_ACCESS_TOKEN",
+      "present": false,
+      "target": "official H3DS v2 encrypted archive download/extract"
+    }
+  ],
+  "date": "2026-05-20",
+  "decision": "The benchmark bench is configured enough for immediate intake once credentials arrive: official tool repos are cloned, raw-data roots are ignored, and the preflight records the required contracts. Actual NeRSemble/H3DS method-quality work remains blocked until official credentials/data pass data, VLM, distribution, and artifact gates.",
+  "gate": "G48",
+  "git_raw_data_policy": [
+    "tracked_dataset_files=['datasets/README.md', 'datasets/access_manifest.tsv']",
+    "unexpected_tracked_dataset_files=['none']",
+    "raw FaceScape/NeRSemble/H3DS images, masks, meshes, pointclouds, archives, and renders must remain ignored/local",
+    "repo-safe sync is limited to README/access manifest, metrics, scripts, hashes, and non-identifiable aggregate figures"
+  ],
+  "root_checks": [
+    {
+      "exists": true,
+      "file_count": 2,
+      "is_symlink": false,
+      "key": "datasets",
+      "note": "local raw-data entry root; only README/access manifest are git-trackable",
+      "path": "/data1/workspace/airulan/3dv/datasets"
+    },
+    {
+      "exists": true,
+      "file_count": 0,
+      "is_symlink": false,
+      "key": "access_manifest",
+      "note": "repo-safe access and license manifest",
+      "path": "/data1/workspace/airulan/3dv/datasets/access_manifest.tsv"
+    },
+    {
+      "exists": true,
+      "file_count": 2142,
+      "is_symlink": true,
+      "key": "facescape_benchmark",
+      "note": "licensed/public FaceScape SVFR local support, not NeRSemble/H3DS substitute",
+      "path": "/data1/workspace/airulan/3dv/datasets/facescape_benchmark",
+      "target": "/data1/workspace/airulan/3dv/external/facescape/benchmark/data"
+    },
+    {
+      "exists": true,
+      "file_count": 0,
+      "is_symlink": false,
+      "key": "nersemble_benchmark",
+      "note": "awaits NERSEMBLE_BENCHMARK_URL",
+      "path": "/data1/workspace/airulan/3dv/datasets/nersemble_benchmark"
+    },
+    {
+      "exists": true,
+      "file_count": 0,
+      "is_symlink": false,
+      "key": "nersemble_v2",
+      "note": "awaits NERSEMBLE_DATA_URL; large optional full data",
+      "path": "/data1/workspace/airulan/3dv/datasets/nersemble_v2"
+    },
+    {
+      "exists": true,
+      "file_count": 0,
+      "is_symlink": false,
+      "key": "h3ds_v2",
+      "note": "awaits H3DS_ACCESS_TOKEN",
+      "path": "/data1/workspace/airulan/3dv/datasets/h3ds_v2"
+    },
+    {
+      "exists": true,
+      "file_count": 60,
+      "is_symlink": false,
+      "key": "tool_nersemble_benchmark",
+      "note": "official benchmark downloader clone",
+      "path": "/data1/workspace/airulan/3dv/external/nersemble-benchmark"
+    },
+    {
+      "exists": true,
+      "file_count": 52,
+      "is_symlink": false,
+      "key": "tool_nersemble_data",
+      "note": "official v2 downloader clone",
+      "path": "/data1/workspace/airulan/3dv/external/nersemble-data"
+    },
+    {
+      "exists": true,
+      "file_count": 50,
+      "is_symlink": false,
+      "key": "tool_h3ds",
+      "note": "official H3DS loader/evaluator clone",
+      "path": "/data1/workspace/airulan/3dv/external/h3ds"
+    }
+  ],
+  "scope": "Preconfigure stronger real-GT benchmark intake for NeRSemble and H3DS while credentials are pending. This checks tools, local raw-data policy, required credentials, and benchmark contracts without creating any method-quality result.",
+  "verdict": "PASS_BENCHMARK_INTAKE_PREFLIGHT_READY_DATA_BLOCKED_BY_CREDENTIALS"
+}

@@ -1,0 +1,57 @@
+{
+  "date": "2026-05-20",
+  "verdict": "PARTIAL_ACCESS_PREFLIGHT_ONLY_NO_BENCHMARK_CLAIM",
+  "downloaded": [
+    {
+      "dataset": "FaceScape SVFR benchmark",
+      "path": "datasets/facescape_benchmark",
+      "status": "downloaded_extracted",
+      "size": "707M"
+    },
+    {
+      "dataset": "FaceScape sample",
+      "path": "datasets/facescape_sample",
+      "status": "downloaded_extracted",
+      "size": "95M"
+    }
+  ],
+  "tools": [
+    {
+      "name": "NeRSembleBenchmark",
+      "path": "external/nersemble-benchmark",
+      "commit": "e15f204dfc7cd8f822eac69a37383ce24628da5f",
+      "clone_url": "https://ghfast.top/https://github.com/tobias-kirschstein/nersemble-benchmark.git"
+    },
+    {
+      "name": "NeRSembleData",
+      "path": "external/nersemble-data",
+      "commit": "4a2430e7c9fd101e1e3d0662a9fa380a17bee732",
+      "clone_url": "https://ghfast.top/https://github.com/tobias-kirschstein/nersemble-data.git"
+    },
+    {
+      "name": "H3DS",
+      "path": "external/h3ds",
+      "commit": "987122657dcfbe0ca42b15f8804718d85add4dde",
+      "clone_url": "https://ghfast.top/https://github.com/CrisalixSA/h3ds.git"
+    }
+  ],
+  "blocked_credentials": {
+    "NeRSemble benchmark": "NERSEMBLE_BENCHMARK_URL",
+    "NeRSemble v2": "NERSEMBLE_DATA_URL",
+    "H3DS v2": "H3DS_ACCESS_TOKEN",
+    "FaceScape full release": "official license/share link"
+  },
+  "hf_candidates_not_downloaded": [
+    {
+      "repo": "xzw123/NeRSemble",
+      "mirror_url": "https://hf-mirror.com/datasets/xzw123/NeRSemble",
+      "reason": "no dataset card/license/provenance"
+    },
+    {
+      "repo": "MahdiGhafourian/rendered_mini_FaceScape_db",
+      "mirror_url": "https://hf-mirror.com/datasets/MahdiGhafourian/rendered_mini_FaceScape_db",
+      "reason": "FaceScape-derived provenance/redistribution policy unclear"
+    }
+  ],
+  "claim_boundary": "G47 is only access/download/tooling preflight. Empty NeRSemble/H3DS directories, FaceScape sample data, and unofficial mirrors are not PASS_REAL_GT_BENCHMARK. NeRSemble/H3DS method-quality claims remain blocked until official credentials arrive and a later data/VLM/distribution/artifact gate passes."
+}

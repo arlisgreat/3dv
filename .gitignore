@@ -60,3 +60,9 @@ __pycache__/
 *.pyc
 .DS_Store
 /.cache/
+
+# Licensed benchmark datasets. Keep raw/private data local only.
+/datasets/**
+!/datasets/
+!/datasets/README.md
+!/datasets/access_manifest.tsv

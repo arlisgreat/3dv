@@ -150,7 +150,14 @@ G44-aligned LAM mesh into the three held-out Multiface cameras and compares
 silhouette/depth against GT-derived masks/z-buffers. This is the first
 held-out-camera learned-prior geometry diagnostic, but still not RGB
 reconstruction quality because it depends on similarity/ICP alignment and does
-not render native LAM Gaussians or held-out RGB appearance.
+not render native LAM Gaussians or held-out RGB appearance. G47 clones official
+benchmark tool repos and prepares local ignored dataset roots for FaceScape,
+NeRSemble, and H3DS, while recording that NeRSemble/H3DS remain
+credential-gated. G48 checks the future benchmark intake contract: official
+tools and raw-data policy are ready, but method-quality work stays blocked
+until user-provided NeRSemble/H3DS credentials pass data/VLM/distribution gates.
+G49 records project completion probability by scope, separating the repo-safe
+diagnostic package from the larger RGB method-quality and proposal-level system.
 ```
 
 ## Completed Milestones
@@ -210,12 +217,15 @@ not render native LAM Gaussians or held-out RGB appearance.
 | G44 | done, aligned geometry diagnostic pass no quality claim | Similarity/ICP-aligned LAM mesh vs Multiface GT mesh diagnostic | `experiments/metrics/g44_lam_similarity_geometry_gate_20260520.md` | Symmetric mean nearest-neighbor distance after similarity/ICP alignment is 17.164824 GT units, normalized 0.037132 by GT bbox diagonal; this is diagnostic only, not final reconstruction quality. |
 | G45 | done, held-out geometry diagnostic pass no RGB quality claim | Render G44-aligned LAM mesh into Multiface held-out cameras | `experiments/metrics/g45_lam_heldout_camera_geometry_gate_20260520.md` | Held-out mask IoU mean 0.708083 and depth mean error 0.029646 of GT median pass geometry diagnostics; no held-out RGB/SOTA claim. |
 | G46 | done, forecast pass | Project completion forecast and risk register | `experiments/metrics/g46_project_completion_forecast_20260520.md` | Repo-safe diagnostic package can close in roughly 2-4 focused work days; RGB method-quality or full proposal scope needs more work and user decisions. |
+| G47 | done, access/tooling partial pass | Benchmark dataset access/download preparation | `experiments/metrics/g47_benchmark_dataset_access_download_20260520.md`, `datasets/access_manifest.tsv` | FaceScape SVFR/sample and official NeRSemble/H3DS tool repos are local; NeRSemble/H3DS data remain blocked until official credentials arrive. |
+| G48 | done, intake preflight pass data blocked | Future NeRSemble/H3DS benchmark intake contract | `experiments/metrics/g48_benchmark_intake_preflight_20260520.md`, `scripts/benchmark_intake_preflight.py` | Official tool repos, ignored raw-data roots, required credentials, and benchmark contracts are preconfigured; no fake benchmark result is created. |
+| G49 | done, probability pass | Project completion probability by scope | `experiments/metrics/g49_project_completion_probability_20260520.md` | Diagnostic package probability is high; method-quality result depends on native held-out rendering and official NeRSemble/H3DS data access. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current learned-prior held-out geometry loop | Stop interpreting LAM MP4, exported PLY/OBJ, normalized mesh sanity, ICP-aligned geometry, or held-out silhouette/depth diagnostics as final RGB reconstruction quality | G39-G46 | Open a new milestone only to implement native held-out RGB/camera rendering, run artifact/privacy review, acquire a stronger licensed benchmark, or package the final paper/report. |
+| none | closed for current benchmark-preaccess loop | Stop interpreting tool clones, empty NeRSemble/H3DS directories, FaceScape samples, or G45 geometry diagnostics as final RGB/method-quality benchmark results | G39-G49 | Open a new milestone when NeRSemble/H3DS credentials arrive, to implement native held-out RGB/camera rendering, run artifact/privacy review, or package the final paper/report. |
 
 ## G8 Result
 

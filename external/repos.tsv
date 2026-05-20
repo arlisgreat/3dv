@@ -5,4 +5,7 @@ zero123plus	https://github.com/SUDO-AI-3D/zero123plus.git	main	pseudo multiview 
 ri3d	https://github.com/avinashpaliwal/ri3d.git	main	sparse-view 3DGS repair/inpainting reference	P0
 TensorialGaussianAvatar	https://github.com/ant-research/TensorialGaussianAvatar.git	main	optional FLAME Gaussian head reference	P1
 stable-fast-3d	https://github.com/Stability-AI/stable-fast-3d.git	main	optional fast single-image mesh baseline	P1
-
+facescape	https://github.com/zhuhao-nju/facescape.git	master	licensed SVFR benchmark/sample/toolkit	P1
+nersemble-benchmark	https://github.com/tobias-kirschstein/nersemble-benchmark.git	main	official NeRSemble benchmark downloader	P1
+nersemble-data	https://github.com/tobias-kirschstein/nersemble-data.git	main	official NeRSemble v2 downloader	P1
+h3ds	https://github.com/CrisalixSA/h3ds.git	main	official H3DS loader/evaluator	P1

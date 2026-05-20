@@ -65,6 +65,9 @@ G43 weak normalized LAM-vs-Multiface geometry sanity gate
 G44 similarity/ICP-aligned LAM-vs-Multiface geometry diagnostic gate
 G45 held-out-camera LAM geometry diagnostic gate
 G46 project completion forecast and risk register
+G47 benchmark access/tooling partial setup
+G48 future NeRSemble/H3DS benchmark intake preflight
+G49 project completion probability by scope
 ```
 
 还没有完成：
@@ -75,6 +78,7 @@ benchmark-grade geometry metric with verified correspondence/coverage trimming
 quantitative RGB reconstruction evaluation beyond geometry diagnostics
 publishable artifact review for any identifiable Multiface RGB/mesh result
 public/stronger real-GT benchmark access for a method-quality table
+native NeRSemble/H3DS data gate after official credentials arrive
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -137,7 +141,11 @@ Multiface GT frame, but it is still diagnostic-only because ICP alignment is not
 camera recovery, surface correspondence, or held-out view reconstruction. G45
 uses that aligned mesh in the three held-out Multiface cameras and passes a
 silhouette/depth geometry diagnostic, but it still does not render native LAM
-Gaussians or evaluate held-out RGB appearance.
+Gaussians or evaluate held-out RGB appearance. G47-G48 preconfigure future
+NeRSemble/H3DS benchmark intake without claiming access: official tools are
+local, raw data roots are ignored, credentials are still absent, and empty
+dataset directories are explicitly blocked from interpretation as available
+benchmarks. G49 records completion probabilities by scope.
 ```
 
 ## 2. Stage 00: Inputs

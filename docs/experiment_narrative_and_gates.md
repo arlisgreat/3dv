@@ -69,6 +69,10 @@ recovery, verified surface correspondence, or held-out view reconstruction. G45
 then renders the aligned LAM mesh into the three held-out Multiface cameras and
 passes silhouette/depth diagnostics, while still blocking RGB/SOTA quality
 claims because native LAM Gaussians and held-out appearance are not evaluated.
+G47-G48 preconfigure stronger benchmark intake for NeRSemble and H3DS using
+official tooling and ignored local raw-data roots, but keep method-quality work
+blocked until official credentials/data pass data, VLM, distribution, and
+artifact gates. G49 records project completion probabilities by scope.
 
 ## Real GT Benchmark Pivot
 
@@ -132,6 +136,9 @@ G44: add similarity/ICP-aligned LAM-vs-Multiface mesh diagnostic, still
 G45: project the aligned LAM mesh into held-out Multiface cameras and record
      silhouette/depth diagnostics, still no RGB reconstruction claim.
 G46: record project completion forecast and user-check risks.
+G47-G48: preconfigure official benchmark tooling and intake contracts for
+         NeRSemble/H3DS while data access is still credential-gated.
+G49: record completion probability by project scope.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -273,6 +280,9 @@ positive control, so they are not the active G16b case.
 | G44 | Similarity/ICP geometry diagnostic | G43 weak geometry sanity | Done: similarity-aligned symmetric mean nearest-neighbor is 17.164824 GT units / 0.037132 normalized, but this remains diagnostic-only |
 | G45 | Held-out camera geometry diagnostic | G44 aligned geometry diagnostic | Done: held-out mask IoU mean 0.708083 and depth mean error 0.029646 of GT median pass diagnostic thresholds; still no RGB/SOTA claim |
 | G46 | Project completion forecast | G45 diagnostic closure and literature monitor | Done: fastest repo-safe diagnostic package is estimated at 2-4 focused work days; stronger RGB method-quality/full-proposal scope needs more time and user decisions |
+| G47 | Benchmark access/tooling setup | User-side NeRSemble/H3DS applications are pending | Done: FaceScape support and official NeRSemble/H3DS tool repos are local; credential-gated data remains blocked |
+| G48 | Benchmark intake preflight | G47 tooling setup | Done: raw-data roots, credentials, contracts, and git policy are checked without creating fake benchmark results |
+| G49 | Completion probability | G48 preaccess closure | Done: diagnostic package probability is high; method-quality probability depends on native held-out rendering and official benchmark data |
 
 ## Expected Final Outputs
 
