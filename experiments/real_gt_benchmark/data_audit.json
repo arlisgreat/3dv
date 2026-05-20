@@ -1,0 +1,239 @@
+{
+  "artifacts": [
+    "experiments/real_gt_benchmark/benchmark_manifest.json",
+    "experiments/real_gt_benchmark/benchmark_manifest.csv",
+    "experiments/real_gt_benchmark/data_audit.json",
+    "experiments/real_gt_benchmark/data_audit.md",
+    "experiments/real_gt_benchmark/data_audit_summary.png"
+  ],
+  "benchmark_cases": [
+    {
+      "artifact_policy": "metadata and hash summaries may be committed; raw RGB, masks, mesh, and identifiable contact sheets remain in 3dv_work pending artifact review",
+      "camera_count": 9,
+      "capture_type": "real_capture",
+      "case_id": "multiface_debug_6795937_e001_000102_9view",
+      "checks": {
+        "camera_count_matches_views": true,
+        "camera_extrinsics_present": true,
+        "camera_intrinsics_present": true,
+        "cameras_json_exists": true,
+        "downstream_datasets_not_used": true,
+        "g21_gate_passed": true,
+        "license_recorded": true,
+        "manifest_exists": true,
+        "mask_files_exist_local": true,
+        "mesh_exists_local": true,
+        "not_generated_candidate": true,
+        "privacy_policy_recorded": true,
+        "real_capture": true,
+        "repo_policy_keeps_raw_assets_out": true,
+        "rgb_files_exist_local": true,
+        "same_identity_static": true,
+        "view_count_6_to_12": true
+      },
+      "dataset": "Multiface",
+      "expression": "E001_Neutral_Eyes_Open",
+      "failed_checks": [],
+      "frame": "000102",
+      "identity_redacted": true,
+      "license": "Creative Commons Attribution-NonCommercial 4.0 International",
+      "mask_coverage_max": 0.802761,
+      "mask_coverage_mean": 0.6952231111111111,
+      "mask_coverage_min": 0.409422,
+      "mesh_basename": "000102.obj",
+      "mesh_sha256": "7d40aa3389a0f8e8a4b2c0115bb2e466773feb73ba8a3e9c38e7855ae54baf28",
+      "privacy_status": "recognizable human-subject dataset; public repo export limited to metadata/hashes unless artifact review approves derived contact sheets",
+      "repo_policy": "local benchmark case; commit compact metrics, hashes, and gate reports only unless user explicitly approves identifiable derived PNG export",
+      "role": "current_local_real_gt_route",
+      "source_case_dir": "/data1/workspace/airulan/3dv_work/datasets/multiface_debug_e001/compact_case_000102_9view/gate_case",
+      "status": "PASS_REAL_GT_BENCHMARK",
+      "view_count": 9,
+      "views": [
+        {
+          "camera": "400012",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400012_000102_mask.png",
+          "mask_coverage": 0.802761,
+          "mask_exists_local": true,
+          "mask_sha256": "e32448278cb3d89e9a10bcd72dc5c43651ea7a877f0c7ac498422847219ead90",
+          "projected_faces": 10304,
+          "rgb_basename": "400012_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "c7f55e401f4b96d4faf752399c04c1343aaf985d52a264b4c3ce0275c61f1449",
+          "width": 1334
+        },
+        {
+          "camera": "400017",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400017_000102_mask.png",
+          "mask_coverage": 0.780532,
+          "mask_exists_local": true,
+          "mask_sha256": "119c442ab8745d3bc51bd2e2e56203d2e88371d45d8f128170ab380e2079606b",
+          "projected_faces": 9937,
+          "rgb_basename": "400017_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "adce56e250e2198abb17e1e055eb4ae4944c5a9b37e966c6e692283658ed2565",
+          "width": 1334
+        },
+        {
+          "camera": "400023",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400023_000102_mask.png",
+          "mask_coverage": 0.409422,
+          "mask_exists_local": true,
+          "mask_sha256": "626c78c82fd773e4934b4b5f948f8620ff3f63b9ed0d71a93ad5f0af8b434ea8",
+          "projected_faces": 10936,
+          "rgb_basename": "400023_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "9db706a6a8d25707eb9a1989c9eecaccb228940dfaa4941f84ca53d8b8308538",
+          "width": 1334
+        },
+        {
+          "camera": "400041",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400041_000102_mask.png",
+          "mask_coverage": 0.790486,
+          "mask_exists_local": true,
+          "mask_sha256": "97d5b6c4d49c0afe35dd7ab981e0c2fe123907f702a69a118b2b5f19772c0d1e",
+          "projected_faces": 10707,
+          "rgb_basename": "400041_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "dfec7602f83685310ac99ed41af83ebcf009b0e1c271a5e42173ec4a10c7bf21",
+          "width": 1334
+        },
+        {
+          "camera": "400042",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400042_000102_mask.png",
+          "mask_coverage": 0.782612,
+          "mask_exists_local": true,
+          "mask_sha256": "e5c7f548d1e4dd3fc13cae76d13e4eac7f1ba517c58cd4b9ad29ea7cc7573a00",
+          "projected_faces": 10312,
+          "rgb_basename": "400042_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "87eee5d06c4433e6e6f6e4c8436d7ea69a554c8a3a0383609435353aca6be4b6",
+          "width": 1334
+        },
+        {
+          "camera": "400050",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400050_000102_mask.png",
+          "mask_coverage": 0.725541,
+          "mask_exists_local": true,
+          "mask_sha256": "3350dc0310b877f4b537e2744e49a7b8031d9905e6950cb6faadadca6d0449f4",
+          "projected_faces": 10329,
+          "rgb_basename": "400050_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "1b70116a3344a795a3bdf63d66fece34c570a27025c3ed17ee2f147eca776d1e",
+          "width": 1334
+        },
+        {
+          "camera": "400055",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400055_000102_mask.png",
+          "mask_coverage": 0.654213,
+          "mask_exists_local": true,
+          "mask_sha256": "ebf824e8770f74bae36f605abab98283597a15617f4e81abab61d53a86cac251",
+          "projected_faces": 10887,
+          "rgb_basename": "400055_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "19db46e25cca155399d8c8a82eb75ab067004db0b0b33eae09731ca0160e4838",
+          "width": 1334
+        },
+        {
+          "camera": "400067",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400067_000102_mask.png",
+          "mask_coverage": 0.707763,
+          "mask_exists_local": true,
+          "mask_sha256": "f933e6937725945000b5c6ee5536c099dcd4460916ea5f90102be9f9c741160a",
+          "projected_faces": 10261,
+          "rgb_basename": "400067_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "2d81a020d501027075b3150c32e6c6e6008b44ca9f3b23303188d932b1099b99",
+          "width": 1334
+        },
+        {
+          "camera": "400070",
+          "frame": "000102",
+          "height": 2048,
+          "mask_basename": "400070_000102_mask.png",
+          "mask_coverage": 0.603678,
+          "mask_exists_local": true,
+          "mask_sha256": "911b2a27dcb9dc86da14aea59e62ac3a03baa6a35ba06d59e60a2addfafaaef3",
+          "projected_faces": 10760,
+          "rgb_basename": "400070_000102.png",
+          "rgb_exists_local": true,
+          "rgb_sha256": "963b36e83a15bcb134e318547e88b029ed8fedc0d1ca58f1f1d32f049cdbbff2",
+          "width": 1334
+        }
+      ]
+    }
+  ],
+  "date": "2026-05-20",
+  "decision": "Use the local Multiface compact case only for auditable real-GT benchmark plumbing and held-out evaluation gates. Do not claim method quality from this manifest alone, do not train from experiments/downstream_datasets, and do not treat FaceScape sample metadata or the synthetic CC0 positive control as a ready real-capture benchmark.",
+  "gates": {
+    "additional_benchmark_availability": "BLOCKED_NO_ADDITIONAL_READY_REAL_GT_BENCHMARK",
+    "current_multiface_case": "PASS_REAL_GT_BENCHMARK",
+    "downstream_datasets": "NOT_USED_NOT_VALIDATED_TRAINING_SET",
+    "facescape_sample": "PASS_METADATA_ACCESS_ONLY_BLOCKED_REPO_IMAGE_EXPORT"
+  },
+  "route_audit": [
+    {
+      "name": "H3DS v2",
+      "ready_for_manifest": false,
+      "reason": "Local wheel/config only; no H3DS_ACCESS_TOKEN or dataset files available.",
+      "source": "https://pypi.org/project/h3ds/",
+      "status": "blocked"
+    },
+    {
+      "name": "FaceScape",
+      "ready_for_manifest": false,
+      "reason": "Toolkit/sample metadata exists locally, but sample has only limited images and redistribution is blocked; full licensed case is required.",
+      "source": "https://nju-3dv.github.io/projects/FaceScape/",
+      "status": "blocked"
+    },
+    {
+      "name": "Multiface",
+      "ready_for_manifest": true,
+      "reason": "Local debug compact case is already the current G21-G33 route; it is not a new benchmark and G33 shows no quality gain.",
+      "source": "https://github.com/facebookresearch/multiface",
+      "status": "current_route_only"
+    },
+    {
+      "name": "NeRSemble",
+      "ready_for_manifest": false,
+      "reason": "No compact local dataset found; access/download is required before a gate.",
+      "source": "https://tobias-kirschstein.github.io/nersemble/",
+      "status": "blocked"
+    },
+    {
+      "name": "Wikimedia/Blender CC0 head",
+      "ready_for_manifest": false,
+      "reason": "Repo-safe synthetic plumbing control, not a real-capture benchmark.",
+      "source": "https://commons.wikimedia.org/wiki/File:Head_(Sculpting)_-_Realistic_by_Dan_Ulrich_(CC0).stl",
+      "status": "positive_control_only"
+    },
+    {
+      "blocker": "sample readme says do not distribute; full licensed case required",
+      "mview_available_images": 2,
+      "mview_valid_views": 52,
+      "name": "FaceScape sample local metadata",
+      "ready_for_manifest": false,
+      "reason": "Sample confirms FaceScape has calibrated multi-view params and a corresponding mesh, but the public sample exposes only two images and must not be committed or redistributed.",
+      "sample_root": "/data1/workspace/airulan/3dv/external/facescape/samples",
+      "source": "external/facescape/samples",
+      "status": "metadata_access_only"
+    }
+  ],
+  "scope": "Repo-safe data audit plus benchmark manifest for the current local Multiface real-GT route. This confirms a current local benchmark exists, while additional public/licensed benchmarks remain blocked. experiments/downstream_datasets is not read and is not a verified training set.",
+  "verdict": "PASS_CURRENT_LOCAL_MANIFEST_BLOCKED_FOR_ADDITIONAL_BENCHMARKS"
+}

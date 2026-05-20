@@ -1,0 +1,46 @@
+{
+  "date": "2026-05-20",
+  "decision": "Current results can be analyzed as qualitative baseline, diagnostic pseudo-view failure evidence, or real-GT plumbing/numerical smoke only. No existing result supports a reconstruction-quality claim.",
+  "gate": "G37",
+  "inputs": {
+    "first10_count": 10,
+    "g33_verdict": "PASS_COMBINED_GUARDED_TRAIN10_EVAL_NO_QUALITY_GAIN",
+    "g36_verdict": "PASS_METHOD_REDESIGN_DIRECTION_NO_LONGER_RI3D_SCALING",
+    "lam_summary_count": 10,
+    "real_gt_manifest_verdict": "PASS_CURRENT_LOCAL_MANIFEST_BLOCKED_FOR_ADDITIONAL_BENCHMARKS"
+  },
+  "next_milestone_rule": "Every method milestone must declare model training/evaluation distribution, test benchmark source, in/out-of-distribution status, held-out split, and visual/VLM gate before GPU work.",
+  "routes": [
+    {
+      "data": "10 web portraits, no GT cameras/mesh",
+      "distribution_verdict": "IN_INPUT_FORM_BUT_NO_GT",
+      "interpretation": "10/10 LAM runs produced MP4s. This is a qualitative one-shot portrait baseline only; there is no held-out real-GT metric on first10.",
+      "route": "LAM first10 qualitative baseline"
+    },
+    {
+      "data": "experiments/downstream_datasets/*",
+      "distribution_verdict": "OUT_OF_RECONSTRUCTION_GT_DISTRIBUTION",
+      "interpretation": "Generated views are candidate priors with known identity/geometry/grid failures. They cannot be used as train/test data for a reconstruction-quality claim.",
+      "route": "Zero123++ pseudo-view candidate pools"
+    },
+    {
+      "data": "experiments/ri3d_datasets/first2*",
+      "distribution_verdict": "MISMATCHED_INPUT_PREMISE",
+      "interpretation": "RI3D assumes coherent sparse views of a scene. Historical exports came from generated candidate views and are downgraded to diagnostic artifact/failure evidence.",
+      "route": "RI3D on old pseudo-view exports"
+    },
+    {
+      "data": "9 real captured views, cameras, masks, local mesh",
+      "distribution_verdict": "REAL_GT_PREMISE_PASS_BUT_METHOD_QUALITY_NOT_SUPPORTED",
+      "interpretation": "The data premise is valid for local held-out benchmark plumbing. G33 held-out metrics remain init-level ({'SSIM': 0.5905788938204447, 'PSNR': 4.268513361612956, 'LPIPS': 0.5011390447616577}), so results are numerical/plumbing evidence, not a method-quality win.",
+      "route": "RI3D G21-G33 Multiface local compact case"
+    },
+    {
+      "data": "LAM/PanoLAM/OMEGA/FFAvatar-style model on Multiface/H3DS/FaceScape/NeRSemble-style real GT",
+      "distribution_verdict": "CONDITIONAL_ON_EXPLICIT_IN_OR_OUT_DISTRIBUTION_STATEMENT",
+      "interpretation": "Before running, record the model training/evaluation distribution, whether Multiface/H3DS/FaceScape/NeRSemble is in-distribution, and which held-out views/geometry metrics are used.",
+      "route": "Next learned-prior/feed-forward head method"
+    }
+  ],
+  "verdict": "PASS_DISTRIBUTION_AUDIT_NO_NEW_QUALITY_CLAIM"
+}

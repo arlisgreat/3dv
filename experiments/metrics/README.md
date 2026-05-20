@@ -40,4 +40,7 @@ g33_combined_guarded_train10_eval_20260520.md
 g34_post_g33_route_reset_20260520.md
 g35_public_benchmark_availability_20260520.md
 g36_method_redesign_direction_20260520.md
+monitor_literature_vlm_gate_20260520.md
+g37_model_data_distribution_audit_20260520.md
+g38_artifact_sync_gate_20260520.md
 ```

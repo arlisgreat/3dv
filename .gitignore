@@ -7,6 +7,7 @@
 /experiments/reconstructions/**
 /experiments/downstream_3d/**
 /experiments/gt_cases/**
+/experiments/real_gt_benchmark/**
 /experiments/metrics/**
 /experiments/figures/**
 /experiments/ri3d_datasets/**/point_cloud.ply
@@ -37,6 +38,13 @@
 !/experiments/gt_cases/**/*.md
 !/experiments/gt_cases/**/*.png
 !/experiments/gt_cases/**/*.mp4
+!/experiments/real_gt_benchmark/
+!/experiments/real_gt_benchmark/**/
+!/experiments/real_gt_benchmark/**/*.csv
+!/experiments/real_gt_benchmark/**/*.json
+!/experiments/real_gt_benchmark/**/*.md
+!/experiments/real_gt_benchmark/**/*.png
+!/experiments/real_gt_benchmark/**/*.mp4
 !/experiments/metrics/
 !/experiments/metrics/**/
 !/experiments/metrics/**/*.csv

@@ -42,6 +42,7 @@ echo "== compact result candidates =="
 {
   find experiments/inputs -type f \( -name 'manifest.csv' -o -name 'README.md' -o -name '*.json' \) -size -50M -print 2>/dev/null || true
   find experiments/metrics experiments/figures -type f -size -50M -print 2>/dev/null || true
+  find experiments/real_gt_benchmark -type f \( -name '*.csv' -o -name '*.json' -o -name '*.md' -o -name '*.png' -o -name '*.mp4' \) -size -100M -print 2>/dev/null || true
   find experiments/pseudo_views -type f \( -name '*.png' -o -name 'metadata.json' -o -name 'manifest.json' -o -name 'README.md' \) -size -100M -print 2>/dev/null || true
   find experiments/reconstructions -type f \( -name '*.mp4' -o -name 'metadata.json' -o -name 'summary.json' -o -name 'README.md' \) -size -100M -print 2>/dev/null || true
 } | sort
@@ -69,6 +70,7 @@ if [[ "$FORCE_RESULTS" -eq 1 ]]; then
   done < <({
     find experiments/inputs -type f \( -name 'manifest.csv' -o -name 'README.md' -o -name '*.json' \) -size -50M -print 2>/dev/null || true
     find experiments/metrics experiments/figures -type f -size -50M -print 2>/dev/null || true
+    find experiments/real_gt_benchmark -type f \( -name '*.csv' -o -name '*.json' -o -name '*.md' -o -name '*.png' -o -name '*.mp4' \) -size -100M -print 2>/dev/null || true
     find experiments/pseudo_views -type f \( -name '*.png' -o -name 'metadata.json' -o -name 'manifest.json' -o -name 'README.md' \) -size -100M -print 2>/dev/null || true
     find experiments/reconstructions -type f \( -name '*.mp4' -o -name 'metadata.json' -o -name 'summary.json' -o -name 'README.md' \) -size -100M -print 2>/dev/null || true
   } | sort)

@@ -55,7 +55,8 @@ case or an equivalent licensed case. G23/G24/G25 are not reconstruction-quality
 results. G26-G33 also remain plumbing/numerical gates, not quality claims. G34
 closes the current RI3D scaling route; G35 confirms no additional ready
 public/local real-GT benchmark is available; G36 resets the method direction
-toward learned-prior/full-head Gaussian approaches.
+toward learned-prior/full-head Gaussian approaches. G37-G38 add model/data
+distribution and artifact-sync safeguards before any future method claim.
 
 ## Real GT Benchmark Pivot
 
@@ -109,6 +110,7 @@ G20-G33: acquire one local real-GT compact case, repair adapter/numerical
          plumbing, and show no held-out quality gain.
 G34-G36: stop current RI3D scaling, audit benchmark availability, and reset the
          method direction with current literature.
+G37-G38: audit model/data distribution interpretability and repo artifact sync.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -157,6 +159,12 @@ passes visual/VLM + distribution audit:
 
 Only after PASS_REAL_GT_BENCHMARK may a method milestone record:
   PASS_RECONSTRUCTION_TRAINING
+
+Before interpreting any method metric, also require:
+  explicit model training/evaluation distribution statement
+  in-distribution or out-of-distribution status for the test benchmark
+  held-out split that is not used as supervision
+  artifact sync gate for PNG/MP4/CSV/JSON/MD outputs
 ```
 
 ## Active Data Routes
@@ -234,6 +242,8 @@ positive control, so they are not the active G16b case.
 | G34 | Post-G33 route reset | G33 no-quality-gain result | Done: no longer RI3D scaling milestone is authorized from the current adapter/objective |
 | G35 | Public/stronger benchmark availability audit | G34 route stop | Done, blocked: no additional ready local/public real-GT benchmark beyond current Multiface debug route and synthetic positive control |
 | G36 | Method redesign direction | G34/G35 | Done: next method must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views are conditional priors only |
+| G37 | Model/data distribution audit | G36 method reset | Done: current results are qualitative, diagnostic, or plumbing/numerical evidence only; next method must declare in/out distribution before GPU work |
+| G38 | Artifact sync gate | G37 distribution audit and repo-safe manifests | Done: current repo-safe PNG/MP4/CSV/JSON/MD artifacts are sync candidates; blocked raw/private paths are zero |
 
 ## Expected Final Outputs
 
@@ -279,5 +289,8 @@ real-GT benchmark access, not renewed web pseudo-view training or longer RI3D
 training. G34-G36 record that stop condition explicitly: the current RI3D path
 is closed for method scaling, no additional ready benchmark exists locally, and
 the method story should pivot to learned-prior/full-head Gaussian reconstruction
-under real-GT gates.
+under real-GT gates. G37-G38 add the two safeguards requested after the
+candidate-pool mistake: model/data distribution must be declared before any
+interpretation, and repo-safe artifacts are explicitly checked for GitHub sync
+without admitting raw/private assets.
 ```

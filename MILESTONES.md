@@ -72,7 +72,9 @@ training. G23/G24 pass only the local adapter and CPU file-contract gates. G25-G
 prove init, eval, numerical diagnosis, guarded train10, and post-guard eval
 plumbing. G34-G36 close the current RI3D scaling route, confirm no additional
 ready public/local real-GT benchmark is available, and reset the method direction
-toward learned-prior/full-head Gaussian approaches. None of these is a
+toward learned-prior/full-head Gaussian approaches. G37-G38 add explicit
+model/data distribution and artifact-sync gates so that old candidate pools and
+raw/private assets cannot slip back into the main claim. None of these is a
 reconstruction-quality result.
 ```
 
@@ -119,7 +121,10 @@ guarded train10/eval still runs; they do not produce held-out quality gain or
 authorize longer/default-loss training. G34-G36 turn that into the current
 closure: no scaling from this RI3D route, no additional ready benchmark
 locally, and no new method-quality milestone without a redesigned method plus
-fresh data/VLM gate.
+fresh data/VLM gate. G37 confirms that existing model/test pairs are
+interpretable only as qualitative, diagnostic, or plumbing/numerical evidence.
+G38 confirms the current repo-safe artifact sync set has no blocked raw/private
+paths.
 ```
 
 ## Completed Milestones
@@ -169,12 +174,14 @@ fresh data/VLM gate.
 | G34 | done, route-stop pass | Post-G33 route reset | `experiments/metrics/g34_post_g33_route_reset_20260520.md` | Longer RI3D training on the current adapter is closed as a method-quality milestone; no web pseudo-view candidate pool may become training data. |
 | G35 | done, benchmark blocked | Public/stronger benchmark availability audit | `experiments/metrics/g35_public_benchmark_availability_20260520.md` | No additional ready local/public real-GT benchmark exists; H3DS/FaceScape/NeRSemble require access/license, and Multiface is the current local route only. |
 | G36 | done, method direction pass | Method redesign and latest literature update | `experiments/metrics/g36_method_redesign_direction_20260520.md` | Next method work must be learned-prior/feed-forward/head-anchored with real-GT gates; pseudo views can only be audited conditional priors. |
+| G37 | done, distribution pass no quality claim | Model/data distribution audit | `experiments/metrics/g37_model_data_distribution_audit_20260520.md` | LAM first10 is qualitative-only; pseudo-view/RI3D exports are diagnostic-only; Multiface G21-G33 is real-GT plumbing/numerical evidence without quality gain. |
+| G38 | done, sync pass | Artifact sync gate | `experiments/metrics/g38_artifact_sync_gate_20260520.md`, `experiments/real_gt_benchmark/` | Current untracked repo-safe PNG/MP4/CSV/JSON/MD artifacts are sync candidates; blocked raw/private paths are zero. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G34 route reset + G35 benchmark audit + G36 method redesign direction | Open a new milestone only after a passing method premise and real-GT/data/VLM gate; no longer-training milestone is authorized from current RI3D evidence. |
+| none | closed for current RI3D route | Stop scaling this RI3D setup as a method result | G34 route reset + G35 benchmark audit + G36 method redesign direction + G37 distribution audit + G38 sync gate | Open a new milestone only after a passing method premise, explicit model/data distribution statement, and real-GT/data/VLM gate; no longer-training milestone is authorized from current RI3D evidence. |
 
 ## G8 Result
 

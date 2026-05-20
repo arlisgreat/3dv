@@ -15,6 +15,7 @@ experiments/
   figures/          # 论文图
   ri3d_datasets/    # RI3D-compatible downstream inputs
   gt_cases/          # optional compact GT case metadata, only if license permits
+  real_gt_benchmark/ # repo-safe real-GT manifests and audit summaries
 ```
 
 ## First10
@@ -65,6 +66,10 @@ experiments/reconstructions/**/metadata.json
 experiments/reconstructions/**/*.mp4
 experiments/metrics/*.csv
 experiments/metrics/*.md
+experiments/real_gt_benchmark/*.csv
+experiments/real_gt_benchmark/*.json
+experiments/real_gt_benchmark/*.md
+experiments/real_gt_benchmark/*.png
 ```
 
 当前 smoke 结果：

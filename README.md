@@ -26,7 +26,7 @@ hard stop:
 ```
 
 G2-G19 的价值是止损和诊断：它们证明了 split-grid preprocessing、弱筛选指标、
-伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G36：
+伪视角畸变和 RI3D 碎片/卡片失败都足以污染结论。现在的主线是 G20-G38：
 
 ```text
 G20: benchmark-first pivot and route audit, complete.
@@ -57,6 +57,10 @@ G35: public/stronger benchmark availability audit, complete but blocked; no
      additional ready local/public real-GT benchmark exists.
 G36: method redesign direction, complete; next method must be learned-prior /
      feed-forward / head-anchored and real-GT gated.
+G37: model/data distribution audit, complete; current results are interpretable
+     only as qualitative, diagnostic, or real-GT plumbing/numerical evidence.
+G38: artifact sync gate, complete; repo-safe PNG/MP4/CSV/JSON/MD outputs are
+     sync candidates, raw/private assets stay outside the repo.
 ```
 
 ## 目录怎么用
@@ -72,6 +76,7 @@ G36: method redesign direction, complete; next method must be learned-prior /
   data_manifest.csv      # 样本清单
 
   experiments/           # 我们自己的输入、输出、指标、图表
+    real_gt_benchmark/   # repo-safe real-GT manifests and audit summaries
   scripts/               # 我们自己的脚本
   external/              # 第三方仓库，不提交到主仓库
   patches/               # 如果改了第三方代码，把 patch 放这里
@@ -179,6 +184,7 @@ CC0 human-head mesh positive-control gate
 real-GT benchmark pivot and distribution audit
 Multiface local real-GT compact-case gate and adapter/init/eval/numerical gates
 post-G33 route reset, benchmark availability audit, and method redesign update
+real-GT benchmark manifest, model/data distribution audit, and artifact sync gate
 ```
 
 历史 diagnostic pseudo-view 前端：

@@ -868,6 +868,10 @@ Multiface local-only adapter 和 RI3D file contract 补到可 smoke 的状态，
 G28/G29 证明其中 L1-only NaN 类问题来自 zero-weight branch contamination
 并可用 guard 清除；G30-G33 证明 guarded small-step train/eval 仍没有带来
 held-out 质量提升。G34-G36 已把当前 RI3D scaling 关闭为方法路线，并把下一步
-限定为更强 benchmark 或 learned-prior/head-anchored 方法重设。不要从现有 web
-first10 candidate pool 继续训练，也不要把 G23-G36 或旧 RI3D 结果解释成质量结论。
+限定为更强 benchmark 或 learned-prior/head-anchored 方法重设。G37 进一步检查
+模型/测试数据分布：LAM first10 只能做定性，pseudo-view/旧 RI3D 只能诊断，
+Multiface G21-G33 只能说明 real-GT plumbing/numerical gate。G38 记录 artifact
+sync gate，保证 repo-safe PNG/MP4/CSV/JSON/MD 结果进入 GitHub，同步时不混入
+raw/private assets。不要从现有 web first10 candidate pool 继续训练，也不要把
+G23-G38 或旧 RI3D 结果解释成质量结论。
 ```

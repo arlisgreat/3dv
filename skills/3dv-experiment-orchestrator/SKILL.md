@@ -14,6 +14,7 @@ experiments/pseudo_views/    Zero123++ and mask outputs
 experiments/reconstructions/ LAM or downstream reconstruction outputs
 experiments/metrics/         CSV/JSON/Markdown metrics and observations
 experiments/figures/         publishable PNG figures
+experiments/real_gt_benchmark/ repo-safe real-GT manifests and audit artifacts
 external/                    third-party repos, not committed as source
 patches/                     third-party patches when needed
 skills/                      project-specific Codex skill copy
@@ -101,6 +102,10 @@ not run longer/default-loss training from this setup as a method result. G34-G36
 explicitly close current RI3D scaling, confirm no additional ready public/local
 benchmark is available, and reset the method direction toward learned-prior /
 feed-forward / head-anchored Gaussian reconstruction under real-GT gates.
+G37 records model/data distribution interpretability: first10 LAM is qualitative
+only, pseudo-view/RI3D exports are diagnostic-only, and the Multiface route is
+real-GT plumbing/numerical evidence without a quality claim. G38 records the
+repo artifact sync gate for PNG/MP4/CSV/JSON/MD outputs.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate
@@ -130,6 +135,14 @@ For real-GT milestones, run:
 
 ```bash
 python scripts/real_gt_benchmark_gate.py --case-root <case_root> --case-id <case_id> --visual-verdict PASS
+```
+
+For repo-safe real-GT manifests, distribution checks, and artifact sync gates:
+
+```bash
+python scripts/real_gt_benchmark_manifest.py
+python scripts/model_data_distribution_audit.py
+python scripts/artifact_sync_gate.py
 ```
 
 For the current Multiface path, G25 was run by calling RI3D
