@@ -124,9 +124,10 @@ is still diagnostic only because one held-out camera remains cropped/off-center.
 G77 adds source-mask plus eval-camera-frustum crop guard alignment; it may use
 held-out camera K/R/T metadata but not held-out RGB/mask or GT pointcloud for
 alignment. G78/G79 are the current best method-direction positive, with mean
-held-out mask IoU 0.900017 and a passing private visual review. The active next
-gate is G80: freeze this no-leakage protocol, repeat it on additional audited
-NeRSemble cases/sources, and keep the distribution/overlap warning for LAM-20K.
+held-out mask IoU 0.900017 and a passing private visual review. G80 syncs the
+repo-safe artifacts. The active next gate is G81: freeze this no-leakage
+protocol, repeat it on additional audited NeRSemble cases/sources, and keep the
+distribution/overlap warning for LAM-20K.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate

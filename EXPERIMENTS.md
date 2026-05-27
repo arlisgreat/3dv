@@ -983,7 +983,7 @@ official hidden-holdout result.
 Active next step:
 
 ```text
-G80: freeze the G77-G79 protocol, then repeat it on additional audited
+G81: freeze the G77-G79 protocol, then repeat it on additional audited
 NeRSemble cases/sources. Keep copy-source, G70/G75, and G77/G78 comparisons in
 the same table; do not claim unseen generalization until model/data overlap is
 audited beyond local metadata.

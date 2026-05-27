@@ -309,12 +309,13 @@ plumbing itself.
 | G77 | done, render pass current best | Source-mask plus eval-camera-frustum crop guard render | `experiments/metrics/g77_lam_native_gaussian_source220700191_frustum_guard_render_20260527.md`, `scripts/render_lam_native_gaussian_nersemble_source_aligned.py` | Uses held-out camera K/R/T metadata only as a frustum guard, not held-out RGB/mask or GT geometry; renders noncropped held-out predictions. |
 | G78 | done, eval pass current best | Held-out evaluator on G77 frustum-guard renders | `experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.md` | Mean PSNR 12.690455 and mask IoU 0.900017, a large improvement over G75 and G71. |
 | G79 | done, visual gate pass diagnostic | Visual/mask gate for G77/G78 | `experiments/metrics/g79_lam_native_gaussian_source220700191_frustum_guard_visual_gate_20260527.md`, `experiments/figures/g79_lam_native_gaussian_source220700191_frustum_guard_mask_audit_20260527.png`, `scripts/audit_nersemble_method_visual_gate.py` | Current best method-direction positive: no gross crop in private review and high mask overlap, but still diagnostic pending multi-case validation and distribution review. |
+| G80 | done, sync pass | Artifact sync gate for G74-G79 repo-safe outputs | `experiments/metrics/g80_artifact_sync_gate_20260527.md`, `scripts/artifact_sync_gate.py` | 18 new repo-safe sync candidates and 0 blocked private/raw paths; checkpoint committed and pushed. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G80 | active next | Scale the frozen G77-G79 real-GT protocol to more NeRSemble cases/sources and compare against copy-source/G70/G75 diagnostics | G77/G78/G79 validate the renderer/evaluator direction on one frame without held-out image or GT-geometry alignment leakage | At least one additional audited NeRSemble case/source passes the same data, distribution, metric, and visual gates, or the route is downgraded to a single-case diagnostic contribution. |
+| G81 | active next | Scale the frozen G77-G79 real-GT protocol to more NeRSemble cases/sources and compare against copy-source/G70/G75 diagnostics | G77/G78/G79 validate the renderer/evaluator direction on one frame without held-out image or GT-geometry alignment leakage | At least one additional audited NeRSemble case/source passes the same data, distribution, metric, and visual gates, or the route is downgraded to a single-case diagnostic contribution. |
 
 ## G8 Result
 
