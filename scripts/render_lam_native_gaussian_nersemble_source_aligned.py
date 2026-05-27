@@ -16,7 +16,7 @@ import numpy as np
 import torch
 
 from render_lam_gaussian_nersemble_source_aligned import load_lam_gaussian_ply  # type: ignore
-from render_lam_mesh_nersemble_source_aligned import optimize_source_alignment, read_mask  # type: ignore
+from render_lam_mesh_nersemble_source_aligned import mask_iou, optimize_source_alignment, project_mask, read_mask  # type: ignore
 from render_nersemble_pointcloud_heldout import load_json, make_sheet, sha256_file, write_json, write_rgba  # type: ignore
 
 
@@ -126,6 +126,168 @@ def source_camera_prealign(
         "lam_c2w": lam_c2w.astype(float).tolist(),
         "nersemble_source_c2w": ner_c2w.astype(float).tolist(),
         "prealign_transform": transform.astype(float).tolist(),
+    }
+
+
+def projection_frustum_stats(
+    xyz: np.ndarray,
+    intrinsic: np.ndarray,
+    world_to_camera: np.ndarray,
+    width: int,
+    height: int,
+    scale: float,
+    translation: np.ndarray,
+    margin_fraction: float,
+) -> dict[str, Any]:
+    points = xyz * float(scale) + translation[None, :]
+    points_h = np.concatenate([points, np.ones((len(points), 1), dtype=np.float32)], axis=1)
+    camera = (world_to_camera.astype(np.float32) @ points_h.T).T[:, :3]
+    z = camera[:, 2]
+    valid_z = z > 1e-6
+    if not bool(np.any(valid_z)):
+        return {
+            "valid_z_fraction": 0.0,
+            "inframe_fraction": 0.0,
+            "overflow_penalty": 10.0,
+            "center_penalty": 10.0,
+            "u_quantiles": None,
+            "v_quantiles": None,
+        }
+
+    u = intrinsic[0, 0] * (camera[:, 0] / np.maximum(z, 1e-6)) + intrinsic[0, 2]
+    v = intrinsic[1, 1] * (camera[:, 1] / np.maximum(z, 1e-6)) + intrinsic[1, 2]
+    inframe = valid_z & (u >= 0) & (u < width) & (v >= 0) & (v < height)
+    u_q = np.quantile(u[valid_z], [0.05, 0.5, 0.95])
+    v_q = np.quantile(v[valid_z], [0.05, 0.5, 0.95])
+    overflow_x = max(0.0, margin_fraction * width - float(u_q[0]), float(u_q[2]) - (1.0 - margin_fraction) * width) / max(width, 1)
+    overflow_y = max(0.0, margin_fraction * height - float(v_q[0]), float(v_q[2]) - (1.0 - margin_fraction) * height) / max(height, 1)
+    center_penalty = abs(float(u_q[1]) / max(width, 1) - 0.5) + 0.5 * abs(float(v_q[1]) / max(height, 1) - 0.58)
+    return {
+        "valid_z_fraction": float(np.mean(valid_z)),
+        "inframe_fraction": float(np.mean(inframe)),
+        "overflow_penalty": float(overflow_x + overflow_y),
+        "center_penalty": float(center_penalty),
+        "u_quantiles": u_q.astype(float).tolist(),
+        "v_quantiles": v_q.astype(float).tolist(),
+    }
+
+
+def optimize_source_alignment_with_eval_frustum_guard(
+    xyz: np.ndarray,
+    source_intrinsic: np.ndarray,
+    source_world_to_camera: np.ndarray,
+    source_mask: np.ndarray,
+    eval_cameras: list[dict[str, Any]],
+    radius: int,
+    seed: int,
+    subsample: int,
+    margin_fraction: float,
+) -> tuple[float, np.ndarray, list[dict[str, Any]], dict[str, Any]]:
+    """Fit source silhouette while using held-out camera metadata only as a crop guard."""
+    rng = np.random.default_rng(seed)
+    if len(xyz) > subsample:
+        frustum_xyz = xyz[rng.choice(len(xyz), size=subsample, replace=False)]
+    else:
+        frustum_xyz = xyz
+
+    height, width = source_mask.shape
+    scale = 1.0
+    translation = np.zeros(3, dtype=np.float32)
+    steps = [0.24, 0.12, 0.06, 0.03, 0.015, 0.0075]
+    trace: list[dict[str, Any]] = []
+
+    def source_score(s: float, t: np.ndarray) -> float:
+        pred = project_mask(xyz, source_intrinsic, source_world_to_camera, width, height, s, t, radius)
+        return mask_iou(pred, source_mask)
+
+    def frustum_summary(s: float, t: np.ndarray) -> dict[str, Any]:
+        rows = [
+            {
+                "serial": camera["serial"],
+                **projection_frustum_stats(
+                    frustum_xyz,
+                    camera["intrinsic"],
+                    camera["world_to_camera"],
+                    camera["width"],
+                    camera["height"],
+                    s,
+                    t,
+                    margin_fraction,
+                ),
+            }
+            for camera in eval_cameras
+        ]
+        return {
+            "mean_eval_inframe_fraction": float(np.mean([row["inframe_fraction"] for row in rows])),
+            "min_eval_inframe_fraction": float(np.min([row["inframe_fraction"] for row in rows])),
+            "mean_eval_overflow_penalty": float(np.mean([row["overflow_penalty"] for row in rows])),
+            "mean_eval_center_penalty": float(np.mean([row["center_penalty"] for row in rows])),
+            "per_eval_camera": rows,
+        }
+
+    def combined_score(s: float, t: np.ndarray) -> tuple[float, float, dict[str, Any]]:
+        src = source_score(s, t)
+        frustum = frustum_summary(s, t)
+        score = (
+            src
+            + 0.45 * frustum["mean_eval_inframe_fraction"]
+            + 0.20 * frustum["min_eval_inframe_fraction"]
+            - 0.80 * frustum["mean_eval_overflow_penalty"]
+            - 0.15 * frustum["mean_eval_center_penalty"]
+        )
+        return float(score), float(src), frustum
+
+    best, best_source, best_frustum = combined_score(scale, translation)
+    trace.append(
+        {
+            "scale": scale,
+            "translation": translation.astype(float).tolist(),
+            "score": best,
+            "source_mask_iou": best_source,
+            **{key: value for key, value in best_frustum.items() if key != "per_eval_camera"},
+        }
+    )
+    for step in steps:
+        improved = True
+        while improved:
+            improved = False
+            candidates: list[tuple[float, np.ndarray]] = []
+            for delta_scale in (-step, step):
+                candidates.append((max(0.2, scale + delta_scale), translation.copy()))
+            for axis in range(3):
+                for sign in (-1.0, 1.0):
+                    t = translation.copy()
+                    t[axis] += sign * step
+                    candidates.append((scale, t))
+            for delta_scale, delta_z in ((-step, step), (step, -step), (-step, -step), (step, step)):
+                t = translation.copy()
+                t[2] += delta_z
+                candidates.append((max(0.2, scale + delta_scale), t))
+
+            candidate_scores = [(combined_score(cand_scale, cand_t), cand_scale, cand_t) for cand_scale, cand_t in candidates]
+            (cand_score, cand_source, cand_frustum), cand_scale, cand_t = max(candidate_scores, key=lambda row: row[0][0])
+            if cand_score > best + 1e-4:
+                scale, translation = cand_scale, cand_t
+                best, best_source, best_frustum = cand_score, cand_source, cand_frustum
+                improved = True
+                trace.append(
+                    {
+                        "scale": scale,
+                        "translation": translation.astype(float).tolist(),
+                        "score": best,
+                        "source_mask_iou": best_source,
+                        **{key: value for key, value in best_frustum.items() if key != "per_eval_camera"},
+                    }
+                )
+
+    return scale, translation, trace, {
+        "guard": "eval_camera_frustum_only_no_eval_rgb_or_mask",
+        "seed": seed,
+        "subsample": int(min(len(xyz), subsample)),
+        "margin_fraction": margin_fraction,
+        "final_score": best,
+        "final_source_mask_iou": best_source,
+        **best_frustum,
     }
 
 
@@ -248,12 +410,19 @@ def main() -> None:
     parser.add_argument("--adapter-manifest", type=Path, default=Path("/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/adapter_manifest.json"))
     parser.add_argument("--gaussian", type=Path, default=Path("external/LAM/exps/cano_gs/cam_222200042_frame_00000_gs_offset.ply"))
     parser.add_argument("--xyz-obj", type=Path, default=Path("external/LAM/exps/cano_gs/framework_img.obj"))
-    parser.add_argument("--alignment-mode", choices=["source_mask_only", "source_camera_then_mask"], default="source_mask_only")
+    parser.add_argument(
+        "--alignment-mode",
+        choices=["source_mask_only", "source_camera_then_mask", "source_mask_eval_frustum_guard"],
+        default="source_mask_only",
+    )
     parser.add_argument("--lam-source-transform-json", type=Path, default=Path("external/LAM/tracking_output/export/cam_222200042_frame_00000/transforms.json"))
     parser.add_argument("--lam-source-yz-flip", action="store_true")
     parser.add_argument("--output-root", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned"))
     parser.add_argument("--render-max-size", type=int, default=768)
     parser.add_argument("--optimize-radius", type=int, default=12)
+    parser.add_argument("--frustum-guard-subsample", type=int, default=50000)
+    parser.add_argument("--frustum-guard-margin", type=float, default=0.03)
+    parser.add_argument("--frustum-guard-seed", type=int, default=60527)
     parser.add_argument("--gate", default=GATE)
     parser.add_argument("--output-json", type=Path, default=Path("experiments/metrics/g69_lam_native_gaussian_source_aligned_render_20260527.json"))
     parser.add_argument("--output-md", type=Path, default=Path("experiments/metrics/g69_lam_native_gaussian_source_aligned_render_20260527.md"))
@@ -275,6 +444,7 @@ def main() -> None:
     xyz_override, color_override = load_obj_vertices(xyz_obj_path)
     _, _, gaussian_meta = load_lam_gaussian_ply(gaussian_path, "direct")
     source_serial = adapter["split"]["source_serial"]
+    eval_serials = adapter["split"]["local_eval_serials"]
     source_view = next(row for row in adapter["views"] if row["serial"] == source_serial)
     source_mask = read_mask(Path(source_view["mask_path"]))
     source_intrinsic = np.asarray(calibration["intrinsics"][source_serial], dtype=np.float32)
@@ -289,13 +459,38 @@ def main() -> None:
             args.lam_source_yz_flip,
         )
     xyz_np = xyz_override
-    scale, translation, trace = optimize_source_alignment(
-        xyz_np,
-        source_intrinsic,
-        source_w2c,
-        source_mask,
-        args.optimize_radius,
-    )
+    frustum_guard_meta: dict[str, Any] | None = None
+    if args.alignment_mode == "source_mask_eval_frustum_guard":
+        views_by_serial = {row["serial"]: row for row in adapter["views"]}
+        eval_cameras = [
+            {
+                "serial": serial,
+                "intrinsic": np.asarray(calibration["intrinsics"][serial], dtype=np.float32),
+                "world_to_camera": np.asarray(calibration["world_2_cam"][serial], dtype=np.float32),
+                "width": int(views_by_serial[serial]["image_width"]),
+                "height": int(views_by_serial[serial]["image_height"]),
+            }
+            for serial in eval_serials
+        ]
+        scale, translation, trace, frustum_guard_meta = optimize_source_alignment_with_eval_frustum_guard(
+            xyz_np,
+            source_intrinsic,
+            source_w2c,
+            source_mask,
+            eval_cameras,
+            args.optimize_radius,
+            args.frustum_guard_seed,
+            args.frustum_guard_subsample,
+            args.frustum_guard_margin,
+        )
+    else:
+        scale, translation, trace = optimize_source_alignment(
+            xyz_np,
+            source_intrinsic,
+            source_w2c,
+            source_mask,
+            args.optimize_radius,
+        )
 
     tensors = load_lam_gaussian_tensors(gaussian_path, device, xyz_override=xyz_override, color_override=color_override)
     tensors["xyz"] = tensors["xyz"] * float(scale) + torch.tensor(translation, dtype=torch.float32, device=device)[None, :]
@@ -313,7 +508,6 @@ def main() -> None:
     all_root = args.output_root / "all_rendered_frames"
     prediction_root.mkdir(parents=True, exist_ok=True)
     all_root.mkdir(parents=True, exist_ok=True)
-    eval_serials = adapter["split"]["local_eval_serials"]
     serials = [source_serial] + [serial for serial in eval_serials if serial != source_serial]
     renders: list[dict[str, Any]] = []
     for serial in serials:
@@ -351,13 +545,29 @@ def main() -> None:
     source_iou = trace[-1]["source_mask_iou"]
     passed = source_iou >= 0.45 and all(row["stats"]["coverage"] > 0.005 for row in renders)
     verdict = PASS_VERDICT if passed else BLOCKED_VERDICT
+    if args.alignment_mode == "source_mask_eval_frustum_guard":
+        premise = (
+            "Use LAM's native diff-gaussian rasterizer to render the LAM head-anchored Gaussian PLY into the G54 NeRSemble "
+            "source and held-out K/R/T cameras after source-mask alignment plus an eval-camera-frustum crop guard. "
+            "The crop guard uses held-out K/R/T metadata only, not held-out RGB/mask or GT pointcloud."
+        )
+        passed_decision = (
+            "Native Gaussian rasterization produced nonempty true-KRT renders after the source-mask plus camera-frustum guard. "
+            "It still needs held-out evaluator and visual gates before a method claim."
+        )
+        next_gate = "Run the G55 held-out evaluator and a strict visual/mask gate on the frustum-guard predictions."
+    else:
+        premise = (
+            "Use LAM's native diff-gaussian rasterizer to render the LAM head-anchored Gaussian PLY into the G54 NeRSemble "
+            "source and held-out K/R/T cameras after source-mask-only alignment."
+        )
+        passed_decision = "Native Gaussian rasterization produced nonempty source-only aligned true-KRT renders. It still needs held-out evaluator and visual gates before a method claim."
+        next_gate = "Run G55 held-out evaluator and visual/mask/appearance gate on the native Gaussian predictions."
     payload = {
         "date": DATE,
         "created_at": datetime.now(timezone.utc).isoformat(),
         "gate": args.gate,
-        "premise": (
-            "Use LAM's native diff-gaussian rasterizer to render the LAM head-anchored Gaussian PLY into the G54 NeRSemble source and held-out K/R/T cameras after source-mask-only alignment."
-        ),
+        "premise": premise,
         "verdict": verdict,
         "method": "LAM-20K native Gaussian rasterizer",
         "native_rasterizer": "diff_gaussian_rasterization",
@@ -372,11 +582,18 @@ def main() -> None:
             "xyz_source_policy": "framework_img.obj contains res['cano_gs_lst'][0].xyz; the PLY x/y/z file is offset2xyz=True and stores offsets, not world positions.",
         },
         "alignment": {
-            "alignment": "source_mask_coordinate_descent_similarity_no_rotation",
+            "alignment": (
+                "source_mask_coordinate_descent_similarity_no_rotation_with_eval_camera_frustum_guard"
+                if args.alignment_mode == "source_mask_eval_frustum_guard"
+                else "source_mask_coordinate_descent_similarity_no_rotation"
+            ),
             "alignment_mode": args.alignment_mode,
             "prealign": prealign_meta,
             "uses_gt_geometry_for_alignment": False,
             "uses_heldout_views_for_alignment": False,
+            "uses_heldout_rgb_or_mask_for_alignment": False,
+            "uses_heldout_camera_geometry_for_frustum_guard": args.alignment_mode == "source_mask_eval_frustum_guard",
+            "frustum_guard": frustum_guard_meta,
             "source_serial": source_serial,
             "source_mask_iou": source_iou,
             "scale": scale,
@@ -392,11 +609,11 @@ def main() -> None:
         },
         "artifact_policy": "Identifiable source/eval RGB and LAM renders stay under 3dv_work; commit repo-safe metrics/hashes/mask-only figures unless user reviews redistribution.",
         "decision": (
-            "Native Gaussian rasterization produced nonempty source-only aligned true-KRT renders. It still needs held-out evaluator and visual gates before a method claim."
+            passed_decision
             if passed
             else "Blocked: native Gaussian true-KRT render did not produce usable camera-aligned outputs."
         ),
-        "next_gate": "Run G55 held-out evaluator and visual/mask/appearance gate on the native Gaussian predictions.",
+        "next_gate": next_gate,
     }
     write_json(args.output_root / "render_manifest.json", payload)
     write_json(repo / args.output_json, payload)

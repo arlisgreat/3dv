@@ -1,0 +1,189 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T12:38:32.371134+00:00",
+  "crop_risk_policy": {
+    "max_coverage_ratio": 1.25,
+    "min_coverage_ratio": 0.75,
+    "min_mask_iou": 0.75,
+    "mode": "mask_iou_coverage"
+  },
+  "date": "2026-05-27",
+  "decision": "G77/G78/G79 are the current best method-direction positive: the learned-prior/head-anchored Gaussian renderer/evaluator path works under the real-GT gate and the previous gross crop failure is fixed without held-out RGB/mask or GT pointcloud alignment. It is still diagnostic rather than a final SOTA reconstruction claim because it uses in-domain LAM-20K and only one NeRSemble frame/case.",
+  "eval_json": "experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+  "eval_mean_prediction_mask_iou": 0.9000165206203238,
+  "eval_mean_psnr": 12.690454933591733,
+  "eval_verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL",
+  "gate": "G79",
+  "manual_visual_audit": "Private sheet shows all three held-out predictions are nonblank and no longer suffer the severe side-view crop seen in G74/G76. Identity and glasses are preserved, poses follow the NeRSemble cameras, and mask overlap is high; remaining limitations are LAM Gaussian blur/smearing around hair, shoulder/background edges, and imperfect expression/illumination.",
+  "method": "LAM-20K native Gaussian rasterizer",
+  "next_gate": "Scale the same frozen protocol to additional NeRSemble cases/sources and compare against copy-source and prior G70/G75 diagnostics. Keep model/data-overlap and private-artifact restrictions in force.",
+  "per_eval_serial": [
+    {
+      "decision": "nonblank_aligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+      "prediction_sha256": "4aeaff96db9133bd64c52817ac9807bce8edbad7fd8015e29e8f567a7dc278d9",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          155,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5164572522353611,
+          0.5962238465037957
+        ],
+        "coverage": 0.7221486057583314,
+        "touches_image_border": true
+      },
+      "prediction_target_coverage_ratio": 1.0775338547811077,
+      "prediction_target_mask_iou": 0.8875754239222053,
+      "serial": "222200042",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5454705121958935,
+          0.6177090784145541
+        ],
+        "coverage": 0.6701864656540467,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "nonblank_aligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "79457839a7c460ed567fecb5c84ef5a2fa68dd3e9dc5db496adfb859800506cb",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          140,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.49935404377980414,
+          0.6134784181272627
+        ],
+        "coverage": 0.6517127635456813,
+        "touches_image_border": true
+      },
+      "prediction_target_coverage_ratio": 1.0841121671551959,
+      "prediction_target_mask_iou": 0.8994707721708137,
+      "serial": "222200041",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5254274763684955,
+          0.624082989938132
+        ],
+        "coverage": 0.6011488324642938,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "nonblank_aligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "72c1721c4334cccc673176450a6f5a8f4ec2adb5ece08f260d831ef734df2153",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          182,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5536299982454729,
+          0.6126670804728249
+        ],
+        "coverage": 0.6350640444343686,
+        "touches_image_border": true
+      },
+      "prediction_target_coverage_ratio": 1.0687832353263798,
+      "prediction_target_mask_iou": 0.9130033657679525,
+      "serial": "222200047",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.55793585446858,
+          0.6309854480143975
+        ],
+        "coverage": 0.5941934935388801,
+        "touches_image_border": true
+      }
+    }
+  ],
+  "premise": "Audit G77/G78 frontal-source LAM native Gaussian true-KRT predictions after source-mask plus eval-camera-frustum crop guard alignment. This gate uses held-out masks only for post-hoc evaluation, not alignment.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/g69_private_lam_native_gaussian_source_aligned_sheet.png",
+    "contact_sheet_sha256": "b2348cb861ec893982cf97737422da3a3faf707cac01acc2fefab7993ccdab46"
+  },
+  "quality_claim_status": "diagnostic_only_pending_multicase_validation",
+  "render_manifest": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/render_manifest.json",
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g79_lam_native_gaussian_source220700191_frustum_guard_mask_audit_20260527.png",
+    "mask_sheet_sha256": "ce5b3c51b735e6a55c2351f39bc982eedd05930c1af95872f78137606ad77191"
+  },
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "summary": {
+    "any_crop_or_alignment_risk": false,
+    "mean_prediction_coverage": 0.6696418045794604,
+    "mean_prediction_target_mask_iou": 0.9000165206203238
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_NATIVE_GAUSSIAN_RENDERER_WITH_LIMITATIONS"
+}

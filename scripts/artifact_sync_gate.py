@@ -68,7 +68,7 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 def write_md(path: Path, payload: dict[str, Any]) -> None:
     lines = [
-        "# G38 Artifact Sync Gate",
+        f"# {payload['gate']} Artifact Sync Gate",
         "",
         f"Date: {payload['date']}",
         "",
@@ -112,6 +112,8 @@ def write_md(path: Path, payload: dict[str, Any]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--gate", default="G38")
+    parser.add_argument("--date", default=DATE)
     parser.add_argument("--output-json", type=Path, default=Path("experiments/metrics/g38_artifact_sync_gate_20260520.json"))
     parser.add_argument("--output-md", type=Path, default=Path("experiments/metrics/g38_artifact_sync_gate_20260520.md"))
     parser.add_argument("--max-size-mb", type=float, default=100.0)
@@ -142,8 +144,8 @@ def main() -> None:
     else:
         decision = "Blocked: remove private/raw paths from repo sync or move them under 3dv_work before commit."
     payload = {
-        "date": DATE,
-        "gate": "G38",
+        "date": args.date,
+        "gate": args.gate,
         "verdict": verdict,
         "counts": {
             "tracked_result_artifacts": len(tracked_results),

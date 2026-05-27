@@ -118,12 +118,15 @@ GT pointcloud and GT-bbox-aligned mesh diagnostics are not method quality. G63
 through G66 remove GT alignment for LAM mesh but the visual gate fails. G67/G69
 expose that LAM `*_gs_offset.ply` stores offsets, not final xyz. G70 fixes this
 by using `framework_img.obj` xyz with PLY opacity/scale/rotation and the LAM
-native diff-gaussian rasterizer. G71/G73 are the current best diagnostic
-positive: recognizable source-only aligned NeRSemble held-out renders and finite
-G55 metrics, but crop/alignment risk still blocks a reconstruction-quality
-claim. The active next gate is G74: improve source-only pose/scale alignment or
-switch to native NeRSemble-camera-conditioned feed-forward output, then repeat
-G54/G55/G73 without GT or held-out alignment leakage.
+native diff-gaussian rasterizer. G71/G73 are recognizable but crop-limited.
+G74-G76 show that changing from the side source to frontal source `220700191`
+is still diagnostic only because one held-out camera remains cropped/off-center.
+G77 adds source-mask plus eval-camera-frustum crop guard alignment; it may use
+held-out camera K/R/T metadata but not held-out RGB/mask or GT pointcloud for
+alignment. G78/G79 are the current best method-direction positive, with mean
+held-out mask IoU 0.900017 and a passing private visual review. The active next
+gate is G80: freeze this no-leakage protocol, repeat it on additional audited
+NeRSemble cases/sources, and keep the distribution/overlap warning for LAM-20K.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate

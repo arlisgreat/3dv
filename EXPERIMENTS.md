@@ -959,23 +959,32 @@ native `diff_gaussian_rasterization`.
 Current best diagnostic result:
 
 ```text
-G70 render: experiments/metrics/g70_lam_native_gaussian_source_aligned_xyz_render_20260527.md
-G71 eval:   experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.md
-G73 visual: experiments/metrics/g73_lam_native_gaussian_visual_gate_20260527.md
-mask sheet: experiments/figures/g73_lam_native_gaussian_source_aligned_mask_audit_20260527.png
+G77 render: experiments/metrics/g77_lam_native_gaussian_source220700191_frustum_guard_render_20260527.md
+G78 eval:   experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.md
+G79 visual: experiments/metrics/g79_lam_native_gaussian_source220700191_frustum_guard_visual_gate_20260527.md
+mask sheet: experiments/figures/g79_lam_native_gaussian_source220700191_frustum_guard_mask_audit_20260527.png
 ```
 
-G70/G71/G73 show the learned-prior/head-anchored Gaussian route is technically
-working under the real-GT gate: a LAM Gaussian output can be rendered into
-NeRSemble held-out cameras and evaluated without GT pointcloud or held-out
-alignment. The result is still diagnostic-only because held-out masks are
-partially shifted/cropped (`mean_prediction_target_mask_iou = 0.498004`) and
-private visual audit blocks any reconstruction-quality claim.
+G70/G71/G73 first showed that the learned-prior/head-anchored Gaussian route is
+technically working under the real-GT gate: a LAM Gaussian output can be
+rendered into NeRSemble held-out cameras and evaluated without GT pointcloud or
+held-out image alignment. G74-G76 then showed that simply switching from the
+side source to frontal source `220700191` does not fix crop risk.
+
+G77 adds a source-mask plus eval-camera-frustum crop guard. It uses held-out
+camera K/R/T metadata only to keep the predicted Gaussian inside the renderable
+frusta; it does not use held-out RGB/mask or GT pointcloud for alignment.
+G78/G79 improve mean held-out mask IoU from G75's `0.458910` to `0.900017` and
+private visual audit no longer shows the severe side-view crop. This is the
+current best method-direction positive, but still diagnostic-only because it is
+one NeRSemble frame/case, in-domain for LAM-20K, and not yet a multi-case or
+official hidden-holdout result.
 
 Active next step:
 
 ```text
-G74: improve source-only pose/scale alignment without held-out leakage, or
-switch to a native NeRSemble-camera-conditioned feed-forward avatar method.
-Repeat G54/G55/G73 on more cases only after this visual gate passes.
+G80: freeze the G77-G79 protocol, then repeat it on additional audited
+NeRSemble cases/sources. Keep copy-source, G70/G75, and G77/G78 comparisons in
+the same table; do not claim unseen generalization until model/data overlap is
+audited beyond local metadata.
 ```

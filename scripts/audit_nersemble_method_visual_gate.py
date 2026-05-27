@@ -163,13 +163,14 @@ def write_md(path: Path, payload: dict[str, Any]) -> None:
         "",
         "Mask audit:",
         "",
-        "| serial | pred coverage | target coverage | pred/target IoU | touches border | decision |",
-        "| --- | ---: | ---: | ---: | --- | --- |",
+        "| serial | pred coverage | target coverage | coverage ratio | pred/target IoU | touches border | decision |",
+        "| --- | ---: | ---: | ---: | ---: | --- | --- |",
     ]
     for row in payload["per_eval_serial"]:
         lines.append(
             f"| {row['serial']} | {row['prediction_stats']['coverage']:.6f} | "
-            f"{row['target_stats']['coverage']:.6f} | {row['prediction_target_mask_iou']:.6f} | "
+            f"{row['target_stats']['coverage']:.6f} | {row['prediction_target_coverage_ratio']:.6f} | "
+            f"{row['prediction_target_mask_iou']:.6f} | "
             f"{row['prediction_stats']['touches_image_border']} | {row['decision']} |"
         )
     lines.extend(
@@ -181,6 +182,8 @@ def write_md(path: Path, payload: dict[str, Any]) -> None:
             "| --- | ---: |",
             f"| mean_prediction_target_mask_iou | {payload['summary']['mean_prediction_target_mask_iou']:.6f} |",
             f"| mean_prediction_coverage | {payload['summary']['mean_prediction_coverage']:.6f} |",
+            f"| crop_risk_mode | {payload['crop_risk_policy']['mode']} |",
+            f"| min_mask_iou | {payload['crop_risk_policy']['min_mask_iou']:.6f} |",
             "",
             "Repo-safe mask sheet:",
             "",
@@ -231,6 +234,10 @@ def main() -> None:
     parser.add_argument("--premise", required=True)
     parser.add_argument("--decision", required=True)
     parser.add_argument("--next-gate", required=True)
+    parser.add_argument("--crop-risk-mode", choices=["legacy_border_or_iou", "mask_iou_coverage"], default="legacy_border_or_iou")
+    parser.add_argument("--min-mask-iou", type=float, default=0.45)
+    parser.add_argument("--min-coverage-ratio", type=float, default=0.40)
+    parser.add_argument("--max-coverage-ratio", type=float, default=1.70)
     args = parser.parse_args()
 
     repo = args.repo.resolve()
@@ -249,7 +256,12 @@ def main() -> None:
         pred_stats = mask_stats(pred_mask)
         target_stats = mask_stats(target_mask)
         iou = mask_iou(pred_mask, target_mask)
-        crop_risk = bool(pred_stats["touches_image_border"]) or iou < 0.45
+        target_coverage = max(float(target_stats["coverage"]), 1e-8)
+        coverage_ratio = float(pred_stats["coverage"]) / target_coverage
+        if args.crop_risk_mode == "mask_iou_coverage":
+            crop_risk = iou < args.min_mask_iou or coverage_ratio < args.min_coverage_ratio or coverage_ratio > args.max_coverage_ratio
+        else:
+            crop_risk = bool(pred_stats["touches_image_border"]) or iou < args.min_mask_iou
         rows.append(
             {
                 "serial": serial,
@@ -259,6 +271,7 @@ def main() -> None:
                 "prediction_stats": pred_stats,
                 "target_stats": target_stats,
                 "prediction_target_mask_iou": iou,
+                "prediction_target_coverage_ratio": coverage_ratio,
                 "decision": "partial_or_cropped_prediction" if crop_risk else "nonblank_aligned_prediction",
                 "_target_mask": target_mask,
                 "_prediction_mask": pred_mask,
@@ -298,6 +311,12 @@ def main() -> None:
         "eval_verdict": eval_payload.get("verdict"),
         "eval_mean_psnr": eval_payload.get("metrics", {}).get("mean_masked_rgb_psnr"),
         "eval_mean_prediction_mask_iou": eval_payload.get("metrics", {}).get("mean_prediction_mask_vs_eval_mask_iou"),
+        "crop_risk_policy": {
+            "mode": args.crop_risk_mode,
+            "min_mask_iou": args.min_mask_iou,
+            "min_coverage_ratio": args.min_coverage_ratio,
+            "max_coverage_ratio": args.max_coverage_ratio,
+        },
         "per_eval_serial": rows,
         "summary": {
             "mean_prediction_target_mask_iou": mean_iou,

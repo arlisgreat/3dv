@@ -1,0 +1,180 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:53:17.143936+00:00",
+  "date": "2026-05-27",
+  "decision": "G74 confirms the native Gaussian renderer/evaluator path works from a second real source camera, strengthening the overall method-direction evidence. It still does not pass the final quality gate because at least one held-out view is cropped/off-center.",
+  "eval_json": "experiments/metrics/g75_lam_native_gaussian_source220700191_eval_20260527.json",
+  "eval_mean_prediction_mask_iou": 0.4589099022029483,
+  "eval_mean_psnr": 5.885673189923757,
+  "eval_verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_SOURCE220700191_EVAL",
+  "gate": "G76",
+  "manual_visual_audit": "Private sheet shows the frontal source render is plausible and two held-out views preserve recognizable identity/appearance, but the side held-out camera 222200042 is cropped toward the image border. This improves source clarity but does not eliminate camera-alignment risk.",
+  "method": "LAM-20K native Gaussian rasterizer",
+  "next_gate": "G77 must solve source-only pose/scale/crop alignment or move to a method that natively conditions on NeRSemble cameras; do not scale to a main table until visual gate passes across held-out views.",
+  "per_eval_serial": [
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200042_frame_00000.png",
+      "prediction_sha256": "381b7aca8bdbbc73c5bf2339f1cdfa7487e3e797e9addf054700bd924e8f8733",
+      "prediction_stats": {
+        "bbox": [
+          414,
+          178,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.7880040839339093,
+          0.7019336587920294
+        ],
+        "coverage": 0.2701099523917479,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.3261608090652138,
+      "serial": "222200042",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5454705121958935,
+          0.6177090784145541
+        ],
+        "coverage": 0.6701864656540467,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "95f2d6cdabb925859727e99cbc009fb145ff34a2d41c9370ae1c32d6b1d7f81d",
+      "prediction_stats": {
+        "bbox": [
+          161,
+          621,
+          981,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5204358981603824,
+          0.7165226580447979
+        ],
+        "coverage": 0.3828729313080934,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.5712005212575338,
+      "serial": "222200041",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5254274763684955,
+          0.624082989938132
+        ],
+        "coverage": 0.6011488324642938,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "b002ab47492fd14a073969f05a9820e75c882d9f263425b751ad091d12253077",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          197,
+          964,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.3388732522052491,
+          0.606467134430607
+        ],
+        "coverage": 0.561119927454092,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.47936837628609724,
+      "serial": "222200047",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.55793585446858,
+          0.6309854480143975
+        ],
+        "coverage": 0.5941934935388801,
+        "touches_image_border": true
+      }
+    }
+  ],
+  "premise": "Audit G74/G75 frontal-source native LAM Gaussian true-KRT predictions before any method-quality interpretation.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/g69_private_lam_native_gaussian_source_aligned_sheet.png",
+    "contact_sheet_sha256": "724099b30cbb9e85c8dce487e72451a7e5f5f34f5a36b605d4157a3be586d894"
+  },
+  "quality_claim_status": "blocked_by_crop_or_alignment",
+  "render_manifest": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/render_manifest.json",
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g76_lam_native_gaussian_source220700191_mask_audit_20260527.png",
+    "mask_sheet_sha256": "8daa7730c5db1e7672c2dd4119906e36129f94d75fccc16d7e6cd67975420fed"
+  },
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "summary": {
+    "any_crop_or_alignment_risk": true,
+    "mean_prediction_coverage": 0.4047009370513111,
+    "mean_prediction_target_mask_iou": 0.4589099022029483
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_NATIVE_GAUSSIAN_RENDERER_WITH_LIMITATIONS"
+}

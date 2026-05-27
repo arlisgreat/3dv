@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T12:36:57.347393+00:00",
+  "date": "2026-05-27",
+  "decision": "Held-out RGB/mask metrics are finite for G77; visual gate controls whether crop risk is sufficiently reduced for the method-direction claim.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G78",
+  "interpretation": "G77 tests whether a source-only silhouette fit with camera-metadata crop guard improves the LAM head-anchored Gaussian path without held-out image leakage.",
+  "method_label": "LAM_native_Gaussian_true_KRT_source220700191_source_mask_eval_frustum_guard",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.1410921812057495,
+    "mean_masked_rgb_psnr": 12.690454933591733,
+    "mean_masked_rgb_ssim_global_luma": 0.450276799681961,
+    "mean_prediction_foreground_coverage": 0.6696418045794604,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238,
+    "mean_source_mask_vs_eval_mask_iou": 0.9000165206203238,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.15071991086006165,
+        "masked_rgb_mse": 0.059854455292224884,
+        "masked_rgb_psnr": 12.229035171570883,
+        "masked_rgb_ssim_global_luma": 0.37302910645339493,
+        "prediction_foreground_coverage": 0.7221486057583314,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.8875754239222053,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.8875754239222053,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.1491519957780838,
+        "masked_rgb_mse": 0.058630168437957764,
+        "masked_rgb_psnr": 12.318788581336316,
+        "masked_rgb_ssim_global_luma": 0.43621351019855426,
+        "prediction_foreground_coverage": 0.6517127635456813,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.8994707721708137,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.8994707721708137,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.12340463697910309,
+        "masked_rgb_mse": 0.04442688822746277,
+        "masked_rgb_psnr": 13.523541047867997,
+        "masked_rgb_ssim_global_luma": 0.5415877823939338,
+        "prediction_foreground_coverage": 0.6350640444343686,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9130033657679525,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9130033657679525,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Run G79 visual/mask audit and private sheet review. Only if all held-out views are non-cropped should this become the current best method-direction positive.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions",
+  "premise": "Evaluate G77 LAM native Gaussian true-KRT predictions after source-mask plus eval-camera-frustum crop guard alignment. The alignment uses no held-out RGB/mask or GT pointcloud.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+}

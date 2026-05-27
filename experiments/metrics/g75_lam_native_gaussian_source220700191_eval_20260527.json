@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:53:01.597366+00:00",
+  "date": "2026-05-27",
+  "decision": "Held-out metrics are finite; visual/mask gate determines whether this source choice improves the method direction enough to scale.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G75",
+  "interpretation": "G74 uses a real captured frontal source, LAM native Gaussian output, source-mask-only alignment, and official NeRSemble K/R/T held-out cameras. It remains diagnostic until the visual gate confirms non-cropped held-out views.",
+  "method_label": "LAM_native_Gaussian_true_KRT_source220700191_source_mask_aligned",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.43230616052945453,
+    "mean_masked_rgb_psnr": 5.885673189923757,
+    "mean_masked_rgb_ssim_global_luma": 0.0950460803733798,
+    "mean_prediction_foreground_coverage": 0.4047009370513111,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.4589099022029483,
+    "mean_source_mask_vs_eval_mask_iou": 0.4589099022029483,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.4919537603855133,
+        "masked_rgb_mse": 0.30634456872940063,
+        "masked_rgb_psnr": 5.137898149950289,
+        "masked_rgb_ssim_global_luma": 0.21784341556499925,
+        "prediction_foreground_coverage": 0.2701099523917479,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.3261608090652138,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.3261608090652138,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.4096270203590393,
+        "masked_rgb_mse": 0.24126817286014557,
+        "masked_rgb_psnr": 6.1749996471727435,
+        "masked_rgb_ssim_global_luma": 0.06357603198790442,
+        "prediction_foreground_coverage": 0.3828729313080934,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.5712005212575338,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.5712005212575338,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.39533770084381104,
+        "masked_rgb_mse": 0.23205333948135376,
+        "masked_rgb_psnr": 6.344121772648239,
+        "masked_rgb_ssim_global_luma": 0.003718793567235741,
+        "prediction_foreground_coverage": 0.561119927454092,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.47936837628609724,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.47936837628609724,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Run visual/mask audit. If one or more held-out cameras remain cropped, G74 is a diagnostic positive only and G77 must address source-only pose alignment or use native camera-conditioned inference.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g74_lam_native_gaussian_source220700191_true_krt/predictions",
+  "premise": "Evaluate G74 LAM native Gaussian true-KRT renders using a frontal NeRSemble source camera 220700191 and local held-out cameras 222200042/222200041/222200047. This tests whether G70 crop risk was caused mainly by the side-view source.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_SOURCE220700191_EVAL"
+}

@@ -166,6 +166,16 @@ G59-G60: validate true NeRSemble K/R/T camera/evaluator plumbing with the GT
          pointcloud oracle positive control.
 G61-G62: render/evaluate LAM textured mesh through true K/R/T only with GT bbox
          alignment; keep it diagnostic-only because texture/appearance are broken.
+G63-G73: remove GT pointcloud alignment and identify the usable native Gaussian
+         contract: `framework_img.obj` xyz plus LAM PLY opacity/scale/rotation
+         rendered through the native diff-gaussian rasterizer into true K/R/T.
+         The first pass is recognizable but crop-limited.
+G74-G76: rerun from a frontal source view; LAM export/render/eval work, but a
+         source change alone does not solve crop/off-center failure.
+G77-G79: add source-mask plus eval-camera-frustum crop guard with no held-out
+         RGB/mask or GT pointcloud alignment; held-out mask IoU reaches 0.900017
+         and visual review passes as the current single-case method-direction
+         positive.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -175,6 +185,9 @@ The stable scientific signal is not "RI3D is solved." It is:
 2. 2D candidate selection improves hygiene but does not prove 3D usefulness.
 3. Reconstruction claims need a ground-truth positive control with cameras and
    mesh/point-cloud evidence.
+4. A learned-prior/head-anchored Gaussian method can be made evaluable only
+   after its output is rendered into real held-out cameras under an explicit
+   no-leakage gate.
 ```
 
 ## Gate Semantics

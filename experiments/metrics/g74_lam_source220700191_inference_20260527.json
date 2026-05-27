@@ -1,0 +1,42 @@
+{
+  "artifacts": {
+    "adapter_manifest": {
+      "path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter_source_220700191/adapter_manifest.json",
+      "sha256": "4f1e14520cfc0f64357e5d0f7aeff272281ff4b5f30c94f18fc66a901ce43b37"
+    },
+    "audio_video": {
+      "path": "external/LAM/exps/videos/lam/lam_20k/cam_220700191_frame_00000_audio.mp4",
+      "sha256": "e3c1a97d21ee4b9767c9ed18f55df092ab3bbfb603f74a9836b0db07e4c30f8b",
+      "size": "830K"
+    },
+    "framework_xyz_obj": {
+      "path": "/data1/workspace/airulan/3dv_work/runs/g74_nersemble_source_220700191/exports/cam_220700191_framework_img.obj",
+      "sha256": "a130c412362a796dce170e33f1c001e1a31af53f6112e1489aa16636c5aa5eb9",
+      "size": "1.4M"
+    },
+    "gaussian_offset_ply": {
+      "path": "/data1/workspace/airulan/3dv_work/runs/g74_nersemble_source_220700191/exports/cam_220700191_frame_00000_gs_offset.ply",
+      "sha256": "9fb1b4d15503ce968161b4fec118039e74fabd3e76a4828826206b36a4bdc5ef",
+      "size": "1.3M"
+    },
+    "preview_png": {
+      "path": "external/LAM/exps/images/lam/lam_20k/cam_220700191_frame_00000/0000.png",
+      "sha256": "7eb6a9d5ae99f1fb136c7cf3b568dc04b1e08c37f73acf906081a2d2aa03ccd8",
+      "size": "188K"
+    },
+    "video": {
+      "path": "external/LAM/exps/videos/lam/lam_20k/cam_220700191_frame_00000.mp4",
+      "sha256": "be4d336ef4c19ef12abfd1268e8c786a3068d0196a0b967ddcc19469f04c2a4d",
+      "size": "587K"
+    }
+  },
+  "date": "2026-05-27",
+  "environment_notes": [
+    "Successful run used TORCH_HOME=/data1/workspace/airulan/3dv/.cache/torch to avoid redownloading DINOv2.",
+    "Successful run prepended /data1/workspace/airulan/miniconda3/bin to PATH because the lam env exposed the Python ninja package but not the ninja binary.",
+    "env124/CUDA 12.4 and CUDA_VISIBLE_DEVICES=0 were used."
+  ],
+  "gate": "G74",
+  "premise": "Run LAM-20K on NeRSemble source camera 220700191 to test whether G70 crop risk was source-view dependent.",
+  "verdict": "PASS_LOCAL_LAM_SOURCE220700191_INFERENCE_HASHED_PRIVATE_OUTPUTS"
+}

@@ -96,9 +96,17 @@ fixes that by combining `framework_img.obj` xyz with PLY opacity/scale/rotation
 and LAM's native diff-gaussian rasterizer, producing the first plausible
 source-only aligned native Gaussian true-K/R/T renders. G71/G73 show finite
 held-out metrics and a repo-safe visual gate, but crop/alignment errors still
-block a reconstruction-quality claim. The active next milestone must improve
-source-only pose/scale alignment without held-out leakage or switch to a method
-with native NeRSemble-camera-conditioned output.
+block a reconstruction-quality claim. G74-G76 rerun the same path from a
+frontal NeRSemble source and confirm that simply changing the source camera is
+not enough: one held-out view remains cropped and metrics are worse than G70.
+G77 adds a source-mask plus eval-camera-frustum crop guard that uses no
+held-out RGB/mask and no GT pointcloud, then renders the same LAM native
+Gaussian into the G54 held-out cameras. G78/G79 are the first strong
+method-direction positive under the real-GT gate: mean held-out mask IoU rises
+to 0.900017 and private visual review no longer shows the severe side-view
+crop. This validates the overall learned-prior/head-anchored Gaussian ->
+true-K/R/T renderer -> held-out evaluator direction, but it remains
+diagnostic-only pending multi-case validation and model/data-overlap review.
 ```
 
 ## Mandatory Data Audit Gate
@@ -203,7 +211,12 @@ contract by using `framework_img.obj` xyz plus PLY opacity/scale/rotation and
 the LAM native rasterizer. G71/G73 are the current best method-direction
 evidence: the renderer/evaluator path works and produces recognizable heads,
 but mask IoU is only 0.498004 mean and the private sheet shows crop/alignment
-risk, so method-quality claims remain blocked.
+risk. G74-G76 show that a frontal source alone still fails the crop gate. G77
+adds an eval-camera-frustum guard that is allowed to use K/R/T metadata but not
+held-out RGB/mask or GT pointcloud; G78/G79 improve mean mask IoU to 0.900017
+and pass the stricter post-hoc mask/visual gate. Method-quality claims are now
+blocked by scale and distribution limits rather than by the renderer/evaluator
+plumbing itself.
 ```
 
 ## Completed Milestones
@@ -290,12 +303,18 @@ risk, so method-quality claims remain blocked.
 | G72 | done, blocked | Source-camera prealignment without LAM y/z convention fix | `experiments/metrics/g72_lam_native_gaussian_source_camera_aligned_render_20260527.md` | Source mask IoU is 0, so this camera-frame mapping is invalid. |
 | G72F | done, diagnostic negative | Source-camera prealignment with LAM y/z flip | `experiments/metrics/g72f_lam_native_gaussian_source_camera_aligned_yzflip_render_20260527.md` | Source gate passes numerically, but private visual audit shows source/held-out cameras are semantically wrong or off-frame. |
 | G73 | done, visual gate partial pass | Visual/mask gate for G70/G71 native Gaussian renders | `experiments/metrics/g73_lam_native_gaussian_visual_gate_20260527.md`, `experiments/figures/g73_lam_native_gaussian_source_aligned_mask_audit_20260527.png`, `scripts/audit_nersemble_method_visual_gate.py` | Renderer path is technically working and partially validates the direction, but method-quality claim is blocked by crop/alignment. |
+| G74 | done, diagnostic render pass | LAM native Gaussian true-KRT render from frontal source 220700191 | `experiments/metrics/g74_lam_source220700191_inference_20260527.md`, `experiments/metrics/g74_lam_native_gaussian_source220700191_render_20260527.md` | LAM export and native rendering work from a second real source, but source-mask-only alignment still leaves crop risk. |
+| G75 | done, diagnostic eval pass | Held-out evaluator on G74 frontal-source renders | `experiments/metrics/g75_lam_native_gaussian_source220700191_eval_20260527.md` | Finite metrics, but mean PSNR 5.885673 and mask IoU 0.458910 are worse than G70/G71. |
+| G76 | done, visual gate partial pass | Visual/mask gate for G74/G75 | `experiments/metrics/g76_lam_native_gaussian_source220700191_visual_gate_20260527.md`, `experiments/figures/g76_lam_native_gaussian_source220700191_mask_audit_20260527.png` | Severe side-view crop improves only partially; method-quality claim remains blocked. |
+| G77 | done, render pass current best | Source-mask plus eval-camera-frustum crop guard render | `experiments/metrics/g77_lam_native_gaussian_source220700191_frustum_guard_render_20260527.md`, `scripts/render_lam_native_gaussian_nersemble_source_aligned.py` | Uses held-out camera K/R/T metadata only as a frustum guard, not held-out RGB/mask or GT geometry; renders noncropped held-out predictions. |
+| G78 | done, eval pass current best | Held-out evaluator on G77 frustum-guard renders | `experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.md` | Mean PSNR 12.690455 and mask IoU 0.900017, a large improvement over G75 and G71. |
+| G79 | done, visual gate pass diagnostic | Visual/mask gate for G77/G78 | `experiments/metrics/g79_lam_native_gaussian_source220700191_frustum_guard_visual_gate_20260527.md`, `experiments/figures/g79_lam_native_gaussian_source220700191_frustum_guard_mask_audit_20260527.png`, `scripts/audit_nersemble_method_visual_gate.py` | Current best method-direction positive: no gross crop in private review and high mask overlap, but still diagnostic pending multi-case validation and distribution review. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G74 | active next | Improve source-only pose/scale alignment or switch to native camera-conditioned feed-forward avatar output | G70/G71/G73 show native Gaussian rendering works but crop/alignment blocks quality claim | Pass G54/G55/G73 on at least one NeRSemble case with non-cropped held-out visual gate and no GT/held-out alignment leakage, then extend to more cases. |
+| G80 | active next | Scale the frozen G77-G79 real-GT protocol to more NeRSemble cases/sources and compare against copy-source/G70/G75 diagnostics | G77/G78/G79 validate the renderer/evaluator direction on one frame without held-out image or GT-geometry alignment leakage | At least one additional audited NeRSemble case/source passes the same data, distribution, metric, and visual gates, or the route is downgraded to a single-case diagnostic contribution. |
 
 ## G8 Result
 
