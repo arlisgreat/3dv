@@ -1,0 +1,174 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:41:56.941116+00:00",
+  "date": "2026-05-27",
+  "decision": "The learned-prior/head-anchored Gaussian renderer path is now technically working: a LAM Gaussian output is rendered through official NeRSemble K/R/T into G55 evaluator without GT pointcloud or held-out alignment. The current run only partially validates the overall direction because held-out crop/alignment errors block a main quality claim.",
+  "eval_json": "experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.json",
+  "eval_mean_prediction_mask_iou": 0.4980042274449353,
+  "eval_mean_psnr": 6.31818408852353,
+  "eval_verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_TRUE_KRT_SOURCE_MASK_ALIGNED_XYZ_EVAL",
+  "gate": "G73",
+  "manual_visual_audit": "Private sheet shows the source render is a plausible side-view head and held-out renders preserve recognizable identity/appearance better than mesh or point approximations. However, held-out views are still partially cropped or shifted, especially the frontal/upward cameras, so this is not yet a reconstruction-quality result.",
+  "method": "LAM-20K native Gaussian rasterizer",
+  "next_gate": "Keep G70/G71/G73 as the current best diagnostic positive. Next, either improve source-only pose/scale alignment without held-out leakage or switch to a method with native NeRSemble-camera-conditioned output; then repeat G54/G55/G73 on more cases.",
+  "per_eval_serial": [
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g70_lam_native_gaussian_true_krt_source_aligned_xyz/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "46b99977a42cd3234ba218fba581b13a63a62fbdcc718df74ce683eeac41f612",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          186,
+          885,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.3424729668506993,
+          0.5867976917970883
+        ],
+        "coverage": 0.58094253003854,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.5861287388036561,
+      "serial": "220700191",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5130972911873009,
+          0.6125939729470059
+        ],
+        "coverage": 0.6453973021990478,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g70_lam_native_gaussian_true_krt_source_aligned_xyz/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "65c77fb0c65d9bca0936114bceb97ec502031abb60a43b7180247838ccc87519",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          381,
+          811,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.3304560131031852,
+          0.6568692766258787
+        ],
+        "coverage": 0.47098617093629563,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.48260616719648375,
+      "serial": "222200041",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5254274763684955,
+          0.624082989938132
+        ],
+        "coverage": 0.6011488324642938,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "partial_or_cropped_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g70_lam_native_gaussian_true_krt_source_aligned_xyz/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "392f261f1d11385d561ec94e9816a68cc3df052ebeeff02cde1c93fe7d79f881",
+      "prediction_stats": {
+        "bbox": [
+          0,
+          264,
+          828,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.311143619995693,
+          0.6190791193715288
+        ],
+        "coverage": 0.49423033325776466,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.425277776334666,
+      "serial": "222200047",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.55793585446858,
+          0.6309854480143975
+        ],
+        "coverage": 0.5941934935388801,
+        "touches_image_border": true
+      }
+    }
+  ],
+  "premise": "Audit the G70/G71 native LAM Gaussian true-KRT held-out predictions before any method-quality interpretation. The gate checks repo-safe mask alignment, private visual appearance, renderer contract, and crop risk.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g70_lam_native_gaussian_true_krt_source_aligned_xyz/g69_private_lam_native_gaussian_source_aligned_sheet.png",
+    "contact_sheet_sha256": "e531235925ff93657bc73a63ffb0be7dac70b6145a8c164e961a5794235243f5"
+  },
+  "quality_claim_status": "blocked_by_crop_or_alignment",
+  "render_manifest": "/data1/workspace/airulan/3dv_work/runs/g70_lam_native_gaussian_true_krt_source_aligned_xyz/render_manifest.json",
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g73_lam_native_gaussian_source_aligned_mask_audit_20260527.png",
+    "mask_sheet_sha256": "4cd54a3c1f3d8ae2a768791ce7eb4f3d132b796c33bb2c8fa38538ab7ca3231a"
+  },
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "summary": {
+    "any_crop_or_alignment_risk": true,
+    "mean_prediction_coverage": 0.5153863447442001,
+    "mean_prediction_target_mask_iou": 0.4980042274449353
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_NATIVE_GAUSSIAN_RENDERER_WITH_LIMITATIONS"
+}

@@ -88,8 +88,17 @@ fragments. G59/G60 prove the real K/R/T renderer and evaluator using the
 NeRSemble GT pointcloud as an oracle positive control. G61/G62 route the LAM
 textured mesh through the same K/R/T path only after GT pointcloud bbox
 alignment; this is diagnostic-only and visually broken, not method quality.
-The next valid method milestone must remove GT geometry alignment or use a
-method with native NeRSemble-camera output.
+G63-G66 remove GT pointcloud alignment for LAM textured mesh via source-mask
+alignment and true K/R/T rendering, but point/triangle mesh rendering remains
+visually broken. G67/G69 expose a critical LAM export contract issue: the
+`*_gs_offset.ply` x/y/z fields are offsets, not final Gaussian positions. G70
+fixes that by combining `framework_img.obj` xyz with PLY opacity/scale/rotation
+and LAM's native diff-gaussian rasterizer, producing the first plausible
+source-only aligned native Gaussian true-K/R/T renders. G71/G73 show finite
+held-out metrics and a repo-safe visual gate, but crop/alignment errors still
+block a reconstruction-quality claim. The active next milestone must improve
+source-only pose/scale alignment without held-out leakage or switch to a method
+with native NeRSemble-camera-conditioned output.
 ```
 
 ## Mandatory Data Audit Gate
@@ -185,7 +194,16 @@ contract fails and the held-out predictions are mostly blank/cropped. G59/G60
 establish a true-KRT pointcloud oracle positive control, proving that the G54
 camera/evaluator path itself works. G61/G62 render a LAM textured mesh through
 the same path only with GT pointcloud bbox alignment; the result is nonempty but
-texture-broken and remains diagnostic-only.
+texture-broken and remains diagnostic-only. G63/G64 try source-mask-only LAM
+mesh true-KRT renders and evaluator; G65/G66 replace point splats with triangle
+rasterization. Both are diagnostic because texture/appearance remains broken.
+G67/G69 test Gaussian PLY point/native rendering but reveal that
+`gs_offset.ply` stores offsets rather than final xyz. G70 fixes the coordinate
+contract by using `framework_img.obj` xyz plus PLY opacity/scale/rotation and
+the LAM native rasterizer. G71/G73 are the current best method-direction
+evidence: the renderer/evaluator path works and produces recognizable heads,
+but mask IoU is only 0.498004 mean and the private sheet shows crop/alignment
+risk, so method-quality claims remain blocked.
 ```
 
 ## Completed Milestones
@@ -261,12 +279,23 @@ texture-broken and remains diagnostic-only.
 | G60 | done, oracle eval pass | Held-out evaluator on G59 pointcloud oracle renders | `experiments/metrics/g60_nersemble_pointcloud_oracle_eval_20260527.md` | Oracle pointcloud visible-heldout metrics are finite (mean PSNR 5.343938, mask IoU 0.553924); sparse pointcloud RGB remains an evaluator/camera sanity check. |
 | G61 | done, diagnostic render pass | LAM textured mesh through true K/R/T after GT bbox alignment | `experiments/metrics/g61_lam_mesh_true_krt_bbox_aligned_20260527.md`, `scripts/render_lam_mesh_nersemble_true_krt.py` | LAM mesh renders are nonempty but use GT pointcloud bbox alignment and show broken texture/appearance; diagnostic-only. |
 | G62 | done, diagnostic eval pass | Held-out evaluator on G61 LAM mesh true-KRT diagnostic renders | `experiments/metrics/g62_lam_mesh_true_krt_eval_20260527.md` | Finite metrics (mean PSNR 6.894329, mask IoU 0.708950) do not validate the method because the visual result is broken and GT-aligned. |
+| G63 | done, diagnostic render pass | LAM textured mesh true-KRT source-mask alignment | `experiments/metrics/g63_lam_mesh_true_krt_source_aligned_20260527.md`, `scripts/render_lam_mesh_nersemble_source_aligned.py` | Removes GT pointcloud alignment and produces nonempty renders, but point-splat texture is visibly broken. |
+| G64 | done, diagnostic eval pass | Held-out evaluator on G63 source-mask mesh renders | `experiments/metrics/g64_lam_mesh_source_aligned_eval_20260527.md` | Finite metrics (mean PSNR 5.806210, mask IoU 0.422768) remain diagnostic because visual quality fails. |
+| G65 | done, diagnostic render pass | Triangle-rasterized source-mask LAM mesh true-KRT renders | `experiments/metrics/g65_lam_mesh_source_aligned_triangle_render_20260527.md` | Triangle rasterization removes point-splat noise but still shows swirled/broken texture. |
+| G66 | done, diagnostic eval pass | Held-out evaluator on G65 triangle mesh renders | `experiments/metrics/g66_lam_mesh_source_aligned_triangle_eval_20260527.md` | Finite metrics (mean PSNR 5.860206, mask IoU 0.417768) do not validate the mesh route. |
+| G67 | done, diagnostic render pass | LAM Gaussian PLY point approximation through true K/R/T | `experiments/metrics/g67_lam_gaussian_source_aligned_render_20260527.md`, `scripts/render_lam_gaussian_nersemble_source_aligned.py` | Simple point rendering is sparse; it also helped expose that PLY x/y/z are offsets. |
+| G69 | done, invalidated diagnostic | Native Gaussian renderer before xyz contract fix | `experiments/metrics/g69_lam_native_gaussian_source_aligned_render_20260527.md`, `scripts/render_lam_native_gaussian_nersemble_source_aligned.py` | Native rasterizer can run, but this run used offset coordinates and is superseded by G70. |
+| G70 | done, best diagnostic positive | Native LAM Gaussian true-KRT render with corrected xyz source | `experiments/metrics/g70_lam_native_gaussian_source_aligned_xyz_render_20260527.md` | Uses `framework_img.obj` xyz plus PLY opacity/scale/rotation and source-mask alignment; renders recognizable heads without GT/held-out alignment. |
+| G71 | done, diagnostic eval pass | Held-out evaluator on G70 corrected native Gaussian renders | `experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.md` | Mean PSNR 6.318184 and mask IoU 0.498004; evaluator works but crop/alignment risk remains. |
+| G72 | done, blocked | Source-camera prealignment without LAM y/z convention fix | `experiments/metrics/g72_lam_native_gaussian_source_camera_aligned_render_20260527.md` | Source mask IoU is 0, so this camera-frame mapping is invalid. |
+| G72F | done, diagnostic negative | Source-camera prealignment with LAM y/z flip | `experiments/metrics/g72f_lam_native_gaussian_source_camera_aligned_yzflip_render_20260527.md` | Source gate passes numerically, but private visual audit shows source/held-out cameras are semantically wrong or off-frame. |
+| G73 | done, visual gate partial pass | Visual/mask gate for G70/G71 native Gaussian renders | `experiments/metrics/g73_lam_native_gaussian_visual_gate_20260527.md`, `experiments/figures/g73_lam_native_gaussian_source_aligned_mask_audit_20260527.png`, `scripts/audit_nersemble_method_visual_gate.py` | Renderer path is technically working and partially validates the direction, but method-quality claim is blocked by crop/alignment. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G63 | active next | Produce source/model-derived true-KRT method renders without GT pointcloud alignment | G59/G60 camera contract passes; G61/G62 show GT-aligned LAM mesh remains diagnostic and visually broken | Either derive a valid source-camera/model transform for LAM/mesh/Gaussian output, or switch to a method with native NeRSemble camera output before any main result claim. |
+| G74 | active next | Improve source-only pose/scale alignment or switch to native camera-conditioned feed-forward avatar output | G70/G71/G73 show native Gaussian rendering works but crop/alignment blocks quality claim | Pass G54/G55/G73 on at least one NeRSemble case with non-cropped held-out visual gate and no GT/held-out alignment leakage, then extend to more cases. |
 
 ## G8 Result
 

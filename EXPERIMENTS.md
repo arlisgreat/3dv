@@ -941,3 +941,41 @@ sync gate，保证 repo-safe PNG/MP4/CSV/JSON/MD 结果进入 GitHub，同步时
 raw/private assets。不要从现有 web first10 candidate pool 继续训练，也不要把
 G23-G38 或旧 RI3D 结果解释成质量结论。
 ```
+
+## 13. NeRSemble Native Gaussian Renderer Status
+
+G54/G55 now define the active real-GT contract: NeRSemble NVS participant 388
+GLASSES frame 0, source camera `222200042`, local held-out cameras
+`220700191`, `222200041`, and `222200047`, evaluated through official K/R/T
+and the G55 masked RGB/mask harness.
+
+G63-G66 removed GT pointcloud alignment for LAM textured mesh renders, but both
+point splatting and triangle rasterization failed the visual premise. G67/G69
+then exposed the key LAM export pitfall: `*_gs_offset.ply` stores offsets in
+its x/y/z fields. G70 fixes this by using `framework_img.obj` for final
+Gaussian xyz, while keeping PLY opacity/scale/rotation and rendering with LAM's
+native `diff_gaussian_rasterization`.
+
+Current best diagnostic result:
+
+```text
+G70 render: experiments/metrics/g70_lam_native_gaussian_source_aligned_xyz_render_20260527.md
+G71 eval:   experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.md
+G73 visual: experiments/metrics/g73_lam_native_gaussian_visual_gate_20260527.md
+mask sheet: experiments/figures/g73_lam_native_gaussian_source_aligned_mask_audit_20260527.png
+```
+
+G70/G71/G73 show the learned-prior/head-anchored Gaussian route is technically
+working under the real-GT gate: a LAM Gaussian output can be rendered into
+NeRSemble held-out cameras and evaluated without GT pointcloud or held-out
+alignment. The result is still diagnostic-only because held-out masks are
+partially shifted/cropped (`mean_prediction_target_mask_iou = 0.498004`) and
+private visual audit blocks any reconstruction-quality claim.
+
+Active next step:
+
+```text
+G74: improve source-only pose/scale alignment without held-out leakage, or
+switch to a native NeRSemble-camera-conditioned feed-forward avatar method.
+Repeat G54/G55/G73 on more cases only after this visual gate passes.
+```

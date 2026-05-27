@@ -1,0 +1,386 @@
+{
+  "alignment": {
+    "alignment": "source_mask_coordinate_descent_similarity_no_rotation",
+    "scale": 3.130000000000002,
+    "source_mask_iou": 0.7395705171298469,
+    "source_serial": "222200042",
+    "trace": [
+      {
+        "scale": 1.0,
+        "source_mask_iou": 0.2780239907218941,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.12,
+        "source_mask_iou": 0.3121430655374614,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.2400000000000002,
+        "source_mask_iou": 0.34811719539300867,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.3600000000000003,
+        "source_mask_iou": 0.3868269337641773,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.4800000000000004,
+        "source_mask_iou": 0.4205038575216673,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.6000000000000005,
+        "source_mask_iou": 0.45399759162137754,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.7200000000000006,
+        "source_mask_iou": 0.4754644853506216,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.8400000000000007,
+        "source_mask_iou": 0.49151943571217277,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.9600000000000009,
+        "source_mask_iou": 0.5038299455760499,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.080000000000001,
+        "source_mask_iou": 0.5124161285885812,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.200000000000001,
+        "source_mask_iou": 0.5160383826532766,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.320000000000001,
+        "source_mask_iou": 0.5207010801092343,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.4400000000000013,
+        "source_mask_iou": 0.5244149770391181,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.4400000000000013,
+        "source_mask_iou": 0.653942054887715,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.5600000000000014,
+        "source_mask_iou": 0.6747009042046443,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.6800000000000015,
+        "source_mask_iou": 0.6959010602410801,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.8000000000000016,
+        "source_mask_iou": 0.7131180713776823,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 2.9200000000000017,
+        "source_mask_iou": 0.7260954028914901,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.040000000000002,
+        "source_mask_iou": 0.7274848851842436,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.100000000000002,
+        "source_mask_iou": 0.7294780573618572,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.115000000000002,
+        "source_mask_iou": 0.7304787434640356,
+        "translation": [
+          0.0,
+          -0.11999999731779099,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.115000000000002,
+        "source_mask_iou": 0.7387950689616976,
+        "translation": [
+          0.0,
+          -0.13499999046325684,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.130000000000002,
+        "source_mask_iou": 0.7389798195296877,
+        "translation": [
+          0.0,
+          -0.13499999046325684,
+          0.0
+        ]
+      },
+      {
+        "scale": 3.130000000000002,
+        "source_mask_iou": 0.7395705171298469,
+        "translation": [
+          -0.007499999832361937,
+          -0.13499999046325684,
+          0.0
+        ]
+      }
+    ],
+    "translation": [
+      -0.007499999832361937,
+      -0.13499999046325684,
+      0.0
+    ],
+    "uses_gt_geometry_for_alignment": false,
+    "uses_heldout_views_for_alignment": false
+  },
+  "artifact_policy": "Identifiable source/eval RGB and LAM renders stay under 3dv_work; commit repo-safe metrics/hashes/mask-only figures unless user reviews redistribution.",
+  "camera_contract": "official_nersemble_world_2_cam_and_intrinsics_scaled_to_render_size",
+  "camera_contract_verified": true,
+  "camera_mode": "nersemble_krt",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:34:03.988373+00:00",
+  "date": "2026-05-27",
+  "decision": "Native Gaussian rasterization produced nonempty source-only aligned true-KRT renders. It still needs held-out evaluator and visual gates before a method claim.",
+  "gate": "G69",
+  "gaussian": {
+    "color_mode": "direct",
+    "loaded_points": 20018,
+    "opacity_max": 6.906767845153809,
+    "opacity_mean": -2.3197691440582275,
+    "opacity_min": -6.906754970550537,
+    "path": "/data1/workspace/airulan/3dv/external/LAM/exps/cano_gs/cam_222200042_frame_00000_gs_offset.ply",
+    "properties": [
+      "x",
+      "y",
+      "z",
+      "nx",
+      "ny",
+      "nz",
+      "f_dc_0",
+      "f_dc_1",
+      "f_dc_2",
+      "opacity",
+      "scale_0",
+      "scale_1",
+      "scale_2",
+      "rot_0",
+      "rot_1",
+      "rot_2",
+      "rot_3"
+    ],
+    "vertex_count": 20018
+  },
+  "method": "LAM-20K native Gaussian rasterizer",
+  "native_rasterizer": "diff_gaussian_rasterization",
+  "next_gate": "Run G55 held-out evaluator and visual/mask/appearance gate on the native Gaussian predictions.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/predictions",
+  "premise": "Use LAM's native diff-gaussian rasterizer to render the LAM head-anchored Gaussian PLY into the G54 NeRSemble source and held-out K/R/T cameras after source-mask-only alignment.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/g69_private_lam_native_gaussian_source_aligned_sheet.png",
+    "contact_sheet_sha256": "c56626b3219f19ef5be32f34cdf75023922ddff2ffb5272d7275593edbbd23f5"
+  },
+  "render_max_size": 768,
+  "renders": [
+    {
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/all_rendered_frames/cam_222200042_frame_00000.png",
+      "render_sha256": "b8033272fb65870d091d603247cf41a05e1dcea4fcdee49c7ba1e65f1253132f",
+      "render_width": 527,
+      "role": "source_render",
+      "serial": "222200042",
+      "stats": {
+        "alpha_mean": 0.7808001637458801,
+        "coverage": 0.9012195604048071,
+        "projected_points": 20018,
+        "rasterized_pixels": 364756
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200042_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "950a38e8a33f73fcd60d1b0eebbeac77ccbe4b74d749563e68ffd42dae4b58ab",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_sha256": "950a38e8a33f73fcd60d1b0eebbeac77ccbe4b74d749563e68ffd42dae4b58ab",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "220700191",
+      "stats": {
+        "alpha_mean": 0.7645605206489563,
+        "coverage": 0.94189051628716,
+        "projected_points": 20018,
+        "rasterized_pixels": 381217
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_220700191_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "fcbf260f3a805b6bf3fa7a595656e90f995f9b38c9fea4f0f42a2f64f5eeceb1",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/all_rendered_frames/cam_222200041_frame_00000.png",
+      "render_sha256": "fcbf260f3a805b6bf3fa7a595656e90f995f9b38c9fea4f0f42a2f64f5eeceb1",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "222200041",
+      "stats": {
+        "alpha_mean": 0.7956749796867371,
+        "coverage": 0.9447170501265022,
+        "projected_points": 20018,
+        "rasterized_pixels": 382361
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200041_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "f788a15facbb5b251ae1956dffa8d8cb7545e8b0d32b518197bc930f6eaeec11",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g69_lam_native_gaussian_true_krt_source_aligned/all_rendered_frames/cam_222200047_frame_00000.png",
+      "render_sha256": "f788a15facbb5b251ae1956dffa8d8cb7545e8b0d32b518197bc930f6eaeec11",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "222200047",
+      "stats": {
+        "alpha_mean": 0.7598550319671631,
+        "coverage": 0.8696360096457938,
+        "projected_points": 20018,
+        "rasterized_pixels": 351973
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200047_frame_00000.png"
+    }
+  ],
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_LAM_NATIVE_GAUSSIAN_TRUE_KRT_SOURCE_MASK_ALIGNED_DIAGNOSTIC"
+}

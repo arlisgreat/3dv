@@ -1,0 +1,400 @@
+{
+  "alignment": {
+    "alignment": "source_mask_coordinate_descent_similarity_no_rotation",
+    "alignment_mode": "source_camera_then_mask",
+    "prealign": {
+      "lam_c2w": [
+        [
+          1.0,
+          -0.0,
+          -0.0,
+          0.02826753258705139
+        ],
+        [
+          0.0,
+          -1.0,
+          -0.0,
+          0.014753027819097042
+        ],
+        [
+          0.0,
+          -0.0,
+          -1.0,
+          0.8508920669555664
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "lam_transform_json": "/data1/workspace/airulan/3dv/external/LAM/tracking_output/export/cam_222200042_frame_00000/transforms.json",
+      "lam_yz_flip": true,
+      "nersemble_source_c2w": [
+        [
+          0.6907656788825989,
+          0.18140476942062378,
+          -0.6999537348747253,
+          0.7809341549873352
+        ],
+        [
+          -0.024437515065073967,
+          -0.9616088271141052,
+          -0.2733337879180908,
+          0.30164316296577454
+        ],
+        [
+          -0.7226657271385193,
+          0.20591473579406738,
+          -0.6598132252693176,
+          0.7618785500526428
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "prealign": "source_camera_c2w_to_c2w",
+      "prealign_transform": [
+        [
+          0.6907656788825989,
+          -0.18140476942062378,
+          0.6999537348747253,
+          0.16849911212921143
+        ],
+        [
+          -0.024437515065073967,
+          0.9616088271141052,
+          0.2733337879180908,
+          0.05556975305080414
+        ],
+        [
+          -0.7226657271385193,
+          -0.20591473579406738,
+          0.6598132252693176,
+          0.22391456365585327
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    "scale": 0.9249999999999999,
+    "source_mask_iou": 0.8545511203244825,
+    "source_serial": "222200042",
+    "trace": [
+      {
+        "scale": 1.0,
+        "source_mask_iou": 0.6042148254438646,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.88,
+        "source_mask_iou": 0.619289748807992,
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.88,
+        "source_mask_iou": 0.6712047813367314,
+        "translation": [
+          0.11999999731779099,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.0,
+        "source_mask_iou": 0.7023197302793671,
+        "translation": [
+          0.11999999731779099,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.12,
+        "source_mask_iou": 0.7111328847398956,
+        "translation": [
+          0.11999999731779099,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.06,
+        "source_mask_iou": 0.7133636366450303,
+        "translation": [
+          0.11999999731779099,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.06,
+        "source_mask_iou": 0.7941150253889996,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 1.0,
+        "source_mask_iou": 0.8333412952815902,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.94,
+        "source_mask_iou": 0.8393499985957168,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.97,
+        "source_mask_iou": 0.8411271261442362,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.955,
+        "source_mask_iou": 0.8424555138230404,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "scale": 0.955,
+        "source_mask_iou": 0.845719406724433,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          -0.014999999664723873
+        ]
+      },
+      {
+        "scale": 0.94,
+        "source_mask_iou": 0.8491290907469607,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          -0.014999999664723873
+        ]
+      },
+      {
+        "scale": 0.9249999999999999,
+        "source_mask_iou": 0.8495199525944864,
+        "translation": [
+          0.05999999865889549,
+          0.0,
+          -0.014999999664723873
+        ]
+      },
+      {
+        "scale": 0.9249999999999999,
+        "source_mask_iou": 0.8543899611289223,
+        "translation": [
+          0.05249999836087227,
+          0.0,
+          -0.014999999664723873
+        ]
+      },
+      {
+        "scale": 0.9249999999999999,
+        "source_mask_iou": 0.8545511203244825,
+        "translation": [
+          0.05249999836087227,
+          0.0,
+          -0.022499999031424522
+        ]
+      }
+    ],
+    "translation": [
+      0.05249999836087227,
+      0.0,
+      -0.022499999031424522
+    ],
+    "uses_gt_geometry_for_alignment": false,
+    "uses_heldout_views_for_alignment": false
+  },
+  "artifact_policy": "Identifiable source/eval RGB and LAM renders stay under 3dv_work; commit repo-safe metrics/hashes/mask-only figures unless user reviews redistribution.",
+  "camera_contract": "official_nersemble_world_2_cam_and_intrinsics_scaled_to_render_size",
+  "camera_contract_verified": true,
+  "camera_mode": "nersemble_krt",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:38:31.754226+00:00",
+  "date": "2026-05-27",
+  "decision": "Native Gaussian rasterization produced nonempty source-only aligned true-KRT renders. It still needs held-out evaluator and visual gates before a method claim.",
+  "gate": "G72F",
+  "gaussian": {
+    "color_mode": "direct",
+    "loaded_points": 20018,
+    "opacity_max": 6.906767845153809,
+    "opacity_mean": -2.3197691440582275,
+    "opacity_min": -6.906754970550537,
+    "path": "/data1/workspace/airulan/3dv/external/LAM/exps/cano_gs/cam_222200042_frame_00000_gs_offset.ply",
+    "properties": [
+      "x",
+      "y",
+      "z",
+      "nx",
+      "ny",
+      "nz",
+      "f_dc_0",
+      "f_dc_1",
+      "f_dc_2",
+      "opacity",
+      "scale_0",
+      "scale_1",
+      "scale_2",
+      "rot_0",
+      "rot_1",
+      "rot_2",
+      "rot_3"
+    ],
+    "vertex_count": 20018,
+    "xyz_source": "/data1/workspace/airulan/3dv/external/LAM/exps/cano_gs/framework_img.obj",
+    "xyz_source_policy": "framework_img.obj contains res['cano_gs_lst'][0].xyz; the PLY x/y/z file is offset2xyz=True and stores offsets, not world positions."
+  },
+  "method": "LAM-20K native Gaussian rasterizer",
+  "native_rasterizer": "diff_gaussian_rasterization",
+  "next_gate": "Run G55 held-out evaluator and visual/mask/appearance gate on the native Gaussian predictions.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/predictions",
+  "premise": "Use LAM's native diff-gaussian rasterizer to render the LAM head-anchored Gaussian PLY into the G54 NeRSemble source and held-out K/R/T cameras after source-mask-only alignment.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/g69_private_lam_native_gaussian_source_aligned_sheet.png",
+    "contact_sheet_sha256": "9219085ea934f8ebed8043a36e1a5d8a461fb238d80e9707214f7344f7d2cfa3"
+  },
+  "render_max_size": 768,
+  "renders": [
+    {
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/all_rendered_frames/cam_222200042_frame_00000.png",
+      "render_sha256": "757b7717a4f924f07f1b9a4efdd125afa57339925fc95b8cdd3c4b0e609af11b",
+      "render_width": 527,
+      "role": "source_render",
+      "serial": "222200042",
+      "stats": {
+        "alpha_mean": 0.608735203742981,
+        "coverage": 0.6741727941176471,
+        "projected_points": 20018,
+        "rasterized_pixels": 272862
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200042_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "3820f1dfc6627fba0d795decd7b0e852c1a0eb82a2460627af4fb6b9eff0619e",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_sha256": "3820f1dfc6627fba0d795decd7b0e852c1a0eb82a2460627af4fb6b9eff0619e",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "220700191",
+      "stats": {
+        "alpha_mean": 0.26103731989860535,
+        "coverage": 0.3080057123655914,
+        "projected_points": 20018,
+        "rasterized_pixels": 124661
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_220700191_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "6ef451d1322bf9e7bfb182a245040f8791bb4fca6c7a2ac4be2c07c69cb18bde",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/all_rendered_frames/cam_222200041_frame_00000.png",
+      "render_sha256": "6ef451d1322bf9e7bfb182a245040f8791bb4fca6c7a2ac4be2c07c69cb18bde",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "222200041",
+      "stats": {
+        "alpha_mean": 0.20885497331619263,
+        "coverage": 0.2635545145477546,
+        "projected_points": 20018,
+        "rasterized_pixels": 106670
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200041_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "493a211016f1a918ffe40abdc1ba6a526956cfa1b9848929dd988f40a66c54ef",
+      "render_height": 768,
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g72f_lam_native_gaussian_true_krt_source_camera_aligned_yzflip/all_rendered_frames/cam_222200047_frame_00000.png",
+      "render_sha256": "493a211016f1a918ffe40abdc1ba6a526956cfa1b9848929dd988f40a66c54ef",
+      "render_width": 527,
+      "role": "heldout_prediction",
+      "serial": "222200047",
+      "stats": {
+        "alpha_mean": 0.045508258044719696,
+        "coverage": 0.07292407890575585,
+        "projected_points": 20018,
+        "rasterized_pixels": 29515
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200047_frame_00000.png"
+    }
+  ],
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_LAM_NATIVE_GAUSSIAN_TRUE_KRT_SOURCE_MASK_ALIGNED_DIAGNOSTIC"
+}

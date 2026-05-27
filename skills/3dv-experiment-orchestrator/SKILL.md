@@ -113,6 +113,17 @@ but records only hashes because the derived MP4s are identifiable/private; the
 repo-safe CC0 point-splat positive-control input is blocked by LAM face tracking.
 G41 blocks any learned-prior quality claim until camera-aligned held-out renders
 or GT geometry metrics are available.
+G50-G62 establish the NeRSemble G54/G55 true-K/R/T benchmark path and show that
+GT pointcloud and GT-bbox-aligned mesh diagnostics are not method quality. G63
+through G66 remove GT alignment for LAM mesh but the visual gate fails. G67/G69
+expose that LAM `*_gs_offset.ply` stores offsets, not final xyz. G70 fixes this
+by using `framework_img.obj` xyz with PLY opacity/scale/rotation and the LAM
+native diff-gaussian rasterizer. G71/G73 are the current best diagnostic
+positive: recognizable source-only aligned NeRSemble held-out renders and finite
+G55 metrics, but crop/alignment risk still blocks a reconstruction-quality
+claim. The active next gate is G74: improve source-only pose/scale alignment or
+switch to native NeRSemble-camera-conditioned feed-forward output, then repeat
+G54/G55/G73 without GT or held-out alignment leakage.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate

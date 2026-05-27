@@ -1,0 +1,98 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T11:24:17.112293+00:00",
+  "date": "2026-05-27",
+  "decision": "Held-out metrics are finite, but the G63 visual gate must decide whether this validates the overall learned-prior/feed-forward direction.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G64",
+  "interpretation": "G63 removes GT pointcloud alignment and uses the official NeRSemble K/R/T evaluator path. Metrics are interpretable only as a diagnostic of the current LAM mesh output because the private visual sheet shows severe texture/appearance corruption.",
+  "method_label": "LAM_mesh_true_KRT_source_mask_aligned_diagnostic",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.42883655428886414,
+    "mean_masked_rgb_psnr": 5.806210484162382,
+    "mean_masked_rgb_ssim_global_luma": 0.05267669253086905,
+    "mean_prediction_foreground_coverage": 0.4469549610821431,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.42276833691270954,
+    "mean_source_mask_vs_eval_mask_iou": 0.42276833691270954,
+    "per_eval_serial": [
+      {
+        "eval_serial": "220700191",
+        "masked_rgb_mae": 0.41837236285209656,
+        "masked_rgb_mse": 0.2559337615966797,
+        "masked_rgb_psnr": 5.918724202167896,
+        "masked_rgb_ssim_global_luma": -0.08207186622303438,
+        "prediction_foreground_coverage": 0.49744218997959644,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.4938624558918423,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g63_lam_mesh_true_krt_source_aligned/predictions/cam_220700191_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.4938624558918423,
+        "target_alpha_coverage": 0.6453973021990478
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.43711206316947937,
+        "masked_rgb_mse": 0.27484288811683655,
+        "masked_rgb_psnr": 5.609154964336508,
+        "masked_rgb_ssim_global_luma": 0.04863146215529763,
+        "prediction_foreground_coverage": 0.41547098163681706,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.41951444186455084,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g63_lam_mesh_true_krt_source_aligned/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.41951444186455084,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.4310252368450165,
+        "masked_rgb_mse": 0.2575874924659729,
+        "masked_rgb_psnr": 5.890752285982746,
+        "masked_rgb_ssim_global_luma": 0.1914704816603439,
+        "prediction_foreground_coverage": 0.4279517116300159,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.35492811298173543,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g63_lam_mesh_true_krt_source_aligned/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.35492811298173543,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Run a visual/mask renderer-contract gate for G63. If texture/appearance remains broken, mark the current LAM mesh route as diagnostic failure and switch to native NeRSemble-camera aligned feed-forward output.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g63_lam_mesh_true_krt_source_aligned/predictions",
+  "premise": "Evaluate G63 source-mask-only aligned LAM textured-mesh true-KRT renders on the G54 NeRSemble visible held-out cameras. This tests the method-output-to-G55 evaluator path without GT pointcloud or held-out alignment, but remains diagnostic unless the visual gate passes.",
+  "source_serial": "222200042",
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_MESH_TRUE_KRT_SOURCE_MASK_ALIGNED_EVAL"
+}
