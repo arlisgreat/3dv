@@ -1,0 +1,159 @@
+{
+  "alignment": {
+    "alignment": "gt_pointcloud_bbox_similarity_no_rotation",
+    "scale": 0.9396174550056458,
+    "source_bbox_max": [
+      0.13082073628902435,
+      0.15755565464496613,
+      0.07697687298059464
+    ],
+    "source_bbox_min": [
+      -0.19374975562095642,
+      -0.26007580757141113,
+      -0.1568860113620758
+    ],
+    "target_bbox_max": [
+      0.16206927597522736,
+      0.1687164604663849,
+      0.17027217149734497
+    ],
+    "target_bbox_min": [
+      -0.13689957559108734,
+      -0.23069514334201813,
+      -0.049469463527202606
+    ],
+    "translation_after_scale": [
+      0.04214945435523987,
+      0.017175521701574326,
+      0.09794336557388306
+    ],
+    "uses_gt_geometry_for_alignment": true
+  },
+  "artifact_policy": "Identifiable GT RGB and LAM renders stay under 3dv_work; commit repo-safe metrics/hashes unless user reviews redistribution.",
+  "camera_contract": "official_nersemble_world_2_cam_and_intrinsics",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:40:58.951664+00:00",
+  "date": "2026-05-27",
+  "decision": "LAM mesh renders are nonempty under the true NeRSemble K/R/T path, but this remains diagnostic-only because GT pointcloud bbox alignment was used.",
+  "gate": "G61",
+  "gt_pointcloud": {
+    "loaded_points": 673854,
+    "path": "/data1/workspace/airulan/3dv/datasets/nersemble_benchmark/nvs/388/sequences/GLASSES/pointclouds/frame_00000.pcd"
+  },
+  "mesh": {
+    "faces": 9976,
+    "path": "/data1/workspace/airulan/3dv/external/LAM/exps/cano_gs/cam_222200042_frame_00000_textured_mesh.obj",
+    "sampled_points_total": 270018,
+    "surface_samples": 250000,
+    "vertices": 20018
+  },
+  "next_gate": "Run the held-out evaluator on these diagnostic renders. A method-quality gate still requires a renderer alignment derived from the source image/camera or model output alone, not from GT pointcloud geometry.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions",
+  "premise": "Render the LAM-20K textured mesh output into the G54 NeRSemble cameras after an explicit GT pointcloud bbox similarity alignment. This tests the renderer path for method-shaped geometry but is diagnostic-only because GT geometry is used for alignment.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/g61_private_lam_mesh_true_krt_sheet.png",
+    "contact_sheet_sha256": "4beb117661180f6cb1f146d04c450a9a0f52f60ca3e9176e597c506a07560d93"
+  },
+  "renders": [
+    {
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/all_rendered_frames/cam_222200042_frame_00000.png",
+      "render_sha256": "6540eb49ff1459676c9ec34e6ade5c8f62d6df4d029a51cb43164b3fededdc21",
+      "role": "source_render",
+      "serial": "222200042",
+      "stats": {
+        "coverage": 0.5789588528678304,
+        "projected_points": 268403,
+        "rasterized_pixels": 1021515,
+        "z_max": 1.2375845909118652,
+        "z_min": 0.9494028091430664
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200042_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "5a5f2e993932143ea9b5a26e126dff6d5aadd578bb78308739c6359a8ce16964",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_sha256": "5a5f2e993932143ea9b5a26e126dff6d5aadd578bb78308739c6359a8ce16964",
+      "role": "heldout_prediction",
+      "serial": "220700191",
+      "stats": {
+        "coverage": 0.5210054409430968,
+        "projected_points": 268730,
+        "rasterized_pixels": 919262,
+        "z_max": 1.2511975765228271,
+        "z_min": 1.0253751277923584
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_220700191_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "0194bcc2f133c2c67ff1134f854d29709795ef1ff50726100f19ce4ce108cf75",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/all_rendered_frames/cam_222200041_frame_00000.png",
+      "render_sha256": "0194bcc2f133c2c67ff1134f854d29709795ef1ff50726100f19ce4ce108cf75",
+      "role": "heldout_prediction",
+      "serial": "222200041",
+      "stats": {
+        "coverage": 0.5066288823396056,
+        "projected_points": 269218,
+        "rasterized_pixels": 893896,
+        "z_max": 1.308119535446167,
+        "z_min": 1.0920159816741943
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200041_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "b40d2d8d5275d4f94ccbd647c14e570440241f193bb9342b05eed24d9991ba2b",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/all_rendered_frames/cam_222200047_frame_00000.png",
+      "render_sha256": "b40d2d8d5275d4f94ccbd647c14e570440241f193bb9342b05eed24d9991ba2b",
+      "role": "heldout_prediction",
+      "serial": "222200047",
+      "stats": {
+        "coverage": 0.4649467240988438,
+        "projected_points": 270018,
+        "rasterized_pixels": 820352,
+        "z_max": 1.3144543170928955,
+        "z_min": 1.0873146057128906
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200047_frame_00000.png"
+    }
+  ],
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_MESH_TRUE_KRT_GT_BBOX_ALIGNED"
+}

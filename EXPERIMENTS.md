@@ -74,17 +74,23 @@ G52 NeRSemble full download integrity gate with 404 exclusions
 G53 NeRSemble benchmark protocol and v2 compact visual gate
 G54 NeRSemble official NVS frame-0 local adapter preflight
 G55 NeRSemble held-out metric harness copy-baseline smoke
-G56 NeRSemble method readiness/distribution gate blocked on renderer
+G56 NeRSemble method readiness/distribution gate blocked on renderer-contract
+G57 LAM source-to-sample NeRSemble evaluator diagnostic
+G58 LAM renderer contract/visual audit downgrade
+G59 NeRSemble GT pointcloud true-KRT renderer positive control
+G60 NeRSemble GT pointcloud oracle held-out eval
+G61 LAM textured mesh true-KRT diagnostic with GT bbox alignment
+G62 LAM mesh true-KRT diagnostic held-out eval
 ```
 
 还没有完成：
 
 ```text
-native learned-prior held-out RGB rendering without similarity/ICP post-alignment
+native learned-prior held-out RGB rendering without GT geometry alignment
 benchmark-grade geometry metric with verified correspondence/coverage trimming
-quantitative RGB reconstruction evaluation beyond geometry diagnostics
+quantitative RGB reconstruction evaluation beyond oracle/diagnostic render checks
 publishable artifact review for any identifiable Multiface RGB/mesh result
-native learned-prior method output on the audited NeRSemble source/eval split
+native learned-prior method output on the audited NeRSemble source/eval split with source/model-derived camera alignment
 official NeRSemble leaderboard submission packaging, if needed
 H3DS access and independent cross-dataset validation after user provides data
 ```
@@ -160,7 +166,16 @@ method-quality result; it only authorizes running a real learned-prior /
 feed-forward / head-anchored method output through the audited split. G56 then
 blocks LAM method-quality evaluation because no renderer currently maps LAM
 outputs into the NeRSemble held-out cameras, and LAM-on-NeRSemble is in-domain
-with possible dataset overlap.
+with possible dataset overlap. G57 shows why the extra gate is mandatory:
+`source_to_lam_sample` LAM frames can be copied into the evaluator and produce
+finite numbers, but G58 downgrades the run because the held-out predictions are
+blank/cropped and the camera contract is not true NeRSemble K/R/T. G59/G60
+separately validate the real K/R/T renderer/evaluator with the official
+pointcloud oracle. G61/G62 route the LAM textured mesh through that same K/R/T
+path after GT pointcloud bbox alignment; this is nonempty but visually broken
+and remains diagnostic-only. The repo-safe PNG
+`experiments/figures/g57_g61_nersemble_render_mask_audit_20260527.png` syncs
+mask-only visual evidence; identifiable RGB sheets stay under `3dv_work`.
 ```
 
 ## 2. Stage 00: Inputs

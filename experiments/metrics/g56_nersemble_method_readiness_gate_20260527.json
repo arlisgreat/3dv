@@ -1,16 +1,19 @@
 {
   "checks": {
     "camera_renderer_script": "/data1/workspace/airulan/3dv/scripts/lam_render_nersemble_cameras.py",
-    "camera_renderer_script_present": false,
+    "camera_renderer_script_present": true,
     "expected_eval_prediction_count": 3,
     "g52_g55_required_gates_pass": true,
     "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions",
-    "present_eval_prediction_count": 0,
-    "raw_rgb_policy": "private local only under 3dv_work; commit metrics/hashes/mask-only figures unless user explicitly reviews identifiable media"
+    "present_eval_prediction_count": 3,
+    "raw_rgb_policy": "private local only under 3dv_work; commit metrics/hashes/mask-only figures unless user explicitly reviews identifiable media",
+    "renderer_audit_json": "/data1/workspace/airulan/3dv/experiments/metrics/g58_nersemble_lam_renderer_contract_audit_20260527.json",
+    "renderer_audit_verdict": "PASS_DIAGNOSTIC_ONLY_RENDERER_CONTRACT_FAILED",
+    "renderer_contract_pass": false
   },
-  "created_at": "2026-05-27T08:17:32.263686+00:00",
+  "created_at": "2026-05-27T10:44:54.297458+00:00",
   "date": "2026-05-27",
-  "decision": "Blocked for method-quality evaluation: the data and metric gates pass, but no LAM-to-NeRSemble held-out camera renderer or prediction set is present. Do not substitute LAM motion-camera MP4s for held-out NeRSemble camera renders.",
+  "decision": "Blocked for method-quality evaluation: data and metric gates pass, but the method prediction set lacks a passing true NeRSemble K/R/T renderer-contract audit. Do not substitute LAM motion-camera MP4s or source-to-sample frames for held-out NeRSemble camera renders.",
   "distribution_audit": {
     "allowed_interpretation": "baseline sanity and in-distribution benchmark plumbing; not an unseen cross-dataset generalization claim",
     "candidate_method": "LAM-20K baseline / learned-prior head-anchored Gaussian family",

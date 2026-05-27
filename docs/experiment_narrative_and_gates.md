@@ -79,6 +79,13 @@ copy-source baseline proves held-out RGB/mask metric IO. These gates authorize a
 real method-output run, not a method-quality claim by themselves. G56 blocks the
 first method-readiness check because LAM-on-NeRSemble is in-domain with possible
 dataset overlap and no held-out NeRSemble camera renderer/prediction files exist.
+G57 then produces finite LAM prediction files through a `source_to_lam_sample`
+motion-camera path, but G58 downgrades the run to diagnostic-only because the
+renderer contract is not verified NeRSemble K/R/T and the held-out predictions
+are blank/cropped. G59/G60 validate the true NeRSemble K/R/T path with the
+official pointcloud as an oracle positive control. G61/G62 route LAM textured
+mesh output through that same camera path only after GT pointcloud bbox
+alignment; this is nonempty but visually broken and remains diagnostic-only.
 
 ## Real GT Benchmark Pivot
 
@@ -153,6 +160,12 @@ G54-G55: prepare an official NVS frame-0 local adapter and smoke-test held-out
          RGB/mask metrics with a trivial copy-source baseline.
 G56: block method-quality evaluation until a real method output can be rendered
      into the G54 NeRSemble held-out cameras.
+G57-G58: show that LAM source-to-sample camera files are finite but invalid for
+         method claims after renderer-contract and visual audit.
+G59-G60: validate true NeRSemble K/R/T camera/evaluator plumbing with the GT
+         pointcloud oracle positive control.
+G61-G62: render/evaluate LAM textured mesh through true K/R/T only with GT bbox
+         alignment; keep it diagnostic-only because texture/appearance are broken.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -303,7 +316,14 @@ positive control, so they are not the active G16b case.
 | G53 | NeRSemble compact case data/VLM gate | G52 pass with exclusions | Done: official NVS/Mono/SVFR protocols pass and v2 017 EXP-1-head passes local visual audit |
 | G54 | NeRSemble NVS frame-0 adapter | G53 pass | Done: official NVS 388 GLASSES frame 0 adapter has RGB/alpha/cameras/pointcloud local-only |
 | G55 | NeRSemble held-out metric smoke | G54 pass | Done: copy-source baseline produces finite held-out RGB/mask metrics; this is metric plumbing only |
-| G56 | NeRSemble method readiness gate | G55 pass | Blocked correctly: no held-out NeRSemble camera renderer/prediction files, and LAM-on-NeRSemble has in-domain/possible-overlap risk |
+| G56 | NeRSemble method readiness gate | G55 pass | Blocked correctly: prediction files exist, but no passing true NeRSemble K/R/T renderer-contract audit; LAM-on-NeRSemble also has in-domain/possible-overlap risk |
+| G57 | LAM source-to-sample evaluator diagnostic | G56 blocked on renderer | Done: finite files/metrics, but not a true NeRSemble camera renderer |
+| G58 | LAM renderer contract audit | G57 files present | Done: G57 downgraded to diagnostic-only due failed camera contract and blank/cropped predictions |
+| G59 | True-KRT pointcloud renderer positive control | G58 downgrade requires camera isolation | Done: official GT pointcloud renders into source/eval cameras with plausible view direction |
+| G60 | Pointcloud oracle held-out eval | G59 pass | Done: finite oracle visible-heldout metrics; validates evaluator/camera path only |
+| G61 | LAM mesh true-KRT diagnostic render | G59/G60 pass | Done: nonempty renders after GT pointcloud bbox alignment; diagnostic-only and visually broken |
+| G62 | LAM mesh true-KRT diagnostic eval | G61 pass | Done: finite metrics but no method-quality claim due GT alignment and broken appearance |
+| G63 | Source/model-derived true-KRT method render | G61/G62 diagnostic closure | Active next: remove GT geometry alignment or use a method with native NeRSemble camera output |
 
 ## Expected Final Outputs
 
@@ -364,12 +384,14 @@ only local execution quality, not a metric-backed reconstruction result. The
 repo-safe CC0 point-splat positive control is blocked for LAM input use because
 face tracking fails. The next action must be a camera-aligned render/geometry
 export adapter, stronger licensed benchmark access, or explicit artifact review,
-not more ungated MP4 generation. After G50-G55, NeRSemble is now the main
+not more ungated MP4 generation. After G50-G62, NeRSemble is now the main
 real-GT route: official data is local but not perfectly complete, with 79
-server-side 404 paths excluded. The immediate next method milestone is to run a
-real learned-prior/feed-forward/head-anchored output through the G54/G55
-NeRSemble source/eval split and report metrics only after model-distribution and
-artifact/privacy gates pass. G56 records that this is currently blocked by the
-missing method-to-NeRSemble camera renderer; LAM motion-camera videos must not
-be substituted for held-out camera predictions.
+server-side 404 paths excluded. The true-KRT camera/evaluator path now passes
+with a GT pointcloud oracle, while the current LAM routes remain diagnostic:
+source-to-sample camera frames fail the renderer contract, and GT-bbox-aligned
+LAM mesh renders are visually broken. The immediate next method milestone is a
+source/model-derived true-KRT learned-prior/feed-forward/head-anchored output,
+or a switch to a method with native NeRSemble camera output. Metrics are not
+main-result evidence until model-distribution, visual, renderer-contract, and
+artifact/privacy gates all pass.
 ```

@@ -1,0 +1,98 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:37:51.416967+00:00",
+  "date": "2026-05-27",
+  "decision": "The oracle pointcloud renderer produces finite metrics and plausible held-out camera views; the renderer contract is usable for subsequent method-output tests.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G60",
+  "interpretation": "This is an oracle GT pointcloud render, not a learned-prior method result. It verifies the NeRSemble K/R/T projection and gives a sparse upper-bound sanity check for mask/RGB metrics.",
+  "method_label": "NeRSemble_GT_pointcloud_true_KRT_oracle",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.3755094011624654,
+    "mean_masked_rgb_psnr": 5.343937534956415,
+    "mean_masked_rgb_ssim_global_luma": -0.33046989220319517,
+    "mean_prediction_foreground_coverage": 0.3450436408977556,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.5539237552340944,
+    "mean_source_mask_vs_eval_mask_iou": 0.5539237552340944,
+    "per_eval_serial": [
+      {
+        "eval_serial": "220700191",
+        "masked_rgb_mae": 0.3490010201931,
+        "masked_rgb_mse": 0.27034991979599,
+        "masked_rgb_psnr": 5.680737549293557,
+        "masked_rgb_ssim_global_luma": -0.31892934497823394,
+        "prediction_foreground_coverage": 0.3809527318068465,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.582903275432855,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_220700191_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.582903275432855,
+        "target_alpha_coverage": 0.6453973021990478
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.397270143032074,
+        "masked_rgb_mse": 0.31115248799324036,
+        "masked_rgb_psnr": 5.070267220219007,
+        "masked_rgb_ssim_global_luma": -0.34014768676641566,
+        "prediction_foreground_coverage": 0.32625765132622986,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.5360258032539436,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.5360258032539436,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.3802570402622223,
+        "masked_rgb_mse": 0.29642799496650696,
+        "masked_rgb_psnr": 5.280807835356679,
+        "masked_rgb_ssim_global_luma": -0.3323326448649359,
+        "prediction_foreground_coverage": 0.32792053956019046,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.5428421870154846,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.5428421870154846,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Route a real method mesh/Gaussian through the same K/R/T renderer without using GT pointcloud alignment for method claims, or label any GT-aligned render as diagnostic-only.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions",
+  "premise": "Evaluate the G59 GT pointcloud true-KRT renderer as an oracle local-visible held-out positive control for camera/evaluator plumbing.",
+  "source_serial": "222200042",
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_NERSEMBLE_POINTCLOUD_ORACLE_HELDOUT_EVAL"
+}

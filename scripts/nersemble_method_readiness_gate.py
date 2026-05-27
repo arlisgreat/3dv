@@ -86,6 +86,7 @@ def main() -> None:
     parser.add_argument("--repo", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--prediction-root", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions"))
     parser.add_argument("--adapter-manifest", type=Path, default=Path("/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/adapter_manifest.json"))
+    parser.add_argument("--renderer-audit-json", type=Path, default=Path("experiments/metrics/g58_nersemble_lam_renderer_contract_audit_20260527.json"))
     parser.add_argument("--output-json", type=Path, default=Path("experiments/metrics/g56_nersemble_method_readiness_gate_20260527.json"))
     parser.add_argument("--output-md", type=Path, default=Path("experiments/metrics/g56_nersemble_method_readiness_gate_20260527.md"))
     args = parser.parse_args()
@@ -106,7 +107,10 @@ def main() -> None:
     camera_renderer_script = repo / "scripts/lam_render_nersemble_cameras.py"
     renderer_ready = camera_renderer_script.exists()
     predictions_ready = len(present_predictions) == len(expected_predictions) and bool(expected_predictions)
-    verdict = PASS_VERDICT if gate_pass and renderer_ready and predictions_ready else BLOCKED_VERDICT
+    renderer_audit_path = args.renderer_audit_json if args.renderer_audit_json.is_absolute() else repo / args.renderer_audit_json
+    renderer_audit = load_json(renderer_audit_path)
+    renderer_contract_pass = renderer_audit.get("verdict") == "PASS_NERSEMBLE_TRUE_CAMERA_RENDERER_CONTRACT"
+    verdict = PASS_VERDICT if gate_pass and renderer_ready and predictions_ready and renderer_contract_pass else BLOCKED_VERDICT
     payload = {
         "date": DATE,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -131,11 +135,14 @@ def main() -> None:
             "expected_eval_prediction_count": len(expected_predictions),
             "present_eval_prediction_count": len(present_predictions),
             "prediction_root": str(args.prediction_root),
+            "renderer_audit_json": str(renderer_audit_path),
+            "renderer_audit_verdict": renderer_audit.get("verdict"),
+            "renderer_contract_pass": renderer_contract_pass,
             "raw_rgb_policy": "private local only under 3dv_work; commit metrics/hashes/mask-only figures unless user explicitly reviews identifiable media",
         },
         "decision": (
-            "Blocked for method-quality evaluation: the data and metric gates pass, but no LAM-to-NeRSemble held-out camera renderer or prediction set is present. "
-            "Do not substitute LAM motion-camera MP4s for held-out NeRSemble camera renders."
+            "Blocked for method-quality evaluation: data and metric gates pass, but the method prediction set lacks a passing true NeRSemble K/R/T renderer-contract audit. "
+            "Do not substitute LAM motion-camera MP4s or source-to-sample frames for held-out NeRSemble camera renders."
             if verdict == BLOCKED_VERDICT
             else "Ready to score method outputs on the audited NeRSemble held-out split."
         ),

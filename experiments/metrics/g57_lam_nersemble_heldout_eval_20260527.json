@@ -1,0 +1,98 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:37:52.250399+00:00",
+  "date": "2026-05-27",
+  "decision": "Prediction files produced finite metrics, but G58 renderer-contract and visual audit controls whether this can be interpreted; current G58 downgrades it to diagnostic-only.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G57",
+  "interpretation": "The copy-source baseline is expected to be low because target cameras see different viewpoints. Prediction-root mode can support a method-quality discussion only after model distribution, renderer-contract, visual, and artifact gates pass.",
+  "method_label": "LAM-20K_source_to_lam_sample_diagnostic",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.6107116341590881,
+    "mean_masked_rgb_psnr": 3.683666408260733,
+    "mean_masked_rgb_ssim_global_luma": 0.06345960967868051,
+    "mean_prediction_foreground_coverage": 0.09977253835109197,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.035655711987431095,
+    "mean_source_mask_vs_eval_mask_iou": 0.035655711987431095,
+    "per_eval_serial": [
+      {
+        "eval_serial": "220700191",
+        "masked_rgb_mae": 0.5641270279884338,
+        "masked_rgb_mse": 0.3785642981529236,
+        "masked_rgb_psnr": 4.218603461204747,
+        "masked_rgb_ssim_global_luma": 0.20732620613195468,
+        "prediction_foreground_coverage": 0.18995182498299706,
+        "prediction_mask_source": "border_mode_rgb_distance",
+        "prediction_mask_vs_eval_mask_iou": 0.08840839776394396,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_220700191_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.08840839776394396,
+        "target_alpha_coverage": 0.6453973021990478
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.6359128355979919,
+        "masked_rgb_mse": 0.45963409543037415,
+        "masked_rgb_psnr": 3.3758776303847156,
+        "masked_rgb_ssim_global_luma": -0.02891111628251326,
+        "prediction_foreground_coverage": 0.10641351167535706,
+        "prediction_mask_source": "border_mode_rgb_distance",
+        "prediction_mask_vs_eval_mask_iou": 0.018558738198349318,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.018558738198349318,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.6320950388908386,
+        "masked_rgb_mse": 0.45117828249931335,
+        "masked_rgb_psnr": 3.456518133192737,
+        "masked_rgb_ssim_global_luma": 0.011963739186600122,
+        "prediction_foreground_coverage": 0.0029522783949217863,
+        "prediction_mask_source": "border_mode_rgb_distance",
+        "prediction_mask_vs_eval_mask_iou": 0.0,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.0,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Use G59/G60 true-KRT pointcloud positive control, then connect method mesh/Gaussian outputs to the same camera contract.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions",
+  "premise": "Exercise the NeRSemble held-out metric chain. In copy-source mode this is a deliberately weak baseline; in prediction-root mode it evaluates rendered outputs for each local held-out camera.",
+  "source_serial": "222200042",
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_NERSEMBLE_HELDOUT_METHOD_EVAL"
+}

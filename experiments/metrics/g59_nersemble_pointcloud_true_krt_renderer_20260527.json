@@ -1,0 +1,123 @@
+{
+  "artifact_policy": "Identifiable GT RGB and pointcloud renders stay under 3dv_work; commit repo-safe metrics/hashes unless user reviews redistribution.",
+  "camera_contract": "official_nersemble_world_2_cam_and_intrinsics",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:35:01.575255+00:00",
+  "date": "2026-05-27",
+  "decision": "The true K/R/T pointcloud renderer produced nonempty source/eval renders and can be used as the camera-contract positive control.",
+  "gate": "G59",
+  "next_gate": "Run the G55 evaluator on these pointcloud renders as an oracle local-visible held-out baseline, then connect method mesh/Gaussian output to this same camera contract without using GT geometry for method alignment unless explicitly labeled diagnostic.",
+  "pointcloud": {
+    "header_points": "673854",
+    "loaded_points": 673854,
+    "path": "/data1/workspace/airulan/3dv/datasets/nersemble_benchmark/nvs/388/sequences/GLASSES/pointclouds/frame_00000.pcd"
+  },
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions",
+  "premise": "Render the official NeRSemble frame-0 GT pointcloud through the exact G54 visible-camera K/R/T. This is an oracle renderer positive control for camera/evaluator plumbing, not a learned-prior method result.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/g59_private_pointcloud_true_krt_sheet.png",
+    "contact_sheet_sha256": "f4dc8e308f24cdf6153ce9f9aa9e8e11146e06bb5e994de857ad752441402087"
+  },
+  "renders": [
+    {
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/all_rendered_frames/cam_222200042_frame_00000.png",
+      "render_sha256": "426b653097da9e4baee1b2898d549ecef04e6a312565b5dedfb51b0757851bb7",
+      "role": "source_render",
+      "serial": "222200042",
+      "stats": {
+        "coverage": 0.3303593289503514,
+        "projected_points": 663330,
+        "rasterized_pixels": 582886,
+        "z_max": 1.2803844213485718,
+        "z_min": 0.9714894890785217
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200042_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "33bb78b2db00593ca88d17f7ae1bf56f372fb9bedee710e8f48387f32b25fd34",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_sha256": "33bb78b2db00593ca88d17f7ae1bf56f372fb9bedee710e8f48387f32b25fd34",
+      "role": "heldout_prediction",
+      "serial": "220700191",
+      "stats": {
+        "coverage": 0.3809527318068465,
+        "projected_points": 673703,
+        "rasterized_pixels": 672153,
+        "z_max": 1.2617131471633911,
+        "z_min": 1.0350481271743774
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_220700191_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "7f81109310a9b27c9841fd28696ffbcb4e26a2a4ed7c91a12f0f2ee182e22a67",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/all_rendered_frames/cam_222200041_frame_00000.png",
+      "render_sha256": "7f81109310a9b27c9841fd28696ffbcb4e26a2a4ed7c91a12f0f2ee182e22a67",
+      "role": "heldout_prediction",
+      "serial": "222200041",
+      "stats": {
+        "coverage": 0.32625765132622986,
+        "projected_points": 673854,
+        "rasterized_pixels": 575649,
+        "z_max": 1.3066303730010986,
+        "z_min": 1.0354254245758057
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200041_frame_00000.png"
+    },
+    {
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "8d80082ac8dec41218fb27e77800b4ac5826314b937305af94f9e0f77ba790aa",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g59_nersemble_pointcloud_true_krt_renderer/all_rendered_frames/cam_222200047_frame_00000.png",
+      "render_sha256": "8d80082ac8dec41218fb27e77800b4ac5826314b937305af94f9e0f77ba790aa",
+      "role": "heldout_prediction",
+      "serial": "222200047",
+      "stats": {
+        "coverage": 0.32792053956019046,
+        "projected_points": 673598,
+        "rasterized_pixels": 578583,
+        "z_max": 1.306715965270996,
+        "z_min": 1.0858678817749023
+      },
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200047_frame_00000.png"
+    }
+  ],
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_NERSEMBLE_TRUE_KRT_POINTCLOUD_RENDERER_POSITIVE_CONTROL"
+}

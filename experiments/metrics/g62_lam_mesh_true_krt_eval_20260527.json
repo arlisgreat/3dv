@@ -1,0 +1,98 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:41:22.518388+00:00",
+  "date": "2026-05-27",
+  "decision": "Finite metrics are recorded, but the visual result is broken and GT-aligned; this does not validate the single-image learned-prior method idea.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G62",
+  "interpretation": "These metrics are not a method-quality result. They test whether LAM mesh output can be routed through the true NeRSemble camera renderer after weak GT-geometry alignment; visual audit shows broken texture/appearance.",
+  "method_label": "LAM_mesh_true_KRT_GT_bbox_aligned_diagnostic",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.3344317674636841,
+    "mean_masked_rgb_psnr": 6.89432910889897,
+    "mean_masked_rgb_ssim_global_luma": -0.09376136849742706,
+    "mean_prediction_foreground_coverage": 0.4975270157938487,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.708950093237306,
+    "mean_source_mask_vs_eval_mask_iou": 0.708950093237306,
+    "per_eval_serial": [
+      {
+        "eval_serial": "220700191",
+        "masked_rgb_mae": 0.3226020932197571,
+        "masked_rgb_mse": 0.18889811635017395,
+        "masked_rgb_psnr": 7.237723727441486,
+        "masked_rgb_ssim_global_luma": -0.04587589785689973,
+        "prediction_foreground_coverage": 0.5210054409430968,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.7263501469242377,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_220700191_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.7263501469242377,
+        "target_alpha_coverage": 0.6453973021990478
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.34734824299812317,
+        "masked_rgb_mse": 0.220764622092247,
+        "masked_rgb_psnr": 6.560705217994544,
+        "masked_rgb_ssim_global_luma": -0.13302728641019623,
+        "prediction_foreground_coverage": 0.5066288823396056,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.6844017959479141,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.6844017959479141,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.333344966173172,
+        "masked_rgb_mse": 0.20490103960037231,
+        "masked_rgb_psnr": 6.88455838126088,
+        "masked_rgb_ssim_global_luma": -0.10238092122518523,
+        "prediction_foreground_coverage": 0.4649467240988438,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.716098336839766,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.716098336839766,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Replace GT-bbox alignment with source-camera/model-derived alignment, or switch to a method with native NeRSemble-camera output before making a main experiment claim.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g61_lam_mesh_true_krt_bbox_aligned/predictions",
+  "premise": "Evaluate G61 LAM textured-mesh true-KRT renders on the G54 visible held-out cameras. The run is diagnostic-only because GT pointcloud bbox alignment was used.",
+  "source_serial": "222200042",
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_MESH_TRUE_KRT_EVAL"
+}

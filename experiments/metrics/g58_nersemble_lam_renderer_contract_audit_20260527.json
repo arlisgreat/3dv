@@ -1,0 +1,176 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T10:38:02.775915+00:00",
+  "date": "2026-05-27",
+  "decision": "G57 is downgraded to diagnostic-only. Finite evaluator metrics only prove that files were readable; they do not validate the learned-prior idea or a true held-out camera renderer.",
+  "gate": "G58",
+  "manual_visual_audit": "The G57 private contact sheet shows a plausible source render but the three held-out predictions are mostly blank or cropped to image borders. This is not a verified NeRSemble held-out camera rendering.",
+  "next_gate": "Implement a true G54 K/R/T renderer positive control first, preferably with the NeRSemble GT pointcloud, then route a method mesh/Gaussian through the same renderer and repeat this visual/mask/camera audit.",
+  "per_eval_serial": [
+    {
+      "decision": "weak_or_misaligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_220700191_frame_00000.png",
+      "prediction_sha256": "ea98894aa4b141198b3b0305a943830d03c7dd538aa2134dea05dd9c8294ab37",
+      "prediction_stats": {
+        "bbox": [
+          774,
+          0,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.897817562976496,
+          0.48214483737707914
+        ],
+        "coverage": 0.18995182498299706,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.08840839776394396,
+      "serial": "220700191",
+      "source_lam_png": "/data1/workspace/airulan/3dv/external/LAM/exps/images/lam/lam_20k/cam_222200042_frame_00000/0001.png",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_220700191_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_220700191_frame_00000.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5130972911873009,
+          0.6125939729470059
+        ],
+        "coverage": 0.6453973021990478,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "weak_or_misaligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "1fe6cf4ece17a11f967a653e54c66ba16005e15be2aac9dac47bd8862920e54c",
+      "prediction_stats": {
+        "bbox": [
+          749,
+          0,
+          1099,
+          830
+        ],
+        "centroid_xy_norm": [
+          0.8932343288128334,
+          0.2405100316218537
+        ],
+        "coverage": 0.10641351167535706,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.018558738198349318,
+      "serial": "222200041",
+      "source_lam_png": "/data1/workspace/airulan/3dv/external/LAM/exps/images/lam/lam_20k/cam_222200042_frame_00000/0002.png",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200041_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200041_frame_00000.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.5254274763684955,
+          0.624082989938132
+        ],
+        "coverage": 0.6011488324642938,
+        "touches_image_border": true
+      }
+    },
+    {
+      "decision": "weak_or_misaligned_prediction",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "457395cad04fd3f3d9819d7055a7c62558fdfd788a3ac4c447a509d530e61700",
+      "prediction_stats": {
+        "bbox": [
+          1051,
+          192,
+          1099,
+          339
+        ],
+        "centroid_xy_norm": [
+          0.9820844478767501,
+          0.16601191828481512
+        ],
+        "coverage": 0.0029522783949217863,
+        "touches_image_border": true
+      },
+      "prediction_target_mask_iou": 0.0,
+      "serial": "222200047",
+      "source_lam_png": "/data1/workspace/airulan/3dv/external/LAM/exps/images/lam/lam_20k/cam_222200042_frame_00000/0003.png",
+      "target_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200047_frame_00000_mask.png",
+      "target_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200047_frame_00000.png",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "centroid_xy_norm": [
+          0.55793585446858,
+          0.6309854480143975
+        ],
+        "coverage": 0.5941934935388801,
+        "touches_image_border": true
+      }
+    }
+  ],
+  "premise": "A method metric is interpretable only if the prediction PNGs are rendered by the same learned-prior/mesh/Gaussian representation into the audited G54 NeRSemble held-out K/R/T cameras and pass a visual nonblank/alignment gate.",
+  "private_outputs": {
+    "audit_sheet": "/data1/workspace/airulan/3dv_work/runs/g58_nersemble_lam_renderer_contract_audit/g58_private_lam_vs_gt_sheet.png",
+    "audit_sheet_sha256": "4f0dacd1a151b20779af8ef0941a5665a029dc504dafb5131d1a2bbb314d57f8",
+    "existing_g57_private_sheet": "/data1/workspace/airulan/3dv_work/runs/g57_nersemble_lam_camera_render/g57_private_lam_nersemble_render_sheet.png",
+    "existing_g57_private_sheet_sha256": "1ed89208ee077c038f53885465838cd230ed1a7b8dc46c7e5835fac0c28aa20c"
+  },
+  "renderer_contract": {
+    "camera_contract_verified": false,
+    "camera_mode": "source_to_lam_sample",
+    "eval_json_verdict": "PASS_NERSEMBLE_HELDOUT_METHOD_EVAL",
+    "eval_mean_prediction_mask_iou": 0.035655711987431095,
+    "eval_mean_psnr": 3.683666408260733,
+    "eval_mean_ssim": 0.06345960967868051,
+    "method": "LAM-20K",
+    "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions"
+  },
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_DIAGNOSTIC_ONLY_RENDERER_CONTRACT_FAILED"
+}

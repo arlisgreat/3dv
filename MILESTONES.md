@@ -77,13 +77,19 @@ model/data distribution and artifact-sync gates so that old candidate pools and
 raw/private assets cannot slip back into the main claim. G39-G45 open the first
 learned-prior/feed-forward/head-anchored Gaussian smoke and geometry-diagnostic
 loop on Multiface: LAM can run and export local geometry, but the results remain
-diagnostic because native held-out RGB rendering is not evaluated. G50-G55 move
+diagnostic because native held-out RGB rendering is not evaluated. G50-G62 move
 the benchmark route from credential-waiting to NeRSemble-backed data and metric
 plumbing: official data is present with 79 explicit HTTP-404 exclusions, a
 v2 compact case passes local visual audit, and an official NVS frame-0 adapter
-plus copy-source held-out metric smoke passes. None of these is a method-quality
-result yet; they authorize only the next learned-prior method output on the
-audited NeRSemble split.
+plus copy-source held-out metric smoke passes. G57 produces finite LAM files
+but G58 downgrades them because the `source_to_lam_sample` camera path is not a
+verified NeRSemble held-out renderer and the visual sheet is mostly blank/crop
+fragments. G59/G60 prove the real K/R/T renderer and evaluator using the
+NeRSemble GT pointcloud as an oracle positive control. G61/G62 route the LAM
+textured mesh through the same K/R/T path only after GT pointcloud bbox
+alignment; this is diagnostic-only and visually broken, not method quality.
+The next valid method milestone must remove GT geometry alignment or use a
+method with native NeRSemble-camera output.
 ```
 
 ## Mandatory Data Audit Gate
@@ -170,9 +176,16 @@ full 16-camera compact case after a local visual/VLM audit sheet. G54 prepares
 an official NVS participant 388 GLASSES frame-0 local adapter with 13 visible
 views, alpha maps, cameras, and a 673854-point pointcloud. G55 proves the
 held-out RGB/mask metric harness with a deliberately weak copy-source baseline;
-that is plumbing only, not a reconstruction method. G56 blocks method-quality
-evaluation until a real method output can be rendered into the exact NeRSemble
-held-out cameras; LAM motion-camera MP4s are not acceptable substitutes.
+that is plumbing only, not a reconstruction method. G56 correctly blocks
+method-quality evaluation until a real method output can be rendered into the
+exact NeRSemble held-out cameras; LAM motion-camera MP4s are not acceptable
+substitutes. G57 then confirms the risk: a LAM `source_to_lam_sample` render can
+produce finite files, but G58 marks it diagnostic-only because the camera
+contract fails and the held-out predictions are mostly blank/cropped. G59/G60
+establish a true-KRT pointcloud oracle positive control, proving that the G54
+camera/evaluator path itself works. G61/G62 render a LAM textured mesh through
+the same path only with GT pointcloud bbox alignment; the result is nonempty but
+texture-broken and remains diagnostic-only.
 ```
 
 ## Completed Milestones
@@ -241,13 +254,19 @@ held-out cameras; LAM motion-camera MP4s are not acceptable substitutes.
 | G53 | done, visual/data gate pass local-only | NeRSemble benchmark protocol and compact v2 case gate | `experiments/metrics/g53_nersemble_compact_case_gate_20260527.md`, `scripts/nersemble_compact_case_gate.py` | Official NVS/Mono/SVFR protocol assets pass; v2 participant 017 EXP-1-head all-16-camera sheet passes local visual audit but identifiable sheet remains under `3dv_work`. |
 | G54 | done, adapter preflight pass local-only | Official NeRSemble NVS frame-0 local adapter | `experiments/metrics/g54_nersemble_nvs_frame0_adapter_preflight_20260527.md`, `experiments/figures/g54_nersemble_nvs_frame0_mask_audit_20260527.png` | Participant 388 GLASSES frame 0 yields 13 visible RGB/alpha views, cameras, and a 673854-point pointcloud; raw RGB stays local. |
 | G55 | done, metric harness smoke pass | NeRSemble held-out RGB/mask eval harness smoke | `experiments/metrics/g55_nersemble_heldout_eval_harness_smoke_20260527.md`, `scripts/nersemble_heldout_copy_eval_smoke.py` | A copy-source baseline gives finite held-out metrics (mean PSNR 11.730165, SSIM 0.364646); this is metric plumbing only. |
-| G56 | done, blocked correctly | NeRSemble method readiness and distribution gate | `experiments/metrics/g56_nersemble_method_readiness_gate_20260527.md`, `scripts/nersemble_method_readiness_gate.py` | LAM-on-NeRSemble is in-domain with possible dataset overlap; no held-out camera renderer or prediction files exist, so method-quality evaluation is blocked. |
+| G56 | done, blocked correctly | NeRSemble method readiness and distribution gate | `experiments/metrics/g56_nersemble_method_readiness_gate_20260527.md`, `scripts/nersemble_method_readiness_gate.py` | LAM-on-NeRSemble is in-domain with possible dataset overlap; prediction files now exist, but G58 renderer-contract audit fails, so method-quality evaluation remains blocked. |
+| G57 | done, finite but not quality | LAM source-to-sample camera render into G55 evaluator | `experiments/metrics/g57_lam_nersemble_heldout_eval_20260527.md`, `scripts/lam_render_nersemble_cameras.py` | Finite metrics are produced, but mean PSNR is 3.683666 and mean prediction-mask IoU is 0.035656 after the stricter mask fix; G58 controls interpretation. |
+| G58 | done, diagnostic downgrade | LAM renderer contract and visual gate audit | `experiments/metrics/g58_nersemble_lam_renderer_contract_audit_20260527.md`, `experiments/figures/g57_g61_nersemble_render_mask_audit_20260527.png`, `scripts/audit_nersemble_lam_renderer_contract.py` | `source_to_lam_sample` is not a verified NeRSemble K/R/T renderer; held-out predictions are blank/cropped. G57 is diagnostic-only. |
+| G59 | done, oracle renderer pass | True NeRSemble K/R/T pointcloud renderer positive control | `experiments/metrics/g59_nersemble_pointcloud_true_krt_renderer_20260527.md`, `scripts/render_nersemble_pointcloud_heldout.py` | The official frame-0 pointcloud projects into source/eval cameras with plausible view direction and nonempty coverage; this validates camera plumbing, not a method. |
+| G60 | done, oracle eval pass | Held-out evaluator on G59 pointcloud oracle renders | `experiments/metrics/g60_nersemble_pointcloud_oracle_eval_20260527.md` | Oracle pointcloud visible-heldout metrics are finite (mean PSNR 5.343938, mask IoU 0.553924); sparse pointcloud RGB remains an evaluator/camera sanity check. |
+| G61 | done, diagnostic render pass | LAM textured mesh through true K/R/T after GT bbox alignment | `experiments/metrics/g61_lam_mesh_true_krt_bbox_aligned_20260527.md`, `scripts/render_lam_mesh_nersemble_true_krt.py` | LAM mesh renders are nonempty but use GT pointcloud bbox alignment and show broken texture/appearance; diagnostic-only. |
+| G62 | done, diagnostic eval pass | Held-out evaluator on G61 LAM mesh true-KRT diagnostic renders | `experiments/metrics/g62_lam_mesh_true_krt_eval_20260527.md` | Finite metrics (mean PSNR 6.894329, mask IoU 0.708950) do not validate the method because the visual result is broken and GT-aligned. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G57 | active next | Implement or import a renderer/adapter that maps a learned-prior Gaussian/mesh output into G54 NeRSemble held-out cameras | G56 blocked on missing renderer/predictions; raw RGB remains local | Produce held-out prediction PNGs for the G55 eval serials, then rerun the evaluator; otherwise select a different method with native NeRSemble camera rendering. |
+| G63 | active next | Produce source/model-derived true-KRT method renders without GT pointcloud alignment | G59/G60 camera contract passes; G61/G62 show GT-aligned LAM mesh remains diagnostic and visually broken | Either derive a valid source-camera/model transform for LAM/mesh/Gaussian output, or switch to a method with native NeRSemble camera output before any main result claim. |
 
 ## G8 Result
 

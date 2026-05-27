@@ -29,17 +29,20 @@ Renderer/readiness checks:
 | check | value |
 | --- | --- |
 | g52_g55_required_gates_pass | True |
-| camera_renderer_script_present | False |
+| camera_renderer_script_present | True |
 | camera_renderer_script | /data1/workspace/airulan/3dv/scripts/lam_render_nersemble_cameras.py |
 | expected_eval_prediction_count | 3 |
-| present_eval_prediction_count | 0 |
+| present_eval_prediction_count | 3 |
 | prediction_root | /data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions |
+| renderer_audit_json | /data1/workspace/airulan/3dv/experiments/metrics/g58_nersemble_lam_renderer_contract_audit_20260527.json |
+| renderer_audit_verdict | PASS_DIAGNOSTIC_ONLY_RENDERER_CONTRACT_FAILED |
+| renderer_contract_pass | False |
 | raw_rgb_policy | private local only under 3dv_work; commit metrics/hashes/mask-only figures unless user explicitly reviews identifiable media |
 
 Decision:
 
 ```text
-Blocked for method-quality evaluation: the data and metric gates pass, but no LAM-to-NeRSemble held-out camera renderer or prediction set is present. Do not substitute LAM motion-camera MP4s for held-out NeRSemble camera renders.
+Blocked for method-quality evaluation: data and metric gates pass, but the method prediction set lacks a passing true NeRSemble K/R/T renderer-contract audit. Do not substitute LAM motion-camera MP4s or source-to-sample frames for held-out NeRSemble camera renders.
 ```
 
 Next gate:

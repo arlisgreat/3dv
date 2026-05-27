@@ -1,11 +1,11 @@
-# G55 NeRSemble Held-Out Eval Harness Smoke
+# G55 NeRSemble Held-Out Eval
 
 Date: 2026-05-27
 
 Premise:
 
 ```text
-Exercise the NeRSemble held-out metric chain with a deliberately weak copy-source baseline. The source image is pasted as the prediction for each local held-out camera; this validates metric IO only.
+Exercise the NeRSemble held-out metric chain. In copy-source mode this is a deliberately weak baseline; in prediction-root mode it evaluates real method outputs for each local held-out camera.
 ```
 
 Verdict:
@@ -16,11 +16,11 @@ PASS_NERSEMBLE_HELDOUT_EVAL_HARNESS_SMOKE_COPY_BASELINE
 
 Metrics:
 
-| eval serial | PSNR mask | SSIM global luma | MAE mask | copy mask IoU |
-| --- | ---: | ---: | ---: | ---: |
-| 220700191 | 12.071801 | 0.462999 | 0.156714 | 0.836145 |
-| 222200041 | 11.442771 | 0.342381 | 0.184817 | 0.827324 |
-| 222200047 | 11.675924 | 0.288558 | 0.173916 | 0.841295 |
+| eval serial | PSNR mask | SSIM global luma | MAE mask | prediction mask IoU | prediction coverage |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 220700191 | 12.071801 | 0.462999 | 0.156714 | 0.836145 | 0.670186 |
+| 222200041 | 11.442771 | 0.342381 | 0.184817 | 0.827324 | 0.670186 |
+| 222200047 | 11.675924 | 0.288558 | 0.173916 | 0.841295 | 0.670186 |
 
 Mean metrics:
 
@@ -29,12 +29,25 @@ Mean metrics:
 | mean_masked_rgb_psnr | 11.730165 |
 | mean_masked_rgb_ssim_global_luma | 0.364646 |
 | mean_masked_rgb_mae | 0.171815 |
-| mean_source_mask_vs_eval_mask_iou | 0.834921 |
+| mean_prediction_mask_vs_eval_mask_iou | 0.834921 |
+| mean_prediction_foreground_coverage | 0.670186 |
+
+Evaluation mode:
+
+```text
+copy_source_baseline
+```
+
+Method label:
+
+```text
+copy_source_baseline
+```
 
 Interpretation:
 
 ```text
-The low copy-baseline numbers are expected because the target cameras see different viewpoints. This is a harness smoke and lower-bound sanity check, not a method-quality result.
+The copy-source baseline is expected to be low because target cameras see different viewpoints. Prediction-root mode can support a method-quality discussion only after model distribution and artifact gates pass.
 ```
 
 Decision:
