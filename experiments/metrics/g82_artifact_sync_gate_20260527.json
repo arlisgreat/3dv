@@ -1,0 +1,20 @@
+{
+  "blocked_untracked_paths": [],
+  "counts": {
+    "blocked_untracked_paths": 0,
+    "oversized_sync_candidates": 0,
+    "tracked_result_artifacts": 1596,
+    "untracked_allowed_sync_candidates": 4
+  },
+  "date": "2026-05-27",
+  "decision": "All current untracked result artifacts are repo-safe sync candidates. Stage them with the milestone docs, commit, and push.",
+  "gate": "G82",
+  "oversized_sync_candidates": [],
+  "untracked_allowed_sync_candidates": [
+    "experiments/metrics/g81_pseudo_supervision_repositioning_20260527.json",
+    "experiments/metrics/g81_pseudo_supervision_repositioning_20260527.md",
+    "experiments/metrics/g82_artifact_sync_gate_20260527.json",
+    "experiments/metrics/g82_artifact_sync_gate_20260527.md"
+  ],
+  "verdict": "PASS_ARTIFACT_SYNC_GATE_READY"
+}

@@ -1,0 +1,21 @@
+{
+  "date": "2026-05-27",
+  "gate": "G81",
+  "verdict": "PASS_REPOSITIONING_GATE_OPEN_PSEUDO_SUPERVISION_VALIDITY_TEST",
+  "rejected_positioning": "single image -> diffusion side/back views -> 3DGS -> qualitative render",
+  "accepted_positioning": "single-image input -> identity-anchored confidence-aware pseudo-view supervision -> full-head 3DGS -> real held-out camera evaluation",
+  "core_question": "Can 2D hallucinated pseudo multi-view generation become credible 3D Gaussian reconstruction supervision?",
+  "required_experiment_arms": [
+    "direct_single_image",
+    "naive_pseudo_view",
+    "identity_confidence_pseudo_view"
+  ],
+  "no_leakage_rule": "No real multi-view images may be used as training supervision for the pseudo-supervision claim; real held-out images/masks are evaluation only.",
+  "pass_condition": "identity_confidence_pseudo_view improves held-out camera metrics and visual/VLM gates over both direct_single_image and naive_pseudo_view",
+  "failure_condition": "If the gated pseudo-supervision arm does not improve real held-out camera reconstruction, record a negative answer rather than a qualitative demo claim.",
+  "dependencies": [
+    "G15-G20 pseudo-view candidate-pool correction",
+    "G54-G55 NeRSemble adapter/evaluator",
+    "G77-G80 true-KRT renderer/evaluator/sync harness"
+  ]
+}

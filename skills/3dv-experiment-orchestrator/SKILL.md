@@ -125,9 +125,13 @@ G77 adds source-mask plus eval-camera-frustum crop guard alignment; it may use
 held-out camera K/R/T metadata but not held-out RGB/mask or GT pointcloud for
 alignment. G78/G79 are the current best method-direction positive, with mean
 held-out mask IoU 0.900017 and a passing private visual review. G80 syncs the
-repo-safe artifacts. The active next gate is G81: freeze this no-leakage
-protocol, repeat it on additional audited NeRSemble cases/sources, and keep the
-distribution/overlap warning for LAM-20K.
+repo-safe artifacts. The active next gate is G81: do not scale a qualitative
+"single image -> diffusion side/back views -> 3DGS render" story. Instead test
+whether identity-anchored, confidence-aware pseudo multi-view supervision can
+beat both direct single-image Gaussian and naive pseudo-view supervision when
+all outputs are rendered into the same real held-out benchmark cameras. Keep the
+distribution/overlap warning for LAM-20K and do not use real multi-view images
+as training supervision in this claim.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate
@@ -153,6 +157,20 @@ Do not feed pseudo views into downstream Gaussian/PanoHead/FLAME experiments
 unless the milestone has an explicit `PASS_RECONSTRUCTION_TRAINING` gate. If
 the gate is diagnostic-only or blocked, use the candidates only for failure
 taxonomy and do not describe them as training data.
+
+For G81-style pseudo-supervision experiments, every pseudo view must carry:
+
+```text
+identity anchor score or manual/VLM identity verdict
+view/pose role
+confidence/reliability score
+trusted-region mask
+allowed supervision channels, for example RGB, mask, depth/normal prior, or reject
+```
+
+The required baselines are direct single-image Gaussian, naive pseudo-view
+supervision, and identity/confidence-aware pseudo-view supervision, all evaluated
+through the same real held-out camera renderer/evaluator.
 
 For real-GT milestones, run:
 

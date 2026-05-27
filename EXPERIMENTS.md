@@ -983,8 +983,20 @@ official hidden-holdout result.
 Active next step:
 
 ```text
-G81: freeze the G77-G79 protocol, then repeat it on additional audited
-NeRSemble cases/sources. Keep copy-source, G70/G75, and G77/G78 comparisons in
-the same table; do not claim unseen generalization until model/data overlap is
-audited beyond local metadata.
+G81: stop treating "single image -> diffusion side/back views -> 3DGS ->
+qualitative render" as a valuable target. The next valid experiment is a
+supervision-validity test: single-image input, no real multi-view supervision,
+identity-anchored and confidence-aware pseudo views, full-head 3DGS
+reconstruction, and strict rendering into real held-out cameras.
+
+Required comparison:
+1. direct single-image Gaussian / learned-prior baseline
+2. naive pseudo-view supervision pipeline
+3. identity-anchored, confidence-aware pseudo-view supervision pipeline
+
+All three must use the same NeRSemble / RenderMe-360 / Ava-256 / FaceScape-style
+held-out camera evaluator. If the gated pseudo-supervision variant cannot beat
+the direct and naive baselines under metric plus visual/VLM gates, the correct
+result is a negative answer to whether 2D hallucinations can become credible 3D
+Gaussian supervision.
 ```

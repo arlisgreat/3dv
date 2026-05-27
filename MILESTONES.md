@@ -39,6 +39,26 @@ Establish a licensed, auditable real-GT benchmark before making any
 single-image/few-view head reconstruction-quality claim.
 ```
 
+The sharpened paper question after G77-G80 is:
+
+```text
+Can 2D hallucinations from pseudo multi-view generation become trustworthy
+3D Gaussian reconstruction supervision if they are identity-anchored,
+confidence-aware, and evaluated by rendering into real held-out cameras?
+```
+
+The project must not be positioned as:
+
+```text
+single image -> diffusion side/back views -> 3DGS -> qualitative render
+```
+
+That route is too weak against FaceLift / HQ Head / CAP4D / GAF-style baselines.
+The valuable route is a supervision-validity study: single-image input, no real
+multi-view images as supervision, identity/confidence-gated pseudo views, full-head
+3DGS reconstruction, and strict real-camera evaluation on NeRSemble / RenderMe-360 /
+Ava-256 / FaceScape-style held-out protocols.
+
 ## Working Thesis
 
 Current hypothesis after the benchmark pivot:
@@ -47,6 +67,15 @@ Current hypothesis after the benchmark pivot:
 No pseudo-view or RI3D result is credible as a method-quality claim until it is
 tested against a licensed real-GT benchmark with real captured views, cameras,
 masks, and GT mesh/point-cloud geometry.
+```
+
+Current scientific hypothesis:
+
+```text
+Naive pseudo-view supervision is unreliable; identity-anchored and
+confidence-aware pseudo-view supervision may become useful only if it improves
+real held-out camera reconstruction over both direct single-image Gaussian and
+naive pseudo-view pipelines.
 ```
 
 Historical diagnostic pseudo-view frontend:
@@ -107,6 +136,10 @@ to 0.900017 and private visual review no longer shows the severe side-view
 crop. This validates the overall learned-prior/head-anchored Gaussian ->
 true-K/R/T renderer -> held-out evaluator direction, but it remains
 diagnostic-only pending multi-case validation and model/data-overlap review.
+G81 must not merely scale that LAM diagnostic. It must test the actual paper
+claim: whether identity-anchored, confidence-aware pseudo multi-view supervision
+can produce more stable full-head 3DGS than direct single-image Gaussian and
+naive pseudo-view supervision under the same real held-out camera evaluator.
 ```
 
 ## Mandatory Data Audit Gate
@@ -315,7 +348,7 @@ plumbing itself.
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G81 | active next | Scale the frozen G77-G79 real-GT protocol to more NeRSemble cases/sources and compare against copy-source/G70/G75 diagnostics | G77/G78/G79 validate the renderer/evaluator direction on one frame without held-out image or GT-geometry alignment leakage | At least one additional audited NeRSemble case/source passes the same data, distribution, metric, and visual gates, or the route is downgraded to a single-case diagnostic contribution. |
+| G81 | active next | Reposition and test pseudo-view supervision validity: identity-anchored, confidence-aware pseudo multi-view supervision -> full-head 3DGS -> real held-out camera evaluation | `experiments/metrics/g81_pseudo_supervision_repositioning_20260527.md`; G77-G80 validate the real-GT renderer/evaluator/sync harness; G15-G20 prove naive pseudo-view candidate pools are unsafe | Compare direct single-image Gaussian, naive pseudo-view supervision, and identity/confidence-aware pseudo supervision on the same real-GT held-out cameras. Pass only if the gated pseudo-supervision variant improves stability/metrics/visual gate without using real multi-view images as supervision; otherwise record a negative result. |
 
 ## G8 Result
 

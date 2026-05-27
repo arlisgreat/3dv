@@ -24,6 +24,19 @@ Establish a licensed real-GT benchmark before making any
 single-image/few-view head reconstruction-quality claim.
 ```
 
+After the G77-G80 renderer/evaluator validation, the central question is:
+
+```text
+Can pseudo multi-view generation provide trustworthy 3D Gaussian supervision,
+or does it only create plausible 2D hallucinations that fail real held-out
+camera evaluation?
+```
+
+The intended contribution is not a qualitative single-image demo. It is a
+strict supervision-validity protocol: identity-anchored and confidence-aware
+pseudo views, no real multi-view images as training supervision, full-head 3DGS
+reconstruction, and rendering/evaluation in real held-out benchmark cameras.
+
 Expected claim boundary:
 
 ```text
@@ -188,6 +201,9 @@ The stable scientific signal is not "RI3D is solved." It is:
 4. A learned-prior/head-anchored Gaussian method can be made evaluable only
    after its output is rendered into real held-out cameras under an explicit
    no-leakage gate.
+5. The next publishable question is whether identity/confidence-gated pseudo
+   views improve real-camera 3DGS reconstruction over direct single-image and
+   naive pseudo-view baselines.
 ```
 
 ## Gate Semantics
