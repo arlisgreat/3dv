@@ -1,0 +1,34 @@
+{
+  "date": "2026-05-24",
+  "verdict": "FULL_DOWNLOAD_IN_PROGRESS",
+  "scope": {
+    "benchmark": [
+      "svfr",
+      "nvs",
+      "mono_flame_avatar"
+    ],
+    "dataset_v2": [
+      "metadata",
+      "calibrations",
+      "background_images",
+      "all_available_sequence_videos_all_cameras"
+    ]
+  },
+  "urls": {
+    "NERSEMBLE_DATA_URL": "https://kaldir.vc.cit.tum.de/nersemble/v2",
+    "NERSEMBLE_BENCHMARK_URL": "https://kaldir.vc.cit.tum.de/nersemble/benchmark_v1"
+  },
+  "runtime": {
+    "pid_file": "/data1/workspace/airulan/3dv_work/status/nersemble_full_download.pid",
+    "log": "/data1/workspace/airulan/3dv_work/logs/nersemble_full_setsid_20260525_000223.log",
+    "manifest": "datasets/nersemble_full_manifest.tsv",
+    "workers": 128
+  },
+  "launch_check": {
+    "process": "running",
+    "manifest_rows_including_header": 464,
+    "failures": 0,
+    "active_curl_workers": 128
+  },
+  "network_policy": "unset local HTTP/HTTPS/ALL proxy variables; NO_PROXY=*"
+}

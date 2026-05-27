@@ -68,6 +68,13 @@ G46 project completion forecast and risk register
 G47 benchmark access/tooling partial setup
 G48 future NeRSemble/H3DS benchmark intake preflight
 G49 project completion probability by scope
+G50 NeRSemble official SVFR/v2 metadata intake
+G51 NeRSemble official full download launch
+G52 NeRSemble full download integrity gate with 404 exclusions
+G53 NeRSemble benchmark protocol and v2 compact visual gate
+G54 NeRSemble official NVS frame-0 local adapter preflight
+G55 NeRSemble held-out metric harness copy-baseline smoke
+G56 NeRSemble method readiness/distribution gate blocked on renderer
 ```
 
 还没有完成：
@@ -77,8 +84,9 @@ native learned-prior held-out RGB rendering without similarity/ICP post-alignmen
 benchmark-grade geometry metric with verified correspondence/coverage trimming
 quantitative RGB reconstruction evaluation beyond geometry diagnostics
 publishable artifact review for any identifiable Multiface RGB/mesh result
-public/stronger real-GT benchmark access for a method-quality table
-native NeRSemble/H3DS data gate after official credentials arrive
+native learned-prior method output on the audited NeRSemble source/eval split
+official NeRSemble leaderboard submission packaging, if needed
+H3DS access and independent cross-dataset validation after user provides data
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -141,11 +149,18 @@ Multiface GT frame, but it is still diagnostic-only because ICP alignment is not
 camera recovery, surface correspondence, or held-out view reconstruction. G45
 uses that aligned mesh in the three held-out Multiface cameras and passes a
 silhouette/depth geometry diagnostic, but it still does not render native LAM
-Gaussians or evaluate held-out RGB appearance. G47-G48 preconfigure future
-NeRSemble/H3DS benchmark intake without claiming access: official tools are
-local, raw data roots are ignored, credentials are still absent, and empty
-dataset directories are explicitly blocked from interpretation as available
-benchmarks. G49 records completion probabilities by scope.
+Gaussians or evaluate held-out RGB appearance. G47-G49 preconfigure benchmark
+intake and forecast project scope. G50-G55 then change the NeRSemble status from
+credential-waiting to audited local benchmark plumbing: official data is present
+with 79 explicit HTTP-404 exclusions, official NVS/Mono/SVFR protocol assets
+pass structural checks, v2 participant 017 EXP-1-head passes a local all-camera
+visual audit, and official NVS participant 388 GLASSES frame 0 now has a
+local-only adapter plus held-out RGB/mask metric smoke. This still is not a
+method-quality result; it only authorizes running a real learned-prior /
+feed-forward / head-anchored method output through the audited split. G56 then
+blocks LAM method-quality evaluation because no renderer currently maps LAM
+outputs into the NeRSemble held-out cameras, and LAM-on-NeRSemble is in-domain
+with possible dataset overlap.
 ```
 
 ## 2. Stage 00: Inputs

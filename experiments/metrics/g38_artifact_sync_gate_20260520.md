@@ -12,7 +12,7 @@ Counts:
 
 | field | value |
 | --- | ---: |
-| tracked_result_artifacts | 1526 |
+| tracked_result_artifacts | 1542 |
 | untracked_allowed_sync_candidates | 0 |
 | blocked_untracked_paths | 0 |
 | oversized_sync_candidates | 0 |

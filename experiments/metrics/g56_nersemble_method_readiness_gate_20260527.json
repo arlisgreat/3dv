@@ -1,0 +1,31 @@
+{
+  "checks": {
+    "camera_renderer_script": "/data1/workspace/airulan/3dv/scripts/lam_render_nersemble_cameras.py",
+    "camera_renderer_script_present": false,
+    "expected_eval_prediction_count": 3,
+    "g52_g55_required_gates_pass": true,
+    "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g56_nersemble_lam_eval/predictions",
+    "present_eval_prediction_count": 0,
+    "raw_rgb_policy": "private local only under 3dv_work; commit metrics/hashes/mask-only figures unless user explicitly reviews identifiable media"
+  },
+  "created_at": "2026-05-27T08:17:32.263686+00:00",
+  "date": "2026-05-27",
+  "decision": "Blocked for method-quality evaluation: the data and metric gates pass, but no LAM-to-NeRSemble held-out camera renderer or prediction set is present. Do not substitute LAM motion-camera MP4s for held-out NeRSemble camera renders.",
+  "distribution_audit": {
+    "allowed_interpretation": "baseline sanity and in-distribution benchmark plumbing; not an unseen cross-dataset generalization claim",
+    "candidate_method": "LAM-20K baseline / learned-prior head-anchored Gaussian family",
+    "in_distribution_status": "in-domain for NeRSemble; possible subject/dataset overlap cannot be ruled out from local metadata alone",
+    "test_data": "NeRSemble official NVS 388 GLASSES frame 0 local held-out split plus v2 017 compact visual gate",
+    "training_distribution_statement": "LAM-20K is documented in prior project gates as trained on VFHQ + NeRSemble."
+  },
+  "gate": "G56",
+  "next_gate": "Implement or import a renderer that maps method output into the G54 NeRSemble camera intrinsics/extrinsics, then write predictions for each G55 eval serial and run the held-out evaluator.",
+  "premise": "Before running a learned-prior/feed-forward/head-anchored method on NeRSemble, the real-GT/data/VLM gates, model/test distribution statement, camera renderer, and held-out prediction files must all be explicit.",
+  "required_gate_verdicts": {
+    "G52": "PASS_NERSEMBLE_OFFICIAL_DATA_PRESENT_WITH_404_EXCLUSIONS",
+    "G53": "PASS_NERSEMBLE_COMPACT_CASE_LOCAL_VISUAL_AUDIT",
+    "G54": "PASS_NERSEMBLE_NVS_FRAME0_ADAPTER_PREFLIGHT_LOCAL_ONLY",
+    "G55": "PASS_NERSEMBLE_HELDOUT_EVAL_HARNESS_SMOKE_COPY_BASELINE"
+  },
+  "verdict": "BLOCKED_NERSEMBLE_METHOD_OUTPUT_CAMERA_RENDERER_MISSING"
+}

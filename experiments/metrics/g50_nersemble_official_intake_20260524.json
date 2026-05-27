@@ -1,0 +1,38 @@
+{
+  "date": "2026-05-24",
+  "verdict": "PARTIAL_PASS_SVFR_AND_V2_METADATA_READY",
+  "urls": {
+    "NERSEMBLE_DATA_URL": "https://kaldir.vc.cit.tum.de/nersemble/v2",
+    "NERSEMBLE_BENCHMARK_URL": "https://kaldir.vc.cit.tum.de/nersemble/benchmark_v1"
+  },
+  "downloads": [
+    {
+      "scope": "SVFR benchmark RGB inputs",
+      "path": "datasets/nersemble_benchmark/svfr",
+      "files": 391,
+      "size": "128M",
+      "status": "complete",
+      "manifest": "datasets/nersemble_svfr_manifest.tsv",
+      "failures": 0
+    },
+    {
+      "scope": "NeRSemble v2 metadata and calibrations",
+      "path": "datasets/nersemble_v2",
+      "files": 839,
+      "size": "12M",
+      "status": "complete",
+      "camera_params": 418,
+      "color_calibration": 418,
+      "manifest": "datasets/nersemble_v2_calibrations_manifest.tsv",
+      "failures": 0
+    },
+    {
+      "scope": "NVS benchmark videos",
+      "path": "datasets/nersemble_benchmark/nvs",
+      "files": 18,
+      "size": "53M",
+      "status": "partial_paused_due_low_throughput"
+    }
+  ],
+  "network_policy": "unset local HTTP/HTTPS/ALL proxy variables and use direct official NeRSemble URLs"
+}

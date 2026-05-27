@@ -61,14 +61,20 @@ else
   echo "[skip] FaceScape SVFR benchmark already extracted"
 fi
 
-if [[ -n "${NERSEMBLE_BENCHMARK_URL:-}" ]]; then
-  echo "[download] NeRSemble benchmark SVFR data"
-  PYTHONPATH="$ROOT/external/nersemble-benchmark/src:${PYTHONPATH:-}" \
-    python3 "$ROOT/external/nersemble-benchmark/scripts/download_data.py" \
-    "$DATA_ROOT/nersemble_benchmark" svfr --n-workers 4
-else
-  echo "[blocked] Set NERSEMBLE_BENCHMARK_URL to download official NeRSemble benchmark data"
-fi
+export NERSEMBLE_BENCHMARK_URL="${NERSEMBLE_BENCHMARK_URL:-https://kaldir.vc.cit.tum.de/nersemble/benchmark_v1}"
+export NERSEMBLE_DATA_URL="${NERSEMBLE_DATA_URL:-https://kaldir.vc.cit.tum.de/nersemble/v2}"
+
+echo "[download] NeRSemble benchmark data and v2 metadata"
+python3 "$ROOT/scripts/download_nersemble_official.py" \
+  --out "$DATA_ROOT" \
+  --benchmark-url "$NERSEMBLE_BENCHMARK_URL" \
+  --data-url "$NERSEMBLE_DATA_URL" \
+  --scope benchmark_svfr \
+  --scope benchmark_nvs \
+  --scope benchmark_mono \
+  --scope v2_full \
+  --manifest "$DATA_ROOT/nersemble_full_manifest.tsv" \
+  --workers "${NERSEMBLE_WORKERS:-4}"
 
 if [[ -n "${NERSEMBLE_DATA_URL:-}" && "${NERSEMBLE_DOWNLOAD_FULL:-0}" == "1" ]]; then
   echo "[download] NeRSemble v2 full data; this can exceed 1.5TB"

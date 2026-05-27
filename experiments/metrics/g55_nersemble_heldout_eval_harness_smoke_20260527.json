@@ -1,0 +1,81 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-27T08:11:52.562055+00:00",
+  "date": "2026-05-27",
+  "decision": "Held-out RGB/mask metric plumbing is ready for a real learned-prior/feed-forward method output.",
+  "gate": "G55",
+  "interpretation": "The low copy-baseline numbers are expected because the target cameras see different viewpoints. This is a harness smoke and lower-bound sanity check, not a method-quality result.",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.1718154897292455,
+    "mean_masked_rgb_psnr": 11.7301653472288,
+    "mean_masked_rgb_ssim_global_luma": 0.3646458827315147,
+    "mean_source_mask_vs_eval_mask_iou": 0.8349211054674109,
+    "per_eval_serial": [
+      {
+        "eval_serial": "220700191",
+        "masked_rgb_mae": 0.15671366453170776,
+        "masked_rgb_mse": 0.062061164528131485,
+        "masked_rgb_psnr": 12.071800794866821,
+        "masked_rgb_ssim_global_luma": 0.46299859280054556,
+        "source_mask_vs_eval_mask_iou": 0.8361450395869572,
+        "target_alpha_coverage": 0.6453973021990478
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.1848168671131134,
+        "masked_rgb_mse": 0.07173364609479904,
+        "masked_rgb_psnr": 11.442770941804792,
+        "masked_rgb_ssim_global_luma": 0.34238092850762447,
+        "source_mask_vs_eval_mask_iou": 0.8273237006509677,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.17391593754291534,
+        "masked_rgb_mse": 0.06798413395881653,
+        "masked_rgb_psnr": 11.67592430501479,
+        "masked_rgb_ssim_global_luma": 0.2885581268863743,
+        "source_mask_vs_eval_mask_iou": 0.841294576164308,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Run a real method output through this exact source/eval split, then report RGB/mask/geometry metrics only after model distribution and artifact/privacy gates pass.",
+  "premise": "Exercise the NeRSemble held-out metric chain with a deliberately weak copy-source baseline. The source image is pasted as the prediction for each local held-out camera; this validates metric IO only.",
+  "source_serial": "222200042",
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_NERSEMBLE_HELDOUT_EVAL_HARNESS_SMOKE_COPY_BASELINE"
+}

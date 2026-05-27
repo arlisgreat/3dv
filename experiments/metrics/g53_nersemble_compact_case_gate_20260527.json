@@ -1,0 +1,698 @@
+{
+  "compact_candidates": {
+    "blocked_missing_examples": [],
+    "candidate_count": 20,
+    "candidates": [
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "017",
+        "sequence": "EXP-1-head",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "017",
+        "sequence": "FREE",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/FREE/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "017",
+        "sequence": "EMO-1-shout+laugh",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EMO-1-shout+laugh/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "017",
+        "sequence": "SEN-09-frown_events_bad",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/SEN-09-frown_events_bad/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "018",
+        "sequence": "EXP-1-head",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/EXP-1-head/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "018",
+        "sequence": "FREE",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/FREE/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "018",
+        "sequence": "EMO-1-shout+laugh",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/EMO-1-shout+laugh/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "018",
+        "sequence": "SEN-09-frown_events_bad",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/018/sequences/SEN-09-frown_events_bad/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "024",
+        "sequence": "EXP-1-head",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/EXP-1-head/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "024",
+        "sequence": "FREE",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/FREE/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "024",
+        "sequence": "EMO-1-shout+laugh",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/EMO-1-shout+laugh/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "024",
+        "sequence": "SEN-09-frown_events_bad",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/024/sequences/SEN-09-frown_events_bad/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "030",
+        "sequence": "EXP-1-head",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/EXP-1-head/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "030",
+        "sequence": "FREE",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/FREE/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "030",
+        "sequence": "EMO-1-shout+laugh",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/EMO-1-shout+laugh/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "030",
+        "sequence": "SEN-09-frown_events_bad",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/030/sequences/SEN-09-frown_events_bad/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "031",
+        "sequence": "EXP-1-head",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/EXP-1-head/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "031",
+        "sequence": "FREE",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/FREE/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "031",
+        "sequence": "EMO-1-shout+laugh",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/EMO-1-shout+laugh/images"
+      },
+      {
+        "all_serial_count": 16,
+        "background_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/BACKGROUND",
+        "calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/camera_params.json",
+        "color_calibration": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/calibration/color_calibration.json",
+        "local_eval_serials": [
+          "222200046",
+          "220700191",
+          "222200039"
+        ],
+        "official_nvs_holdout_serials": [
+          "222200046",
+          "222200037",
+          "222200039"
+        ],
+        "participant": "031",
+        "sequence": "SEN-09-frown_events_bad",
+        "single_image_input_serial": "222200037",
+        "video_dir": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/031/sequences/SEN-09-frown_events_bad/images"
+      }
+    ],
+    "selection_policy": "Require one participant/sequence with all 16 camera videos, all 16 backgrounds, camera calibration, and color calibration. Use cam_222200037 as the single-image input for the Mono-FLAME-like setting and reserve cam_222200046/220700191/222200039 for local held-out RGB/mask audit."
+  },
+  "created_at": "2026-05-27T08:07:23.687746+00:00",
+  "date": "2026-05-27",
+  "decision": "Official benchmark protocols are locally configured and the selected compact v2 case passed local visual audit. This authorizes adapter/dataloader implementation, not a reconstruction-quality result.",
+  "gate": "G53",
+  "local_visual_audit": {
+    "audit_sheet": {
+      "local_only_reason": "Contains licensed identifiable NeRSemble face frames; keep under 3dv_work and do not commit without explicit artifact review.",
+      "path": "/data1/workspace/airulan/3dv_work/nersemble_audits/g53_nersemble_compact_case_audit_20260527.png",
+      "serials": [
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200037",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200037.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200046",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200046.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "220700191",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_220700191.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200039",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200039.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200042",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200042.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200044",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200044.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200040",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200040.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200036",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200036.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200048",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200048.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200041",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200041.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200038",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200038.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200047",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200047.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200043",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200043.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200049",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200049.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "222200045",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_222200045.mp4"
+        },
+        {
+          "frame_count": 647,
+          "frame_index": 0,
+          "serial": "221501007",
+          "video": "/data1/workspace/airulan/3dv/datasets/nersemble_v2/017/sequences/EXP-1-head/images/cam_221501007.mp4"
+        }
+      ],
+      "sha256": "b8a33ba28b3c08fb671c6c3a2ffe13e704e50a1c83b84b793a9cda2009c0933d"
+    },
+    "notes": "Local VLM/manual audit sheet shows one consistent participant across all 16 cameras at frame 0; views are real captured synchronized camera views, not generated pseudo views; no split-card, body-only, rotated-photo, or obvious multi-identity distortion observed. Licensed identifiable sheet remains local under 3dv_work.",
+    "verdict": "PASS_NERSEMBLE_COMPACT_CASE_LOCAL_VISUAL_AUDIT"
+  },
+  "next_gate": "Implement a NeRSemble adapter that consumes only the selected audited case/protocol, keeps raw RGB local, declares train/test distribution, and evaluates held-out cameras before any method-quality claim.",
+  "official_benchmark": {
+    "mono": {
+      "cases": [
+        {
+          "missing_files": [],
+          "official_eval_serials": [
+            "222200046",
+            "220700191",
+            "222200039"
+          ],
+          "participant": "393",
+          "required_files": 59,
+          "test_sequence_count": 4,
+          "train_sequence_count": 18,
+          "train_serial": "222200037"
+        },
+        {
+          "missing_files": [],
+          "official_eval_serials": [
+            "222200046",
+            "220700191",
+            "222200039"
+          ],
+          "participant": "404",
+          "required_files": 59,
+          "test_sequence_count": 4,
+          "train_sequence_count": 18,
+          "train_serial": "222200037"
+        },
+        {
+          "missing_files": [],
+          "official_eval_serials": [
+            "222200046",
+            "220700191",
+            "222200039"
+          ],
+          "participant": "461",
+          "required_files": 59,
+          "test_sequence_count": 4,
+          "train_sequence_count": 18,
+          "train_serial": "222200037"
+        },
+        {
+          "missing_files": [],
+          "official_eval_serials": [
+            "222200046",
+            "220700191",
+            "222200039"
+          ],
+          "participant": "477",
+          "required_files": 59,
+          "test_sequence_count": 4,
+          "train_sequence_count": 18,
+          "train_serial": "222200037"
+        },
+        {
+          "missing_files": [],
+          "official_eval_serials": [
+            "222200046",
+            "220700191",
+            "222200039"
+          ],
+          "participant": "486",
+          "required_files": 59,
+          "test_sequence_count": 4,
+          "train_sequence_count": 18,
+          "train_serial": "222200037"
+        }
+      ],
+      "interpretation": "Mono FLAME Avatar assets provide a single-camera train protocol plus FLAME tracking. This is the closest official protocol to the sprint's single-image/head-prior setting.",
+      "missing_files": 0,
+      "task": "official_mono_flame_avatar"
+    },
+    "nvs": {
+      "cases": [
+        {
+          "has_first_pointcloud": true,
+          "hidden_holdout_serials": [
+            "222200046",
+            "222200037",
+            "222200039"
+          ],
+          "missing_files": [],
+          "participant": "388",
+          "required_files": 28,
+          "sequence": "GLASSES",
+          "train_serial_count": 13
+        },
+        {
+          "has_first_pointcloud": true,
+          "hidden_holdout_serials": [
+            "222200046",
+            "222200037",
+            "222200039"
+          ],
+          "missing_files": [],
+          "participant": "422",
+          "required_files": 28,
+          "sequence": "EXP-2-eyes",
+          "train_serial_count": 13
+        },
+        {
+          "has_first_pointcloud": true,
+          "hidden_holdout_serials": [
+            "222200046",
+            "222200037",
+            "222200039"
+          ],
+          "missing_files": [],
+          "participant": "443",
+          "required_files": 28,
+          "sequence": "FREE",
+          "train_serial_count": 13
+        },
+        {
+          "has_first_pointcloud": true,
+          "hidden_holdout_serials": [
+            "222200046",
+            "222200037",
+            "222200039"
+          ],
+          "missing_files": [],
+          "participant": "445",
+          "required_files": 28,
+          "sequence": "EXP-6-tongue-1",
+          "train_serial_count": 13
+        },
+        {
+          "has_first_pointcloud": true,
+          "hidden_holdout_serials": [
+            "222200046",
+            "222200037",
+            "222200039"
+          ],
+          "missing_files": [],
+          "participant": "475",
+          "required_files": 28,
+          "sequence": "HAIR",
+          "train_serial_count": 13
+        }
+      ],
+      "interpretation": "Official NVS train assets and first pointclouds can configure adapter development. The three official held-out cameras are hidden, so local metrics must not be presented as official leaderboard metrics.",
+      "missing_files": 0,
+      "task": "official_nvs"
+    },
+    "svfr": {
+      "image_count": 391,
+      "interpretation": "SVFR is the official single-view task, but GT geometry is hidden for submission metrics. It is suitable for input-distribution smoke tests and external benchmark submission packaging, not local GT metric claims.",
+      "missing_expected_participants": [],
+      "participant_count": 20,
+      "participants_with_images": {
+        "017": 20,
+        "060": 20,
+        "071": 20,
+        "102": 20,
+        "112": 20,
+        "123": 20,
+        "133": 20,
+        "139": 20,
+        "175": 19,
+        "178": 20,
+        "183": 20,
+        "194": 19,
+        "215": 13,
+        "226": 20,
+        "256": 20,
+        "266": 20,
+        "289": 20,
+        "310": 20,
+        "320": 20,
+        "372": 20
+      },
+      "task": "official_svfr"
+    }
+  },
+  "premise": "NeRSemble must enter the project as a real licensed benchmark with explicit protocol constraints. Official benchmark assets configure NVS/Mono/SVFR tasks; full v2 videos only provide compact local multi-view cases after a visual/VLM gate.",
+  "verdict": "PASS_NERSEMBLE_COMPACT_CASE_LOCAL_VISUAL_AUDIT"
+}

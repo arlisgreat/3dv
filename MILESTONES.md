@@ -74,12 +74,16 @@ plumbing. G34-G36 close the current RI3D scaling route, confirm no additional
 ready public/local real-GT benchmark is available, and reset the method direction
 toward learned-prior/full-head Gaussian approaches. G37-G38 add explicit
 model/data distribution and artifact-sync gates so that old candidate pools and
-raw/private assets cannot slip back into the main claim. G39-G41 open and close
-the first learned-prior/feed-forward/head-anchored Gaussian smoke loop: LAM can
-run on the local real-GT Multiface train view, but only as local execution
-evidence because the current wrapper exports animation MP4s, not held-out
-camera-aligned renders or GT geometry metrics. None of these is a
-reconstruction-quality result.
+raw/private assets cannot slip back into the main claim. G39-G45 open the first
+learned-prior/feed-forward/head-anchored Gaussian smoke and geometry-diagnostic
+loop on Multiface: LAM can run and export local geometry, but the results remain
+diagnostic because native held-out RGB rendering is not evaluated. G50-G55 move
+the benchmark route from credential-waiting to NeRSemble-backed data and metric
+plumbing: official data is present with 79 explicit HTTP-404 exclusions, a
+v2 compact case passes local visual audit, and an official NVS frame-0 adapter
+plus copy-source held-out metric smoke passes. None of these is a method-quality
+result yet; they authorize only the next learned-prior method output on the
+audited NeRSemble split.
 ```
 
 ## Mandatory Data Audit Gate
@@ -158,6 +162,17 @@ tools and raw-data policy are ready, but method-quality work stays blocked
 until user-provided NeRSemble/H3DS credentials pass data/VLM/distribution gates.
 G49 records project completion probability by scope, separating the repo-safe
 diagnostic package from the larger RGB method-quality and proposal-level system.
+G50/G51 record official NeRSemble partial intake and full download launch. G52
+closes the download with 156260 ok manifest paths and 79 final HTTP-404
+exclusions, mainly participant 545/546/548 cam_222200041. G53 passes official
+benchmark protocol preflight and selects v2 participant 017 EXP-1-head as a
+full 16-camera compact case after a local visual/VLM audit sheet. G54 prepares
+an official NVS participant 388 GLASSES frame-0 local adapter with 13 visible
+views, alpha maps, cameras, and a 673854-point pointcloud. G55 proves the
+held-out RGB/mask metric harness with a deliberately weak copy-source baseline;
+that is plumbing only, not a reconstruction method. G56 blocks method-quality
+evaluation until a real method output can be rendered into the exact NeRSemble
+held-out cameras; LAM motion-camera MP4s are not acceptable substitutes.
 ```
 
 ## Completed Milestones
@@ -220,12 +235,19 @@ diagnostic package from the larger RGB method-quality and proposal-level system.
 | G47 | done, access/tooling partial pass | Benchmark dataset access/download preparation | `experiments/metrics/g47_benchmark_dataset_access_download_20260520.md`, `datasets/access_manifest.tsv` | FaceScape SVFR/sample and official NeRSemble/H3DS tool repos are local; NeRSemble/H3DS data remain blocked until official credentials arrive. |
 | G48 | done, intake preflight pass data blocked | Future NeRSemble/H3DS benchmark intake contract | `experiments/metrics/g48_benchmark_intake_preflight_20260520.md`, `scripts/benchmark_intake_preflight.py` | Official tool repos, ignored raw-data roots, required credentials, and benchmark contracts are preconfigured; no fake benchmark result is created. |
 | G49 | done, probability pass | Project completion probability by scope | `experiments/metrics/g49_project_completion_probability_20260520.md` | Diagnostic package probability is high; method-quality result depends on native held-out rendering and official NeRSemble/H3DS data access. |
+| G50 | done, partial intake pass | Official NeRSemble SVFR and v2 metadata/calibration intake | `experiments/metrics/g50_nersemble_official_intake_20260524.md`, `scripts/download_nersemble_official.py` | SVFR RGB inputs and v2 metadata/calibrations were ready; NVS/mono/full v2 remained resumable. |
+| G51 | done, transfer launch | Official NeRSemble full download launch | `experiments/metrics/g51_nersemble_full_download_launch_20260524.md`, `datasets/nersemble_full_manifest.tsv` | Full v2/benchmark download was launched with 128 workers; manifest stays local/ignored. |
+| G52 | done, intake pass with exclusions | NeRSemble full download integrity gate | `experiments/metrics/g52_nersemble_download_integrity_gate_20260527.md`, `scripts/nersemble_download_integrity_gate.py` | 1.4TB v2 and 3.2GB benchmark data are present; 156260 manifest paths are ok and 79 final HTTP-404 paths must be excluded. |
+| G53 | done, visual/data gate pass local-only | NeRSemble benchmark protocol and compact v2 case gate | `experiments/metrics/g53_nersemble_compact_case_gate_20260527.md`, `scripts/nersemble_compact_case_gate.py` | Official NVS/Mono/SVFR protocol assets pass; v2 participant 017 EXP-1-head all-16-camera sheet passes local visual audit but identifiable sheet remains under `3dv_work`. |
+| G54 | done, adapter preflight pass local-only | Official NeRSemble NVS frame-0 local adapter | `experiments/metrics/g54_nersemble_nvs_frame0_adapter_preflight_20260527.md`, `experiments/figures/g54_nersemble_nvs_frame0_mask_audit_20260527.png` | Participant 388 GLASSES frame 0 yields 13 visible RGB/alpha views, cameras, and a 673854-point pointcloud; raw RGB stays local. |
+| G55 | done, metric harness smoke pass | NeRSemble held-out RGB/mask eval harness smoke | `experiments/metrics/g55_nersemble_heldout_eval_harness_smoke_20260527.md`, `scripts/nersemble_heldout_copy_eval_smoke.py` | A copy-source baseline gives finite held-out metrics (mean PSNR 11.730165, SSIM 0.364646); this is metric plumbing only. |
+| G56 | done, blocked correctly | NeRSemble method readiness and distribution gate | `experiments/metrics/g56_nersemble_method_readiness_gate_20260527.md`, `scripts/nersemble_method_readiness_gate.py` | LAM-on-NeRSemble is in-domain with possible dataset overlap; no held-out camera renderer or prediction files exist, so method-quality evaluation is blocked. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| none | closed for current benchmark-preaccess loop | Stop interpreting tool clones, empty NeRSemble/H3DS directories, FaceScape samples, or G45 geometry diagnostics as final RGB/method-quality benchmark results | G39-G49 | Open a new milestone when NeRSemble/H3DS credentials arrive, to implement native held-out RGB/camera rendering, run artifact/privacy review, or package the final paper/report. |
+| G57 | active next | Implement or import a renderer/adapter that maps a learned-prior Gaussian/mesh output into G54 NeRSemble held-out cameras | G56 blocked on missing renderer/predictions; raw RGB remains local | Produce held-out prediction PNGs for the G55 eval serials, then rerun the evaluator; otherwise select a different method with native NeRSemble camera rendering. |
 
 ## G8 Result
 

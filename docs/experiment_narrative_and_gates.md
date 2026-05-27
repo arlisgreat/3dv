@@ -69,10 +69,16 @@ recovery, verified surface correspondence, or held-out view reconstruction. G45
 then renders the aligned LAM mesh into the three held-out Multiface cameras and
 passes silhouette/depth diagnostics, while still blocking RGB/SOTA quality
 claims because native LAM Gaussians and held-out appearance are not evaluated.
-G47-G48 preconfigure stronger benchmark intake for NeRSemble and H3DS using
-official tooling and ignored local raw-data roots, but keep method-quality work
-blocked until official credentials/data pass data, VLM, distribution, and
-artifact gates. G49 records project completion probabilities by scope.
+G47-G49 preconfigure stronger benchmark intake and scope forecasts. G50-G55
+then update the benchmark route with actual NeRSemble data: the official v2 and
+benchmark folders are present with 79 explicit HTTP-404 exclusions; official
+NVS/Mono/SVFR protocol assets pass; v2 participant 017 EXP-1-head passes a
+local all-camera visual audit; official NVS participant 388 GLASSES frame 0 has
+RGB, alpha maps, cameras, and pointcloud wired into a local adapter; and a
+copy-source baseline proves held-out RGB/mask metric IO. These gates authorize a
+real method-output run, not a method-quality claim by themselves. G56 blocks the
+first method-readiness check because LAM-on-NeRSemble is in-domain with possible
+dataset overlap and no held-out NeRSemble camera renderer/prediction files exist.
 
 ## Real GT Benchmark Pivot
 
@@ -139,6 +145,14 @@ G46: record project completion forecast and user-check risks.
 G47-G48: preconfigure official benchmark tooling and intake contracts for
          NeRSemble/H3DS while data access is still credential-gated.
 G49: record completion probability by project scope.
+G50-G52: ingest NeRSemble official data and close the download integrity gate
+         with 156260 ok manifest paths and 79 explicit HTTP-404 exclusions.
+G53: pass NeRSemble official benchmark protocol checks and a local visual/VLM
+     gate for a v2 all-16-camera compact case.
+G54-G55: prepare an official NVS frame-0 local adapter and smoke-test held-out
+         RGB/mask metrics with a trivial copy-source baseline.
+G56: block method-quality evaluation until a real method output can be rendered
+     into the G54 NeRSemble held-out cameras.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -283,6 +297,13 @@ positive control, so they are not the active G16b case.
 | G47 | Benchmark access/tooling setup | User-side NeRSemble/H3DS applications are pending | Done: FaceScape support and official NeRSemble/H3DS tool repos are local; credential-gated data remains blocked |
 | G48 | Benchmark intake preflight | G47 tooling setup | Done: raw-data roots, credentials, contracts, and git policy are checked without creating fake benchmark results |
 | G49 | Completion probability | G48 preaccess closure | Done: diagnostic package probability is high; method-quality probability depends on native held-out rendering and official benchmark data |
+| G50 | NeRSemble official intake | Official access URL available | Done: SVFR inputs and v2 metadata/calibration downloaded; full videos still resumable |
+| G51 | NeRSemble full download launch | G50 partial intake | Done: full v2/benchmark transfer launched with ignored manifest under `datasets/` |
+| G52 | NeRSemble download integrity gate | Download completed locally | Done: v2 and benchmark roots present; 79 final HTTP-404 paths are explicitly excluded |
+| G53 | NeRSemble compact case data/VLM gate | G52 pass with exclusions | Done: official NVS/Mono/SVFR protocols pass and v2 017 EXP-1-head passes local visual audit |
+| G54 | NeRSemble NVS frame-0 adapter | G53 pass | Done: official NVS 388 GLASSES frame 0 adapter has RGB/alpha/cameras/pointcloud local-only |
+| G55 | NeRSemble held-out metric smoke | G54 pass | Done: copy-source baseline produces finite held-out RGB/mask metrics; this is metric plumbing only |
+| G56 | NeRSemble method readiness gate | G55 pass | Blocked correctly: no held-out NeRSemble camera renderer/prediction files, and LAM-on-NeRSemble has in-domain/possible-overlap risk |
 
 ## Expected Final Outputs
 
@@ -296,11 +317,13 @@ The expected final package is:
 4. A real-GT benchmark requirement and route audit for the next credible claim.
 5. A learned-prior/head-anchored Gaussian method gate showing that LAM can run
    locally on real-GT input, but MP4 smoke is not a reconstruction metric.
+6. A NeRSemble-backed benchmark route with explicit download exclusions,
+   visual/data gates, local-only raw RGB policy, and a held-out metric harness.
 ```
 
 ## Current Closure
 
-As of 2026-05-20:
+As of 2026-05-27:
 
 ```text
 G16a real-capture GT is no longer blocked at the local compact-case level:
@@ -341,5 +364,12 @@ only local execution quality, not a metric-backed reconstruction result. The
 repo-safe CC0 point-splat positive control is blocked for LAM input use because
 face tracking fails. The next action must be a camera-aligned render/geometry
 export adapter, stronger licensed benchmark access, or explicit artifact review,
-not more ungated MP4 generation.
+not more ungated MP4 generation. After G50-G55, NeRSemble is now the main
+real-GT route: official data is local but not perfectly complete, with 79
+server-side 404 paths excluded. The immediate next method milestone is to run a
+real learned-prior/feed-forward/head-anchored output through the G54/G55
+NeRSemble source/eval split and report metrics only after model-distribution and
+artifact/privacy gates pass. G56 records that this is currently blocked by the
+missing method-to-NeRSemble camera renderer; LAM motion-camera videos must not
+be substituted for held-out camera predictions.
 ```

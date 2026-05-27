@@ -1,0 +1,249 @@
+{
+  "calibration": {
+    "intrinsics_count": 16,
+    "path": "/data1/workspace/airulan/3dv/datasets/nersemble_benchmark/nvs/388/calibration/camera_params.json",
+    "serial_count": 16
+  },
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "checks": {
+    "all_image_alpha_frame_counts_match": true,
+    "all_views_have_calibration": true,
+    "all_views_same_resolution": true,
+    "local_eval_serials_present": true,
+    "max_alpha_coverage": 0.6701864656540467,
+    "min_alpha_coverage": 0.4809878712310134,
+    "pointcloud_exists": true,
+    "source_serial_present": true
+  },
+  "created_at": "2026-05-27T08:10:12.570506+00:00",
+  "date": "2026-05-27",
+  "decision": "The official NVS frame-0 adapter is ready for CPU/GPU evaluation harness work. Do not present metrics as official leaderboard metrics; use visible-camera local held-outs only until submission packaging exists.",
+  "gate": "G54",
+  "local_adapter_root": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter",
+  "next_gate": "G55 should implement a model-agnostic held-out evaluation harness over this adapter: source view in, local eval cameras out, RGB PSNR/SSIM/LPIPS plus mask IoU/depth or pointcloud sanity where the method output supports it.",
+  "pointcloud": {
+    "#": ".PCD v0.7 - Point Cloud Data file format",
+    "count": "1 1 1 1 1 1 1",
+    "data": "binary",
+    "exists": true,
+    "fields": "x y z normal_x normal_y normal_z rgb",
+    "header_lines": [
+      "# .PCD v0.7 - Point Cloud Data file format",
+      "VERSION 0.7",
+      "FIELDS x y z normal_x normal_y normal_z rgb",
+      "SIZE 4 4 4 4 4 4 4",
+      "TYPE F F F F F F F",
+      "COUNT 1 1 1 1 1 1 1",
+      "WIDTH 673854",
+      "HEIGHT 1",
+      "VIEWPOINT 0 0 0 1 0 0 0",
+      "POINTS 673854",
+      "DATA binary"
+    ],
+    "height": "1",
+    "path": "/data1/workspace/airulan/3dv/datasets/nersemble_benchmark/nvs/388/sequences/GLASSES/pointclouds/frame_00000.pcd",
+    "points": "673854",
+    "size": "4 4 4 4 4 4 4",
+    "type": "F F F F F F F",
+    "version": "0.7",
+    "viewpoint": "0 0 0 1 0 0 0",
+    "width": "673854"
+  },
+  "premise": "Build the smallest real NeRSemble NVS local adapter from official benchmark data: one frame with real RGB, alpha maps, cameras, and a pointcloud. This preflight validates data plumbing only; official leaderboard hold-out cameras remain hidden.",
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g54_nersemble_nvs_frame0_mask_audit_20260527.png",
+    "mask_sheet_sha256": "7205dec4f3945f204b07fa4ac51f208b5556b01751663d60bac5b35364c88bc9"
+  },
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_NERSEMBLE_NVS_FRAME0_ADAPTER_PREFLIGHT_LOCAL_ONLY",
+  "views": [
+    {
+      "alpha_coverage": 0.6701864656540467,
+      "alpha_sha256": "9e55923980a0eeac919214d052e4dabb78dbac8591a7aa76fee0509dfcceeea4",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "eb4aab2e06712495940af104c6ec32a075b28f3cc959bf90c3bda9a65c67a7d5",
+      "rgb_sha256": "3a0cd0471c42060d0e020813844d2d458484a5d7c4a11e5a39c02e3ca5f8d93e",
+      "role": "source_single_image",
+      "serial": "222200042"
+    },
+    {
+      "alpha_coverage": 0.6453973021990478,
+      "alpha_sha256": "24e9fb7d5c8125caa52e9c433e8329d135d0d4b3de839ee0165657576984ab3b",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "041b8f058daf0b79ff95fa04203d959a636840ffc7f4277627d6b4138b9186bd",
+      "rgb_sha256": "7a83325a0b165b44fab4577194e10dc5cc001025ea247d971e6f8b5db76a11a8",
+      "role": "local_heldout_eval",
+      "serial": "220700191"
+    },
+    {
+      "alpha_coverage": 0.6011488324642938,
+      "alpha_sha256": "d361a962035e2a99e47997ee7a5238257f542663da9c6b2ccd79018d9cb9110b",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "340250dbb0ccfd4b38a1f0b9b72795692c2465fc13729a053b1b1d9542d17b58",
+      "rgb_sha256": "9411abe41b7e1181b799254c02dff04e554af0dedb459ee6fa7c63c10132eaa8",
+      "role": "local_heldout_eval",
+      "serial": "222200041"
+    },
+    {
+      "alpha_coverage": 0.5941934935388801,
+      "alpha_sha256": "80329500d8e5b7416260ca39e3ce9847582a10409859eb2901db6a38e22c2f15",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "6939b71944678101381e81eaff38480c55ec7036449a921a27e18454130839aa",
+      "rgb_sha256": "99ab53042b28523104b8ad6263d97e622508621fd7ad502c1bb9e598cf84c14c",
+      "role": "local_heldout_eval",
+      "serial": "222200047"
+    },
+    {
+      "alpha_coverage": 0.6324920652913172,
+      "alpha_sha256": "c1026a74a738acbf123b339b9d06ec06e8e9e17fb3b3c02f9b09e6522b8d3fc8",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "946ab957addb36d9b49796df3b6b8a73564bc4711f9f8bd6bb33dfc28bdf0fef",
+      "rgb_sha256": "38249ce3c6efbaa3309e886b471d23bd57d63a0f934f8439a51752aff98c4097",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "221501007"
+    },
+    {
+      "alpha_coverage": 0.603913511675357,
+      "alpha_sha256": "affd99c471a693303a41cd7d04f72057331056b771c3f0b3acbcc22ef00dddbb",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "62172619b4f9538af1d62d791a3144c968b072c3615882df27a33297fe607b32",
+      "rgb_sha256": "b46218db2b9904bbe1207e6c10fb7512f1c7d959f603bf5ecd383b451c8e42ea",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200036"
+    },
+    {
+      "alpha_coverage": 0.4809878712310134,
+      "alpha_sha256": "43d76da443aff79e00fb115cd7261ef6213fecbcb5db9bbf8f196f7d8e3af762",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "18c3e36b9a5adc82d339a7208db35de3ca77ca4c05808413c12845947a635dbc",
+      "rgb_sha256": "29617de34ceaa50fd4f4d08dd323d7f011c544f4f08e20e44dff3811daa5a985",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200038"
+    },
+    {
+      "alpha_coverage": 0.5286987077760145,
+      "alpha_sha256": "f7d961b90fe361d663656f402b41f713b145bcd70ee93b8aee4ba01b6ee18c03",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "676c8a85ad1b06ff3176099e9ebfbba3cbdfbe9b8c385f1e7ac35972473b9f53",
+      "rgb_sha256": "cf2bff498aa0a7a0dfb49ff399a9a6cde8e7d4f893d6e59015967358cd2ef3dc",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200040"
+    },
+    {
+      "alpha_coverage": 0.4968929947857629,
+      "alpha_sha256": "59794cc9d86b61a7d161f37c95813a98f7274cef97a31d6ba7a7657020131993",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "0990f75276f5e9421553bd99fe314668756ca1a3ffe82dc84d46ee645957b25d",
+      "rgb_sha256": "724cec69d0944d553d32d003cebc267b205793bd15b0ce0b79b7bd6c0068ee8b",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200043"
+    },
+    {
+      "alpha_coverage": 0.6457861029245069,
+      "alpha_sha256": "21f28ddd8a4afc73ddd4c8935e7faf2a0597de99d53396d12ddf1e9401a6aa2e",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "84ae173ac86c50e776fb330fa843380ca472d2ac51a75943af8b1e05fb1fd58b",
+      "rgb_sha256": "8ab05bd95ddddedbaefdebd28c09f42240f31b309e5c2319d1827bfce9126c1a",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200044"
+    },
+    {
+      "alpha_coverage": 0.5942473362049422,
+      "alpha_sha256": "d3ae8fb2ad593992c54cce1c6eb10790b053791940dcdaeabf06b55da623e001",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "953487462289386fdfada50b1601a27eb70e9cd24e9c2ecdb4c89589b29b5f05",
+      "rgb_sha256": "75b84dfc0972552ac15e317ae98ac9cb99155a9229bc028ba86d57098e95decc",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200045"
+    },
+    {
+      "alpha_coverage": 0.5555962366810248,
+      "alpha_sha256": "87d8c39c86bec0ca04f2532ea8e2eae6a8a8329e5b996b85176c6da0edf5f020",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "b03beb085421e09fdc7c51f16f223d42dc0025f76f69eb16933f4d04a89c367e",
+      "rgb_sha256": "5796025070d67a866a08ec6678f2ac86db295163830564203f7c9883653ba18c",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200048"
+    },
+    {
+      "alpha_coverage": 0.6034493312174111,
+      "alpha_sha256": "e99ca4c699b5be4f604dfa1c71d8d17e67166425d5b75f6343cea69cf40ba003",
+      "has_calibration": true,
+      "image_frame_count": 1118,
+      "image_height": 1604,
+      "image_width": 1100,
+      "mask_sha256": "5b4808c42e929e99dffdd6647299dd0da598f024be236e4f8fd15d5f35a68cb1",
+      "rgb_sha256": "dc4c57713dae6101a0bc9402a43d1d2f6f57b09575ea37e1e7eb6923594c82a7",
+      "role": "visible_context_not_for_first_smoke",
+      "serial": "222200049"
+    }
+  ]
+}
