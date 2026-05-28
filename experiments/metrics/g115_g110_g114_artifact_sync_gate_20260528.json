@@ -1,0 +1,30 @@
+{
+  "blocked_untracked_paths": [],
+  "counts": {
+    "blocked_untracked_paths": 0,
+    "oversized_sync_candidates": 0,
+    "tracked_result_artifacts": 1651,
+    "untracked_allowed_sync_candidates": 14
+  },
+  "date": "2026-05-28",
+  "decision": "All current untracked result artifacts are repo-safe sync candidates. Stage them with the milestone docs, commit, and push.",
+  "gate": "G115",
+  "oversized_sync_candidates": [],
+  "untracked_allowed_sync_candidates": [
+    "experiments/figures/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.png",
+    "experiments/metrics/g110_source_gated_pseudo_prior_refinement_20260528.json",
+    "experiments/metrics/g110_source_gated_pseudo_prior_refinement_20260528.md",
+    "experiments/metrics/g111_source_gated_pseudo_prior_refinement_heldout_eval_g55_20260528.json",
+    "experiments/metrics/g111_source_gated_pseudo_prior_refinement_heldout_eval_g55_20260528.md",
+    "experiments/metrics/g112_source_gated_pseudo_prior_three_arm_contract_g55_20260528.json",
+    "experiments/metrics/g112_source_gated_pseudo_prior_three_arm_contract_g55_20260528.md",
+    "experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.json",
+    "experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.md",
+    "experiments/metrics/g114_source_gated_pseudo_prior_private_rgb_visual_audit_20260528.json",
+    "experiments/metrics/g114_source_gated_pseudo_prior_private_rgb_visual_audit_20260528.md",
+    "experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.json",
+    "experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.md",
+    "scripts/g110_refine_direct_with_pseudo_prior.py"
+  ],
+  "verdict": "PASS_ARTIFACT_SYNC_GATE_READY"
+}

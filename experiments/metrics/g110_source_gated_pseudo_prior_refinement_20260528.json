@@ -1,0 +1,320 @@
+{
+  "all_rendered_root": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/all_rendered_frames",
+  "artifact_policy": "Refined identifiable RGBA predictions remain under 3dv_work; commit metrics/hashes and repo-safe mask audits only.",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "color_prior": {
+    "blend": 0.6201516538160059,
+    "blend_policy": "conservative minimum(confidence_score/100 * rgb_weight) across selected strict train candidates",
+    "moment_weight_policy": "identity_anchor_score * confidence_score/100 * rgb_weight over strict train candidates",
+    "pseudo_target_mean_rgb": [
+      0.36074891686439514,
+      0.2838295102119446,
+      0.27167782187461853
+    ],
+    "pseudo_target_std_rgb": [
+      0.2531089186668396,
+      0.20173613727092743,
+      0.1749037355184555
+    ],
+    "selected_pseudo_views": [
+      {
+        "confidence_score": 100.0,
+        "identity_anchor_score": 0.720435,
+        "image_sha256": "b0d8b5bec49a74c8688b04e4aacfc8c3873bc15e52e790fd776ba44c8a8f6b47",
+        "moment_weight": 0.720435,
+        "pixel_count": 33771,
+        "rgb_weight": 1.0,
+        "supervision_role": "identity_supervision",
+        "trusted_region_mask_sha256": "10a282efc46b8306c7efaf2c50c4ba014f50a25512a8bf03dd33338d62e664fa",
+        "view_index": 0
+      },
+      {
+        "confidence_score": 95.40794674092399,
+        "identity_anchor_score": 0.567084,
+        "image_sha256": "51a59ea4a030c77738a0199721d222b36dab58e90f43499961989b9f4145c7ed",
+        "moment_weight": 0.3516780804525959,
+        "pixel_count": 29715,
+        "rgb_weight": 0.65,
+        "supervision_role": "identity_supervision_weak",
+        "trusted_region_mask_sha256": "a3ca8f6ef4b1bf9f015978fdca34d830f235e8a59cf402011729034584478f18",
+        "view_index": 4
+      },
+      {
+        "confidence_score": 100.0,
+        "identity_anchor_score": 0.875623,
+        "image_sha256": "691785eb0f792135e8c686ee85ab6ea67087bfac254be8f32780f94731f0018b",
+        "moment_weight": 0.875623,
+        "pixel_count": 34673,
+        "rgb_weight": 1.0,
+        "supervision_role": "identity_supervision",
+        "trusted_region_mask_sha256": "beab701edfc9f3c04334c23ac042e3cfa4e5bb33a2fe9a2fc05077d9984583f3",
+        "view_index": 5
+      }
+    ],
+    "source_direct_mean_rgb": [
+      0.48503586649894714,
+      0.3830097019672394,
+      0.3557395040988922
+    ],
+    "source_direct_std_rgb": [
+      0.23730075359344482,
+      0.1981784552335739,
+      0.1925964206457138
+    ]
+  },
+  "created_at": "2026-05-28T08:43:09.554511+00:00",
+  "date": "2026-05-28",
+  "decision": "Source-gated direct-prior refinement produced held-out prediction PNGs for evaluator comparison.",
+  "direct_render_root": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard",
+  "gate": "G110",
+  "missing_requirements": [],
+  "next_gate": "Evaluate G110 predictions with the held-out evaluator, rerun the three-arm contract, and audit masks.",
+  "no_leakage_policy": "Parameter selection uses only the direct source render, source RGB/mask, and generated pseudo views from the strict identity/confidence-aware manifest. Held-out RGB/masks are not read by this script.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/predictions",
+  "pseudo_manifest": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_manifest/identity_confidence_strict_pseudo_supervision_manifest.json",
+  "renders": [
+    {
+      "alpha_coverage": 0.6440931761505327,
+      "direct_input": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/all_rendered_frames/cam_220700191_frame_00000.png",
+      "render_sha256": "282f0519ecf26daafb2d2af803f2290173bb98bb79b4e696d7d5fcc2c35d4790",
+      "role": "source_render",
+      "serial": "220700191"
+    },
+    {
+      "alpha_coverage": 0.6707815688052596,
+      "direct_input": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/predictions/cam_222200042_frame_00000.png",
+      "prediction_sha256": "ce1a9065980181912268051ace24c91665448d966070bbe4ea4595c78b27261d",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/all_rendered_frames/cam_222200042_frame_00000.png",
+      "render_sha256": "ce1a9065980181912268051ace24c91665448d966070bbe4ea4595c78b27261d",
+      "role": "heldout_prediction",
+      "serial": "222200042"
+    },
+    {
+      "alpha_coverage": 0.6143595556563137,
+      "direct_input": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/predictions/cam_222200041_frame_00000.png",
+      "prediction_sha256": "c48635061afd83db50f481f19e000d9f3f5f636c105ead54a2672421ec171990",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/all_rendered_frames/cam_222200041_frame_00000.png",
+      "render_sha256": "c48635061afd83db50f481f19e000d9f3f5f636c105ead54a2672421ec171990",
+      "role": "heldout_prediction",
+      "serial": "222200041"
+    },
+    {
+      "alpha_coverage": 0.5929392428020857,
+      "direct_input": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png",
+      "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/predictions/cam_222200047_frame_00000.png",
+      "prediction_sha256": "e0e071f7710a57aba685ca0161e6e59bf93ca426ca58b6c35eb1fec71ae044aa",
+      "render_path": "/data1/workspace/airulan/3dv_work/runs/g110_source_gated_pseudo_prior_refinement/all_rendered_frames/cam_222200047_frame_00000.png",
+      "render_sha256": "e0e071f7710a57aba685ca0161e6e59bf93ca426ca58b6c35eb1fec71ae044aa",
+      "role": "heldout_prediction",
+      "serial": "222200047"
+    }
+  ],
+  "source_alpha_gate": {
+    "candidates": [
+      {
+        "coverage_error": 0.07162718204488783,
+        "prediction_coverage": 0.7170244842439356,
+        "source_mask_iou": 0.8788279292974688,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.00392156862745098,
+        "threshold_u8": 1
+      },
+      {
+        "coverage_error": 0.05184425300385409,
+        "prediction_coverage": 0.6972415552029019,
+        "source_mask_iou": 0.9002512329022052,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.01568627450980392,
+        "threshold_u8": 4
+      },
+      {
+        "coverage_error": 0.037913738381319506,
+        "prediction_coverage": 0.6833110405803673,
+        "source_mask_iou": 0.9152654393707426,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.03137254901960784,
+        "threshold_u8": 8
+      },
+      {
+        "coverage_error": 0.021564837905237,
+        "prediction_coverage": 0.6669621401042848,
+        "source_mask_iou": 0.9336197055721502,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.06274509803921569,
+        "threshold_u8": 16
+      },
+      {
+        "coverage_error": 0.011709362956245806,
+        "prediction_coverage": 0.6571066651552936,
+        "source_mask_iou": 0.9445851885322055,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.09411764705882353,
+        "threshold_u8": 24
+      },
+      {
+        "coverage_error": 0.005394468374518291,
+        "prediction_coverage": 0.6507917705735661,
+        "source_mask_iou": 0.9499957794070877,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.12549019607843137,
+        "threshold_u8": 32
+      },
+      {
+        "coverage_error": 0.0013041260485150419,
+        "prediction_coverage": 0.6440931761505327,
+        "source_mask_iou": 0.952514256536123,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.18823529411764706,
+        "threshold_u8": 48
+      },
+      {
+        "coverage_error": 0.005231806846520026,
+        "prediction_coverage": 0.6401654953525278,
+        "source_mask_iou": 0.9522096382866836,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.25098039215686274,
+        "threshold_u8": 64
+      },
+      {
+        "coverage_error": 0.007901269553389212,
+        "prediction_coverage": 0.6374960326456586,
+        "source_mask_iou": 0.9512240746168301,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.3137254901960784,
+        "threshold_u8": 80
+      },
+      {
+        "coverage_error": 0.009973362049421897,
+        "prediction_coverage": 0.6354239401496259,
+        "source_mask_iou": 0.9501149851792086,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.3764705882352941,
+        "threshold_u8": 96
+      },
+      {
+        "coverage_error": 0.011771707095896589,
+        "prediction_coverage": 0.6336255951031512,
+        "source_mask_iou": 0.949013362444208,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.4392156862745098,
+        "threshold_u8": 112
+      },
+      {
+        "coverage_error": 0.013360915892087877,
+        "prediction_coverage": 0.6320363863069599,
+        "source_mask_iou": 0.9479409197369217,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.5019607843137255,
+        "threshold_u8": 128
+      },
+      {
+        "coverage_error": 0.014941056449784607,
+        "prediction_coverage": 0.6304562457492632,
+        "source_mask_iou": 0.9468202133694945,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.5647058823529412,
+        "threshold_u8": 144
+      },
+      {
+        "coverage_error": 0.016490024937655834,
+        "prediction_coverage": 0.628907277261392,
+        "source_mask_iou": 0.9456799503624597,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.6274509803921569,
+        "threshold_u8": 160
+      },
+      {
+        "coverage_error": 0.018146678757651302,
+        "prediction_coverage": 0.6272506234413965,
+        "source_mask_iou": 0.9443720445321517,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.6901960784313725,
+        "threshold_u8": 176
+      },
+      {
+        "coverage_error": 0.02043244162321467,
+        "prediction_coverage": 0.6249648605758331,
+        "source_mask_iou": 0.9422185251136211,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.7529411764705882,
+        "threshold_u8": 192
+      },
+      {
+        "coverage_error": 0.023615960099750533,
+        "prediction_coverage": 0.6217813420992973,
+        "source_mask_iou": 0.9386582755053643,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.8156862745098039,
+        "threshold_u8": 208
+      },
+      {
+        "coverage_error": 0.028289503513942327,
+        "prediction_coverage": 0.6171077986851055,
+        "source_mask_iou": 0.9331374939794586,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.8784313725490196,
+        "threshold_u8": 224
+      },
+      {
+        "coverage_error": 0.042264225799138466,
+        "prediction_coverage": 0.6031330763999093,
+        "source_mask_iou": 0.9156246086847634,
+        "target_coverage": 0.6453973021990478,
+        "threshold": 0.9411764705882353,
+        "threshold_u8": 240
+      }
+    ],
+    "selected": {
+      "coverage_error": 0.0013041260485150419,
+      "prediction_coverage": 0.6440931761505327,
+      "source_mask_iou": 0.952514256536123,
+      "target_coverage": 0.6453973021990478,
+      "threshold": 0.18823529411764706,
+      "threshold_u8": 48
+    }
+  },
+  "source_refined_mask_iou": 0.6447987984583995,
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G110_SOURCE_GATED_PSEUDO_PRIOR_REFINEMENT_READY"
+}

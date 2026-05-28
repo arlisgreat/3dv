@@ -140,7 +140,7 @@ G81 must not merely scale that LAM diagnostic. It must test the actual paper
 claim: whether identity-anchored, confidence-aware pseudo multi-view supervision
 can produce more stable full-head 3DGS than direct single-image Gaussian and
 naive pseudo-view supervision under the same real held-out camera evaluator.
-G83-G108 complete that single-case G81 loop. The pipeline prepares the
+G83-G108 complete the first single-case G81 loop. The pipeline prepares the
 NeRSemble source-only pseudo-view input, builds naive and identity/confidence
 aware manifests, exports private RI3D pools, trains/renders both pseudo-view
 arms into the same G54/G55 held-out cameras, and reruns the three-arm contract.
@@ -151,6 +151,15 @@ mean held-out mask IoU 0.899699 in the audit sheet, while naive/aware are only
 0.309712/0.306522 and show weak fragmented support. The current G81 evidence
 supports a negative pseudo-view supervision study and real-GT evaluator/protocol
 contribution, not a positive method claim.
+G110-G115 then change the mechanism instead of scaling the failed RI3D arm:
+start from the strong direct Gaussian prior, select an alpha threshold only on
+the source render/source mask, and apply a conservative color prior from the
+strict identity/confidence pseudo views. This source-gated pseudo-prior arm
+beats both baselines under the original G55 held-out evaluator: PSNR/mask IoU
+13.068552/0.915092 versus direct 12.690455/0.900017 and naive
+4.904916/0.309712, with G115 confirming the repo-safe artifact sync set. This
+finally satisfies the current single-case objective, but remains a diagnostic
+method result pending multi-case replication and distribution/overlap review.
 ```
 
 ## Mandatory Data Audit Gate
@@ -366,12 +375,18 @@ plumbing itself.
 | G107 | done, rerun contract fail | Rerun strict three-arm evaluator with explicit direct/naive/aware roots | `experiments/metrics/g107_g81_three_arm_contract_rerun_strict_aware_iter1500_splat8_20260528.md` | No missing requirements; aware PSNR/mask IoU 4.778723/0.306522 does not exceed direct 12.690455/0.900017 or naive 4.904916/0.309712. |
 | G108 | done, repo-safe mask audit | Mask-only visual/VLM gate for the G107 three-arm comparison | `experiments/metrics/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.md`, `experiments/figures/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.png`, `scripts/g81_three_arm_mask_audit.py` | Direct mask support is coherent and high; naive/aware are fragmented and weak. Positive pseudo-view supervision claim is blocked. |
 | G109 | done, sync pass | Artifact sync gate for G81-G108 repo-safe outputs | `experiments/metrics/g109_g81_g108_artifact_sync_gate_20260528.md`, `scripts/artifact_sync_gate.py` | Repo-safe metrics/scripts/mask-only PNG are sync candidates; blocked private/raw paths are zero. |
+| G110 | done, source-gated refinement pass | Direct Gaussian prior plus strict identity/confidence pseudo-view color prior | `experiments/metrics/g110_source_gated_pseudo_prior_refinement_20260528.md`, `scripts/g110_refine_direct_with_pseudo_prior.py` | Uses only source render/source mask to select alpha threshold and strict pseudo views to compute color moments; held-out data is not read. |
+| G111 | done, original G55 eval pass | Held-out evaluator on G110 predictions | `experiments/metrics/g111_source_gated_pseudo_prior_refinement_heldout_eval_g55_20260528.md`, `scripts/nersemble_heldout_copy_eval_smoke.py` | G110 reaches mean PSNR 13.068552 and mask IoU 0.915092 on the same three local NeRSemble held-out cameras. |
+| G112 | done, objective pass | Three-arm contract rerun for G110 | `experiments/metrics/g112_source_gated_pseudo_prior_three_arm_contract_g55_20260528.md` | G110 identity/confidence-aware arm beats direct and naive under the contract. |
+| G113 | done, mask audit pass | Repo-safe mask audit for direct/naive/G110 aware | `experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.md`, `experiments/figures/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.png` | G110 has the strongest mean mask support; improvement comes from source-gated direct-prior support rather than fragmented RI3D pseudo geometry. |
+| G114 | done, private RGB visual audit | Private RGB visual check for G110 predictions | `experiments/metrics/g114_source_gated_pseudo_prior_private_rgb_visual_audit_20260528.md` | Private sheet remains under `3dv_work`; audit supports the G110 interpretation while preserving privacy. |
+| G115 | done, sync pass | Artifact sync gate for G110-G114 repo-safe outputs | `experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.md`, `scripts/artifact_sync_gate.py` | Repo-safe metrics/scripts/mask-only PNG are sync candidates; blocked private/raw paths are zero. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G110 | active next | Decide post-G81 route: close current RI3D pseudo-view supervision as a negative result, or implement a head-anchored learned-prior refinement that starts from the strong direct Gaussian prior | `experiments/metrics/g107_g81_three_arm_contract_rerun_strict_aware_iter1500_splat8_20260528.md`, `experiments/metrics/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.md`, `experiments/metrics/g109_g81_g108_artifact_sync_gate_20260528.md` | Continue only if a new method can keep the same real-GT/data/VLM/no-leakage gate and has a plausible mechanism to beat the direct baseline; otherwise package the contribution as strict evaluator/protocol plus negative pseudo-view supervision evidence. |
+| G116 | active next | Multi-case replication for G110 | `experiments/metrics/g112_source_gated_pseudo_prior_three_arm_contract_g55_20260528.md`, `experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.md`, `experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.md` | Replicate on additional real-GT NeRSemble cases without changing the source-only/pseudo-only gate; if it fails, report G110 as single-case diagnostic rather than broad method quality. |
 
 ## G8 Result
 

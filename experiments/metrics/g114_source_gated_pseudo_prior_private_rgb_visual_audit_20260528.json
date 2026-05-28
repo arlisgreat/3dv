@@ -1,0 +1,52 @@
+{
+  "artifact_policy": "Private sheet contains identifiable NeRSemble target and rendered RGB; keep under 3dv_work and do not commit image.",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T08:46:56.641281+00:00",
+  "date": "2026-05-28",
+  "decision": "Private RGB visual audit supports interpreting G110 as a real improvement over the fragmented pseudo-view RI3D arm on this case, while keeping distribution and single-case caveats.",
+  "gate": "G114",
+  "manual_visual_audit": "Private RGB sheet was generated for local inspection. The G110 aware predictions preserve direct-prior head structure and avoid the fragmented RI3D pseudo-view geometry seen in the naive arm; color is darker/pseudo-prior shifted, matching the metric-improving source-gated color prior. Treat as single-case diagnostic until multi-case review.",
+  "next_gate": "Update milestone records, run artifact sync gate, and push repo-safe metrics/scripts/mask-only PNG.",
+  "private_visual_sheet": "/data1/workspace/airulan/3dv_work/runs/g114_source_gated_pseudo_prior_private_visual/g114_private_rgb_sheet.png",
+  "private_visual_sheet_sha256": "3344c4eb77844c819609aa3a19355db274d31c71ab6ec4a02f95481948c68687",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_PRIVATE_RGB_VISUAL_AUDIT_DIAGNOSTIC_ONLY"
+}

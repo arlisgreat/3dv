@@ -280,6 +280,15 @@ def main() -> None:
         and aware["mean_prediction_mask_vs_eval_mask_iou"] > naive["mean_prediction_mask_vs_eval_mask_iou"]
     )
     verdict = BLOCKED if missing else PASS_DIAGNOSTIC
+    manual_visual_audit = (
+        "Mask-only audit confirms the identity/confidence-aware arm has the strongest held-out mask support among the three arms. "
+        "The improvement comes from source-gated direct-prior support rather than from the earlier fragmented RI3D pseudo-view geometry."
+        if aware_beats_both
+        else (
+            "Mask-only audit confirms the direct arm has much stronger held-out support. "
+            "Naive and identity/confidence-aware RI3D arms are weak/partial and do not provide a visual basis for a positive pseudo-view supervision claim."
+        )
+    )
     payload = {
         "date": DATE,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -296,10 +305,7 @@ def main() -> None:
             "mask_sheet_sha256": sha256_file(mask_sheet),
         },
         "artifact_policy": "Repo-safe mask-only sheet is committed; identifiable RGB renders and pseudo-view sheets remain under 3dv_work.",
-        "manual_visual_audit": (
-            "Mask-only audit confirms the direct arm has much stronger held-out support. "
-            "Naive and identity/confidence-aware RI3D arms are weak/partial and do not provide a visual basis for a positive pseudo-view supervision claim."
-        ),
+        "manual_visual_audit": manual_visual_audit,
         "decision": (
             "Identity/confidence-aware pseudo-view supervision does not exceed direct + naive; G81 is a negative result under the current strict real-GT contract."
             if not aware_beats_both

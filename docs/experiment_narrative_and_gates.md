@@ -37,6 +37,14 @@ current answer is negative for the tested route: identity/confidence-aware
 pseudo-view supervision does not exceed either direct single-image Gaussian or
 matched naive pseudo-view supervision.
 
+G110-G115 find a narrower positive mechanism: do not let pseudo views define
+geometry. Keep the direct Gaussian prior, select alpha only from source
+render/source mask, and use strict identity/confidence pseudo views as a
+conservative color prior. On the same single NeRSemble source/eval split this
+beats direct and naive under the original G55 held-out evaluator, but it remains
+single-case diagnostic evidence pending replication. G115 records the repo-safe
+artifact sync set for the single-case pass.
+
 The intended contribution is not a qualitative single-image demo. It is a
 strict supervision-validity protocol: identity-anchored and confidence-aware
 pseudo views, no real multi-view images as training supervision, full-head 3DGS
@@ -200,6 +208,11 @@ G81-G108: run the actual pseudo-view supervision validity test on the same
           held-out rendering/evaluation, strict three-arm contract rerun, and
           mask-only visual audit. The identity/confidence-aware arm does not
           beat direct or naive.
+G110-G115: replace the failed pseudo-geometry arm with a source-gated
+           direct-prior refinement. The strict identity/confidence pseudo views
+           only provide a color prior; source render/source mask select alpha.
+           This passes the original G55 evaluator and three-arm contract on the
+           current held-out cameras, then passes artifact sync.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -212,10 +225,11 @@ The stable scientific signal is not "RI3D is solved." It is:
 4. A learned-prior/head-anchored Gaussian method can be made evaluable only
    after its output is rendered into real held-out cameras under an explicit
    no-leakage gate.
-5. The next publishable question is whether identity/confidence-gated pseudo
-   views improve real-camera 3DGS reconstruction over direct single-image and
-   naive pseudo-view baselines. G107/G108 answer this negatively for the
-   current single NeRSemble case and RI3D-style pseudo-view route.
+5. Identity/confidence-gated pseudo views do not rescue the RI3D-style
+   pseudo-geometry route, but they can help as a conservative source-gated color
+   prior on top of a strong direct Gaussian prior in the current single case.
+6. G110/G112 answer the active single-case objective positively; G116 must test
+   whether this survives multi-case replication.
 ```
 
 ## Gate Semantics

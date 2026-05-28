@@ -132,10 +132,14 @@ naive `4.904916/0.309712`, and identity/confidence-aware `4.778723/0.306522`
 for PSNR/mask IoU; G108's repo-safe mask audit confirms direct has coherent
 support while the pseudo-view RI3D arms are fragmented. G109 passes artifact
 sync for repo-safe metrics/scripts/mask-only PNG, with private identifiable RGB
-sheets staying under `3dv_work`. The active next gate is G110: either package
-the real-GT evaluator/protocol plus negative
-pseudo-supervision evidence, or try a new head-anchored learned-prior refinement
-that starts from the strong direct Gaussian baseline. Keep the distribution/
+sheets staying under `3dv_work`. G110-G115 implement and verify the next
+direct-prior refinement: source render/source mask select alpha threshold, and
+strict identity/confidence pseudo views provide a conservative color prior. The
+original G55 evaluator gives G110 PSNR/mask IoU `13.068552/0.915092`, beating
+direct `12.690455/0.900017` and naive `4.904916/0.309712`; G112 passes the
+three-arm contract, G113/G114 provide mask/private-RGB visual audit records, and
+G115 passes artifact sync. The active next gate is G116 multi-case replication.
+Keep the distribution/
 overlap warning for LAM-20K and do not use real multi-view images as training
 supervision in this claim.
 ```

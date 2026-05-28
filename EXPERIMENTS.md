@@ -94,6 +94,12 @@ G106 G81 real-GT iteration summary
 G107 strict three-arm evaluator rerun
 G108 repo-safe three-arm mask/VLM audit
 G109 G81-G108 artifact sync gate
+G110 source-gated direct-prior + identity/confidence pseudo color prior refinement
+G111 original G55 held-out eval for G110
+G112 G110 three-arm contract pass
+G113 G110 repo-safe mask audit
+G114 G110 private RGB visual audit
+G115 G110-G114 artifact sync gate
 ```
 
 还没有完成：
@@ -105,7 +111,7 @@ publishable artifact review for any identifiable Multiface RGB/mesh result
 official NeRSemble leaderboard submission packaging, if needed
 H3DS access and independent cross-dataset validation after user provides data
 multi-case replication of the NeRSemble real-GT protocol
-a method that beats the direct single-image Gaussian baseline under G107/G108-style gates
+multi-case validation of the G110 source-gated pseudo-prior refinement
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -192,13 +198,21 @@ baseline. G83-G108 complete the actual G81 pseudo-view supervision validity
 test on source `220700191`: source-only pseudo input, naive/aware manifests,
 private RI3D pools, held-out rendering, G55 evaluation, three-arm contracts,
 strict-aware rejection of geometry-only pseudo views, and repo-safe mask audit.
-The result is negative. Aware does not exceed direct or naive; G107 records
+The first result is negative. Aware does not exceed direct or naive; G107 records
 PSNR/mask IoU as direct `12.690455/0.900017`, naive `4.904916/0.309712`, and
 aware `4.778723/0.306522`. G108 confirms the visual failure with a mask-only
 audit sheet. The repo-safe PNG
 `experiments/figures/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.png`
-syncs the latest mask-only visual evidence; identifiable RGB sheets stay under
-`3dv_work`.
+syncs that mask-only visual evidence. G110-G114 then test the active G109/G110
+idea: keep the strong direct Gaussian prior, choose alpha threshold only from
+source render/source mask, and apply a conservative color prior from strict
+identity/confidence pseudo views. This passes the original G55 held-out
+evaluator and the same three-arm contract: G110/G111/G112 record
+direct `12.690455/0.900017`, naive `4.904916/0.309712`, and G110 aware
+`13.068552/0.915092`. G113 syncs the repo-safe mask-only visual evidence, and
+G114 records a private RGB visual audit hash while keeping identifiable sheets
+under `3dv_work`; G115 passes the repo-safe artifact sync gate for these
+outputs.
 ```
 
 ## 2. Stage 00: Inputs
@@ -1003,7 +1017,7 @@ current best method-direction positive, but still diagnostic-only because it is
 one NeRSemble frame/case, in-domain for LAM-20K, and not yet a multi-case or
 official hidden-holdout result.
 
-G81 outcome:
+G81/G110 outcome:
 
 ```text
 G81 was run as the intended supervision-validity test: single-image input, no
@@ -1016,19 +1030,28 @@ Required comparison:
 2. naive pseudo-view supervision pipeline
 3. identity-anchored, confidence-aware pseudo-view supervision pipeline
 
-All three used the same local NeRSemble held-out evaluator in G107. The gated
-pseudo-supervision variant did not beat direct or naive. G108's mask-only audit
-also shows fragmented/partial pseudo-view reconstructions, so the correct
-current result is a negative answer to whether the present 2D hallucinations can
-become credible 3D Gaussian supervision.
+All three used the same local NeRSemble held-out evaluator in G107. The pure
+RI3D-style gated pseudo-supervision variant did not beat direct or naive. G108's
+mask-only audit also shows fragmented/partial pseudo-view reconstructions.
+
+G110 changes the mechanism to a direct-prior, source-gated refinement: direct
+Gaussian geometry is preserved, source render/source mask choose the alpha
+threshold, and strict identity/confidence pseudo views provide only a
+conservative color prior. G111 evaluates this with the original G55 evaluator.
+G112 passes the three-arm contract:
+
+direct: PSNR 12.690455, mask IoU 0.900017
+naive:  PSNR 4.904916,  mask IoU 0.309712
+G110:   PSNR 13.068552, mask IoU 0.915092
 
 Next step:
-G109 should either close this as an evaluator/protocol plus negative-result
-package, or try a new head-anchored learned-prior refinement that starts from
-the strong direct baseline while keeping the same real-GT/data/VLM/no-leakage
-contract.
+G116 should replicate G110 on more real-GT cases without tuning on held-out
+RGB/masks. Until then, the positive result is a single-case diagnostic success,
+not a broad method-quality claim.
 
 Artifact sync:
 G109 passes the repo-safe sync gate for G81-G108 metrics, scripts, and the
-mask-only PNG. Private identifiable RGB sheets remain in `3dv_work`.
+mask-only PNG. G115 passes the repo-safe sync gate for G110-G114 metrics,
+scripts, and the mask-only PNG. Private identifiable RGB sheets remain in
+`3dv_work`.
 ```
