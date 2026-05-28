@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T14:12:19.479659+00:00",
+  "date": "2026-05-28",
+  "decision": "Full G116 variant produced finite held-out metrics for six-arm ablation summary.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G117",
+  "interpretation": "Full G116 variant repeats the G110 policy under the ablation runner: direct Gaussian geometry, source-only alpha, identity/confidence/rgb pseudo color prior.",
+  "method_label": "g116_identity_confidence_aware_pseudo_prior",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.14497600495815277,
+    "mean_masked_rgb_psnr": 13.06855187444915,
+    "mean_masked_rgb_ssim_global_luma": 0.4587280046179523,
+    "mean_prediction_foreground_coverage": 0.6260267890878863,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "mean_source_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.14604836702346802,
+        "masked_rgb_mse": 0.0522686243057251,
+        "masked_rgb_psnr": 12.817589302503409,
+        "masked_rgb_ssim_global_luma": 0.38381119464809055,
+        "prediction_foreground_coverage": 0.6707815688052596,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/identity_confidence_aware_pseudo_prior/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.15787459909915924,
+        "masked_rgb_mse": 0.0540689118206501,
+        "masked_rgb_psnr": 12.670523708542362,
+        "masked_rgb_ssim_global_luma": 0.44520868580438744,
+        "prediction_foreground_coverage": 0.6143595556563137,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/identity_confidence_aware_pseudo_prior/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.13100504875183105,
+        "masked_rgb_mse": 0.04248598963022232,
+        "masked_rgb_psnr": 13.717542612301681,
+        "masked_rgb_ssim_global_luma": 0.547164133401379,
+        "prediction_foreground_coverage": 0.5929392428020857,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/identity_confidence_aware_pseudo_prior/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Compare against direct, naive, w/o identity, w/o confidence, and no-direct-geometry pseudo arm.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/identity_confidence_aware_pseudo_prior/predictions",
+  "premise": "Evaluate the G116 full identity/confidence-aware source-gated pseudo-prior variant with the original G55 held-out evaluator.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G116_FULL_AWARE_ABLATION_EVAL"
+}

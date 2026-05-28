@@ -100,11 +100,14 @@ G112 G110 three-arm contract pass
 G113 G110 repo-safe mask audit
 G114 G110 private RGB visual audit
 G115 G110-G114 artifact sync gate
-G116 naive pose/crop/source/oracle diagnostic
-G117 source-gated pseudo-prior ablation evals
-G118 single-case ablation contract
-G119 multi-case replication preflight and GPU gate
-G119S G116-G119 artifact sync gate
+G116 naive camera/crop audit and source-gated ablation generation
+G117 full-aware source-gated ablation eval
+G118 w/o identity gate ablation eval
+G119 w/o confidence gate ablation eval
+G120 six-arm single-case ablation summary
+G121 source `222200042` pseudo-input prep
+G122 multi-case replication preflight
+G122S G116-G122 artifact sync gate
 ```
 
 还没有完成：
@@ -220,10 +223,11 @@ under `3dv_work`; G115 passes the repo-safe artifact sync gate for these
 outputs. G116 revisits the naive baseline and finds that its failure should not
 be attributed purely to pseudo-view image quality: source-render undercoverage
 and crop/scale/geometry risk are already present before held-out evaluation.
-G117/G118 then run the single-case ablation contract requested for the current
-source split. G119 records that multi-case replication is still incomplete:
-source `220700191` is complete, source `222200042` lacks pseudo/G117 assets,
-and no empty GPU was available to start the missing jobs.
+G116-G120 then run the single-case ablation contract requested for the current
+source split. G121 prepares the second source input, and G122 records that
+multi-case replication is still incomplete: source `220700191` is complete,
+while source `222200042` still lacks pseudo views, manifests, ablation
+predictions, and six-arm evals.
 ```
 
 ## 2. Stage 00: Inputs
@@ -1055,37 +1059,36 @@ direct: PSNR 12.690455, mask IoU 0.900017
 naive:  PSNR 4.904916,  mask IoU 0.309712
 G110:   PSNR 13.068552, mask IoU 0.915092
 
-G116-G119 update:
-G116 adds the required naive pose/crop/source/oracle diagnostic. Naive remains a
-failed baseline, but its failure is mixed with source-render crop/geometry risk:
-source mask IoU is only `0.342830` and eval mask IoU is `0.309712`, while
+G116-G122 update:
+G116 adds the required naive camera/crop diagnostic. Naive remains a failed
+baseline, but its failure is mixed with source-render crop/geometry risk:
+source mask IoU is only `0.323160` and eval mask IoU is `0.309712`, while
 direct/G110 source/eval masks are coherent. Therefore the project should not
 use naive failure alone as evidence that pseudo-view image quality is bad.
 
-G117/G118 single-case ablation:
+G116-G120 single-case ablation:
 
 ```text
 direct LAM:              PSNR 12.690455, mask IoU 0.900017
 naive RI3D:              PSNR  4.904916, mask IoU 0.309712
-full G110/G117:          PSNR 13.068552, mask IoU 0.915092
+full G110/G116/G117:     PSNR 13.068552, mask IoU 0.915092
 w/o identity gate:       PSNR 12.923015, mask IoU 0.915092
 w/o confidence gate:     PSNR 13.068995, mask IoU 0.915092
-w/o source alpha gate:   PSNR 13.068552, mask IoU 0.899658
-w/o direct geometry:     PSNR  4.778723, mask IoU 0.306522
+w/o source alpha/geometry:
+                           PSNR  4.778723, mask IoU 0.306522
 ```
 
 Interpretation:
 identity helps RGB modestly; confidence weighting is not supported as positive
-on this single case; source-selected alpha improves mask IoU; preserving direct
-geometry is the dominant factor. G119 confirms multi-case replication is not
-complete. G119S passes the repo-safe sync gate for G116-G119 outputs. G120
-should replicate source `222200042` only when an actually empty GPU is
-available.
+on this single case; preserving direct geometry/source alpha is the dominant
+factor. G121 prepares the source-only input for source `222200042`, and G122
+confirms multi-case replication is not complete because that second split still
+lacks pseudo views, manifests, ablation predictions, and six-arm evals.
 
 Artifact sync:
 G109 passes the repo-safe sync gate for G81-G108 metrics, scripts, and the
 mask-only PNG. G115 passes the repo-safe sync gate for G110-G114 metrics,
 scripts, and the mask-only PNG. Private identifiable RGB sheets remain in
-`3dv_work`. G119S passes the repo-safe sync gate for G116-G119 metrics, scripts,
-and the mask-only PNG.
+`3dv_work`. G122S passes the repo-safe sync gate for G116-G122 metrics,
+scripts, and the mask-only PNG.
 ```

@@ -1,0 +1,60 @@
+{
+  "artifact_policy": "Identifiable source RGB and generated pseudo views stay under 3dv_work; commit only hashes/metrics/gate docs.",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "participant": "388",
+    "sequence": "GLASSES",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T14:13:52.580901+00:00",
+  "date": "2026-05-28",
+  "decision": "Private masked-square source input is ready for Zero123++ or another pseudo-view generator.",
+  "gate": "G121",
+  "missing_inputs": [],
+  "next_gate": "Run pseudo-view generation from this private source input, then build the G81 naive and identity/confidence-aware arms.",
+  "premise": "Prepare the single real NeRSemble source image for pseudo-view generation. This uses only the source RGB/mask; held-out RGB/masks remain evaluation-only.",
+  "private_outputs": {
+    "masked_square_input": "/data1/workspace/airulan/3dv_work/runs/g121_nersemble_source222200042_pseudo_input/cam_222200042_masked_square_512.png",
+    "masked_square_input_sha256": "45932f49c705fc9cbd18541da24f3713a35122e0844a2cb2f1a1f960ac2f47c0",
+    "private_manifest": "/data1/workspace/airulan/3dv_work/runs/g121_nersemble_source222200042_pseudo_input/source_pseudo_input_manifest.json"
+  },
+  "source_mask_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/masks/cam_222200042_frame_00000_mask.png",
+  "source_rgb_path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/rgb/cam_222200042_frame_00000.png",
+  "source_serial": "222200042",
+  "source_stats": {
+    "mask_coverage": 0.6701864656540467,
+    "output_height": 512,
+    "output_width": 512,
+    "source_height": 1604,
+    "source_width": 1100
+  },
+  "split": {
+    "local_eval_serials": [
+      "220700191",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "222200042",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_NERSEMBLE_SOURCE_PSEUDO_INPUT_READY_PRIVATE"
+}

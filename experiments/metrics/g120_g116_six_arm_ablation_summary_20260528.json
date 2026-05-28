@@ -1,0 +1,125 @@
+{
+  "ablation_conclusions": [
+    "Full gated pseudo prior exceeds direct on PSNR by 0.378097 and mask IoU by 0.015076.",
+    "Full gated pseudo prior exceeds naive by 8.163636 PSNR and 0.605381 mask IoU.",
+    "Identity gate has a positive single-case RGB effect: full PSNR - w/o identity PSNR = 0.145537; masks are identical because both keep source-gated alpha/direct geometry.",
+    "Confidence gate is inconclusive in this case: w/o confidence PSNR differs by 0.000443, while SSIM differs by -0.000349; mask is unchanged.",
+    "Direct geometry/source alpha is the dominant factor: removing it drops from full PSNR/mask IoU 13.068552/0.915092 to 4.778723/0.306522."
+  ],
+  "arms": [
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+      "label": "direct_single_image_gaussian_lam",
+      "mean_masked_rgb_psnr": 12.690454933591733,
+      "mean_masked_rgb_ssim_global_luma": 0.450276799681961,
+      "mean_prediction_foreground_coverage": 0.6696418045794604,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238,
+      "notes": "No pseudo views; LAM direct source-aligned Gaussian.",
+      "role": "direct prior strength",
+      "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+    },
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g103_g81_naive_strict_pool_iter1500_splat8_heldout_eval_20260528.json",
+      "label": "naive_pseudo_view_pipeline",
+      "mean_masked_rgb_psnr": 4.904915857890938,
+      "mean_masked_rgb_ssim_global_luma": 0.015267359423851823,
+      "mean_prediction_foreground_coverage": 0.3240678606514018,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.30971166292766217,
+      "notes": "RI3D-style pseudo-view geometry arm.",
+      "role": "pseudo-view reconstruction baseline",
+      "verdict": "PASS_G81_NAIVE_STRICT_POOL_ITER1500_HELDOUT_EVAL"
+    },
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g117_g116_full_aware_ablation_eval_20260528.json",
+      "label": "identity_confidence_aware_pseudo_prior",
+      "mean_masked_rgb_psnr": 13.06855187444915,
+      "mean_masked_rgb_ssim_global_luma": 0.4587280046179523,
+      "mean_prediction_foreground_coverage": 0.6260267890878863,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+      "notes": "Direct geometry/source alpha plus identity/confidence pseudo color prior.",
+      "role": "full gated method",
+      "verdict": "PASS_G116_FULL_AWARE_ABLATION_EVAL"
+    },
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g118_g116_without_identity_gate_eval_20260528.json",
+      "label": "without_identity_gate",
+      "mean_masked_rgb_psnr": 12.923014543046534,
+      "mean_masked_rgb_ssim_global_luma": 0.45269042583409064,
+      "mean_prediction_foreground_coverage": 0.6260267890878863,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+      "notes": "Direct geometry/source alpha plus confidence-only pseudo color prior.",
+      "role": "identity ablation",
+      "verdict": "PASS_G116_WITHOUT_IDENTITY_GATE_EVAL"
+    },
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g119_g116_without_confidence_gate_eval_20260528.json",
+      "label": "without_confidence_gate",
+      "mean_masked_rgb_psnr": 13.068995063502394,
+      "mean_masked_rgb_ssim_global_luma": 0.4583794109602315,
+      "mean_prediction_foreground_coverage": 0.6260267890878863,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+      "notes": "Direct geometry/source alpha plus identity-only pseudo color prior.",
+      "role": "confidence ablation",
+      "verdict": "PASS_G116_WITHOUT_CONFIDENCE_GATE_EVAL"
+    },
+    {
+      "eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g104_g81_strict_aware_iter1500_splat8_heldout_eval_20260528.json",
+      "label": "without_source_gated_alpha_geometry_prior",
+      "mean_masked_rgb_psnr": 4.778723076002406,
+      "mean_masked_rgb_ssim_global_luma": 0.010533965528725589,
+      "mean_prediction_foreground_coverage": 0.2528170105040429,
+      "mean_prediction_mask_vs_eval_mask_iou": 0.30652221427156784,
+      "notes": "Strict identity/confidence pseudo-view RI3D geometry without direct geometry/source alpha.",
+      "role": "geometry/source-alpha ablation",
+      "verdict": "PASS_G81_STRICT_AWARE_ITER1500_HELDOUT_EVAL"
+    }
+  ],
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T14:13:36.597388+00:00",
+  "date": "2026-05-28",
+  "decision": "Single-case six-arm ablation is ready, but the active goal remains incomplete until multi-case replication passes.",
+  "gate": "G120",
+  "missing_requirements": [],
+  "naive_camera_crop_interpretation": "The naive arm was rendered with the same NeRSemble eval cameras and an explicit eval-camera frustum guard. The frustum is not catastrophically empty (min in-frame 0.482), but source-mask alignment is poor (0.323) compared with direct (0.889). This supports source/crop/geometry collapse in the RI3D pseudo-geometry output as the primary failure, not a simple evaluator K/R/T wiring error. It still means naive is a weak baseline and should be reported with this caveat.",
+  "remaining_requirement": "Multi-case replication is still pending; this G120 summary proves only the current single NeRSemble source/eval split.",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G116_SINGLE_CASE_SIX_ARM_ABLATION_READY_MULTICASE_PENDING"
+}

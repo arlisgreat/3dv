@@ -37,7 +37,7 @@ current answer is negative for the tested route: identity/confidence-aware
 pseudo-view supervision does not exceed either direct single-image Gaussian or
 matched naive pseudo-view supervision.
 
-G110-G119 find a narrower positive mechanism: do not let pseudo views define
+G110-G122 find a narrower positive mechanism: do not let pseudo views define
 geometry. Keep the direct Gaussian prior, select alpha only from source
 render/source mask, and use strict identity/confidence pseudo views as a
 conservative color prior. On the same single NeRSemble source/eval split this
@@ -45,9 +45,9 @@ beats direct and naive under the original G55 held-out evaluator, but it remains
 single-case diagnostic evidence pending replication. G115 records the repo-safe
 artifact sync set for the single-case pass. G116 then prevents overclaiming the
 naive failure: the naive source render already under-covers the source mask, so
-pose/crop/source/geometry risk remains. G117/G118 show the single-case ablation
-pattern; G119 records that multi-case replication is not complete and no empty
-GPU was available for the next source split.
+camera/crop/source/geometry risk remains. G116-G120 show the single-case
+six-arm ablation pattern; G121-G122 prepare the second source split and record
+that multi-case replication is not complete; G122S syncs the repo-safe record.
 
 The intended contribution is not a qualitative single-image demo. It is a
 strict supervision-validity protocol: identity-anchored and confidence-aware
@@ -237,11 +237,12 @@ The stable scientific signal is not "RI3D is solved." It is:
 6. G110/G112 answer the active single-case objective positively.
 7. G116 says naive failure is real but not cleanly attributable to pseudo-view
    quality alone; source-render crop/geometry risk must stay in the story.
-8. G117/G118: identity helps RGB modestly; confidence weighting is not proven
-   useful on the single case; source alpha helps mask; direct geometry is the
-   dominant contributor.
-9. G119: multi-case replication remains open; G120 must run only when an empty
-   GPU is available and must preserve the source-only/pseudo-only gate.
+8. G116-G120: identity helps RGB modestly; confidence weighting is not proven
+   useful on the single case; direct geometry/source alpha is the dominant
+   contributor.
+9. G121-G122: multi-case replication remains open; G123 must generate/evaluate
+   the source `222200042` pseudo branch while preserving the source-only/
+   pseudo-only gate.
 ```
 
 ## Gate Semantics

@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T14:12:19.502919+00:00",
+  "date": "2026-05-28",
+  "decision": "w/o identity gate variant produced finite held-out metrics for six-arm ablation summary.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G118",
+  "interpretation": "This ablation keeps direct Gaussian geometry and source-only alpha but removes identity-anchor selection/weighting from pseudo color moments.",
+  "method_label": "g116_without_identity_gate",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.13760601729154587,
+    "mean_masked_rgb_psnr": 12.923014543046534,
+    "mean_masked_rgb_ssim_global_luma": 0.45269042583409064,
+    "mean_prediction_foreground_coverage": 0.6260267890878863,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "mean_source_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.14471009373664856,
+        "masked_rgb_mse": 0.05593538656830788,
+        "masked_rgb_psnr": 12.523133561723945,
+        "masked_rgb_ssim_global_luma": 0.37597034569223253,
+        "prediction_foreground_coverage": 0.6707815688052596,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/without_identity_gate/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.14777323603630066,
+        "masked_rgb_mse": 0.055783383548259735,
+        "masked_rgb_psnr": 12.534951470837278,
+        "masked_rgb_ssim_global_luma": 0.4386383091101724,
+        "prediction_foreground_coverage": 0.6143595556563137,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/without_identity_gate/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.12033472210168839,
+        "masked_rgb_mse": 0.04255044832825661,
+        "masked_rgb_psnr": 13.710958596578383,
+        "masked_rgb_ssim_global_luma": 0.5434626226998669,
+        "prediction_foreground_coverage": 0.5929392428020857,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/without_identity_gate/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Compare against full-aware and w/o confidence variants.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation/without_identity_gate/predictions",
+  "premise": "Evaluate the G116 w/o identity gate source-gated pseudo-prior ablation with the original G55 held-out evaluator.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G116_WITHOUT_IDENTITY_GATE_EVAL"
+}

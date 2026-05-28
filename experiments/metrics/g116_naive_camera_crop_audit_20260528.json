@@ -1,0 +1,216 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T14:11:39.782198+00:00",
+  "date": "2026-05-28",
+  "diagnosis": {
+    "camera_pose_likely_primary_failure": false,
+    "source_crop_geometry_likely_primary_failure": true
+  },
+  "direct_alignment": {
+    "mean_eval_inframe_fraction": 0.9925733506510808,
+    "mean_eval_overflow_penalty": 0.0,
+    "min_eval_inframe_fraction": 0.9884603856529124,
+    "source_mask_iou": 0.8894323270504504
+  },
+  "direct_eval": {
+    "mean_masked_rgb_psnr": 12.690454933591733,
+    "mean_prediction_foreground_coverage": 0.6696418045794604,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238
+  },
+  "gate": "G116",
+  "interpretation": "The naive arm was rendered with the same NeRSemble eval cameras and an explicit eval-camera frustum guard. The frustum is not catastrophically empty (min in-frame 0.482), but source-mask alignment is poor (0.323) compared with direct (0.889). This supports source/crop/geometry collapse in the RI3D pseudo-geometry output as the primary failure, not a simple evaluator K/R/T wiring error. It still means naive is a weak baseline and should be reported with this caveat.",
+  "missing_requirements": [],
+  "naive_alignment": {
+    "axis_transform": "sign_1_-1_-1",
+    "mean_eval_center_penalty": 0.08502751429605433,
+    "mean_eval_inframe_fraction": 0.5182166666666667,
+    "mean_eval_overflow_penalty": 0.45423627540359485,
+    "min_eval_inframe_fraction": 0.4821,
+    "scale": 0.2,
+    "source_mask_iou": 0.32315960636741264,
+    "translation": [
+      0.044999998062849045,
+      0.014999999664723873,
+      0.2775000035762787
+    ]
+  },
+  "naive_eval": {
+    "mean_masked_rgb_psnr": 4.904915857890938,
+    "mean_prediction_foreground_coverage": 0.3240678606514018,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.30971166292766217
+  },
+  "per_eval_serial": [
+    {
+      "direct_iou": 0.8868906644058009,
+      "direct_prediction": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+      "direct_stats": {
+        "bbox": [
+          0,
+          155,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.9033665835411472,
+        "center_offset": 0.04834684965689329,
+        "coverage": 0.7223696440716391,
+        "touches_border": true
+      },
+      "naive_iou": 0.28425406896973837,
+      "naive_prediction": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+      "naive_stats": {
+        "bbox": [
+          0,
+          251,
+          1002,
+          1379
+        ],
+        "bbox_area": 0.6417972115166629,
+        "center_offset": 0.044927417443009626,
+        "coverage": 0.3287417819088642,
+        "touches_border": true
+      },
+      "serial": "222200042",
+      "target_stats": {
+        "bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.8915211970074813,
+        "center_offset": 0.054273237679351216,
+        "coverage": 0.6701864656540467,
+        "touches_border": true
+      }
+    },
+    {
+      "direct_iou": 0.8992050710540217,
+      "direct_prediction": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+      "direct_stats": {
+        "bbox": [
+          0,
+          140,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.912718204488778,
+        "center_offset": 0.04366812227074235,
+        "coverage": 0.6520584901382906,
+        "touches_border": true
+      },
+      "naive_iou": 0.26680681596019534,
+      "naive_prediction": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+      "naive_stats": {
+        "bbox": [
+          0,
+          0,
+          1099,
+          1603
+        ],
+        "bbox_area": 1.0,
+        "center_offset": 0.0,
+        "coverage": 0.3206455452278395,
+        "touches_border": true
+      },
+      "serial": "222200041",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.9177057356608479,
+        "center_offset": 0.04117280099812848,
+        "coverage": 0.6011488324642938,
+        "touches_border": true
+      }
+    },
+    {
+      "direct_iou": 0.9130027230464258,
+      "direct_prediction": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png",
+      "direct_stats": {
+        "bbox": [
+          0,
+          182,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.8865336658354115,
+        "center_offset": 0.05676855895196509,
+        "coverage": 0.6353411924733621,
+        "touches_border": true
+      },
+      "naive_iou": 0.37807410385305285,
+      "naive_prediction": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+      "naive_stats": {
+        "bbox": [
+          0,
+          434,
+          1099,
+          1563
+        ],
+        "bbox_area": 0.7044887780548629,
+        "center_offset": 0.12289457267623205,
+        "coverage": 0.3228162548175017,
+        "touches_border": true
+      },
+      "serial": "222200047",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "bbox_area": 0.8753117206982544,
+        "center_offset": 0.06238303181534621,
+        "coverage": 0.5941934935388801,
+        "touches_border": true
+      }
+    }
+  ],
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g116_naive_camera_crop_audit_20260528.png"
+  },
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G116_NAIVE_CAMERA_CROP_AUDIT_DIAGNOSTIC"
+}

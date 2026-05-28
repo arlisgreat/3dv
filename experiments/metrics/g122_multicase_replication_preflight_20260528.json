@@ -1,0 +1,67 @@
+{
+  "candidate_splits": [
+    {
+      "adapter_manifest": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter_source_220700191/adapter_manifest.json",
+      "direct_eval": {
+        "exists": true,
+        "mean_masked_rgb_psnr": 12.690454933591733,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+        "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+      },
+      "next_action": "Use as reference; do not claim multi-case from this alone.",
+      "pseudo_views": {
+        "exists": true,
+        "path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/metadata.json"
+      },
+      "six_arm_summary": {
+        "exists": true,
+        "mean_masked_rgb_psnr": null,
+        "mean_prediction_mask_vs_eval_mask_iou": null,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g120_g116_six_arm_ablation_summary_20260528.json",
+        "verdict": "PASS_G116_SINGLE_CASE_SIX_ARM_ABLATION_READY_MULTICASE_PENDING"
+      },
+      "source_pseudo_input": {
+        "exists": true,
+        "path": "/data1/workspace/airulan/3dv_work/runs/g83_nersemble_source220700191_pseudo_input/cam_220700191_masked_square_512.png"
+      },
+      "source_serial": "220700191",
+      "status": "complete_single_case_only"
+    },
+    {
+      "adapter_manifest": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/adapter_manifest.json",
+      "direct_eval": {
+        "exists": true,
+        "mean_masked_rgb_psnr": 6.31818408852353,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.4980042274449353,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.json",
+        "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_TRUE_KRT_SOURCE_MASK_ALIGNED_XYZ_EVAL"
+      },
+      "next_action": "Run source-only pseudo generation, manifest gate, source-gated ablations, and G55 eval.",
+      "pseudo_views": {
+        "exists": false,
+        "path": "/data1/workspace/airulan/3dv_work/runs/g123_zero123plus_nersemble_source222200042_steps75/metadata.json"
+      },
+      "six_arm_summary": {
+        "exists": false,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g130_g116_source222200042_six_arm_summary_20260528.json"
+      },
+      "source_pseudo_input": {
+        "exists": true,
+        "path": "/data1/workspace/airulan/3dv_work/runs/g121_nersemble_source222200042_pseudo_input/cam_222200042_masked_square_512.png"
+      },
+      "source_serial": "222200042",
+      "status": "ready_for_pseudo_generation"
+    }
+  ],
+  "created_at": "2026-05-28T14:14:35.002473+00:00",
+  "date": "2026-05-28",
+  "decision": "Multi-case replication is not complete. The second split has source-only input prepared and a direct eval baseline, but still lacks pseudo views, identity/confidence manifests, ablation predictions, and six-arm summary.",
+  "gate": "G122",
+  "multi_case_completion": {
+    "complete": false,
+    "completed_six_arm_cases": 1,
+    "required_cases": 2
+  },
+  "verdict": "PASS_G122_MULTICASE_REPLICATION_PREFLIGHT_RECORDED"
+}
