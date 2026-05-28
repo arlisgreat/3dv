@@ -1,0 +1,119 @@
+{
+  "contract_gates": [
+    {
+      "gate": "G84",
+      "path": "experiments/metrics/g84_g81_three_arm_contract_gate_20260528.json",
+      "verdict": "FAIL_G81_IDENTITY_CONFIDENCE_AWARE_DOES_NOT_BEAT_BASELINES"
+    },
+    {
+      "gate": "G84",
+      "path": "experiments/metrics/g94_g81_three_arm_contract_splat8_gate_20260528.json",
+      "verdict": "FAIL_G81_IDENTITY_CONFIDENCE_AWARE_DOES_NOT_BEAT_BASELINES"
+    },
+    {
+      "gate": "G99",
+      "path": "experiments/metrics/g99_g81_three_arm_contract_iter1500_splat8_gate_20260528.json",
+      "verdict": "FAIL_G81_IDENTITY_CONFIDENCE_AWARE_DOES_NOT_BEAT_BASELINES"
+    },
+    {
+      "gate": "G105",
+      "path": "experiments/metrics/g105_g81_three_arm_contract_strict_aware_iter1500_splat8_gate_20260528.json",
+      "verdict": "FAIL_G81_IDENTITY_CONFIDENCE_AWARE_DOES_NOT_BEAT_BASELINES"
+    }
+  ],
+  "created_at": "2026-05-28T08:07:03.814995+00:00",
+  "date": "2026-05-28",
+  "decision": "Current G81 hypothesis is not validated; repository should preserve the negative evidence and prevent qualitative pseudo-view renders from being reported as success.",
+  "findings": [
+    "The pipeline is now real-GT gated: source-only pseudo-view generation, private pseudo supervision manifests, RI3D training, NeRSemble true-KRT held-out rendering, and G55/G84 evaluator contract all ran.",
+    "Identity/confidence-aware supervision gave only a small short-train improvement over naive at iter80, but did not beat direct.",
+    "After 1500-step densification, naive exceeded aware; rejecting geometry_only views improved conceptual cleanliness but still did not beat naive or direct.",
+    "The direct LAM single-image Gaussian baseline remains far stronger: PSNR 12.690455 / mask IoU 0.900017 versus best pseudo-view RI3D PSNR 4.905284 / mask IoU 0.309711.",
+    "Current evidence supports a negative result for naive pseudo-view-to-3DGS supervision under this NeRSemble case, not a positive method claim."
+  ],
+  "gate": "G106",
+  "metrics_summary": [
+    {
+      "coverage": 0.6696418045794604,
+      "label": "direct_single_image_gaussian",
+      "mask_iou": 0.9000165206203238,
+      "path": "experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+      "psnr": 12.690454933591733,
+      "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+    },
+    {
+      "coverage": 0.2718434973173128,
+      "label": "iter80_splat3_naive",
+      "mask_iou": 0.2752405494861099,
+      "path": "experiments/metrics/g89_g81_naive_ri3d_heldout_eval_20260528.json",
+      "psnr": 4.67751073264844,
+      "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.2730631753948462,
+      "label": "iter80_splat3_aware",
+      "mask_iou": 0.277022370182773,
+      "path": "experiments/metrics/g90_g81_identity_confidence_aware_ri3d_heldout_eval_20260528.json",
+      "psnr": 4.692125941020943,
+      "verdict": "PASS_G81_IDENTITY_CONFIDENCE_AWARE_RI3D_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.2956736945515,
+      "label": "iter80_splat8_naive",
+      "mask_iou": 0.2645483056568642,
+      "path": "experiments/metrics/g92_g81_naive_ri3d_splat8_heldout_eval_20260528.json",
+      "psnr": 4.582828640067479,
+      "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_SPLAT8_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.2957893145923071,
+      "label": "iter80_splat8_aware",
+      "mask_iou": 0.29232820761086037,
+      "path": "experiments/metrics/g93_g81_identity_confidence_aware_ri3d_splat8_heldout_eval_20260528.json",
+      "psnr": 4.79557075710199,
+      "verdict": "PASS_G81_IDENTITY_CONFIDENCE_AWARE_RI3D_SPLAT8_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.3237034308168971,
+      "label": "iter1500_splat8_naive",
+      "mask_iou": 0.30967431172352655,
+      "path": "experiments/metrics/g97_g81_naive_ri3d_iter1500_splat8_heldout_eval_20260528.json",
+      "psnr": 4.905283870045445,
+      "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_ITER1500_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.32339416609990174,
+      "label": "iter1500_splat8_aware",
+      "mask_iou": 0.2878354043678412,
+      "path": "experiments/metrics/g98_g81_identity_confidence_aware_ri3d_iter1500_splat8_heldout_eval_20260528.json",
+      "psnr": 4.737664946231289,
+      "verdict": "PASS_G81_IDENTITY_CONFIDENCE_AWARE_RI3D_ITER1500_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.3240678606514018,
+      "label": "strict_iter1500_splat8_naive",
+      "mask_iou": 0.30971166292766217,
+      "path": "experiments/metrics/g103_g81_naive_strict_pool_iter1500_splat8_heldout_eval_20260528.json",
+      "psnr": 4.904915857890938,
+      "verdict": "PASS_G81_NAIVE_STRICT_POOL_ITER1500_HELDOUT_EVAL"
+    },
+    {
+      "coverage": 0.2528170105040429,
+      "label": "strict_iter1500_splat8_aware",
+      "mask_iou": 0.30652221427156784,
+      "path": "experiments/metrics/g104_g81_strict_aware_iter1500_splat8_heldout_eval_20260528.json",
+      "psnr": 4.778723076002406,
+      "verdict": "PASS_G81_STRICT_AWARE_ITER1500_HELDOUT_EVAL"
+    }
+  ],
+  "next_gate": "Either implement direct-prior pseudo-view refinement with exact held-out renderer, or close this route as a negative result and expand protocol/evaluator contribution across more real-GT cases.",
+  "premise": "Summarize the completed G81 real-GT held-out camera iterations after G83-G105. The required success condition was identity/confidence-aware pseudo-view supervision beating both direct single-image Gaussian and naive pseudo-view supervision on the same NeRSemble held-out cameras.",
+  "recommended_next_milestone": "Do not continue the current from-scratch RI3D pseudo-view route as a positive claim. The next credible attempt should be a head-anchored learned-prior refinement: start from a strong direct Gaussian/mesh prior, apply source/identity-only pseudo-view constraints with exact renderer support, and keep the same G84 contract. If that cannot beat direct, reposition the project as a real-GT evaluator/protocol and negative pseudo-view supervision study.",
+  "risk_and_limits": [
+    "G88/G91/G96/G102 use a point-splat diagnostic renderer for RI3D PLYs, not the exact differentiable Gaussian renderer.",
+    "No manual/VLM visual gate was completed inside this sandbox; private contact sheets exist under 3dv_work and need human/VLM review.",
+    "This is a single source case; it is sufficient to block the current positive claim, not sufficient for broad statistical conclusions.",
+    "The direct LAM baseline is likely in or near LAM training distribution for NeRSemble, so it should be labeled an in-domain diagnostic baseline."
+  ],
+  "verdict": "FAIL_G81_CURRENT_PSEUDO_VIEW_SUPERVISION_HYPOTHESIS_NOT_VALIDATED"
+}

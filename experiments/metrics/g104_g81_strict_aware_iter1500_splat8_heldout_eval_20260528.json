@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T08:04:51.893529+00:00",
+  "date": "2026-05-27",
+  "decision": "Strict-aware predictions produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G104",
+  "interpretation": "Strict-aware G81 ablation: source anchor plus identity/weak-identity pseudo views only.",
+  "method_label": "g81_strict_identity_confidence_aware_pseudo_view_supervision_iter1500_point_splat8",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.4960688253243764,
+    "mean_masked_rgb_psnr": 4.778723076002406,
+    "mean_masked_rgb_ssim_global_luma": 0.010533965528725589,
+    "mean_prediction_foreground_coverage": 0.2528170105040429,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.30652221427156784,
+    "mean_source_mask_vs_eval_mask_iou": 0.30652221427156784,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.46316009759902954,
+        "masked_rgb_mse": 0.3077903985977173,
+        "masked_rgb_psnr": 5.117449319414065,
+        "masked_rgb_ssim_global_luma": -0.04493629546527294,
+        "prediction_foreground_coverage": 0.30705508954885513,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.4057636272027159,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.4057636272027159,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.5575986504554749,
+        "masked_rgb_mse": 0.3988915681838989,
+        "masked_rgb_psnr": 3.991451437601218,
+        "masked_rgb_ssim_global_luma": -0.08639105814408961,
+        "prediction_foreground_coverage": 0.21298401722965313,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.1888003548717066,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.1888003548717066,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.4674477279186249,
+        "masked_rgb_mse": 0.30010494589805603,
+        "masked_rgb_psnr": 5.227268470991935,
+        "masked_rgb_ssim_global_luma": 0.1629292501955393,
+        "prediction_foreground_coverage": 0.2384119247336205,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.32500266074028106,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.32500266074028106,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Rerun G105 three-arm contract.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions",
+  "premise": "Evaluate the strict identity/confidence-aware arm after rejecting geometry-only pseudo views, G101 training, and G102 rendering.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_STRICT_AWARE_ITER1500_HELDOUT_EVAL"
+}

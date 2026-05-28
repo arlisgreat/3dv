@@ -1,0 +1,141 @@
+{
+  "arms": [
+    {
+      "evaluation": {
+        "mean_masked_rgb_psnr": 12.690454933591733,
+        "mean_masked_rgb_ssim_global_luma": 0.450276799681961,
+        "mean_prediction_foreground_coverage": 0.6696418045794604,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+        "present": true,
+        "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+      },
+      "name": "direct_single_image_gaussian",
+      "prediction_files": {
+        "files": {
+          "222200041": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+          "222200042": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+          "222200047": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png"
+        },
+        "missing": [],
+        "present": true,
+        "root": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions"
+      },
+      "pseudo_manifest": {
+        "present": null
+      },
+      "ready_for_comparison": true
+    },
+    {
+      "evaluation": {
+        "mean_masked_rgb_psnr": 4.904915857890938,
+        "mean_masked_rgb_ssim_global_luma": 0.015267359423851823,
+        "mean_prediction_foreground_coverage": 0.3240678606514018,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.30971166292766217,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g103_g81_naive_strict_pool_iter1500_splat8_heldout_eval_20260528.json",
+        "present": true,
+        "verdict": "PASS_G81_NAIVE_STRICT_POOL_ITER1500_HELDOUT_EVAL"
+      },
+      "name": "naive_pseudo_view_supervision",
+      "prediction_files": {
+        "files": {
+          "222200041": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+          "222200042": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+          "222200047": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png"
+        },
+        "missing": [],
+        "present": true,
+        "root": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions"
+      },
+      "pseudo_manifest": {
+        "heldout_path_leakage": [],
+        "missing_fields": {},
+        "path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/naive_pseudo_supervision_manifest.json",
+        "present": true,
+        "required_fields_present": true,
+        "view_count": 6
+      },
+      "ready_for_comparison": true
+    },
+    {
+      "evaluation": {
+        "mean_masked_rgb_psnr": 4.778723076002406,
+        "mean_masked_rgb_ssim_global_luma": 0.010533965528725589,
+        "mean_prediction_foreground_coverage": 0.2528170105040429,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.30652221427156784,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g104_g81_strict_aware_iter1500_splat8_heldout_eval_20260528.json",
+        "present": true,
+        "verdict": "PASS_G81_STRICT_AWARE_ITER1500_HELDOUT_EVAL"
+      },
+      "name": "identity_confidence_aware_pseudo_view_supervision",
+      "prediction_files": {
+        "files": {
+          "222200041": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200041_frame_00000.png",
+          "222200042": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200042_frame_00000.png",
+          "222200047": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200047_frame_00000.png"
+        },
+        "missing": [],
+        "present": true,
+        "root": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions"
+      },
+      "pseudo_manifest": {
+        "heldout_path_leakage": [],
+        "missing_fields": {},
+        "path": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_manifest/identity_confidence_strict_pseudo_supervision_manifest.json",
+        "present": true,
+        "required_fields_present": true,
+        "view_count": 6
+      },
+      "ready_for_comparison": true
+    }
+  ],
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T08:04:51.954086+00:00",
+  "date": "2026-05-28",
+  "decision": "Three-arm comparison ran, but the identity/confidence-aware arm did not beat both baselines.",
+  "gate": "G105",
+  "missing_requirements": [],
+  "next_gate": "Run visual/VLM gate and multi-case replication before making a paper claim.",
+  "no_leakage_rule": "Pseudo-view supervision may use only the source image and generated pseudo views; real held-out RGB/masks are evaluation-only.",
+  "premise": "Gate the actual G81 claim: identity/confidence-aware pseudo-view supervision must beat both direct single-image Gaussian and naive pseudo-view supervision on the same real held-out cameras.",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "FAIL_G81_IDENTITY_CONFIDENCE_AWARE_DOES_NOT_BEAT_BASELINES"
+}

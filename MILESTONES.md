@@ -140,6 +140,17 @@ G81 must not merely scale that LAM diagnostic. It must test the actual paper
 claim: whether identity-anchored, confidence-aware pseudo multi-view supervision
 can produce more stable full-head 3DGS than direct single-image Gaussian and
 naive pseudo-view supervision under the same real held-out camera evaluator.
+G83-G108 complete that single-case G81 loop. The pipeline prepares the
+NeRSemble source-only pseudo-view input, builds naive and identity/confidence
+aware manifests, exports private RI3D pools, trains/renders both pseudo-view
+arms into the same G54/G55 held-out cameras, and reruns the three-arm contract.
+The result is negative: identity/confidence-aware pseudo-view supervision does
+not beat either direct single-image Gaussian or the matched naive pseudo-view
+arm. The repo-safe G108 mask audit confirms the failure visually: direct has
+mean held-out mask IoU 0.899699 in the audit sheet, while naive/aware are only
+0.309712/0.306522 and show weak fragmented support. The current G81 evidence
+supports a negative pseudo-view supervision study and real-GT evaluator/protocol
+contribution, not a positive method claim.
 ```
 
 ## Mandatory Data Audit Gate
@@ -343,12 +354,24 @@ plumbing itself.
 | G78 | done, eval pass current best | Held-out evaluator on G77 frustum-guard renders | `experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.md` | Mean PSNR 12.690455 and mask IoU 0.900017, a large improvement over G75 and G71. |
 | G79 | done, visual gate pass diagnostic | Visual/mask gate for G77/G78 | `experiments/metrics/g79_lam_native_gaussian_source220700191_frustum_guard_visual_gate_20260527.md`, `experiments/figures/g79_lam_native_gaussian_source220700191_frustum_guard_mask_audit_20260527.png`, `scripts/audit_nersemble_method_visual_gate.py` | Current best method-direction positive: no gross crop in private review and high mask overlap, but still diagnostic pending multi-case validation and distribution review. |
 | G80 | done, sync pass | Artifact sync gate for G74-G79 repo-safe outputs | `experiments/metrics/g80_artifact_sync_gate_20260527.md`, `scripts/artifact_sync_gate.py` | 18 new repo-safe sync candidates and 0 blocked private/raw paths; checkpoint committed and pushed. |
+| G81 | done, negative route test | Reposition pseudo-view supervision as a real-GT three-arm validity test | `experiments/metrics/g81_pseudo_supervision_repositioning_20260527.md` | Success requires identity/confidence-aware pseudo supervision to beat direct single-image Gaussian and naive pseudo-view supervision on the same held-out cameras. |
+| G83 | done, private source gate | Prepare NeRSemble source `220700191` for source-only pseudo-view generation | `experiments/metrics/g83_nersemble_source220700191_pseudo_input_prep_20260528.md` | Uses only source RGB/mask; held-out RGB/masks remain evaluation-only. |
+| G84 | done, initial contract fail | Initial three-arm contract gate | `experiments/metrics/g84_g81_three_arm_contract_gate_20260528.md` | The contract is executable and already fails the positive claim. |
+| G85 | done, private manifest pass | Build naive and identity/confidence-aware pseudo supervision manifests | `experiments/metrics/g85_nersemble_source220700191_pseudo_supervision_manifests_20260528.md`, `scripts/g81_build_nersemble_pseudo_manifests.py` | Six private pseudo views are labeled with identity/confidence/trusted-mask roles; manifests stay in `3dv_work`. |
+| G86 | done, private RI3D pool pass | Export G81 manifests to RI3D-readable private scene pools | `experiments/metrics/g86_g81_private_ri3d_pool_export_20260528.md`, `scripts/g81_export_pseudo_manifests_to_ri3d_pool.py` | Candidate pools are private method inputs for this gated run, not a validated public training dataset. |
+| G88-G94 | done, diagnostic fail | First G81 RI3D render/eval/contract loop | `experiments/metrics/g88_g81_ri3d_nersemble_heldout_render_20260528.md`, `experiments/metrics/g94_g81_three_arm_contract_splat8_gate_20260528.md` | Aware improves slightly at the short/splat8 setting but does not beat the direct baseline. |
+| G96-G99 | done, diagnostic fail | Iter1500 splat8 naive/aware render/eval/contract loop | `experiments/metrics/g96_g81_ri3d_nersemble_heldout_render_iter1500_splat8_20260528.md`, `experiments/metrics/g99_g81_three_arm_contract_iter1500_splat8_gate_20260528.md` | Longer pseudo-view RI3D training still fails: direct PSNR/mask IoU remain far higher. |
+| G100-G105 | done, strict-aware fail | Reject geometry-only pseudo views and rerun strict-aware pipeline | `experiments/metrics/g100_g81_strict_aware_manifest_20260528.md`, `experiments/metrics/g105_g81_three_arm_contract_strict_aware_iter1500_splat8_gate_20260528.md` | Strict-aware is cleaner conceptually but worse than the matched naive arm and far below direct. |
+| G106 | done, negative summary | Summarize the real-GT G81 iterations | `experiments/metrics/g106_g81_real_gt_iteration_summary_20260528.md` | Current G81 hypothesis is not validated; preserve the negative evidence. |
+| G107 | done, rerun contract fail | Rerun strict three-arm evaluator with explicit direct/naive/aware roots | `experiments/metrics/g107_g81_three_arm_contract_rerun_strict_aware_iter1500_splat8_20260528.md` | No missing requirements; aware PSNR/mask IoU 4.778723/0.306522 does not exceed direct 12.690455/0.900017 or naive 4.904916/0.309712. |
+| G108 | done, repo-safe mask audit | Mask-only visual/VLM gate for the G107 three-arm comparison | `experiments/metrics/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.md`, `experiments/figures/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.png`, `scripts/g81_three_arm_mask_audit.py` | Direct mask support is coherent and high; naive/aware are fragmented and weak. Positive pseudo-view supervision claim is blocked. |
+| G109 | done, sync pass | Artifact sync gate for G81-G108 repo-safe outputs | `experiments/metrics/g109_g81_g108_artifact_sync_gate_20260528.md`, `scripts/artifact_sync_gate.py` | Repo-safe metrics/scripts/mask-only PNG are sync candidates; blocked private/raw paths are zero. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G81 | active next | Reposition and test pseudo-view supervision validity: identity-anchored, confidence-aware pseudo multi-view supervision -> full-head 3DGS -> real held-out camera evaluation | `experiments/metrics/g81_pseudo_supervision_repositioning_20260527.md`; G77-G80 validate the real-GT renderer/evaluator/sync harness; G15-G20 prove naive pseudo-view candidate pools are unsafe | Compare direct single-image Gaussian, naive pseudo-view supervision, and identity/confidence-aware pseudo supervision on the same real-GT held-out cameras. Pass only if the gated pseudo-supervision variant improves stability/metrics/visual gate without using real multi-view images as supervision; otherwise record a negative result. |
+| G110 | active next | Decide post-G81 route: close current RI3D pseudo-view supervision as a negative result, or implement a head-anchored learned-prior refinement that starts from the strong direct Gaussian prior | `experiments/metrics/g107_g81_three_arm_contract_rerun_strict_aware_iter1500_splat8_20260528.md`, `experiments/metrics/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.md`, `experiments/metrics/g109_g81_g108_artifact_sync_gate_20260528.md` | Continue only if a new method can keep the same real-GT/data/VLM/no-leakage gate and has a plausible mechanism to beat the direct baseline; otherwise package the contribution as strict evaluator/protocol plus negative pseudo-view supervision evidence. |
 
 ## G8 Result
 

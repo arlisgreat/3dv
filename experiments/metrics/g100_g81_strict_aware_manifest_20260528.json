@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-05-28T07:57:23.549434+00:00",
+  "date": "2026-05-28",
+  "decision": "Strict-aware manifest is ready for the same private RI3D export/training/render/eval pipeline.",
+  "gate": "G100",
+  "next_gate": "Export G100 private RI3D pool, train strict-aware plus matched naive arm, render to NeRSemble held-out cameras, and rerun the three-arm contract.",
+  "premise": "After G99, create a stricter identity/confidence-aware manifest that rejects geometry_only views with no face/identity anchor before reconstruction training.",
+  "private_outputs": {
+    "strict_manifest": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_manifest/identity_confidence_strict_pseudo_supervision_manifest.json",
+    "strict_manifest_sha256": "7c65122f544cc2de80cdf68bfb0726ed6dbe3b96f3d2c8420c8d829742052447"
+  },
+  "source_manifest": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/identity_confidence_aware_pseudo_supervision_manifest.json",
+  "summary": {
+    "kept_count": 3,
+    "kept_view_indices": [
+      0,
+      4,
+      5
+    ],
+    "rejected_count": 3,
+    "rejected_view_indices": [
+      1,
+      2,
+      3
+    ]
+  },
+  "verdict": "PASS_G81_STRICT_AWARE_MANIFEST_READY_PRIVATE"
+}

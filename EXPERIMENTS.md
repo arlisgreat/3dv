@@ -81,18 +81,31 @@ G59 NeRSemble GT pointcloud true-KRT renderer positive control
 G60 NeRSemble GT pointcloud oracle held-out eval
 G61 LAM textured mesh true-KRT diagnostic with GT bbox alignment
 G62 LAM mesh true-KRT diagnostic held-out eval
+G63-G79 NeRSemble true-KRT LAM mesh/Gaussian renderer diagnostics
+G80 NeRSemble repo-safe artifact sync
+G81 pseudo-view supervision validity repositioning
+G83 NeRSemble source-only pseudo-view input prep
+G85 naive and identity/confidence-aware pseudo supervision manifests
+G86 private RI3D pool export for G81 arms
+G88-G94 short/splat8 G81 render/eval/three-arm contract loop
+G96-G99 iter1500/splat8 G81 render/eval/three-arm contract loop
+G100-G105 strict-aware pseudo-view rejection and matched rerun
+G106 G81 real-GT iteration summary
+G107 strict three-arm evaluator rerun
+G108 repo-safe three-arm mask/VLM audit
+G109 G81-G108 artifact sync gate
 ```
 
 还没有完成：
 
 ```text
-native learned-prior held-out RGB rendering without GT geometry alignment
 benchmark-grade geometry metric with verified correspondence/coverage trimming
 quantitative RGB reconstruction evaluation beyond oracle/diagnostic render checks
 publishable artifact review for any identifiable Multiface RGB/mesh result
-native learned-prior method output on the audited NeRSemble source/eval split with source/model-derived camera alignment
 official NeRSemble leaderboard submission packaging, if needed
 H3DS access and independent cross-dataset validation after user provides data
+multi-case replication of the NeRSemble real-GT protocol
+a method that beats the direct single-image Gaussian baseline under G107/G108-style gates
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -173,9 +186,19 @@ blank/cropped and the camera contract is not true NeRSemble K/R/T. G59/G60
 separately validate the real K/R/T renderer/evaluator with the official
 pointcloud oracle. G61/G62 route the LAM textured mesh through that same K/R/T
 path after GT pointcloud bbox alignment; this is nonempty but visually broken
-and remains diagnostic-only. The repo-safe PNG
-`experiments/figures/g57_g61_nersemble_render_mask_audit_20260527.png` syncs
-mask-only visual evidence; identifiable RGB sheets stay under `3dv_work`.
+and remains diagnostic-only. G63-G79 then find a usable native LAM Gaussian
+true-K/R/T diagnostic path, with G77-G79 giving the strongest single-case direct
+baseline. G83-G108 complete the actual G81 pseudo-view supervision validity
+test on source `220700191`: source-only pseudo input, naive/aware manifests,
+private RI3D pools, held-out rendering, G55 evaluation, three-arm contracts,
+strict-aware rejection of geometry-only pseudo views, and repo-safe mask audit.
+The result is negative. Aware does not exceed direct or naive; G107 records
+PSNR/mask IoU as direct `12.690455/0.900017`, naive `4.904916/0.309712`, and
+aware `4.778723/0.306522`. G108 confirms the visual failure with a mask-only
+audit sheet. The repo-safe PNG
+`experiments/figures/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.png`
+syncs the latest mask-only visual evidence; identifiable RGB sheets stay under
+`3dv_work`.
 ```
 
 ## 2. Stage 00: Inputs
@@ -980,23 +1003,32 @@ current best method-direction positive, but still diagnostic-only because it is
 one NeRSemble frame/case, in-domain for LAM-20K, and not yet a multi-case or
 official hidden-holdout result.
 
-Active next step:
+G81 outcome:
 
 ```text
-G81: stop treating "single image -> diffusion side/back views -> 3DGS ->
-qualitative render" as a valuable target. The next valid experiment is a
-supervision-validity test: single-image input, no real multi-view supervision,
-identity-anchored and confidence-aware pseudo views, full-head 3DGS
-reconstruction, and strict rendering into real held-out cameras.
+G81 was run as the intended supervision-validity test: single-image input, no
+real multi-view supervision, identity-anchored and confidence-aware pseudo
+views, full-head 3DGS/RI3D reconstruction, and strict rendering into real
+held-out NeRSemble cameras.
 
 Required comparison:
 1. direct single-image Gaussian / learned-prior baseline
 2. naive pseudo-view supervision pipeline
 3. identity-anchored, confidence-aware pseudo-view supervision pipeline
 
-All three must use the same NeRSemble / RenderMe-360 / Ava-256 / FaceScape-style
-held-out camera evaluator. If the gated pseudo-supervision variant cannot beat
-the direct and naive baselines under metric plus visual/VLM gates, the correct
-result is a negative answer to whether 2D hallucinations can become credible 3D
-Gaussian supervision.
+All three used the same local NeRSemble held-out evaluator in G107. The gated
+pseudo-supervision variant did not beat direct or naive. G108's mask-only audit
+also shows fragmented/partial pseudo-view reconstructions, so the correct
+current result is a negative answer to whether the present 2D hallucinations can
+become credible 3D Gaussian supervision.
+
+Next step:
+G109 should either close this as an evaluator/protocol plus negative-result
+package, or try a new head-anchored learned-prior refinement that starts from
+the strong direct baseline while keeping the same real-GT/data/VLM/no-leakage
+contract.
+
+Artifact sync:
+G109 passes the repo-safe sync gate for G81-G108 metrics, scripts, and the
+mask-only PNG. Private identifiable RGB sheets remain in `3dv_work`.
 ```

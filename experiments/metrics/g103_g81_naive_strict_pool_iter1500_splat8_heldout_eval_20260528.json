@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T08:04:51.206456+00:00",
+  "date": "2026-05-27",
+  "decision": "Matched naive strict-pool predictions produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G103",
+  "interpretation": "Matched naive baseline for the strict-aware ablation.",
+  "method_label": "g81_naive_pseudo_view_supervision_strict_pool_iter1500_point_splat8",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.48130353291829425,
+    "mean_masked_rgb_psnr": 4.904915857890938,
+    "mean_masked_rgb_ssim_global_luma": 0.015267359423851823,
+    "mean_prediction_foreground_coverage": 0.3240678606514018,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.30971166292766217,
+    "mean_source_mask_vs_eval_mask_iou": 0.30971166292766217,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.49821794033050537,
+        "masked_rgb_mse": 0.3408452868461609,
+        "masked_rgb_psnr": 4.674427069782921,
+        "masked_rgb_ssim_global_luma": -0.04779998899834194,
+        "prediction_foreground_coverage": 0.3287417819088642,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.28425406896973837,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.28425406896973837,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.5023506879806519,
+        "masked_rgb_mse": 0.34114497900009155,
+        "masked_rgb_psnr": 4.670610163190036,
+        "masked_rgb_ssim_global_luma": 0.023011436403937175,
+        "prediction_foreground_coverage": 0.3206455452278395,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.26680681596019534,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.26680681596019534,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.4433419704437256,
+        "masked_rgb_mse": 0.29042163491249084,
+        "masked_rgb_psnr": 5.369710340699857,
+        "masked_rgb_ssim_global_luma": 0.07059063086596024,
+        "prediction_foreground_coverage": 0.3228162548175017,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.37807410385305285,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.37807410385305285,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Evaluate strict-aware and rerun contract.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions",
+  "premise": "Evaluate the matched naive arm from the G100 strict-aware pool after G101 training and G102 rendering.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_NAIVE_STRICT_POOL_ITER1500_HELDOUT_EVAL"
+}

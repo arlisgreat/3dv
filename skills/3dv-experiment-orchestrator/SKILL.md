@@ -125,13 +125,19 @@ G77 adds source-mask plus eval-camera-frustum crop guard alignment; it may use
 held-out camera K/R/T metadata but not held-out RGB/mask or GT pointcloud for
 alignment. G78/G79 are the current best method-direction positive, with mean
 held-out mask IoU 0.900017 and a passing private visual review. G80 syncs the
-repo-safe artifacts. The active next gate is G81: do not scale a qualitative
-"single image -> diffusion side/back views -> 3DGS render" story. Instead test
-whether identity-anchored, confidence-aware pseudo multi-view supervision can
-beat both direct single-image Gaussian and naive pseudo-view supervision when
-all outputs are rendered into the same real held-out benchmark cameras. Keep the
-distribution/overlap warning for LAM-20K and do not use real multi-view images
-as training supervision in this claim.
+repo-safe artifacts. G83-G108 complete the G81 three-arm pseudo-view
+supervision validity test on the audited NeRSemble split. The result is
+negative: G107 reruns the strict contract with direct `12.690455/0.900017`,
+naive `4.904916/0.309712`, and identity/confidence-aware `4.778723/0.306522`
+for PSNR/mask IoU; G108's repo-safe mask audit confirms direct has coherent
+support while the pseudo-view RI3D arms are fragmented. G109 passes artifact
+sync for repo-safe metrics/scripts/mask-only PNG, with private identifiable RGB
+sheets staying under `3dv_work`. The active next gate is G110: either package
+the real-GT evaluator/protocol plus negative
+pseudo-supervision evidence, or try a new head-anchored learned-prior refinement
+that starts from the strong direct Gaussian baseline. Keep the distribution/
+overlap warning for LAM-20K and do not use real multi-view images as training
+supervision in this claim.
 ```
 
 Every milestone that consumes generated images must pass a data audit gate

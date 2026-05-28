@@ -1,0 +1,273 @@
+{
+  "artifact_policy": "Repo-safe mask-only sheet is committed; identifiable RGB renders and pseudo-view sheets remain under 3dv_work.",
+  "aware_beats_direct_and_naive": false,
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T08:27:34.719109+00:00",
+  "date": "2026-05-28",
+  "decision": "Identity/confidence-aware pseudo-view supervision does not exceed direct + naive; G81 is a negative result under the current strict real-GT contract.",
+  "gate": "G108",
+  "manual_visual_audit": "Mask-only audit confirms the direct arm has much stronger held-out support. Naive and identity/confidence-aware RI3D arms are weak/partial and do not provide a visual basis for a positive pseudo-view supervision claim.",
+  "missing_requirements": [],
+  "next_gate": "Update milestones/experiment index and sync repo-safe metrics plus mask-only PNG to GitHub.",
+  "per_eval_serial": [
+    {
+      "arms": {
+        "direct_single_image_gaussian": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200042_frame_00000.png",
+          "prediction_sha256": "4aeaff96db9133bd64c52817ac9807bce8edbad7fd8015e29e8f567a7dc278d9",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              155,
+              1099,
+              1603
+            ],
+            "coverage": 0.7223696440716391,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.8868906644058009
+        },
+        "identity_confidence_aware_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200042_frame_00000.png",
+          "prediction_sha256": "70bd07d6b9d61b92aaa115d9008bdd0b130d3a7cc9c7316c82c2cfdb317bf205",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              422,
+              1099,
+              1573
+            ],
+            "coverage": 0.30705508954885513,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.4057636272027159
+        },
+        "naive_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+          "prediction_sha256": "8d0e75b06b7a28dbafcdd62cec8e8defedf3e9daa4fb956b0fe1c545c3c1ef36",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              251,
+              1002,
+              1379
+            ],
+            "coverage": 0.3287417819088642,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.28425406896973837
+        }
+      },
+      "serial": "222200042",
+      "target_stats": {
+        "bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "coverage": 0.6701864656540467,
+        "touches_border": true
+      }
+    },
+    {
+      "arms": {
+        "direct_single_image_gaussian": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200041_frame_00000.png",
+          "prediction_sha256": "79457839a7c460ed567fecb5c84ef5a2fa68dd3e9dc5db496adfb859800506cb",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              140,
+              1099,
+              1603
+            ],
+            "coverage": 0.6520584901382906,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.8992050710540217
+        },
+        "identity_confidence_aware_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200041_frame_00000.png",
+          "prediction_sha256": "4b4ab4dea43cea4105086d41a59efe1fe5b2952ce20a9a3f59ceffaad0d389f8",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              389,
+              1099,
+              1399
+            ],
+            "coverage": 0.21298401722965313,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.1888003548717066
+        },
+        "naive_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+          "prediction_sha256": "db388fc13b38e14c3aff2f6c7e1fc366d1430448ea52f20142637bfd78c95f98",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              0,
+              1099,
+              1603
+            ],
+            "coverage": 0.3206455452278395,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.26680681596019534
+        }
+      },
+      "serial": "222200041",
+      "target_stats": {
+        "bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "coverage": 0.6011488324642938,
+        "touches_border": true
+      }
+    },
+    {
+      "arms": {
+        "direct_single_image_gaussian": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g77_lam_native_gaussian_source220700191_frustum_guard/predictions/cam_222200047_frame_00000.png",
+          "prediction_sha256": "72c1721c4334cccc673176450a6f5a8f4ec2adb5ece08f260d831ef734df2153",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              182,
+              1099,
+              1603
+            ],
+            "coverage": 0.6353411924733621,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.9130027230464258
+        },
+        "identity_confidence_aware_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_identity_confidence_aware_source_anchor/predictions/cam_222200047_frame_00000.png",
+          "prediction_sha256": "82e59e6f3b9bc30e4864e4db6fc54445ef5090711c03b285314094f433d99262",
+          "prediction_stats": {
+            "bbox": [
+              56,
+              445,
+              1099,
+              1603
+            ],
+            "coverage": 0.2384119247336205,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.32500266074028106
+        },
+        "naive_pseudo_view_supervision": {
+          "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+          "prediction_sha256": "036b53990c82bfa9575dd1411d8a1a631fb5dfa1d8214b140e93b062d0ad4e90",
+          "prediction_stats": {
+            "bbox": [
+              0,
+              434,
+              1099,
+              1563
+            ],
+            "coverage": 0.3228162548175017,
+            "touches_border": true
+          },
+          "prediction_target_mask_iou": 0.37807410385305285
+        }
+      },
+      "serial": "222200047",
+      "target_stats": {
+        "bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "coverage": 0.5941934935388801,
+        "touches_border": true
+      }
+    }
+  ],
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g108_g81_three_arm_strict_iter1500_splat8_mask_audit_20260528.png",
+    "mask_sheet_sha256": "a4a4771ff0a0e695e428e791204307d69d5d726b4eadc90774428c30288e171d"
+  },
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "summary_by_arm": {
+    "direct_single_image_gaussian": {
+      "eval_summary": {
+        "mean_masked_rgb_psnr": 12.690454933591733,
+        "mean_prediction_foreground_coverage": 0.6696418045794604,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.9000165206203238,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json",
+        "verdict": "PASS_DIAGNOSTIC_ONLY_LAM_NATIVE_GAUSSIAN_FRUSTUM_GUARD_EVAL"
+      },
+      "mean_audit_mask_iou": 0.8996994861687494,
+      "mean_prediction_coverage": 0.6699231088944306
+    },
+    "identity_confidence_aware_pseudo_view_supervision": {
+      "eval_summary": {
+        "mean_masked_rgb_psnr": 4.778723076002406,
+        "mean_prediction_foreground_coverage": 0.2528170105040429,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.30652221427156784,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g104_g81_strict_aware_iter1500_splat8_heldout_eval_20260528.json",
+        "verdict": "PASS_G81_STRICT_AWARE_ITER1500_HELDOUT_EVAL"
+      },
+      "mean_audit_mask_iou": 0.30652221427156784,
+      "mean_prediction_coverage": 0.2528170105040429
+    },
+    "naive_pseudo_view_supervision": {
+      "eval_summary": {
+        "mean_masked_rgb_psnr": 4.904915857890938,
+        "mean_prediction_foreground_coverage": 0.3240678606514018,
+        "mean_prediction_mask_vs_eval_mask_iou": 0.30971166292766217,
+        "path": "/data1/workspace/airulan/3dv/experiments/metrics/g103_g81_naive_strict_pool_iter1500_splat8_heldout_eval_20260528.json",
+        "verdict": "PASS_G81_NAIVE_STRICT_POOL_ITER1500_HELDOUT_EVAL"
+      },
+      "mean_audit_mask_iou": 0.30971166292766217,
+      "mean_prediction_coverage": 0.3240678606514018
+    }
+  },
+  "verdict": "PASS_G81_THREE_ARM_MASK_AUDIT_DIAGNOSTIC_ONLY"
+}

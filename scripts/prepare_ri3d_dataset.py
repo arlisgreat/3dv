@@ -34,26 +34,42 @@ from PIL import Image, ImageOps
 DEFAULT_VARIANTS = ("raw75_all6", "raw75_budget4", "cutout75_budget4_masked")
 DEFAULT_SAMPLES = ("web_clean_frontal_03", "web_clean_frontal_01")
 ROLE_CONFIDENCE_MULTIPLIERS = {
+    "source_identity_anchor": 1.0,
+    "naive_rgb": 1.0,
     "identity_supervision": 1.0,
+    "identity_supervision_weak": 0.65,
     "geometry_only": 0.35,
+    "reject": 0.0,
     "identity_reject": 0.0,
     "mask_reject": 0.0,
 }
 ROLE_RGB_WEIGHTS = {
+    "source_identity_anchor": 1.0,
+    "naive_rgb": 1.0,
     "identity_supervision": 1.0,
+    "identity_supervision_weak": 0.65,
     "geometry_only": 0.25,
+    "reject": 0.0,
     "identity_reject": 0.0,
     "mask_reject": 0.0,
 }
 ROLE_DEPTH_WEIGHTS = {
+    "source_identity_anchor": 1.0,
+    "naive_rgb": 1.0,
     "identity_supervision": 1.0,
+    "identity_supervision_weak": 0.8,
     "geometry_only": 1.0,
+    "reject": 0.0,
     "identity_reject": 0.0,
     "mask_reject": 0.0,
 }
 ROLE_RGB_POLICIES = {
+    "source_identity_anchor": "rgb",
+    "naive_rgb": "rgb",
     "identity_supervision": "rgb",
+    "identity_supervision_weak": "rgb_weak",
     "geometry_only": "desaturated_rgb",
+    "reject": "excluded",
     "identity_reject": "excluded",
     "mask_reject": "excluded",
 }

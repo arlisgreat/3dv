@@ -32,6 +32,11 @@ or does it only create plausible 2D hallucinations that fail real held-out
 camera evaluation?
 ```
 
+G83-G108 run this question as a three-arm NeRSemble held-out experiment. The
+current answer is negative for the tested route: identity/confidence-aware
+pseudo-view supervision does not exceed either direct single-image Gaussian or
+matched naive pseudo-view supervision.
+
 The intended contribution is not a qualitative single-image demo. It is a
 strict supervision-validity protocol: identity-anchored and confidence-aware
 pseudo views, no real multi-view images as training supervision, full-head 3DGS
@@ -189,6 +194,12 @@ G77-G79: add source-mask plus eval-camera-frustum crop guard with no held-out
          RGB/mask or GT pointcloud alignment; held-out mask IoU reaches 0.900017
          and visual review passes as the current single-case method-direction
          positive.
+G81-G108: run the actual pseudo-view supervision validity test on the same
+          NeRSemble source/eval split: source-only pseudo generation input,
+          naive and identity/confidence-aware manifests, private RI3D arms,
+          held-out rendering/evaluation, strict three-arm contract rerun, and
+          mask-only visual audit. The identity/confidence-aware arm does not
+          beat direct or naive.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -203,7 +214,8 @@ The stable scientific signal is not "RI3D is solved." It is:
    no-leakage gate.
 5. The next publishable question is whether identity/confidence-gated pseudo
    views improve real-camera 3DGS reconstruction over direct single-image and
-   naive pseudo-view baselines.
+   naive pseudo-view baselines. G107/G108 answer this negatively for the
+   current single NeRSemble case and RI3D-style pseudo-view route.
 ```
 
 ## Gate Semantics

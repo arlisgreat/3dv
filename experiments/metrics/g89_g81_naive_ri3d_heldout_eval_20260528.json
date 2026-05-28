@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T07:37:11.889321+00:00",
+  "date": "2026-05-27",
+  "decision": "Naive pseudo-view RI3D predictions produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G89",
+  "interpretation": "This is the naive pseudo-view supervision baseline for G81. It can be compared only inside the same source split, renderer, and evaluator.",
+  "method_label": "g81_naive_pseudo_view_supervision_ri3d_iter80_point_splat",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.5003059407075247,
+    "mean_masked_rgb_psnr": 4.67751073264844,
+    "mean_masked_rgb_ssim_global_luma": 0.017599806219010524,
+    "mean_prediction_foreground_coverage": 0.2718434973173128,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.2752405494861099,
+    "mean_source_mask_vs_eval_mask_iou": 0.2752405494861099,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.5254465937614441,
+        "masked_rgb_mse": 0.3653239607810974,
+        "masked_rgb_psnr": 4.3732184245068675,
+        "masked_rgb_ssim_global_luma": -0.06757848945337551,
+        "prediction_foreground_coverage": 0.26948481070052144,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.24916255667716955,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g88_g81_ri3d_nersemble_heldout_iter80/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.24916255667716955,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.5023834705352783,
+        "masked_rgb_mse": 0.35076919198036194,
+        "masked_rgb_psnr": 4.549785576676878,
+        "masked_rgb_ssim_global_luma": 0.05924671593699328,
+        "prediction_foreground_coverage": 0.2619564724552256,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.23971465274284068,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g88_g81_ri3d_nersemble_heldout_iter80/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.23971465274284068,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.47308775782585144,
+        "masked_rgb_mse": 0.3083522915840149,
+        "masked_rgb_psnr": 5.109528196761575,
+        "masked_rgb_ssim_global_luma": 0.0611311921734138,
+        "prediction_foreground_coverage": 0.2840892087961913,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.33684443903831934,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g88_g81_ri3d_nersemble_heldout_iter80/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.33684443903831934,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Evaluate the identity/confidence-aware arm and rerun G84 three-arm contract.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g88_g81_ri3d_nersemble_heldout_iter80/g81_naive_pseudo_source_anchor/predictions",
+  "premise": "Evaluate the naive pseudo-view RI3D arm on the audited NeRSemble source220700191 held-out cameras using G88 point-splat predictions.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_HELDOUT_EVAL"
+}

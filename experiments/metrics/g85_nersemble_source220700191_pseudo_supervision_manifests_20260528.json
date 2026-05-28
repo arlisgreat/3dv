@@ -1,0 +1,209 @@
+{
+  "artifact_policy": "Generated identifiable pseudo views and contact sheet remain private under 3dv_work; commit hashes/metrics only.",
+  "aware_manifest_preview": [
+    {
+      "azimuth": 30,
+      "confidence_score": 100.0,
+      "depth_weight": 1.0,
+      "elevation": 20,
+      "identity_anchor_score": 0.720435,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_00_az030_el+20.png",
+      "image_sha256": "b0d8b5bec49a74c8688b04e4aacfc8c3873bc15e52e790fd776ba44c8a8f6b47",
+      "mask_stats": {
+        "bbox": [
+          63,
+          45,
+          261,
+          319
+        ],
+        "bbox_area": 0.534423828125,
+        "center_offset": 0.07096696816722112,
+        "coverage": 0.329794921875
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 1.0,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "identity_supervision",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_00_az030_el+20_trusted_mask.png",
+      "trusted_region_mask_sha256": "10a282efc46b8306c7efaf2c50c4ba014f50a25512a8bf03dd33338d62e664fa",
+      "view_face_detected": true,
+      "view_face_prob": 0.9922284483909607,
+      "view_index": 0
+    },
+    {
+      "azimuth": 90,
+      "confidence_score": 86.77310068373137,
+      "depth_weight": 1.0,
+      "elevation": -10,
+      "identity_anchor_score": null,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_01_az090_el-10.png",
+      "image_sha256": "2305f5b406a6dcd2c43a9a186ea52a8331d6fa83b467db4b69770de28d04b3ae",
+      "mask_stats": {
+        "bbox": [
+          84,
+          58,
+          226,
+          289
+        ],
+        "bbox_area": 0.323984375,
+        "center_offset": 0.04609856166098039,
+        "coverage": 0.26205078125
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 0.2,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "geometry_only",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_01_az090_el-10_trusted_mask.png",
+      "trusted_region_mask_sha256": "cddc18750844450e8e069e0712ad1f5faa4bfc37a36c40d73b5812f0a4799364",
+      "view_face_detected": false,
+      "view_face_prob": 0.0,
+      "view_index": 1
+    },
+    {
+      "azimuth": 150,
+      "confidence_score": 84.95297805642633,
+      "depth_weight": 1.0,
+      "elevation": 20,
+      "identity_anchor_score": null,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_02_az150_el+20.png",
+      "image_sha256": "819a11c4e92c2e8d6c4a93d77b0f6f657405207e60eb408601fde4f6984bb69e",
+      "mask_stats": {
+        "bbox": [
+          58,
+          46,
+          261,
+          319
+        ],
+        "bbox_area": 0.545859375,
+        "center_offset": 0.07210031347962387,
+        "coverage": 0.3466015625
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 0.2,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "geometry_only",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_02_az150_el+20_trusted_mask.png",
+      "trusted_region_mask_sha256": "eb36ae255b933de197f40f6607204f89c26cc7a98b13525572e660f46c04b063",
+      "view_face_detected": false,
+      "view_face_prob": 0.0,
+      "view_index": 2
+    },
+    {
+      "azimuth": 210,
+      "confidence_score": 85.86842656155676,
+      "depth_weight": 1.0,
+      "elevation": -10,
+      "identity_anchor_score": null,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_03_az210_el-10.png",
+      "image_sha256": "243bf9f45e996276e1175a4458bb15f6be2be8e8031b531180f8c2dcaa612241",
+      "mask_stats": {
+        "bbox": [
+          53,
+          67,
+          273,
+          289
+        ],
+        "bbox_area": 0.481279296875,
+        "center_offset": 0.0590224776920462,
+        "coverage": 0.30150390625
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 0.2,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "geometry_only",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_03_az210_el-10_trusted_mask.png",
+      "trusted_region_mask_sha256": "70e68011f358064d0b2a03b3ea701609afa3bce78ac277189963105daa87a92c",
+      "view_face_detected": false,
+      "view_face_prob": 0.0,
+      "view_index": 3
+    },
+    {
+      "azimuth": 270,
+      "confidence_score": 95.40794674092399,
+      "depth_weight": 0.8,
+      "elevation": 20,
+      "identity_anchor_score": 0.567084,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_04_az270_el+20.png",
+      "image_sha256": "51a59ea4a030c77738a0199721d222b36dab58e90f43499961989b9f4145c7ed",
+      "mask_stats": {
+        "bbox": [
+          90,
+          50,
+          240,
+          319
+        ],
+        "bbox_area": 0.39814453125,
+        "center_offset": 0.08024404850263449,
+        "coverage": 0.290185546875
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 0.65,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "identity_supervision_weak",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_04_az270_el+20_trusted_mask.png",
+      "trusted_region_mask_sha256": "a3ca8f6ef4b1bf9f015978fdca34d830f235e8a59cf402011729034584478f18",
+      "view_face_detected": true,
+      "view_face_prob": 0.7072948217391968,
+      "view_index": 4
+    },
+    {
+      "azimuth": 330,
+      "confidence_score": 100.0,
+      "depth_weight": 1.0,
+      "elevation": -10,
+      "identity_anchor_score": 0.875623,
+      "image_path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/view_05_az330_el-10.png",
+      "image_sha256": "691785eb0f792135e8c686ee85ab6ea67087bfac254be8f32780f94731f0018b",
+      "mask_stats": {
+        "bbox": [
+          51,
+          26,
+          268,
+          288
+        ],
+        "bbox_area": 0.55990234375,
+        "center_offset": 0.00783699059561127,
+        "coverage": 0.338603515625
+      },
+      "mask_weight": 1.0,
+      "rgb_weight": 1.0,
+      "ri3d_train_candidate": true,
+      "source_face_detected": true,
+      "supervision_role": "identity_supervision",
+      "trusted_region_mask": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/trusted_masks/view_05_az330_el-10_trusted_mask.png",
+      "trusted_region_mask_sha256": "beab701edfc9f3c04334c23ac042e3cfa4e5bb33a2fe9a2fc05077d9984583f3",
+      "view_face_detected": true,
+      "view_face_prob": 0.9992289543151855,
+      "view_index": 5
+    }
+  ],
+  "created_at": "2026-05-28T07:16:54.625861+00:00",
+  "date": "2026-05-28",
+  "decision": "Naive and identity/confidence-aware pseudo-supervision manifests are ready for RI3D/3DGS arm construction.",
+  "gate": "G85",
+  "next_gate": "Prepare RI3D/3DGS scenes for naive and aware arms, train/render held-out predictions, then rerun G84.",
+  "private_outputs": {
+    "aware_manifest": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/identity_confidence_aware_pseudo_supervision_manifest.json",
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/g85_private_pseudo_view_identity_confidence_sheet.png",
+    "contact_sheet_sha256": "c828348dc597402cbe38fb1d043861941310c956ed987218a823f71938031dd2",
+    "naive_manifest": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/naive_pseudo_supervision_manifest.json"
+  },
+  "summary": {
+    "aware_geometry_count": 3,
+    "aware_identity_count": 3,
+    "aware_reject_count": 0,
+    "aware_role_counts": {
+      "geometry_only": 3,
+      "identity_supervision": 2,
+      "identity_supervision_weak": 1
+    },
+    "aware_trainable_count": 6,
+    "pseudo_view_count": 6
+  },
+  "verdict": "PASS_G81_NERSEMBLE_PSEUDO_MANIFESTS_READY_PRIVATE"
+}

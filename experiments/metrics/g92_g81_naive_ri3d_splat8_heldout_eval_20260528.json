@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T07:48:43.657533+00:00",
+  "date": "2026-05-27",
+  "decision": "Naive splat8 RI3D predictions produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G92",
+  "interpretation": "Renderer-only splat radius ablation for the naive G81 baseline.",
+  "method_label": "g81_naive_pseudo_view_supervision_ri3d_iter80_point_splat8",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.5095062255859375,
+    "mean_masked_rgb_psnr": 4.582828640067479,
+    "mean_masked_rgb_ssim_global_luma": -0.009999952305506205,
+    "mean_prediction_foreground_coverage": 0.2956736945515,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.2645483056568642,
+    "mean_source_mask_vs_eval_mask_iou": 0.2645483056568642,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.4978523254394531,
+        "masked_rgb_mse": 0.3407440483570099,
+        "masked_rgb_psnr": 4.675717210788568,
+        "masked_rgb_ssim_global_luma": -0.04394137016004713,
+        "prediction_foreground_coverage": 0.3139571525731127,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.2977866767115998,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g91_g81_ri3d_nersemble_heldout_iter80_splat8_lite/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.2977866767115998,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.529616117477417,
+        "masked_rgb_mse": 0.3682437241077423,
+        "masked_rgb_psnr": 4.338646460022416,
+        "masked_rgb_ssim_global_luma": 0.04927114984949461,
+        "prediction_foreground_coverage": 0.29494559056903197,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.1871794717769972,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g91_g81_ri3d_nersemble_heldout_iter80_splat8_lite/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.1871794717769972,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.5010502338409424,
+        "masked_rgb_mse": 0.3361923098564148,
+        "masked_rgb_psnr": 4.734122249391455,
+        "masked_rgb_ssim_global_luma": -0.035329636605966094,
+        "prediction_foreground_coverage": 0.27811834051235546,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.30867876848199566,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g91_g81_ri3d_nersemble_heldout_iter80_splat8_lite/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.30867876848199566,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Evaluate aware splat8 and rerun G84 if improved.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g91_g81_ri3d_nersemble_heldout_iter80_splat8_lite/g81_naive_pseudo_source_anchor/predictions",
+  "premise": "Evaluate the naive pseudo-view RI3D arm with G91 splat8 NeRSemble held-out renders.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_SPLAT8_HELDOUT_EVAL"
+}

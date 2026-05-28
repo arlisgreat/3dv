@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T07:55:46.432697+00:00",
+  "date": "2026-05-27",
+  "decision": "Naive iter1500 predictions produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G97",
+  "interpretation": "Densified naive pseudo-view supervision baseline for G81.",
+  "method_label": "g81_naive_pseudo_view_supervision_ri3d_iter1500_point_splat8",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.4812740484873454,
+    "mean_masked_rgb_psnr": 4.905283870045445,
+    "mean_masked_rgb_ssim_global_luma": 0.015212546577613487,
+    "mean_prediction_foreground_coverage": 0.3237034308168971,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.30967431172352655,
+    "mean_source_mask_vs_eval_mask_iou": 0.30967431172352655,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.4983033537864685,
+        "masked_rgb_mse": 0.3407703936100006,
+        "masked_rgb_psnr": 4.6753814410000105,
+        "masked_rgb_ssim_global_luma": -0.047599273516197534,
+        "prediction_foreground_coverage": 0.327936975742462,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.2842665247068432,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g96_g81_ri3d_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.2842665247068432,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.5025349259376526,
+        "masked_rgb_mse": 0.3413848578929901,
+        "masked_rgb_psnr": 4.6675574590247635,
+        "masked_rgb_ssim_global_luma": 0.02355019716411196,
+        "prediction_foreground_coverage": 0.3202125368397189,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.26633010035450855,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g96_g81_ri3d_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.26633010035450855,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.44298386573791504,
+        "masked_rgb_mse": 0.29020756483078003,
+        "masked_rgb_psnr": 5.372912710111562,
+        "masked_rgb_ssim_global_luma": 0.06968671608492603,
+        "prediction_foreground_coverage": 0.3229607798685105,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.37842631010922795,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g96_g81_ri3d_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.37842631010922795,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Evaluate aware iter1500 and rerun G84/G99 contract.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g96_g81_ri3d_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/predictions",
+  "premise": "Evaluate the naive pseudo-view RI3D arm after G95 1500-step training and G96 splat8 NeRSemble held-out rendering.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_NAIVE_PSEUDO_VIEW_RI3D_ITER1500_HELDOUT_EVAL"
+}

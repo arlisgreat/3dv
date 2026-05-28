@@ -1,0 +1,86 @@
+{
+  "artifact_policy": "Private source/pseudo-view images and masks stay under 3dv_work; commit repo-safe metrics and hashes only.",
+  "candidate_root": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/candidate_pools",
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T07:57:38.176805+00:00",
+  "date": "2026-05-28",
+  "decision": "Private RI3D-readable naive and identity/confidence-aware scene pools are ready for scene conversion.",
+  "gate": "G86",
+  "missing_requirements": [],
+  "next_gate": "Run scripts/prepare_ri3d_dataset.py on this private candidate root, then train/render both arms.",
+  "private_outputs": {
+    "contact_sheet": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/g86_private_ri3d_pool_sheet.png",
+    "contact_sheet_sha256": "22592f8e0f4f4e0f0904764bdb812636f8d6de1ac631d6e43e3a5bc49840390f"
+  },
+  "scenes": [
+    {
+      "arm": "naive_pseudo_view_supervision",
+      "heldout_path_leakage": [],
+      "metadata": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/candidate_pools/g81_naive_pseudo_source_anchor/source220700191/metadata.json",
+      "role_counts": {
+        "naive_rgb": 6,
+        "source_identity_anchor": 1
+      },
+      "sample_id": "source220700191",
+      "scene_dir": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/candidate_pools/g81_naive_pseudo_source_anchor/source220700191",
+      "trainable_view_count": 7,
+      "variant": "g81_naive_pseudo_source_anchor",
+      "view_count": 7
+    },
+    {
+      "arm": "identity_confidence_aware_pseudo_view_supervision",
+      "heldout_path_leakage": [],
+      "metadata": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/candidate_pools/g81_identity_confidence_aware_source_anchor/source220700191/metadata.json",
+      "role_counts": {
+        "identity_supervision": 2,
+        "identity_supervision_weak": 1,
+        "source_identity_anchor": 1
+      },
+      "sample_id": "source220700191",
+      "scene_dir": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_ri3d_pool/candidate_pools/g81_identity_confidence_aware_source_anchor/source220700191",
+      "trainable_view_count": 4,
+      "variant": "g81_identity_confidence_aware_source_anchor",
+      "view_count": 7
+    }
+  ],
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G81_RI3D_PRIVATE_POOL_READY"
+}
