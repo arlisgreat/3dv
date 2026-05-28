@@ -1,0 +1,192 @@
+{
+  "complete_source_split_count": 1,
+  "created_at": "2026-05-28T09:26:47.500951+00:00",
+  "date": "2026-05-28",
+  "decision": "Multi-case replication is not complete: only source 220700191 has the full direct/naive/G110/G117 contract. Source 222200042 has a direct diagnostic but lacks pseudo input, Zero123++ pseudo views, manifests, and G117-style ablations. No empty GPU is available now, so do not launch the missing GPU runs in this turn.",
+  "empty_gpu_count": 0,
+  "gate": "G119",
+  "gpu_status": [
+    {
+      "empty": false,
+      "index": 0,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 62497,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 1,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 60339,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 2,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 55887,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 3,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 46421,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 4,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 59497,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 5,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 60919,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 6,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 63633,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    },
+    {
+      "empty": false,
+      "index": 7,
+      "memory_total_mb": 81920,
+      "memory_used_mb": 65987,
+      "name": "NVIDIA A800-SXM4-80GB",
+      "utilization_gpu_percent": 98
+    }
+  ],
+  "next_gate": "G120 should execute source 222200042 replication only when an empty GPU is available, then rerun G118-style aggregation across cases.",
+  "premise": "Preflight multi-case replication of the same source-only/pseudo-only G110/G117 gate before launching more GPU jobs.",
+  "source_splits": [
+    {
+      "complete": true,
+      "missing_requirements": [],
+      "next_action": "already complete as single-case diagnostic; use as case 1",
+      "requirements": [
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "source override adapter",
+          "path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter_source_220700191/adapter_manifest.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "direct LAM eval",
+          "path": "/data1/workspace/airulan/3dv/experiments/metrics/g78_lam_native_gaussian_source220700191_frustum_guard_eval_20260527.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": true,
+          "label": "Zero123++ pseudo views",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/metadata.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "strict pseudo manifest",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_manifest/identity_confidence_strict_pseudo_supervision_manifest.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "G117 ablation predictions",
+          "path": "/data1/workspace/airulan/3dv/experiments/metrics/g117_source_gated_pseudo_prior_ablation_20260528.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "G118 ablation contract",
+          "path": "/data1/workspace/airulan/3dv/experiments/metrics/g118_source_gated_ablation_contract_20260528.json"
+        }
+      ],
+      "source_serial": "220700191"
+    },
+    {
+      "complete": false,
+      "missing_requirements": [
+        {
+          "exists": false,
+          "gpu_required_to_create": false,
+          "label": "source pseudo input prep",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g83_nersemble_source222200042_pseudo_input/source_pseudo_input_manifest.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "Zero123++ pseudo views",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g120_zero123plus_nersemble_source222200042_steps75/metadata.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "pseudo manifests",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g120_zero123plus_nersemble_source222200042_steps75/g81_manifests/identity_confidence_aware_pseudo_supervision_manifest.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "G117-style ablation predictions",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g121_source222200042_source_gated_pseudo_prior_ablation"
+        }
+      ],
+      "next_action": "wait for an actually idle GPU, then run source prep, Zero123++, manifest build, direct/frustum guard if needed, and G117-style eval",
+      "requirements": [
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "source 222200042 adapter",
+          "path": "/data1/workspace/airulan/3dv_work/datasets/nersemble_nvs_388_glasses_frame00000_adapter/adapter_manifest.json"
+        },
+        {
+          "exists": true,
+          "gpu_required_to_create": false,
+          "label": "direct LAM eval, non-frustum-guard diagnostic",
+          "path": "/data1/workspace/airulan/3dv/experiments/metrics/g71_lam_native_gaussian_source_aligned_xyz_eval_20260527.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": false,
+          "label": "source pseudo input prep",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g83_nersemble_source222200042_pseudo_input/source_pseudo_input_manifest.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "Zero123++ pseudo views",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g120_zero123plus_nersemble_source222200042_steps75/metadata.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "pseudo manifests",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g120_zero123plus_nersemble_source222200042_steps75/g81_manifests/identity_confidence_aware_pseudo_supervision_manifest.json"
+        },
+        {
+          "exists": false,
+          "gpu_required_to_create": true,
+          "label": "G117-style ablation predictions",
+          "path": "/data1/workspace/airulan/3dv_work/runs/g121_source222200042_source_gated_pseudo_prior_ablation"
+        }
+      ],
+      "source_serial": "222200042"
+    }
+  ],
+  "verdict": "PASS_G119_MULTICASE_PREFLIGHT_RECORDED"
+}

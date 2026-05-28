@@ -37,13 +37,17 @@ current answer is negative for the tested route: identity/confidence-aware
 pseudo-view supervision does not exceed either direct single-image Gaussian or
 matched naive pseudo-view supervision.
 
-G110-G115 find a narrower positive mechanism: do not let pseudo views define
+G110-G119 find a narrower positive mechanism: do not let pseudo views define
 geometry. Keep the direct Gaussian prior, select alpha only from source
 render/source mask, and use strict identity/confidence pseudo views as a
 conservative color prior. On the same single NeRSemble source/eval split this
 beats direct and naive under the original G55 held-out evaluator, but it remains
 single-case diagnostic evidence pending replication. G115 records the repo-safe
-artifact sync set for the single-case pass.
+artifact sync set for the single-case pass. G116 then prevents overclaiming the
+naive failure: the naive source render already under-covers the source mask, so
+pose/crop/source/geometry risk remains. G117/G118 show the single-case ablation
+pattern; G119 records that multi-case replication is not complete and no empty
+GPU was available for the next source split.
 
 The intended contribution is not a qualitative single-image demo. It is a
 strict supervision-validity protocol: identity-anchored and confidence-aware
@@ -208,11 +212,13 @@ G81-G108: run the actual pseudo-view supervision validity test on the same
           held-out rendering/evaluation, strict three-arm contract rerun, and
           mask-only visual audit. The identity/confidence-aware arm does not
           beat direct or naive.
-G110-G115: replace the failed pseudo-geometry arm with a source-gated
+G110-G119: replace the failed pseudo-geometry arm with a source-gated
            direct-prior refinement. The strict identity/confidence pseudo views
            only provide a color prior; source render/source mask select alpha.
            This passes the original G55 evaluator and three-arm contract on the
-           current held-out cameras, then passes artifact sync.
+           current held-out cameras, then passes artifact sync. The later gates
+           add a naive pose/crop caveat, run requested ablations, and preflight
+           multi-case replication.
 ```
 
 The stable scientific signal is not "RI3D is solved." It is:
@@ -228,8 +234,14 @@ The stable scientific signal is not "RI3D is solved." It is:
 5. Identity/confidence-gated pseudo views do not rescue the RI3D-style
    pseudo-geometry route, but they can help as a conservative source-gated color
    prior on top of a strong direct Gaussian prior in the current single case.
-6. G110/G112 answer the active single-case objective positively; G116 must test
-   whether this survives multi-case replication.
+6. G110/G112 answer the active single-case objective positively.
+7. G116 says naive failure is real but not cleanly attributable to pseudo-view
+   quality alone; source-render crop/geometry risk must stay in the story.
+8. G117/G118: identity helps RGB modestly; confidence weighting is not proven
+   useful on the single case; source alpha helps mask; direct geometry is the
+   dominant contributor.
+9. G119: multi-case replication remains open; G120 must run only when an empty
+   GPU is available and must preserve the source-only/pseudo-only gate.
 ```
 
 ## Gate Semantics

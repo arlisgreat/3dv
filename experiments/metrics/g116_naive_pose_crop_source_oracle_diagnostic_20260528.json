@@ -1,0 +1,774 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T09:20:52.870455+00:00",
+  "date": "2026-05-28",
+  "decision": "Naive failure remains real, but current evidence supports a mixed source/crop/geometry-risk diagnosis, not a pure pseudo-view-quality diagnosis.",
+  "gate": "G116",
+  "interpretation": "Naive RI3D failure is not safe to attribute only to pseudo-view image quality. The render manifest shows the same NeRSemble K/R/T adapter and a sign-flip/source-mask plus eval-frustum guard were used, with valid-z/in-frame evidence rather than a catastrophic empty-pose failure (min eval in-frame 0.4821). However, the naive source render already under-covers the source mask (IoU 0.3428303711577204, coverage ratio 0.5265596418494494), so source-space crop/scale/geometry mismatch is present before held-out evaluation. Direct LAM/G110 have much stronger mask support (direct eval IoU 0.8996994861687494; G110 is recorded separately in G113), while the GT pointcloud oracle confirms KRT plumbing is usable but itself under-covers the full alpha mask (oracle eval IoU 0.5236046612111784; G60 mean mask IoU 0.5539237552340944). Conclusion: G110's current value is that it bypasses pseudo-view geometry/pose/crop risk by preserving direct geometry; the naive baseline remains a failed baseline that needs stronger pose/crop/oracle\u590d\u6838 before using it as evidence against pseudo-view supervision quality alone.",
+  "missing_requirements": [],
+  "naive_pose_crop_evidence": {
+    "alignment_policy": "ri3d_source_camera_to_nersemble_source_camera_plus_sign_flip_search_then_source_mask_and_eval_camera_frustum_guard",
+    "axis_transform": "sign_1_-1_-1",
+    "frustum_guard": {
+      "final_score": 0.27663395890012854,
+      "final_source_mask_iou": 0.32315960636741264,
+      "guard": "eval_camera_frustum_only_no_eval_rgb_or_mask",
+      "margin_fraction": 0.03,
+      "mean_eval_center_penalty": 0.08502751429605433,
+      "mean_eval_inframe_fraction": 0.5182166666666667,
+      "mean_eval_overflow_penalty": 0.45423627540359485,
+      "min_eval_inframe_fraction": 0.4821,
+      "per_eval_camera": [
+        {
+          "center_penalty": 0.09506587984772175,
+          "inframe_fraction": 0.4821,
+          "overflow_penalty": 0.5921496026889449,
+          "serial": "222200042",
+          "u_quantiles": [
+            -322.23572692871096,
+            640.6409606933594,
+            1714.2579833984375
+          ],
+          "v_quantiles": [
+            464.6156539916992,
+            970.9493408203125,
+            1561.8681396484367
+          ],
+          "valid_z_fraction": 1.0
+        },
+        {
+          "center_penalty": 0.02761085795642726,
+          "inframe_fraction": 0.5869,
+          "overflow_penalty": 0.4253604569868608,
+          "serial": "222200041",
+          "u_quantiles": [
+            -299.80706787109375,
+            569.1284790039062,
+            1534.896502685547
+          ],
+          "v_quantiles": [
+            256.98956909179685,
+            897.5299682617188,
+            1550.3152282714843
+          ],
+          "valid_z_fraction": 1.0
+        },
+        {
+          "center_penalty": 0.132405805084014,
+          "inframe_fraction": 0.48565,
+          "overflow_penalty": 0.3451987665349787,
+          "serial": "222200047",
+          "u_quantiles": [
+            -346.71864318847656,
+            691.0256652832031,
+            1431.1367004394529
+          ],
+          "v_quantiles": [
+            479.8494415283203,
+            916.8442993164062,
+            1410.2389221191404
+          ],
+          "valid_z_fraction": 1.0
+        }
+      ],
+      "seed": 60528,
+      "subsample": 20000
+    },
+    "render_manifest": "/data1/workspace/airulan/3dv_work/runs/g102_g81_strict_aware_nersemble_heldout_iter1500_splat8/g81_naive_pseudo_source_anchor/render_manifest.json",
+    "source_mask_iou_from_render_manifest": 0.32315960636741264,
+    "uses_heldout_camera_geometry_for_frustum_guard": true,
+    "uses_heldout_rgb_or_mask_for_alignment": false
+  },
+  "next_gate": "Run ablations with direct geometry preserved, then add multi-case replication; for naive RI3D, add a stronger source-render/oracle-aligned pose-crop repair before drawing final conclusions.",
+  "oracle_gt_evidence": {
+    "oracle_eval_json": "/data1/workspace/airulan/3dv/experiments/metrics/g60_nersemble_pointcloud_oracle_eval_20260527.json",
+    "oracle_eval_verdict": "PASS_NERSEMBLE_POINTCLOUD_ORACLE_HELDOUT_EVAL",
+    "oracle_interpretation": "KRT/evaluator positive control exists but pointcloud splat oracle under-covers the alpha mask, so it is not a full-quality RGB oracle.",
+    "oracle_mean_mask_iou": 0.5539237552340944
+  },
+  "per_serial": {
+    "direct_lam_g77": {
+      "220700191": {
+        "bbox_center_error": 0.005302557704304434,
+        "bbox_iou": 0.9885675857431069,
+        "coverage_abs_error": 0.03770913625028338,
+        "coverage_ratio": 1.058427787227802,
+        "mask_iou": 0.9152944137259885,
+        "prediction_bbox": [
+          0,
+          117,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5364940736119775
+        ],
+        "prediction_coverage": 0.6831064384493312,
+        "target_bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.541796631316282
+        ],
+        "target_coverage": 0.6453973021990478
+      },
+      "222200041": {
+        "bbox_center_error": 0.0024953212726138707,
+        "bbox_iou": 0.9945652173913043,
+        "coverage_abs_error": 0.0509096576739968,
+        "coverage_ratio": 1.084687276968172,
+        "mask_iou": 0.8992050710540217,
+        "prediction_bbox": [
+          0,
+          140,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5436681222707423
+        ],
+        "prediction_coverage": 0.6520584901382906,
+        "target_bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5411728009981285
+        ],
+        "target_coverage": 0.6011488324642938
+      },
+      "222200042": {
+        "bbox_center_error": 0.005926388022457929,
+        "bbox_iou": 0.9868875086266391,
+        "coverage_abs_error": 0.052183178417592346,
+        "coverage_ratio": 1.0778636709212948,
+        "mask_iou": 0.8868906644058009,
+        "prediction_bbox": [
+          0,
+          155,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5483468496568933
+        ],
+        "prediction_coverage": 0.7223696440716391,
+        "target_bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5542732376793512
+        ],
+        "target_coverage": 0.6701864656540467
+      },
+      "222200047": {
+        "bbox_center_error": 0.005614472863381126,
+        "bbox_iou": 0.9873417721518988,
+        "coverage_abs_error": 0.041147698934482,
+        "coverage_ratio": 1.0692496625794667,
+        "mask_iou": 0.9130027230464258,
+        "prediction_bbox": [
+          0,
+          182,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5567685589519651
+        ],
+        "prediction_coverage": 0.6353411924733621,
+        "target_bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5623830318153462
+        ],
+        "target_coverage": 0.5941934935388801
+      }
+    },
+    "g110_source_gated": {
+      "220700191": {
+        "bbox_center_error": 0.001559575795383683,
+        "bbox_iou": 0.9965986394557823,
+        "coverage_abs_error": 0.0013041260485150419,
+        "coverage_ratio": 0.9979793438180303,
+        "mask_iou": 0.952514256536123,
+        "prediction_bbox": [
+          0,
+          139,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5433562071116657
+        ],
+        "prediction_coverage": 0.6440931761505327,
+        "target_bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.541796631316282
+        ],
+        "target_coverage": 0.6453973021990478
+      },
+      "222200041": {
+        "bbox_center_error": 0.01216469120399255,
+        "bbox_iou": 0.9735054347826086,
+        "coverage_abs_error": 0.01321072319201988,
+        "coverage_ratio": 1.0219757944764944,
+        "mask_iou": 0.9276494311813469,
+        "prediction_bbox": [
+          0,
+          171,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.553337492202121
+        ],
+        "prediction_coverage": 0.6143595556563137,
+        "target_bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5411728009981285
+        ],
+        "target_coverage": 0.6011488324642938
+      },
+      "222200042": {
+        "bbox_center_error": 0.002807236431690563,
+        "bbox_iou": 0.9937062937062937,
+        "coverage_abs_error": 0.0005951031512129168,
+        "coverage_ratio": 1.0008879665312729,
+        "mask_iou": 0.8867926333870821,
+        "prediction_bbox": [
+          0,
+          183,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5570804741110418
+        ],
+        "prediction_coverage": 0.6707815688052596,
+        "target_bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5542732376793512
+        ],
+        "target_coverage": 0.6701864656540467
+      },
+      "222200047": {
+        "bbox_center_error": 0.0009357454772301876,
+        "bbox_iou": 0.9978632478632479,
+        "coverage_abs_error": 0.0012542507367944156,
+        "coverage_ratio": 0.997889154374067,
+        "mask_iou": 0.9308345101972337,
+        "prediction_bbox": [
+          0,
+          203,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5633187772925764
+        ],
+        "prediction_coverage": 0.5929392428020857,
+        "target_bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5623830318153462
+        ],
+        "target_coverage": 0.5941934935388801
+      }
+    },
+    "gt_pointcloud_oracle_g59": {
+      "220700191": {
+        "bbox_center_error": 0.019088964929067278,
+        "bbox_iou": 0.8896071928279007,
+        "coverage_abs_error": 0.26444457039220126,
+        "coverage_ratio": 0.5902608060319354,
+        "mask_iou": 0.582903275432855,
+        "prediction_bbox": [
+          36,
+          130,
+          1022,
+          1594
+        ],
+        "prediction_bbox_center": [
+          0.4813466787989081,
+          0.5377417342482844
+        ],
+        "prediction_coverage": 0.3809527318068465,
+        "target_bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.541796631316282
+        ],
+        "target_coverage": 0.6453973021990478
+      },
+      "222200041": {
+        "bbox_center_error": 0.04873527420744616,
+        "bbox_iou": 0.8119329523191074,
+        "coverage_abs_error": 0.274891181138064,
+        "coverage_ratio": 0.542723588081839,
+        "mask_iou": 0.5360258032539436,
+        "prediction_bbox": [
+          48,
+          125,
+          1045,
+          1454
+        ],
+        "prediction_bbox_center": [
+          0.49727024567788897,
+          0.49251403618215844
+        ],
+        "prediction_coverage": 0.32625765132622986,
+        "target_bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5411728009981285
+        ],
+        "target_coverage": 0.6011488324642938
+      },
+      "222200042": {
+        "bbox_center_error": 0.03914636619181967,
+        "bbox_iou": 0.9158296555572465,
+        "coverage_abs_error": 0.3398271367036953,
+        "coverage_ratio": 0.4929364376643267,
+        "mask_iou": 0.491945993364107,
+        "prediction_bbox": [
+          88,
+          170,
+          1097,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5391264786169245,
+          0.5530255770430443
+        ],
+        "prediction_coverage": 0.3303593289503514,
+        "target_bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5542732376793512
+        ],
+        "target_coverage": 0.6701864656540467
+      },
+      "222200047": {
+        "bbox_center_error": 0.03459939083806631,
+        "bbox_iou": 0.9283993506829202,
+        "coverage_abs_error": 0.2662729539786896,
+        "coverage_ratio": 0.5518750089422403,
+        "mask_iou": 0.5428421870154846,
+        "prediction_bbox": [
+          76,
+          197,
+          1099,
+          1602
+        ],
+        "prediction_bbox_center": [
+          0.5345768880800728,
+          0.5611353711790393
+        ],
+        "prediction_coverage": 0.32792053956019046,
+        "target_bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5623830318153462
+        ],
+        "target_coverage": 0.5941934935388801
+      }
+    },
+    "naive_ri3d_g102": {
+      "220700191": {
+        "bbox_center_error": 0.011228945726762363,
+        "bbox_iou": 0.9020408163265307,
+        "coverage_abs_error": 0.3055571299025164,
+        "coverage_ratio": 0.5265596418494494,
+        "mask_iou": 0.3428303711577204,
+        "prediction_bbox": [
+          0,
+          188,
+          1099,
+          1513
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5305676855895196
+        ],
+        "prediction_coverage": 0.3398401722965314,
+        "target_bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.541796631316282
+        ],
+        "target_coverage": 0.6453973021990478
+      },
+      "222200041": {
+        "bbox_center_error": 0.04117280099812848,
+        "bbox_iou": 0.9177057356608479,
+        "coverage_abs_error": 0.28050328723645435,
+        "coverage_ratio": 0.5333879530521832,
+        "mask_iou": 0.26680681596019534,
+        "prediction_bbox": [
+          0,
+          0,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5
+        ],
+        "prediction_coverage": 0.3206455452278395,
+        "target_bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5411728009981285
+        ],
+        "target_coverage": 0.6011488324642938
+      },
+      "222200042": {
+        "bbox_center_error": 0.06363890559887198,
+        "bbox_iou": 0.7198900190718373,
+        "coverage_abs_error": 0.3414446837451825,
+        "coverage_ratio": 0.4905228600640858,
+        "mask_iou": 0.28425406896973837,
+        "prediction_bbox": [
+          0,
+          251,
+          1002,
+          1379
+        ],
+        "prediction_bbox_center": [
+          0.45586897179253866,
+          0.5084217092950717
+        ],
+        "prediction_coverage": 0.3287417819088642,
+        "target_bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5542732376793512
+        ],
+        "target_coverage": 0.6701864656540467
+      },
+      "222200047": {
+        "bbox_center_error": 0.06051154086088584,
+        "bbox_iou": 0.8048433048433048,
+        "coverage_abs_error": 0.27137723872137837,
+        "coverage_ratio": 0.5432847352381498,
+        "mask_iou": 0.37807410385305285,
+        "prediction_bbox": [
+          0,
+          434,
+          1099,
+          1563
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.622894572676232
+        ],
+        "prediction_coverage": 0.3228162548175017,
+        "target_bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5623830318153462
+        ],
+        "target_coverage": 0.5941934935388801
+      }
+    },
+    "strict_aware_ri3d_g102": {
+      "220700191": {
+        "bbox_center_error": 0.08109794135995008,
+        "bbox_iou": 0.7945578231292517,
+        "coverage_abs_error": 0.39535479483110403,
+        "coverage_ratio": 0.38742415953084947,
+        "mask_iou": 0.28485062391838967,
+        "prediction_bbox": [
+          0,
+          415,
+          1099,
+          1582
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.622894572676232
+        ],
+        "prediction_coverage": 0.25004250736794376,
+        "target_bbox": [
+          0,
+          134,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.541796631316282
+        ],
+        "target_coverage": 0.6453973021990478
+      },
+      "222200041": {
+        "bbox_center_error": 0.016531503431066796,
+        "bbox_iou": 0.6868206521739131,
+        "coverage_abs_error": 0.38816481523464075,
+        "coverage_ratio": 0.3542949860795141,
+        "mask_iou": 0.1888003548717066,
+        "prediction_bbox": [
+          0,
+          389,
+          1099,
+          1399
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.5577043044291953
+        ],
+        "prediction_coverage": 0.21298401722965313,
+        "target_bbox": [
+          0,
+          132,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5411728009981285
+        ],
+        "target_coverage": 0.6011488324642938
+      },
+      "222200042": {
+        "bbox_center_error": 0.06799750467872734,
+        "bbox_iou": 0.8055944055944056,
+        "coverage_abs_error": 0.3631313761051916,
+        "coverage_ratio": 0.45816366829967936,
+        "mask_iou": 0.4057636272027159,
+        "prediction_bbox": [
+          0,
+          422,
+          1099,
+          1573
+        ],
+        "prediction_bbox_center": [
+          0.5,
+          0.6222707423580786
+        ],
+        "prediction_coverage": 0.30705508954885513,
+        "target_bbox": [
+          0,
+          174,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5542732376793512
+        ],
+        "target_coverage": 0.6701864656540467
+      },
+      "222200047": {
+        "bbox_center_error": 0.08055439043699421,
+        "bbox_iou": 0.7834731934731934,
+        "coverage_abs_error": 0.3557815688052596,
+        "coverage_ratio": 0.40123617529652467,
+        "mask_iou": 0.32500266074028106,
+        "prediction_bbox": [
+          56,
+          445,
+          1099,
+          1603
+        ],
+        "prediction_bbox_center": [
+          0.5254777070063694,
+          0.6388022457891454
+        ],
+        "prediction_coverage": 0.2384119247336205,
+        "target_bbox": [
+          0,
+          200,
+          1099,
+          1603
+        ],
+        "target_bbox_center": [
+          0.5,
+          0.5623830318153462
+        ],
+        "target_coverage": 0.5941934935388801
+      }
+    }
+  },
+  "premise": "Check whether the G81 naive pseudo-view RI3D baseline failed because of camera pose/crop/source-render issues rather than only pseudo-view quality.",
+  "repo_safe_outputs": {
+    "mask_sheet": "/data1/workspace/airulan/3dv/experiments/figures/g116_naive_pose_crop_source_oracle_mask_diagnostic_20260528.png",
+    "mask_sheet_sha256": "1c14a8592cd799cde64512318806059e5cb38094a47c756ce16e3d0c49944491"
+  },
+  "serials": [
+    "220700191",
+    "222200042",
+    "222200041",
+    "222200047"
+  ],
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "summary_by_arm": {
+    "direct_lam_g77": {
+      "mean_eval_bbox_iou": 0.9895981660566141,
+      "mean_eval_center_error": 0.0046787273861509755,
+      "mean_eval_coverage_ratio": 1.0772668701563113,
+      "mean_eval_mask_iou": 0.8996994861687494,
+      "source_coverage_ratio": 1.058427787227802,
+      "source_mask_iou": 0.9152944137259885
+    },
+    "g110_source_gated": {
+      "mean_eval_bbox_iou": 0.9883583254507168,
+      "mean_eval_center_error": 0.005302557704304434,
+      "mean_eval_coverage_ratio": 1.0069176384606113,
+      "mean_eval_mask_iou": 0.9150921915885543,
+      "source_coverage_ratio": 0.9979793438180303,
+      "source_mask_iou": 0.952514256536123
+    },
+    "gt_pointcloud_oracle_g59": {
+      "mean_eval_bbox_iou": 0.885387319519758,
+      "mean_eval_center_error": 0.04082701041244405,
+      "mean_eval_coverage_ratio": 0.5291783448961352,
+      "mean_eval_mask_iou": 0.5236046612111784,
+      "source_coverage_ratio": 0.5902608060319354,
+      "source_mask_iou": 0.582903275432855
+    },
+    "naive_ri3d_g102": {
+      "mean_eval_bbox_iou": 0.8141463531919966,
+      "mean_eval_center_error": 0.05510774915262876,
+      "mean_eval_coverage_ratio": 0.5223985161181396,
+      "mean_eval_mask_iou": 0.30971166292766217,
+      "source_coverage_ratio": 0.5265596418494494,
+      "source_mask_iou": 0.3428303711577204
+    },
+    "strict_aware_ri3d_g102": {
+      "mean_eval_bbox_iou": 0.758629417080504,
+      "mean_eval_center_error": 0.05502779951559611,
+      "mean_eval_coverage_ratio": 0.4045649432252394,
+      "mean_eval_mask_iou": 0.30652221427156784,
+      "source_coverage_ratio": 0.38742415953084947,
+      "source_mask_iou": 0.28485062391838967
+    }
+  },
+  "verdict": "PASS_G116_NAIVE_POSE_CROP_SOURCE_ORACLE_DIAGNOSTIC"
+}

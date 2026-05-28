@@ -132,14 +132,20 @@ naive `4.904916/0.309712`, and identity/confidence-aware `4.778723/0.306522`
 for PSNR/mask IoU; G108's repo-safe mask audit confirms direct has coherent
 support while the pseudo-view RI3D arms are fragmented. G109 passes artifact
 sync for repo-safe metrics/scripts/mask-only PNG, with private identifiable RGB
-sheets staying under `3dv_work`. G110-G115 implement and verify the next
+sheets staying under `3dv_work`. G110-G119 implement and verify the next
 direct-prior refinement: source render/source mask select alpha threshold, and
 strict identity/confidence pseudo views provide a conservative color prior. The
 original G55 evaluator gives G110 PSNR/mask IoU `13.068552/0.915092`, beating
 direct `12.690455/0.900017` and naive `4.904916/0.309712`; G112 passes the
 three-arm contract, G113/G114 provide mask/private-RGB visual audit records, and
-G115 passes artifact sync. The active next gate is G116 multi-case replication.
-Keep the distribution/
+G115 passes artifact sync. G116 records that naive failure has source-render
+crop/geometry caveats and must not be attributed purely to pseudo-view quality.
+G117/G118 run the requested single-case ablations: identity helps RGB modestly,
+confidence weighting is not proven useful on the single case, source alpha helps
+mask IoU, and direct geometry is dominant. G119 preflights multi-case
+replication and records no empty GPU; G119S passes artifact sync. The active
+next gate is G120: replicate source `222200042` only when an empty GPU is
+available. Keep the distribution/
 overlap warning for LAM-20K and do not use real multi-view images as training
 supervision in this claim.
 ```

@@ -1,0 +1,104 @@
+{
+  "case": {
+    "dataset": "NeRSemble benchmark NVS",
+    "local_eval_override": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "participant": "388",
+    "sequence": "GLASSES",
+    "source_override": "220700191",
+    "timestep": 0
+  },
+  "created_at": "2026-05-28T09:24:19.969642+00:00",
+  "date": "2026-05-28",
+  "decision": "Without-confidence ablation produced finite held-out metrics.",
+  "evaluation_mode": "method_predictions",
+  "gate": "G117_NO_CONFIDENCE",
+  "interpretation": "This variant keeps source-gated direct geometry but removes confidence weighting from pseudo color moments.",
+  "method_label": "g117_without_confidence_gate",
+  "metrics": {
+    "lpips": "not_run_in_smoke_no_dependency_loaded",
+    "mean_masked_rgb_mae": 0.14603202044963837,
+    "mean_masked_rgb_psnr": 13.068995063502394,
+    "mean_masked_rgb_ssim_global_luma": 0.4583794109602315,
+    "mean_prediction_foreground_coverage": 0.6260267890878863,
+    "mean_prediction_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "mean_source_mask_vs_eval_mask_iou": 0.9150921915885543,
+    "per_eval_serial": [
+      {
+        "eval_serial": "222200042",
+        "masked_rgb_mae": 0.1467166244983673,
+        "masked_rgb_mse": 0.05211110785603523,
+        "masked_rgb_psnr": 12.830696938520749,
+        "masked_rgb_ssim_global_luma": 0.3834241412039698,
+        "prediction_foreground_coverage": 0.6707815688052596,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g117_source_gated_pseudo_prior_ablation/without_confidence_gate/predictions/cam_222200042_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.8867926333870821,
+        "target_alpha_coverage": 0.6701864656540467
+      },
+      {
+        "eval_serial": "222200041",
+        "masked_rgb_mae": 0.15900254249572754,
+        "masked_rgb_mse": 0.054044514894485474,
+        "masked_rgb_psnr": 12.672483770471851,
+        "masked_rgb_ssim_global_luma": 0.44519738369343115,
+        "prediction_foreground_coverage": 0.6143595556563137,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g117_source_gated_pseudo_prior_ablation/without_confidence_gate/predictions/cam_222200041_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9276494311813469,
+        "target_alpha_coverage": 0.6011488324642938
+      },
+      {
+        "eval_serial": "222200047",
+        "masked_rgb_mae": 0.13237689435482025,
+        "masked_rgb_mse": 0.04262059926986694,
+        "masked_rgb_psnr": 13.703804481514583,
+        "masked_rgb_ssim_global_luma": 0.5465167079832935,
+        "prediction_foreground_coverage": 0.5929392428020857,
+        "prediction_mask_source": "alpha_channel",
+        "prediction_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "prediction_path": "/data1/workspace/airulan/3dv_work/runs/g117_source_gated_pseudo_prior_ablation/without_confidence_gate/predictions/cam_222200047_frame_00000.png",
+        "source_mask_vs_eval_mask_iou": 0.9308345101972337,
+        "target_alpha_coverage": 0.5941934935388801
+      }
+    ]
+  },
+  "next_gate": "Aggregate G117 ablations.",
+  "prediction_root": "/data1/workspace/airulan/3dv_work/runs/g117_source_gated_pseudo_prior_ablation/without_confidence_gate/predictions",
+  "premise": "Evaluate G117 pseudo-prior ablation without confidence weighting with original G55 evaluator.",
+  "source_serial": "220700191",
+  "split": {
+    "local_eval_serials": [
+      "222200042",
+      "222200041",
+      "222200047"
+    ],
+    "official_hidden_holdout_serials": [
+      "222200046",
+      "222200037",
+      "222200039"
+    ],
+    "source_serial": "220700191",
+    "visible_serials": [
+      "220700191",
+      "221501007",
+      "222200036",
+      "222200038",
+      "222200040",
+      "222200041",
+      "222200042",
+      "222200043",
+      "222200044",
+      "222200045",
+      "222200047",
+      "222200048",
+      "222200049"
+    ]
+  },
+  "verdict": "PASS_G117_WITHOUT_CONFIDENCE_GATE_EVAL"
+}

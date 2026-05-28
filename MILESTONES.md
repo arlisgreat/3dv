@@ -151,7 +151,7 @@ mean held-out mask IoU 0.899699 in the audit sheet, while naive/aware are only
 0.309712/0.306522 and show weak fragmented support. The current G81 evidence
 supports a negative pseudo-view supervision study and real-GT evaluator/protocol
 contribution, not a positive method claim.
-G110-G115 then change the mechanism instead of scaling the failed RI3D arm:
+G110-G119 then change the mechanism instead of scaling the failed RI3D arm:
 start from the strong direct Gaussian prior, select an alpha threshold only on
 the source render/source mask, and apply a conservative color prior from the
 strict identity/confidence pseudo views. This source-gated pseudo-prior arm
@@ -160,6 +160,14 @@ beats both baselines under the original G55 held-out evaluator: PSNR/mask IoU
 4.904916/0.309712, with G115 confirming the repo-safe artifact sync set. This
 finally satisfies the current single-case objective, but remains a diagnostic
 method result pending multi-case replication and distribution/overlap review.
+G116 then corrects the naive-baseline interpretation: naive failure is real but
+cannot be attributed only to pseudo-view image quality because source-space
+crop/scale/geometry mismatch is already visible. G117/G118 run single-case
+ablations showing identity helps RGB modestly, confidence weighting is not
+supported as positive on this case, source-selected alpha helps mask IoU, and
+preserving direct geometry is the dominant factor. G119 records that multi-case
+replication is still incomplete and blocked from GPU execution in this turn
+because no empty card is available.
 ```
 
 ## Mandatory Data Audit Gate
@@ -381,12 +389,17 @@ plumbing itself.
 | G113 | done, mask audit pass | Repo-safe mask audit for direct/naive/G110 aware | `experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.md`, `experiments/figures/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.png` | G110 has the strongest mean mask support; improvement comes from source-gated direct-prior support rather than fragmented RI3D pseudo geometry. |
 | G114 | done, private RGB visual audit | Private RGB visual check for G110 predictions | `experiments/metrics/g114_source_gated_pseudo_prior_private_rgb_visual_audit_20260528.md` | Private sheet remains under `3dv_work`; audit supports the G110 interpretation while preserving privacy. |
 | G115 | done, sync pass | Artifact sync gate for G110-G114 repo-safe outputs | `experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.md`, `scripts/artifact_sync_gate.py` | Repo-safe metrics/scripts/mask-only PNG are sync candidates; blocked private/raw paths are zero. |
+| G116 | done, diagnostic caveat pass | Naive pose/crop/source/oracle diagnostic | `experiments/metrics/g116_naive_pose_crop_source_oracle_diagnostic_20260528.md`, `experiments/figures/g116_naive_pose_crop_source_oracle_mask_diagnostic_20260528.png`, `scripts/g116_naive_pose_crop_diagnostic.py` | Naive failure is real, but source render already under-covers the source mask; do not attribute failure only to pseudo-view quality. |
+| G117 | done, ablation eval pass | Source-gated pseudo-prior ablation predictions/evals | `experiments/metrics/g117_source_gated_pseudo_prior_ablation_20260528.md`, `experiments/metrics/g117_full_identity_confidence_eval_20260528.md`, `scripts/g117_source_gated_pseudo_prior_ablation.py` | Full, w/o identity, w/o confidence, and w/o source-alpha variants all run through the original G55 evaluator. |
+| G118 | done, ablation contract pass | Aggregate single-case ablation findings | `experiments/metrics/g118_source_gated_ablation_contract_20260528.md`, `scripts/g118_source_gated_ablation_contract.py` | Direct prior is strong; full beats direct; identity helps RGB modestly; confidence is not supported as positive; source alpha helps mask; direct geometry is key. |
+| G119 | done, multi-case preflight | Multi-case replication readiness and GPU gate | `experiments/metrics/g119_multicase_replication_preflight_20260528.md`, `scripts/g119_multicase_replication_preflight.py` | Only source `220700191` is complete; source `222200042` lacks pseudo/G117 assets; no empty GPU is available, so do not launch missing GPU jobs now. |
+| G119S | done, sync pass | Artifact sync gate for G116-G119 repo-safe outputs | `experiments/metrics/g119s_g116_g119_artifact_sync_gate_20260528.md`, `scripts/artifact_sync_gate.py` | Repo-safe metrics/scripts/mask-only PNG are sync candidates; blocked private/raw paths are zero. |
 
 ## Active Next Milestone
 
 | Gate | Status | Purpose | Entry gate | Stop condition |
 | --- | --- | --- | --- | --- |
-| G116 | active next | Multi-case replication for G110 | `experiments/metrics/g112_source_gated_pseudo_prior_three_arm_contract_g55_20260528.md`, `experiments/metrics/g113_source_gated_pseudo_prior_three_arm_mask_audit_g55_20260528.md`, `experiments/metrics/g115_g110_g114_artifact_sync_gate_20260528.md` | Replicate on additional real-GT NeRSemble cases without changing the source-only/pseudo-only gate; if it fails, report G110 as single-case diagnostic rather than broad method quality. |
+| G120 | active next | Execute source `222200042` multi-case replication when an empty GPU is available | `experiments/metrics/g118_source_gated_ablation_contract_20260528.md`, `experiments/metrics/g119_multicase_replication_preflight_20260528.md`, `experiments/metrics/g119s_g116_g119_artifact_sync_gate_20260528.md` | Run source prep, Zero123++, identity/confidence manifest, direct/frustum guard if needed, G117-style ablations, and cross-case aggregation without using held-out RGB/masks for generation or parameter selection. |
 
 ## G8 Result
 
