@@ -108,6 +108,17 @@ G120 six-arm single-case ablation summary
 G121 source `222200042` pseudo-input prep
 G122 multi-case replication preflight
 G122S G116-G122 artifact sync gate
+G123 source `222200042` Zero123++ pseudo-view generation
+G124 source `222200042` naive/aware manifests
+G125 source `222200042` strict-aware manifest
+G126 source `222200042` RI3D pool export and scene conversion
+G127 source `222200042` RI3D two-arm iter1500 training
+G128 source `222200042` RI3D held-out render/eval
+G129 source `222200042` direct LAM frustum-guard render/eval
+G130 source `222200042` source-gated pseudo-prior ablations and evals
+G131 source `222200042` naive camera/crop audit
+G132 source `222200042` six-arm summary
+G133 two-case six-arm aggregation and replication verdict
 ```
 
 还没有完成：
@@ -118,8 +129,8 @@ quantitative RGB reconstruction evaluation beyond oracle/diagnostic render check
 publishable artifact review for any identifiable Multiface RGB/mesh result
 official NeRSemble leaderboard submission packaging, if needed
 H3DS access and independent cross-dataset validation after user provides data
-multi-case replication of the NeRSemble real-GT protocol
-multi-case validation of the G110 source-gated pseudo-prior refinement
+multi-case replication beyond the two NeRSemble sources (G133 covers exactly two)
+back-of-head/full-head benchmark protocol on Ava-256/RenderMe-360/H3DS (G134)
 ```
 
 历史 diagnostic pseudo-view 前端：
@@ -1085,10 +1096,37 @@ factor. G121 prepares the source-only input for source `222200042`, and G122
 confirms multi-case replication is not complete because that second split still
 lacks pseudo views, manifests, ablation predictions, and six-arm evals.
 
+G123-G133 second-case replication (source `222200042`, 2026-10-11):
+
+```text
+direct LAM frustum guard:  PSNR 10.276811, mask IoU 0.773536
+naive RI3D iter1500:       PSNR  4.304520, mask IoU 0.265780
+full source-gated aware:   PSNR  9.574039, mask IoU 0.777179
+w/o identity gate:         PSNR 10.238625, mask IoU 0.777179
+w/o confidence gate:       PSNR  9.574039, mask IoU 0.777179
+w/o source alpha/geometry: PSNR  5.578707, mask IoU 0.556704
+```
+
+Replication verdict (G133):
+
+```text
+REPLICATED: direct learned-prior Gaussian strongly beats naive pseudo-view RI3D
+in both cases; removing direct geometry/source alpha collapses the method
+toward the strict RI3D arm in both cases.
+NOT REPLICATED: the G110 full-aware PSNR gain over direct (case1 +0.378 dB)
+flips to -0.703 dB in case 2, and the identity gate's RGB gain (case1 +0.146
+dB) flips to -0.665 dB; confidence weighting is neutral in both cases. Case 2
+yields only 2 identity-anchored pseudo views (vs 3 in case 1), so the strict
+arms train on fewer views. Pseudo-view supervision evidence remains diagnostic;
+no method-quality scaling claim is authorized.
+```
+
 Artifact sync:
 G109 passes the repo-safe sync gate for G81-G108 metrics, scripts, and the
 mask-only PNG. G115 passes the repo-safe sync gate for G110-G114 metrics,
 scripts, and the mask-only PNG. Private identifiable RGB sheets remain in
 `3dv_work`. G122S passes the repo-safe sync gate for G116-G122 metrics,
-scripts, and the mask-only PNG.
+scripts, and the mask-only PNG. The G123-G133 second-case outputs follow the
+same policy: metrics/scripts/mask-only PNG in repo, identifiable media in
+`3dv_work`.
 ```

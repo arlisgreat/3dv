@@ -267,6 +267,8 @@ def main() -> None:
     parser.add_argument("--candidate-root", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g86_g81_nersemble_pseudo_ri3d_pool/candidate_pools"))
     parser.add_argument("--sample-id", default="source220700191")
     parser.add_argument("--source-mask-threshold", type=float, default=22.0)
+    parser.add_argument("--min-trainable-views", type=int, default=4)
+    parser.add_argument("--min-trainable-views-override-reason", default=None)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--output-json", type=Path, default=Path("experiments/metrics/g86_g81_private_ri3d_pool_export_20260528.json"))
     parser.add_argument("--output-md", type=Path, default=Path("experiments/metrics/g86_g81_private_ri3d_pool_export_20260528.md"))
@@ -310,11 +312,13 @@ def main() -> None:
     missing = [
         f"{row['arm']}: only {row['trainable_view_count']} trainable views"
         for row in scenes
-        if row["trainable_view_count"] < 4
+        if row["trainable_view_count"] < args.min_trainable_views
     ]
     for row in scenes:
         if row["heldout_path_leakage"]:
             missing.append(f"{row['arm']}: held-out leakage {row['heldout_path_leakage']}")
+    if args.min_trainable_views < 4 and not args.min_trainable_views_override_reason:
+        missing.append("min-trainable-views below 4 requires --min-trainable-views-override-reason")
     verdict = PASS_VERDICT if not missing else BLOCKED_VERDICT
     payload = {
         "date": DATE,
@@ -324,6 +328,8 @@ def main() -> None:
         "case": adapter["case"],
         "split": adapter["split"],
         "candidate_root": str(args.candidate_root),
+        "min_trainable_views": args.min_trainable_views,
+        "min_trainable_views_override_reason": args.min_trainable_views_override_reason,
         "scenes": [
             {key: value for key, value in row.items() if key != "views"}
             for row in scenes

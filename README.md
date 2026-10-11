@@ -419,8 +419,12 @@ adapter/init/eval/numerical pass 说成 reconstruction-quality pass。
 下一步：
 
 1. 不扩 first30 / first50，也不从 `experiments/downstream_datasets` 重启训练。
-2. 优先获取 H3DS token 或更强公开 real-GT benchmark；本地 G33 已经把当前
-   RI3D 数值 smoke 跑到 combined guarded train10，但没有质量收益。
-3. 不开更长 RI3D 训练 milestone，除非先有方法重设或新 benchmark gate。
+2. G123–G133 已完成第二个 NeRSemble case（source `222200042`）的六臂复现与
+   两案例聚合：direct≫naive 与 source-geometry 主导性跨案例成立；G110 的
+   伪视角先验 PSNR 增益和 identity gate 收益**没有在第二个 case 上复现**，
+   伪视角监督证据维持 diagnostic 定位，不做 method-quality scaling 声明。
+3. 新方向：**单视图全头/后脑勺重建**。调研与定位见 `backhead/`（六个主题
+   调研 + 综合结论）。下一 gate 为 G134：Ava-256/RenderMe-360/H3DS 数据接入、
+   背面 holdout 评估器、开源方法后脑勺体检。
 4. 只允许在真实 GT case 且每轮 audit gate 通过后恢复受控重建实验；web first10 和旧 RI3D
    结果只保留为 failure taxonomy / diagnostic evidence。

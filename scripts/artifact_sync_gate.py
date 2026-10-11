@@ -32,6 +32,7 @@ ALLOWED_PREFIXES = (
     "skills/",
     "scripts/",
     "docs/",
+    "backhead/",
 )
 PRIVATE_TOKENS = (
     "/raw_extract/",

@@ -116,8 +116,8 @@ def main() -> None:
                 "path": "/data1/workspace/airulan/3dv_work/runs/g123_zero123plus_nersemble_source222200042_steps75/metadata.json",
             },
             "six_arm_summary": {
-                "exists": exists(repo / "experiments/metrics/g130_g116_source222200042_six_arm_summary_20260528.json"),
-                "path": str(repo / "experiments/metrics/g130_g116_source222200042_six_arm_summary_20260528.json"),
+                "exists": exists(repo / "experiments/metrics/g132_source222200042_six_arm_summary_20261011.json"),
+                "path": str(repo / "experiments/metrics/g132_source222200042_six_arm_summary_20261011.json"),
             },
             "status": "ready_for_pseudo_generation",
             "next_action": "Run source-only pseudo generation, manifest gate, source-gated ablations, and G55 eval.",

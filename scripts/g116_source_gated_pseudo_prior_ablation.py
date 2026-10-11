@@ -242,6 +242,8 @@ def main() -> None:
     parser.add_argument("--aware-manifest", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g85_zero123plus_nersemble_source220700191_steps75/g81_manifests/identity_confidence_aware_pseudo_supervision_manifest.json"))
     parser.add_argument("--strict-manifest", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g100_g81_strict_aware_manifest/identity_confidence_strict_pseudo_supervision_manifest.json"))
     parser.add_argument("--output-root", type=Path, default=Path("/data1/workspace/airulan/3dv_work/runs/g116_source_gated_pseudo_prior_ablation"))
+    parser.add_argument("--gate", default="G116")
+    parser.add_argument("--date", default=DATE)
     parser.add_argument("--output-json", type=Path, default=Path("experiments/metrics/g116_source_gated_pseudo_prior_ablation_20260528.json"))
     parser.add_argument("--output-md", type=Path, default=Path("experiments/metrics/g116_source_gated_pseudo_prior_ablation_20260528.md"))
     args = parser.parse_args()
@@ -343,9 +345,9 @@ def main() -> None:
 
     verdict = PASS_VERDICT if not missing else BLOCKED
     payload = {
-        "date": DATE,
+        "date": args.date,
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "gate": "G116",
+        "gate": args.gate,
         "verdict": verdict,
         "case": adapter["case"],
         "split": adapter["split"],
